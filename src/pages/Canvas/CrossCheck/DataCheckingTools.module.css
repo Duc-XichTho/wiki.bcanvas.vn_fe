@@ -1,0 +1,71 @@
+.container {
+  width: 100%;
+  height: 85vh;
+}
+
+.header {
+  width: 100%;
+  height: 5%;
+  display: flex;
+}
+
+.tabsHeader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-bottom: 1px solid #e1e5e8;
+}
+
+.content {
+  width: 100%;
+  height: 95%;
+  background-color: #f5f7fa;
+  margin-top: 5px;
+}
+
+.tabs {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  border-bottom: 1px solid #e1e5e8;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #7f8c8d;
+  transition: background-color 0.2s;
+  padding: 0em 1em;
+}
+
+.tab:hover {
+  background-color: #dce4e8;
+}
+
+.tabActiveHeader {
+  display: flex;
+  align-items: center;
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  padding: 0em 1em;
+}
+
+.tabActive {
+  display: flex;
+  align-items: center;
+  background-color: #259c63;
+  color: white;
+  font-weight: bold;
+  padding: 0em 1em;
+}
+
+.mainPanel {
+  width: 100%;
+  height: 95%;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}

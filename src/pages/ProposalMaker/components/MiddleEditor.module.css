@@ -1,0 +1,169 @@
+.panel {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.panelSectionBorder {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.headerActionsBetween {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.h3TitleDark {
+    font-weight: 500;
+    color: #111827;
+}
+
+.actionsRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.formatBar {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.disabled {
+    opacity: 0.8;
+}
+
+.flexRowGap1 {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.selectSmall {
+    font-size: 0.875rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background: #ffffff;
+}
+
+.separator {
+    width: 1px;
+    height: 1.5rem;
+    background: #d1d5db;
+    margin: 0 0.5rem;
+}
+
+.formatBtn {
+    padding: 0.375rem;
+    color: #4b5563;
+    border-radius: 0.375rem;
+    transition: background-color .2s ease;
+}
+
+.formatBtn:hover {
+    background: #e5e7eb;
+}
+
+.btnTextBoldSm {
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.btnTextSm {
+    font-size: 0.875rem;
+}
+
+.btnTextUnderlineSm {
+    font-size: 0.875rem;
+    text-decoration: underline;
+}
+
+.highlightBtn {
+    padding: 0.375rem;
+    color: #4b5563;
+    border-radius: 0.375rem;
+    background: #fef08a;
+}
+
+.varBtn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    background: #dbeafe;
+    color: #1d4ed8;
+    border-radius: 0.375rem;
+    transition: background-color .2s ease;
+}
+
+.varBtn:hover {
+    background: #bfdbfe;
+}
+
+.editorContainer {
+    flex: 0 0 auto;
+    padding: 1rem;
+    position: relative;
+}
+
+.editorArea {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    outline: none;
+    overflow-y: auto;
+}
+
+.editorLockedBorder {
+    border-color: #9ca3af;
+}
+
+.lockedBadge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: #4b5563;
+}
+
+.iconXs {
+    width: 12px;
+    height: 12px;
+}
+
+.emptyState {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+}
+
+.emptyStateInner {
+    text-align: center;
+}
+
+.emptyIcon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem auto;
+    color: #d1d5db;
+}

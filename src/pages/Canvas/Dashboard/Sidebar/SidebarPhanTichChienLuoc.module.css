@@ -1,0 +1,102 @@
+.main {
+    height: 100%;
+    border-right: 1px solid #e8e8e8;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 15px
+}
+
+.header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 4px 0 4px 10px;
+    background-color: white; /* Nền trắng */
+    border-radius: 2px 2px 0 0;
+    height: 40px;
+    color: #262626;
+    font-weight: 700;
+    justify-content: space-between;
+    position: relative;
+    font-size: 15px;
+}
+
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #E65874; /* Hồng */
+    border-radius: 50%;
+}
+
+
+.caidat {
+    margin-left: auto;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.subItems {
+    max-height: calc(100vh - 150px); /* Điều chỉnh chiều cao tối đa */
+    overflow-y: auto; /* Cho phép cuộn dọc */
+    padding-right: 5px; /* Thêm padding để tránh thanh cuộn che nội dung */
+    padding-top: 1px; /* Thêm padding để tránh thanh cuộn che nội dung */
+    padding-left: 8px;
+    font-weight: 500;
+}
+
+
+
+.subTab {
+    padding: 8px 16px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    height: 30px;
+}
+
+.subTab:hover {
+    background-color: #ebebeb;
+}
+
+.subTab.active {
+    background-color:#D9D9D9;
+    color: #000000;
+    font-weight: 700;
+}
+
+.dropdownWrapper {
+    position: relative;
+}
+
+.settingsBtn {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.dropdownWrapper:hover .settingsBtn {
+    opacity: 1;
+}
+
+.titleGroup {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

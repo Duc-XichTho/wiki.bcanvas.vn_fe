@@ -1,0 +1,319 @@
+.section {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.titleContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 70px;
+}
+
+.headerContent {
+    height: 90%;
+    overflow: auto
+
+}
+
+.planInfo {
+    display: flex;
+    border: 1px solid rgba(217, 217, 217, 1);
+    align-items: center;
+    gap: 27px;
+    padding: 5px;
+}
+
+.titleText {
+    color: #454545;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.titleTextItem {
+    color: #454545;
+    font-weight: 400;
+}
+
+
+.benchmarkGroup {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.rightSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%; /* Đảm bảo full chiều cao */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+
+.footerButton {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    width: 15%;
+    margin-top: 10px;
+}
+
+.sidebarLeft {
+    height: 100%;
+}
+
+.sidebar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    /*border: 1px solid #ddd;*/
+    box-sizing: border-box;
+}
+
+.listItem {
+    padding: 20px;
+    overflow-y: auto; /* Thêm cuộn dọc */
+    flex-grow: 1; /* Đảm bảo phần này chiếm toàn bộ khoảng trống còn lại */
+    max-height: 70vh; /* Giới hạn chiều cao */
+}
+
+.headerButton {
+    display: flex;
+    justify-content: end;
+    padding: 10px 10px 10px 20px;
+
+}
+
+.mid {
+    height: 100%;
+    padding: 0 50px 0 50px !important;;
+}
+
+.addButton {
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    /*border: 1px solid #ddd;*/
+    border-radius: 8px;
+    cursor: pointer;
+    background: rgba(246, 246, 246, 1);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 250px;
+}
+
+.card_daDuyet {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    /*border: 1px solid #ddd;*/
+    border-radius: 8px;
+    cursor: pointer;
+    background: rgba(85, 255, 174, 0.35);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    width: 250px;
+}
+
+.sectionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.titleCard {
+    font-size: 18px;
+    color: #454545;
+}
+
+.activeCard {
+    border: 2px solid #1890ff; /* Viền xanh cho thẻ được chọn */
+}
+
+
+.dateRange {
+    display: flex;
+    gap: 7px;
+    margin-top: 5px
+}
+
+.dateRange span {
+    color: #454545;
+}
+
+.infoSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.infoSectionLeft {
+    /*display: flex;*/
+    /*align-items: start;*/
+    /*gap: 20px*/
+}
+
+.infoSectionLeft > span {
+    color: #454545;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.infoSectionButton {
+    display: flex;
+    justify-content: space-between;
+    width: max-content;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 3px 10px 3px 10px;
+    gap: 5px
+}
+
+.infoSectionButton > span {
+    color: #454545;
+    font-size: 12px;
+}
+
+.inputRow {
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.inputRow2 {
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-right: 120px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+}
+
+.inputGroup2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 165px;
+
+}
+
+.label {
+    color: #454545;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+
+.textRow {
+    display: flex;
+    flex-direction: column; /* Mỗi text hiển thị 1 hàng */
+    gap: 8px;
+}
+
+.textItem {
+    display: block;
+    font-size: 14px;
+    color: #333;
+}
+
+.channelContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    color: #333;
+}
+
+.channelGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.channelTitle {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.channelItem {
+    margin-left: 16px;
+    font-size: 14px;
+}
+
+.buttonCard {
+    display: flex;
+    justify-content: end;
+}
+
+.container {
+    height: calc(100% - 10px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+    padding-bottom: 30px;
+}
+
+.top {
+    min-height: 300px;
+    margin-top: 20px;
+}
+.top span{
+    display: block;
+    text-align: center;
+    font-weight: normal;
+}
+
+.bot {
+    min-height: 300px;
+}
+
+.header_left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header_right {
+    margin-left: auto;
+}
+
+.drop_down {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border: 1px solid rgba(217, 217, 217, 1);
+    border-radius: 8px;
+    cursor: pointer;
+    width: 250px;
+}
+
+.button_duyet {
+    background: rgba(246, 246, 246, 1);
+    border-radius: 8px;
+    padding: 4px 16px;
+}

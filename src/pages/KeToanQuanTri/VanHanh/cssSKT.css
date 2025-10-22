@@ -1,0 +1,67 @@
+.spinning {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.updateVasBtn span{
+    color: white !important;
+}
+
+.data-error {
+    background-color: #F4C2D7;
+}
+.spinning2 {
+    animation: spin2 1000ms linear infinite;
+}
+
+@keyframes spin2 {
+    100% {
+        transform: rotate(-360grad)
+    }
+
+}
+
+
+.dropdown-menu-button1 {
+    position: absolute;
+    top: 100%; /* Đặt menu dropdown dưới hình ảnh ba chấm */
+    right: 0; /* Căn phải */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Đảm bảo menu nổi bật trên các phần tử khác */
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    height: auto;
+    /*margin-right: -135%;*/
+}
+
+.dropdown-item-button1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: none;
+    /*padding: 8px 12px;*/
+    text-align: left;
+    cursor: pointer;
+    font-size: 10px;
+    color: #5f5e5b;
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+}
+.dropdown-item-button1 span {
+    font-size: 15px;
+}
+
+.dropdown-item-button1:hover {
+    background: #165591; /* Hiệu ứng hover */
+    color: white !important;
+}

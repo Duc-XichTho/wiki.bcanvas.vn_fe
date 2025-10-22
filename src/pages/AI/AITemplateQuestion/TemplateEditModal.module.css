@@ -1,0 +1,77 @@
+.modalTitle {
+	/* Modal title styles */
+}
+
+.modalContent {
+	/* Modal content container */
+}
+
+.questionSection {
+	margin-bottom: 16px;
+}
+
+.sectionTitle {
+	margin-bottom: 8px;
+	color: #333;
+}
+
+.questionTextarea {
+	border: 1px solid #d9d9d9;
+	border-radius: 6px;
+}
+
+.categorySection {
+	margin-bottom: 16px;
+}
+
+.categorySelect {
+	width: 100%;
+	padding: 8px 12px;
+	border: 1px solid #d9d9d9;
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+.statusSection {
+	margin-bottom: 16px;
+}
+
+.statusSelect {
+	width: 100%;
+	padding: 8px 12px;
+	border: 1px solid #d9d9d9;
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+.chartSection {
+	margin-bottom: 16px;
+}
+
+.chartToggle {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px;
+	background-color: #f8f9fa;
+	border-radius: 6px;
+	border: 1px solid #e9ecef;
+}
+
+.chartDescription {
+	font-size: 14px;
+	color: #333;
+}
+
+.hintSection {
+	padding: 12px;
+	background-color: #e6f7ff;
+	border-radius: 6px;
+	border: 1px solid #91d5ff;
+}
+
+.hintText {
+	margin: 0;
+	font-size: 14px;
+	color: #1890ff;
+} 

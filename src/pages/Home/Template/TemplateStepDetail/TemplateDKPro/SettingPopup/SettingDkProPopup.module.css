@@ -1,0 +1,181 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.popup {
+  width: 450px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.popupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  color: #000;
+}
+
+.section {
+  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  /* user-select: none; */
+  transition: background-color 0.3s ease;
+}
+
+.sectionHeader:hover {
+  background-color: #f0f0f0;
+}
+
+.toggleIcon {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.sectionContent {
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.checkboxLabel {
+  font-size: 14px;
+  /* user-select: none; */
+  cursor: pointer;
+}
+
+.sectionHeader span:first-child {
+  transition: color 0.3s ease;
+}
+
+.sectionHeader span:first-child[data-state="Hiện"] {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.sectionHeader span:first-child[data-state="Ẩn"] {
+  color: #F44336;
+  font-weight: bold;
+}
+
+.dropdownContainer {
+  margin-top: 10px;
+}
+
+.dropdownContainer .ant-select {
+  width: 100% !important;
+}
+
+.dropdownContainer .ant-select-selector {
+  border-radius: 4px !important;
+  border-color: #d9d9d9 !important;
+  box-shadow: none !important;
+  transition: all 0.3s ease;
+}
+
+.dropdownContainer .ant-select-selector:hover {
+  border-color: #4096ff !important;
+}
+
+.dropdownContainer .ant-select-focused .ant-select-selector {
+  border-color: #4096ff !important;
+  box-shadow: 0 0 0 2px rgba(64, 150, 255, 0.2) !important;
+}
+
+.saveButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.saveButton {
+  padding: 8px 16px;
+  background-color: #0070f3 !important;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.saveButton:hover {
+  background-color: #0051a2 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.saveButton:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.step_container{
+  margin-top: 10px;
+}
+
+.steps {
+  padding: 0 15px;
+}

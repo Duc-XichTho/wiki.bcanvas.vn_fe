@@ -1,0 +1,75 @@
+@import url('../../../styleGlobal.css');
+@import url('../../../index.css');
+
+.monthSelect {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border: 0.5px solid var(--header-text);
+    padding: 0px 10px;
+    border-radius: 8px;
+    font-weight: 450;
+    font-size: 14px;
+    cursor: pointer;
+    background: #FFFFFF;
+}
+
+.navbarSelect {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 18px;
+    cursor: pointer;
+    gap: 6px;
+}
+
+.navbarSelect span {
+    color: #737373;
+    text-transform: uppercase;
+
+}
+
+
+.month {
+    font-family: var(--font-family);
+    color: var(--header-text);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.currentUserName {
+    font-family: var(--font-family);
+    color: var(--text-color);
+}
+.btnClose {
+    margin-top: 10px;
+    display: flex;
+    height: 30px;
+    color: #ff7272;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+    line-height: 24px;
+    padding: 0 5px;
+    cursor: pointer;
+    gap: 5px;
+    width: fit-content;
+    border: 1px solid ;
+    font-size: 16px;
+    font-family: Roboto, serif ;
+    font-weight: bold ;
+}
+
+.btnClose:hover {
+    background: rgba(255, 204, 204, 0.37);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(255, 204, 204, 0.37);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(255, 204, 204, 0.37);
+    box-shadow: 0px 0px 10px 0px rgba(255, 79, 79, 0.94);
+}

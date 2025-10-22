@@ -1,0 +1,320 @@
+.mainContainer {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.keToanQuanTri {
+    display: flex;
+    width: 100vw;
+    height: 95%;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.backCanvas  {
+    width: 40px;
+    height: 38px;
+    background-color: rgba(250, 250, 250, 1);
+    border-radius: 12px;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Navbar cho KeToanQuanTri */
+.navbar {
+    width: 100%;
+    height: 56px;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 10;
+}
+
+.navbarLeft {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.appIcon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.appName {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.nameTable {
+    font-size: 20px;
+    font-weight: 600;
+    color: #22223b;
+    margin-left: 8px;
+}
+
+.navbarRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 5%;
+}
+
+.settingIcon {
+    opacity: 0.5;
+    transition: opacity 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.settingIcon:hover {
+    opacity: 1;
+}
+
+.outlet {
+    padding: 10px;
+    height: 100%;
+    overflow-x: hidden;
+    width: 85%;
+    /*background-color: #D8E5E6;*/
+}
+
+.outletExpanded {
+    flex-grow: 1;
+    padding: 10px 10px 10px 10px;
+    height: 100%;
+    overflow-x: hidden;
+    /*background-color: #D8E5E6;*/
+}
+
+.content {
+    background-color: #FFFFFF;
+    padding: 15px;
+    border-radius: 3px;
+    height: 100%;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px 0px 3px 1px rgba(112, 112, 112, 0.4);
+    -moz-box-shadow: 0px 0px 3px 1px rgba(112, 112, 112, 0.4);
+    box-shadow: 0px 0px 3px 1px rgba(112, 112, 112, 0.4);
+    overflow-y: auto;
+}
+
+.headerPowersheet {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.headerPowersheet2 {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.main {
+    display: flex;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.headerTitle {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.toogleChange {
+    display: flex;
+    margin-left: 25px;
+    gap: 25px
+}
+
+.toogleChange2 {
+    display: flex;
+    gap: 25px
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 119%;
+    right: 0;
+    /* Căn phải */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100000000;
+    /* Đảm bảo menu nổi bật trên các phần tử khác */
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    height: auto;
+    /*margin-right: -135%;*/
+}
+
+.headerTitle>span {
+    color: #454545;
+    font-size: 23px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.headerAction {
+    display: flex;
+    justify-content: flex-end;
+    flex: 2;
+    gap: 20px;
+    align-items: center;
+}
+
+.headerActionButton {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #5f5e5b;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.headerActionButton>span {
+    padding: 0 25px;
+    font-size: 14.5px;
+}
+
+.createButToan,
+.updateVas,
+.autoPhanLoai {
+    background: #EEEEEE;
+}
+
+.buttonOn {
+    background: #EEEEEE;
+}
+
+.buttonOn2 {
+    background: rgba(32, 215, 98, 0.21);
+    color: rgb(22, 142, 65);
+    border-color: rgba(32, 215, 98, 0.4);
+}
+
+.buttonOff {
+    background: white;
+}
+
+.inputSearch {
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #5f5e5b;
+    border-radius: 8px;
+    height: 30px;
+}
+
+.quickFilterInput {
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px; */
+    border: unset;
+    width: 130px;
+    font-size: 16.5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.quickFilterInput::placeholder {
+    color: #5f5e5b;
+    padding-left: unset;
+}
+
+.selectContent {
+    background-color: #eeeeee;
+    color: #5f5e5b;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0 15px;
+    text-align: center;
+    font-size: 14.5px !important;
+}
+
+.selectContent>option {
+    text-align: center !important;
+}
+
+.selectItem {
+    background-color: #eeeeee;
+    color: #5f5e5b;
+    font-size: 14.5px !important;
+}
+
+.form_content input {
+    height: 15px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.form_content {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.customSelect {
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.dropdownItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: none;
+    /*padding: 8px 12px;*/
+    text-align: left;
+    cursor: pointer;
+    font-size: 16.5px;
+    color: #5f5e5b;
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.dropdownItem:hover {
+    background: #165591;
+    /* Hiệu ứng hover */
+    color: white !important;
+}
+
+.checkKM {
+    margin: 0 10px;
+    background: #EEEEEE;
+    border: none;
+    color: red;
+
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.activeNotification {
+    background: white;
+    border: 1px solid #454545;
+
+}

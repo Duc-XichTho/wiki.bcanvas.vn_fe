@@ -1,0 +1,40 @@
+.templateFormContainer {
+  padding: 10px 10px 10px 10px;
+  height: 81%;
+  overflow-y: auto;
+}
+
+.dateFieldsContainer {
+  display: flex;
+  gap: 16px;
+}
+
+.dateFieldsContainer .ant-form-item {
+  flex: 1;
+}
+
+.formActions {
+  height: 9%;
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.title {
+  position: sticky;
+  top: 0;
+  z-index: 10; /* để không bị các phần tử khác đè lên */
+  padding: 10px 0; /* để tạo khoảng cách nếu cần */
+  background-color: #fff;
+  margin-left: 1em;
+  color: #262626;
+  font-size: 17px;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

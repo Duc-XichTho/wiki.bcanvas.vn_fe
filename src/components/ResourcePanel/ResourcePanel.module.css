@@ -1,0 +1,518 @@
+/* Resource Panel Styles */
+.resourcePanel {
+  border-radius: 8px;
+  padding: 16px;
+  height: fit-content;
+  min-height: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Pinned Indicator - Always visible red pin in top right corner */
+.pinnedIndicator {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 10;
+  rotate: 45deg;
+}
+
+.pinnedIndicatorIcon {
+  width: 16px;
+  height: 16px;
+  color: #ff0000;
+  flex-shrink: 0;
+}
+
+.pinnedIndicatorText {
+  color: #ff0000;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resourcePanelTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  margin: 0 0 16px 0;
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 8px;
+}
+
+.resourceList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: end;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--text-tertiary);
+  padding: 32px 16px;
+  font-size: 14px;
+}
+
+/* Add New Card Button */
+.addNewCard {
+  width: 50px;
+  height: 40px;
+  background-color: rgba(40, 40, 40, 0.5);
+  /* border: 2px dashed var(--border-primary); */
+  border-radius: 8px;
+  padding: 7px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.addNewCard:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background-color: rgba(40, 40, 40, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.addIcon {
+  width: 48px;
+  height: 48px;
+  color: inherit;
+}
+
+/* Resource Card Styles */
+.resourceCard {
+  width: 233px;
+  height: 130px;
+  background-color: rgba(40, 40, 40, 0.5);
+  /* border: 1px solid var(--card-border); */
+  border-radius: 5px;
+  padding: 12px 12px 33px 12px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.resourceCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Tool Button Styles (copied from Dashboard.module.css) */
+.toolEditBtn {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toolDeleteBtn {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 2.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toolPinBtn {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 4.25rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.resourceCard:hover .toolEditBtn {
+  opacity: 1;
+}
+
+.resourceCard:hover .toolDeleteBtn {
+  opacity: 1;
+}
+
+.resourceCard:hover .toolPinBtn {
+  opacity: 1;
+}
+
+/* Icon Styles */
+.iconEdit {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: white;
+}
+
+.iconPin {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: white;
+}
+
+
+.iconDelete {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #d30606;
+}
+
+/* Card Content Styles */
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.logoContainer {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.logoImage {
+  width: 100%;
+  height: 100%;
+  object-fit: stretch;
+  border-radius: 8px;
+}
+
+.resourceName {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.2;
+  flex: 1;
+}
+
+.resourceDescription {
+  font-size: 13px;
+  color: white;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
+  flex: 1;
+}
+
+.footer {
+  margin-top: 8px;
+  font-size: 10px;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.footerIcon {
+  width: 10px;
+  height: 10px;
+}
+
+/* Dashboard-style modal classes */
+.iconSelectorWrapper {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.iconSelectorList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.iconSelectorBtn {
+  font-size: 1.3rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.iconSelectorBtn:hover {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+.iconSelectorBtnActive {
+  background: var(--bg-tertiary);
+}
+
+.toolTitleInput {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  background: var(--input-bg);
+  outline: none;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.toolTitleInput:focus {
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  box-shadow: 0 0 0 2px var(--custom-hover-color, rgba(19, 194, 194, 0.2));
+}
+
+.toolDescInput {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  background: var(--input-bg);
+  outline: none;
+  width: 100%;
+  resize: none;
+  transition: all 0.2s ease;
+}
+
+.toolDescInput:focus {
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  box-shadow: 0 0 0 2px var(--custom-hover-color, rgba(19, 194, 194, 0.2));
+}
+
+.formGridOne {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.dashboardInput {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboardInput:focus {
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 2px var(--custom-hover-color, rgba(96, 165, 250, 0.2)) !important;
+  border: 2px solid var(--custom-hover-color, var(--accent-primary)) !important;
+  transition: all 0.2s ease;
+}
+
+.dashboardInput::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+.toolActionRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.saveBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 1.1rem;
+  background: var(--btn-primary-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.saveBtn:hover {
+  background: var(--btn-primary-hover);
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.cancelBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 1.1rem;
+  background: var(--btn-secondary-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancelBtn:hover {
+  background: var(--btn-secondary-hover);
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.iconCheckSmall {
+  width: 1rem;
+  height: 1rem;
+  color: var(--btn-text);
+}
+
+.iconCancelSmall {
+  width: 1rem;
+  height: 1rem;
+  color: var(--btn-text);
+}
+
+/* Markdown content styles */
+.markdownContent h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+  border-bottom: 2px solid var(--border-primary);
+  padding-bottom: 0.5rem;
+}
+
+.markdownContent h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 1.5rem 0 0.75rem 0;
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 0.25rem;
+}
+
+.markdownContent h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 1.25rem 0 0.5rem 0;
+}
+
+.markdownContent p {
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+.markdownContent strong {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.markdownContent em {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.markdownContent code {
+  background-color: var(--bg-tertiary);
+  color: var(--accent-primary);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+}
+
+.markdownContent pre {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.markdownContent pre code {
+  background-color: transparent;
+  color: var(--text-primary);
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.875rem;
+}
+
+.markdownContent a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color 0.2s ease;
+}
+
+.markdownContent a:hover {
+  border-bottom-color: var(--accent-primary);
+}
+
+.markdownContent ul, .markdownContent ol {
+  margin: 0 0 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.markdownContent li {
+  margin: 0.25rem 0;
+  line-height: 1.5;
+}
+
+.markdownContent blockquote {
+  border-left: 4px solid var(--accent-primary);
+  margin: 1rem 0;
+  padding: 0.5rem 0 0.5rem 1rem;
+  background-color: var(--bg-tertiary);
+  border-radius: 0 0.25rem 0.25rem 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}

@@ -1,0 +1,26 @@
+.modal :global(.ant-modal-close) {
+    color: transparent;
+}
+
+.modal :global(.ant-modal-close:hover) {
+    color: transparent;
+    background-color: transparent;
+}
+
+.promptList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.promptItem {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}

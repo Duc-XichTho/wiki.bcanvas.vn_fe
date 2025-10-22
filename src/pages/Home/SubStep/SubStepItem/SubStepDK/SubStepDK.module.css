@@ -1,0 +1,103 @@
+/* TemplateDK.module.css */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.settingsButton {
+    background-color: #1677ff !important;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
+.settingsButton:hover {
+    background-color: #1677ff !important;
+}
+
+.dinhKhoanEntry {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    padding: 50px 16px 0px;
+}
+
+.deleteButtonContainer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.deleteButton {
+    color: white !important;
+    background-color: red;
+}
+
+.deleteButton:hover {
+    background-color: #ff4d4f !important;
+}
+
+.outsideFormContainer {
+    width: 100%;
+    padding: 0;
+}
+
+.outsideForm {
+    width: 100%;
+    padding: 0;
+    background-color: transparent;
+}
+
+.settingsForm {
+    width: 100%;
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.formItem {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.disabledInput {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.selectInput {
+    width: 100%;
+}
+
+.submitButton {
+    margin-top: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .formRow {
+        flex-direction: column;
+    }
+
+    .formItem {
+        margin-bottom: 16px;
+    }
+
+    .dinhKhoanEntry {
+        padding: 8px;
+    }
+
+    .deleteButtonContainer {
+        position: relative;
+        top: 0;
+        right: 0;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 8px;
+    }
+}

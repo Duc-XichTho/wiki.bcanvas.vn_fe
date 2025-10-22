@@ -1,0 +1,164 @@
+/* AG Grid Custom Theme */
+.agGridContainer {
+    width: 100%;
+    height: calc(100% - 220px);
+}
+
+.buttonAction {
+    box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(200, 200, 200, 1);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.buttonAction.active {
+    background-color: #ffffff;
+}
+
+.noScrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.noScrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+/* Dark theme styles */
+.agGridContainer :global(.ag-theme-quartz-dark) {
+    --ag-background-color: #1f2836 !important;
+  
+    --ag-header-background-color: #2d3748 !important;
+    --ag-header-foreground-color: #ffffff !important;
+    --ag-row-hover-color: #4a5568 !important;
+    --ag-border-color: #4a5568 !important;
+    --ag-font-size: 14px !important;
+    --ag-header-font-size: 14px !important;
+    --ag-font-weight: 500 !important;
+    --ag-header-font-weight: 600 !important;
+    
+    /* Additional dark theme variables */
+    --ag-cell-horizontal-border: solid #4a5568 !important;
+    --ag-row-border-color: #4a5568 !important;
+    --ag-input-border-color: #4a5568 !important;
+    --ag-input-focus-border-color: #63b3ed !important;
+    --ag-range-selection-border-color: #3182ce !important;
+    --ag-range-selection-background-color: rgba(49, 130, 206, 0.1) !important;
+    --ag-column-hover-color: #4a5568 !important;
+    --ag-column-selected-color: #3182ce !important;
+    --ag-tooltip-background-color: #2d3748 !important;
+    --ag-tooltip-foreground-color: #ffffff !important;
+    
+    /* Force text color for all cells */
+    --ag-cell-data-color: #ffffff !important;
+    --ag-cell-data-horizontal-border: solid #4a5568 !important;
+    
+    /* Status bar and other components */
+    --ag-status-bar-background-color: #2d3748 !important;
+    --ag-status-bar-foreground-color: #ffffff !important;
+    
+    /* Menu and dropdown */
+    --ag-menu-background-color: #2d3748 !important;
+    --ag-menu-foreground-color: #ffffff !important;
+    --ag-menu-border-color: #4a5568 !important;
+    
+    /* Filter panel */
+    --ag-filter-tool-panel-background-color: #2d3748 !important;
+    --ag-filter-tool-panel-foreground-color: #ffffff !important;
+}
+
+/* Force text color for all AG Grid elements in dark theme */
+
+.agGridContainer :global(.ag-theme-quartz-dark) * {
+    color: #ffffff !important;
+}
+
+/* Specific overrides for AG Grid components with higher specificity */
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-cell,
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-cell-value {
+    color: #ffffff !important;
+}
+
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-header-cell,
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-header-cell-text {
+    color: #ffffff !important;
+}
+
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-status-bar {
+    color: #ffffff !important;
+}
+
+/* Additional specific selectors for better coverage */
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-header {
+    color: #ffffff !important;
+}
+
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-body {
+    color: #ffffff !important;
+}
+
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-row {
+    color: #ffffff !important;
+}
+
+/* Force all text elements */
+.agGridContainer :global(.ag-theme-quartz-dark) span,
+.agGridContainer :global(.ag-theme-quartz-dark) div {
+    color: #ffffff !important;
+}
+
+/* Ultra high specificity selectors to override AG Grid */
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-header-cell .ag-header-cell-text {
+    color: #ffffff !important;
+}
+
+.agGridContainer :global(.ag-theme-quartz-dark) .ag-cell .ag-cell-value {
+    color: #ffffff !important;
+}
+
+/* Use attribute selectors for maximum specificity */
+.agGridContainer :global(.ag-theme-quartz-dark) [class*="ag-header-cell"] {
+    color: #ffffff !important;
+}
+
+.agGridContainer :global(.ag-theme-quartz-dark) [class*="ag-cell"] {
+    color: #ffffff !important;
+}
+
+
+
+.agGridContainer :global(.ag-theme-quartz-dark) ::-webkit-scrollbar-track {
+    background: #2d3748;
+}
+
+.agGridContainer :global(.ag-theme-quartz-dark) ::-webkit-scrollbar-thumb {
+    background: #4a5568;
+    border-radius: 4px;
+}
+
+.agGridContainer :global(.ag-theme-quartz-dark) ::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+}
+
+.darkInput {
+    background-color: #3F4853 !important;
+    color: #ffffff;
+    border-color: #4a5568;
+}
+.darkInput:hover {
+    background-color: #2d3748;
+    color: #ffffff;
+    border-color: #4a5568;
+}
+
+    .darkInput:focus {
+        background-color: #2d3748;
+    }
+.darkInput :global(.ant-input)::placeholder {
+    color: #ffffff;
+}
+

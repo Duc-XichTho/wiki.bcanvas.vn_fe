@@ -1,0 +1,417 @@
+/*@import url('../../../index.css');*/
+
+.header {
+    width: 100vw;
+    height: 100%;
+    background-color: var(--header-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--header-border);
+    box-shadow: 0px 3px 3px var(--header-shadow);
+    color: #454545;
+}
+
+.headerLogo {
+    line-height: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    color: #262626;
+}
+
+.selectGroup {
+    margin-left: 100px; /* Tách nhóm này khỏi logo */
+    display: flex;
+    gap: 30px; /* Khoảng cách giữa các phần tử bên trong */
+    transform-origin: top left;
+}
+.selectGroup * {
+    color: #737373;
+}
+
+@media (min-width: 1420px) and (max-width: 1600px) {
+    .selectGroup {
+        margin-left: 40px;
+    }
+}
+
+
+.username {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    height: 100%;
+    width: 100vw;
+    overflow: hidden;
+    /* Hide overflow so that arrows don't overlap */
+    /*margin: 0 15px;*/
+}
+
+.header_left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    align-items: center;
+    padding-left: 10px;
+
+}
+
+.backCanvas  {
+    width: 40px;
+    height: 38px;
+    background-color: rgba(250, 250, 250, 1);
+    border-radius: 12px;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.change_app_button > img {
+    width: 30px;
+}
+
+.header_right {
+    width: auto;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0 10px;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #454545;
+}
+
+.navList {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    height: 100%;
+    padding: 0 20px;
+    /* user-select: none; */
+    flex-grow: 1;
+
+    /* Hide scrollbar for Webkit-based browsers (Chrome, Safari) */
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+}
+
+/* Additional global styles for other browsers if needed */
+.navList {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+}
+
+.navItem {
+    padding: 0 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color: var(--header-text);
+    position: relative;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    gap: 0 5px;
+
+}
+
+.navItem.active {
+    color: var(--header-item-active);
+    animation: colorTransition 1s ease forwards;
+    overflow: clip;
+}
+
+.navItem.active::before {
+    content: '';
+    position: absolute;
+    top: var(--click-y, 50%);
+    left: var(--click-x, 50%);
+    width: 150px;
+    height: 150px;
+    background-color: var(--header-item-active-bg);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.5;
+    animation: circleExpand 1s ease forwards;
+    /* pointer-events: none; */
+}
+
+/*.navItem.active::after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 50%;*/
+/*    height: 2px;*/
+/*    width: 100%;*/
+/*    background-color: #1976d2;*/
+/*    transform: translateX(-50%);*/
+/*    animation: borderGrowFromCenter 0.5s ease forwards;*/
+/*}*/
+.navItem.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--header-item-active-border);
+    animation: borderGrowFromCenter 0.5s ease forwards;
+}
+
+@keyframes colorTransition {
+    0% {
+        color: var(--header-item-text);
+    }
+
+    100% {
+        color: var(--header-item-active);
+    }
+}
+
+@keyframes circleExpand {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        background-color: var(--header-item-active);
+        opacity: 0;
+
+    }
+}
+
+@keyframes borderGrowFromCenter {
+    0% {
+        width: 0;
+        left: 50%;
+    }
+
+    50% {
+        width: 100%;
+        left: 0;
+    }
+}
+
+.navItem:hover {
+    color: var(--header-item-hover);
+}
+
+.navItemLabel {
+    font-family: var(--font-family), serif;
+    color: #737373;
+    font-weight: 600;
+}
+
+.arrow {
+    background: var(--header-arrow-bg);
+    border: none;
+    pointer-events: auto;
+    /* Cho phép click vào các arrow */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    opacity: 0;
+    /* Ẩn theo mặc định */
+    transition: opacity 0.3s ease;
+    /* Smooth transition cho opacity */
+    /* Đảm bảo rằng các arrow có thể cuộn khi cần thiết */
+}
+
+.arrow.show {
+    opacity: 1;
+    /* Hiển thị khi có sự kiện cuộn */
+}
+
+.arrowLeft {
+    order: -1;
+    /* Đảm bảo left arrow nằm trước .navList */
+}
+
+.arrowRight {
+    order: 1;
+    /* Đảm bảo right arrow nằm sau .navList */
+}
+
+.header_right .navItem:last-child {
+    padding-right: 0;
+}
+
+.header_right .navItem:last-child .navItemLabel {
+    margin-right: 0;
+}
+
+.contentApprove {
+    width: 450px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    gap: 5px;
+}
+
+.bell {
+    height: 30px;
+    width: 30px;
+    padding: 5px 5px;
+    border-radius: 50%;
+    border: 1px solid #F64C26;
+    background-color: #FEE4D3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.bell:hover {
+
+    /*border-radius: 10px;*/
+    border: 1px solid #F64C26 !important;
+    background-color: #ffc693 !important;
+    cursor: pointer;
+}
+
+.noti_dropdown {
+    right: 300px !important;
+    top: 50px !important;
+    background: rgba(166, 255, 142, 0) !important;
+}
+
+.noti_dropdown :global(.ant-dropdown-menu) {
+    padding: 0 !important;
+
+}
+.noti_dropdown :global(.ant-dropdown-menu .ant-dropdown-menu-item) {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+
+}
+.noti_dropdown :global(.ant-dropdown-menu .ant-dropdown-menu-item):hover {
+    background-color: #ffffff !important;
+
+}
+
+/*.noti_dropdown :global(.ant-dropdown-menu .ant-dropdown-menu-item) {*/
+
+/*}*/
+
+.count_content {
+    color: #F64C26 !important;
+    border: 1px solid #F64C26;
+    background-color: #FEE4D3;
+    font-size: 13px !important;
+    font-weight: bold;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: 0.5s ease-in-out;
+}
+.count_content:hover {
+    width: 25px;
+    border-radius: 5px;
+    background-color: #ffc693 !important;
+    cursor: pointer;
+}
+
+
+.warning {
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #CC6852;
+    background-color: #FFF3F0;
+    padding: 5px 10px;
+}
+.warning:hover {
+    background-color: #ffe4e1 !important;
+}
+
+.warning_title {
+    color: #B2543F;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.warning_content {
+    color: #cc7460;
+    font-size: 13px;
+}
+
+.attention {
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #EC9E54;
+    background-color: #FFF0DD;
+    padding: 5px 10px;
+}
+.attention:hover {
+    background-color: #ffe8c6 !important;
+}
+
+.attention_title {
+    color: #D2930D;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.attention_content {
+    color: #C08F30;
+    font-size: 13px;
+}
+
+.notification {
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #5C7DEA;
+    background-color: #E1EDFF;
+    padding: 5px 10px;
+}
+.notification:hover {
+
+    background-color: #c2dbff !important;
+
+}
+
+.notification_title {
+    color: #3B66BB;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.notification_content {
+    color: #4579CC;
+    font-size: 13px;
+}

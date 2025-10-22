@@ -1,0 +1,231 @@
+/* Modal Title */
+.modalTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modalTitleIcon {
+  font-size: 18px;
+}
+
+.modalTitleText {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Instructions Section */
+.instructionsContainer {
+  background: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.instructionsHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.instructionsIcon {
+  font-size: 18px;
+}
+
+.instructionsTitle {
+  font-weight: 600;
+  color: #0c4a6e;
+  font-size: 14px;
+}
+
+.instructionsContent {
+  font-size: 13px;
+  color: #0c4a6e;
+  line-height: 1.5;
+}
+
+/* Main Layout */
+.mainLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+/* Column Sections */
+.columnSection {
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fafafa;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.columnIcon {
+  font-size: 18px;
+}
+
+.columnTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.columnContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Form Elements */
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 13px;
+}
+
+.input {
+  font-size: 14px;
+}
+
+/* Override Ant Design input font sizes */
+.input :global(.ant-input) {
+  font-size: 14px !important;
+}
+
+.tagInput :global(.ant-input) {
+  font-size: 13px !important;
+}
+
+/* Tag Input Section */
+.tagInputContainer {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tagInput {
+  flex: 1;
+  font-size: 13px;
+}
+
+.addButton {
+  font-size: 13px;
+}
+
+.addButtonGroup1 {
+  background: #10b981;
+  border-color: #10b981;
+}
+
+.addButtonGroup2 {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.addButtonGroup3 {
+  background: #8b5cf6;
+  border-color: #8b5cf6;
+}
+
+/* Tags Display */
+.tagsContainer {
+  min-height: 60px;
+  padding: 8px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+.emptyState {
+  color: #9ca3af;
+  font-size: 12px;
+  text-align: center;
+  padding: 12px;
+}
+
+.tagsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag {
+  margin: 2px;
+  font-size: 12px;
+}
+
+/* Section Titles */
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background: #f3f4f6;
+  border-left: 4px solid #10b981;
+  border-radius: 4px;
+}
+
+/* Text Columns Layout */
+.textColumnsLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.textColumnSection {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 12px;
+  background: #ffffff;
+  flex: 1;
+  min-width: 200px;
+}
+
+.textColumnHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.textInput {
+  font-size: 13px;
+}
+
+.textInput :global(.ant-input) {
+  font-size: 13px !important;
+}
+
+/* Footer Buttons */
+.footerButton {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cancelButton {
+  border: 1px solid #d1d5db;
+  color: #6b7280;
+}
+
+.saveButton {
+  background: #10b981;
+  border-color: #10b981;
+  font-weight: 600;
+}

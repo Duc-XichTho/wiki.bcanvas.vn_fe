@@ -1,0 +1,260 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContainer {
+    position: relative;
+    background: white;
+    width: 800px;
+    height: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    z-index: 10;
+}
+
+.closeButton:hover {
+    color: #000;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #e0e0e0;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.createColumnButton {
+    background-color: #007bff !important;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+.createColumnButton:hover {
+    background-color: #0056b3 !important;
+}
+
+.columnItem {
+    padding: 12px;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.columnItem:hover {
+    background-color: #d0d0d0;
+}
+
+.selectedColumn {
+    background-color: #007bff;
+    color: white;
+}
+
+.columnName {
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.deleteColumnButton {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 16px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s;
+    opacity: 0.6;
+}
+
+.deleteColumnButton:hover {
+    background-color: #ff4d4d;
+    color: white;
+    opacity: 1;
+}
+
+.selectedColumn .columnName {
+    color: white;
+}
+
+.selectedColumn .deleteColumnButton {
+    color: white;
+    opacity: 0.7;
+}
+
+.selectedColumn .deleteColumnButton:hover {
+    background-color: #ff4d4d;
+    color: white;
+    opacity: 1;
+}
+
+.modalContent {
+    flex-grow: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.columnEditArea {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.columnEdit {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.columnNameInput {
+    width: 75%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.columnTypeSelect {
+    width: 23%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* New Formula Section Styles */
+.formulaSection {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 16px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.formulaInputContainer {
+    display: flex;
+    margin-bottom: 16px;
+    gap: 8px;
+}
+
+.formulaInput {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.addVariableButton {
+    padding: 0 10px;
+    background-color: #28a745 !important;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+}
+
+.addVariableButton:hover {
+    background-color: #218838 !important;
+}
+
+.variableRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 8px;
+}
+
+.variableLetter {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #007bff !important;
+}
+
+.columnSelect {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.saveFormulaButton {
+    margin-top: 16px;
+    padding: 10px 16px;
+    background-color: #007bff !important;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.saveFormulaButton:hover {
+    background-color: #0056b3 !important;
+}
+
+.removeVariableButton {
+    background-color: #ff4d4d !important;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-left: 8px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.removeVariableButton:hover {
+    background-color: #ff3333 !important;
+}

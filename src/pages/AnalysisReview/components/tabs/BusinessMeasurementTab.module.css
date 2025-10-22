@@ -1,0 +1,349 @@
+.container {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 120px;
+    /* Removed default background properties to avoid conflicts with inline styles */
+}
+
+.tableAnalysisContainer {
+    /* This class will be used to apply grid pattern only to standalone TableAnalysisTab */
+    /* Grid pattern styles are applied via inline CSS in the component */
+}
+
+.cardBusinessMeasurement :global(.ant-card-head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    margin: 0;
+    border-bottom: none;
+}
+
+.cardBusinessMeasurement :global(.ant-card-body) {
+    padding: 0 10px;
+}
+
+.mainContent {
+    width: 100vw;
+    margin: 0 auto;
+    padding: 0 0 24px 0;
+}
+
+.mainContent2 {
+    width: 98%;
+    margin: 0 auto;
+    padding: 0 0 24px 0;
+}
+
+.mainContent3 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 0 24px 0;
+}
+
+.mainContentMobile {
+    max-width: 95vw;
+    margin: 0 auto;
+    padding: 24px 0;
+}
+
+.contentContainer {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background-color: white;
+    position: sticky;
+    top: 1px;
+    z-index: 100;
+}
+
+.contentContainer2 {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+}
+
+.titleButton {
+    display: flex;
+    justify-content: space-between;
+}
+
+.controlsCard {
+    margin-bottom: 24px;
+    border-radius: 3px;
+}
+
+.headerTitle {
+    height: 155px;
+    padding: 0 0 0 40px;
+    position: relative;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    gap: 32px;
+}
+
+.headerCacheButton {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.controlsCard h2 {
+    margin-bottom: 8px;
+}
+
+.controlsContainer {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.controlsRow {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.searchContainer {
+
+    width: 150px;
+}
+
+.searchInput {
+    width: flex;
+    font-size: 14px;
+}
+
+.businessTagsContainer {
+    margin-top: 3px;
+    align-items: center;
+}
+
+.businessTagsHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.businessTagsLabel {
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.businessTagButton {
+    font-size: 12px;
+    padding: 4px 8px;
+    height: 28px;
+    min-width: 60px;
+}
+
+.storeTagButton {
+    font-size: 12px;
+    padding: 4px 8px;
+    height: 28px;
+    min-width: 60px;
+}
+
+.storeTagsContainer {
+    flex: 1;
+    min-width: 200px;
+    margin-top: 10px;
+}
+
+.storeTagsHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.storeTagsLabel {
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.metricsGridCard :global(.ant-card-body) {
+    margin: 0;
+    padding: 5px;
+}
+
+.metricsGridCard2 :global(.ant-card-body) {
+    margin: 0;
+    padding: 0;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .defaultItem {
+        display: none;
+    }
+
+    .controlsContainer {
+        flex-direction: column;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .header > h2 {
+        font-size: 16px;
+    }
+
+    .headerCacheButton {
+        justify-content: start;
+    }
+
+    .mainContent {
+        padding: 10px 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .contentContainer {
+        padding: 0px !important;
+        margin: 0 !important;
+        border: none !important;
+    }
+
+    .contentContainer2 {
+        padding: 0px !important;
+        margin: 0 !important;
+        border: none !important;
+    }
+
+    .controlsCard {
+        margin: 0;
+        padding: 0px;
+        width: 95vw !important;
+
+    }
+
+    .controlsCard :global(.ant-card-body) {
+        padding: 10px !important;
+    }
+
+    .controlsRow {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .searchContainer {
+        flex: 1;
+        min-width: auto;
+    }
+
+    .searchInput {
+        font-size: 12px;
+    }
+
+    .businessTagsContainer {
+        min-width: auto;
+    }
+
+    .businessTagsLabel {
+        font-size: 11px;
+    }
+
+    .businessTagButton {
+        font-size: 11px;
+        padding: 2px 6px;
+        height: 24px;
+        min-width: auto;
+    }
+
+    .storeTagsContainer {
+        min-width: auto;
+    }
+
+    .storeTagsLabel {
+        font-size: 11px;
+    }
+
+    .storeTagButton {
+        font-size: 11px;
+        padding: 2px 6px;
+        height: 24px;
+        min-width: auto;
+    }
+
+
+    .metricsGrid {
+        margin: 0 !important;
+        padding: 0 !important;
+        row-gap: 5px !important;
+        width: 100% !important;
+    }
+
+    .metricsGridCol {
+        margin: 0 !important;
+        padding: 0 5px !important;
+
+    }
+
+    .metricsGrid :global(.ant-col) {
+        padding: 0 !important;
+        margin: 0 5px !important;
+    }
+
+    .metricsGridCard {
+        width: 97% !important;
+    }
+
+    .metricsGridCard :global(.ant-card-body) {
+        margin: 0;
+        padding: 4px;
+    }
+
+    .dateRangeFilter {
+        padding: 5px !important;
+    }
+
+    .dateRangePicker {
+        width: auto;
+        margin: 0 !important;
+    }
+
+    .dateRangeSelect {
+        width: auto;
+        margin: 0 !important;
+    }
+
+}
+
+/* Small mobile styles */
+@media (max-width: 480px) {
+    .searchInput {
+        font-size: 12px;
+    }
+
+    .businessTagsLabel {
+        font-size: 11px;
+    }
+
+    .businessTagButton {
+        font-size: 11px;
+        padding: 2px 6px;
+        height: 24px;
+        min-width: auto;
+    }
+}

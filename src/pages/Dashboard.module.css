@@ -1,0 +1,1261 @@
+.dashboardRoot {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* chặn cuộn toàn trang, chỉ cho vùng nội dung cuộn */
+
+  /* background: linear-gradient(45deg, #1e3c72, #2980b9, #6dd5fa); */
+  /* background: url('/simple_background.png'); - Now handled dynamically */
+  /* background: url('/public/background_moi.png'); */
+  /* background-size: 100% 100%; - Now handled dynamically */
+  /* background-position: center; - Now handled dynamically */
+  /* background-repeat: no-repeat; - Now handled dynamically */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  /* Shadow for depth */
+  /* position: relative; */
+}
+
+/* Bottom-left running ticker */
+.bottomLeftTicker {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  z-index: 1000;
+  width: 350px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 12px;
+  /* font-weight: 700; */
+  /* text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); */
+}
+
+.bottomLeftTickerText {
+  display: inline-block;
+  /*padding-left: 100%;*/
+  /*animation: dashboardScroll 20s linear infinite;*/
+}
+
+@keyframes dashboardScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* .dashboardRoot::before {
+  content: "";
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 5rem);
+  background-image: linear-gradient(90deg, var(--dashboard-grid-color, #ff6b6b) 1px, transparent 1px),linear-gradient(var(--dashboard-grid-color, #ff6b6b) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: var(--dashboard-grid-opacity, 0.15);
+  pointer-events: none;
+} */
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.headerTitle {
+  font-size: 18px;
+  font-weight: 600;
+  /* color: var(--text-primary); */
+  color: #454545;
+  text-align: center;
+}
+
+.headerTitleSelect :global(.ant-select-selection-item) {
+  font-size: 18px !important;
+  font-weight: bold;
+  font-family: 'Reddit Sans' !important;
+  color: inherit !important;
+}
+
+.headerTitleSelect :global(.ant-select-arrow) {
+  color: inherit !important;
+}
+
+.headerTitleSelect :global(.ant-select-selector) {
+  background-color: transparent !important;
+  color: inherit !important;
+
+}
+
+.headerEditBtn {
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: -2.5rem;
+}
+
+.headerRow:hover .headerEditBtn {
+  opacity: 1;
+}
+
+.headerEditRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.headerInput {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  background: var(--input-bg);
+  outline: none;
+}
+
+.headerCheckBtn {
+  padding: 0.25rem;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.headerCheckBtn:hover {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+.iconCheck {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--accent-success);
+}
+
+.iconEdit {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.iconDelete {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #d30606;
+}
+
+.contentContainer {
+  margin: 1rem 0;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-color: rgba(0, 0, 0, 0.05) rgba(0, 0, 0, 0.01);
+}
+
+.toolsWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.toolsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.toolCard {
+  /* height: 200px; */
+  background: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 10px;
+  min-width: 320px;
+  max-width: 320px;
+  /* flex: 1 1 220px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+}
+
+.toolCardHover:hover {
+  /* border-color: var(--accent-primary); */
+  box-shadow: 2px 2px 2px 2px rgba(228, 225, 225, 0.3);
+  /* border: 1px solid var(--custom-hover-color, var(--accent-primary)); */
+  transform: translateY(2px);
+}
+
+.toolEditBtn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toolDeleteBtn {
+  position: absolute;
+  top: 0.75rem;
+  right: 1.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
+  border-radius: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toolCardHover:hover .toolEditBtn {
+  opacity: 1;
+}
+
+.toolDeleteBtn {
+  position: absolute;
+  top: 13px;
+  right: 40px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.toolCardHover:hover .toolDeleteBtn {
+  opacity: 1;
+}
+
+.toolCardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 5px;
+}
+
+.toolIcon {
+  font-size: 2rem;
+  /* margin-bottom: 0.75rem; */
+}
+
+.toolTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.toolDesc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.iconSelectorWrapper {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.iconSelectorList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.iconSelectorBtn {
+  font-size: 1.3rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.iconSelectorBtn:hover {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+.iconSelectorBtnActive {
+  background: var(--bg-tertiary);
+}
+
+.iconPreview {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.toolTitleInput {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  background: var(--input-bg);
+  outline: none;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.toolTitleInput:focus {
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  box-shadow: 0 0 0 2px var(--custom-hover-color, rgba(19, 194, 194, 0.2));
+}
+
+.toolDescInput {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  background: var(--input-bg);
+  outline: none;
+  width: 100%;
+  resize: none;
+  transition: all 0.2s ease;
+}
+
+.toolDescInput:focus {
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  box-shadow: 0 0 0 2px var(--custom-hover-color, rgba(19, 194, 194, 0.2));
+}
+
+.toolActionRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.saveBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 1.1rem;
+  background: var(--btn-primary-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.saveBtn:hover {
+  background: var(--btn-primary-hover);
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.cancelBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 1.1rem;
+  background: var(--btn-secondary-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancelBtn:hover {
+  background: var(--btn-secondary-hover);
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.iconCheckSmall {
+  width: 1rem;
+  height: 1rem;
+  color: var(--btn-text);
+}
+
+.iconCancelSmall {
+  width: 1rem;
+  height: 1rem;
+  color: var(--btn-text);
+}
+
+.toolCardDashed {
+  background: var(--card-bg);
+  border: 1.5px dashed var(--card-border);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  min-width: 220px;
+  max-width: 270px;
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.toolCardDashedBtn {
+  background: var(--card-bg);
+  border: 1.5px dashed var(--card-border);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  min-width: 220px;
+  max-width: 270px;
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+  border-style: dashed;
+  box-shadow: var(--card-shadow);
+}
+
+.toolCardDashedBtn:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  box-shadow: var(--card-shadow-hover);
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.iconPlus {
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.addNewText {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Tag Selector Styles */
+.tagSelectorWrapper {
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tagLabel {
+  font-size: 0.98rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.tagSelect {
+  font-size: 0.98rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.tagSelect:focus {
+  border: 2px solid var(--custom-hover-color, var(--accent-primary));
+  box-shadow: 0 0 0 2px var(--custom-hover-color, rgba(19, 194, 194, 0.2));
+}
+
+/* Tag Display on Tool Card */
+
+.toolTags {
+  margin-top: 8px;
+  padding-left: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.toolTagsContainer {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.toolTag {
+  font-size: 12px;
+  font-weight: 500;
+  background: none;
+  border-radius: 0;
+  padding: 4px 8px;
+}
+
+/* Schema Status Indicators */
+.schemaStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  border: 1px solid;
+}
+
+.schemaStatusDefault {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border-color: #bbdefb;
+}
+
+.schemaStatusCurrent {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-secondary);
+}
+
+.schemaStatusPending {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeaa7;
+}
+
+.schemaStatusActive {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+.schemaStatusError {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+.schemaButton {
+  padding: 2px 6px;
+  font-size: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.schemaButton:hover {
+  transform: scale(1.05);
+}
+
+.schemaButtonPrimary {
+  background-color: var(--accent-success);
+  color: white;
+}
+
+.schemaButtonWarning {
+  background-color: #856404;
+  color: white;
+}
+
+.schemaSelectContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  height: 30px;
+  width: 250px;
+}
+
+.schemaSelectLabel {
+  position: absolute;
+  top: -15px;
+  left: 5px;
+  z-index: 1;
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+@media (max-width: 700px) {
+  .headerContent {
+    padding: 1.2rem 0.5rem;
+  }
+
+  .toolsList {
+    gap: 1rem;
+  }
+
+  .toolCard,
+  .toolCardDashed,
+  .toolCardDashedBtn {
+    min-width: 100%;
+    max-width: 100%;
+    padding: 1rem 0.5rem;
+  }
+}
+
+/* Dashboard-specific Modal Theme Classes */
+.dashboardModal {
+  background: var(--card-bg) !important;
+}
+
+.dashboardModalMask {
+  background-color: rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="dark"] .dashboardModalMask {
+  background-color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.dashboardModalContent {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: var(--shadow-heavy) !important;
+}
+
+.dashboardModalHeader {
+  background: var(--card-bg) !important;
+  border-bottom: 1px solid var(--border-primary) !important;
+}
+
+.dashboardModalTitle {
+  color: var(--text-primary) !important;
+}
+
+.dashboardModalClose {
+  color: var(--text-secondary) !important;
+}
+
+.dashboardModalClose:hover {
+  color: var(--text-primary) !important;
+}
+
+.dashboardModalBody {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboardModalFooter {
+  background: var(--card-bg) !important;
+  border-top: 1px solid var(--border-primary) !important;
+}
+
+/* Simple form grid helpers */
+.formGridTwo {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.formGridOne {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.formCheckRow {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 8px;
+  justify-content: center;
+}
+
+/* Ant Design Modal overrides for Dashboard */
+.dashboardModal :global(.ant-modal) {
+  background: var(--card-bg) !important;
+}
+
+.dashboardModal :global(.ant-modal-content) {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-secondary) !important;
+  box-shadow: var(--shadow-heavy) !important;
+}
+
+.dashboardModal :global(.ant-modal-header) {
+  background: var(--card-bg) !important;
+  border-bottom: 1px solid var(--border-primary) !important;
+}
+
+.dashboardModal :global(.ant-modal-title) {
+  color: var(--text-primary) !important;
+}
+
+.dashboardModal :global(.ant-modal-close) {
+  color: var(--text-secondary) !important;
+}
+
+.dashboardModal :global(.ant-modal-close:hover) {
+  color: var(--text-primary) !important;
+}
+
+.dashboardModal :global(.ant-modal-body) {
+  background: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboardModal :global(.ant-modal-footer) {
+  background: var(--card-bg) !important;
+  border-top: 1px solid var(--border-primary) !important;
+}
+
+.dashboardModal :global(.ant-modal-mask) {
+  background-color: rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="dark"] .dashboardModal :global(.ant-modal-mask) {
+  background-color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.dashboardButton {
+  background: var(--btn-primary-bg) !important;
+  border-color: var(--btn-primary-bg) !important;
+  color: var(--btn-text) !important;
+}
+
+.dashboardButton:hover {
+  background: var(--btn-primary-hover) !important;
+  border-color: var(--btn-primary-hover) !important;
+  border: 2px solid var(--custom-hover-color, var(--accent-primary)) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.dashboardButtonDefault {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboardButtonDefault:hover {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--accent-primary) !important;
+  color: var(--accent-primary) !important;
+  border: 2px solid var(--custom-hover-color, var(--accent-primary)) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.dashboardInput {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboardInput:focus {
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 2px var(--custom-hover-color, rgba(96, 165, 250, 0.2)) !important;
+  border: 2px solid var(--custom-hover-color, var(--accent-primary)) !important;
+  transition: all 0.2s ease;
+}
+
+.dashboardInput::placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+/* Ant Design Button and Input overrides for Dashboard */
+.dashboardModal :global(.ant-btn) {
+  background: var(--btn-primary-bg) !important;
+  border-color: var(--btn-primary-bg) !important;
+  color: var(--btn-text) !important;
+}
+
+.dashboardModal :global(.ant-btn:hover) {
+  background: var(--btn-primary-hover) !important;
+  border-color: var(--btn-primary-hover) !important;
+  border: 2px solid var(--custom-hover-color, var(--accent-primary)) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.dashboardModal :global(.ant-btn-default) {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboardModal :global(.ant-btn-default:hover) {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--accent-primary) !important;
+  color: var(--accent-primary) !important;
+  border: 2px solid var(--custom-hover-color, var(--accent-primary)) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.dashboardModal :global(.ant-input) {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboardModal :global(.ant-input:focus) {
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+}
+
+.dashboardModal :global(.ant-input::placeholder) {
+  color: var(--text-tertiary) !important;
+}
+
+.dashboardSelect {
+  background: var(--input-bg) !important;
+}
+
+.dashboardSelectSelector {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-primary) !important;
+}
+
+.dashboardSelectFocused .dashboardSelectSelector {
+  border-color: var(--input-focus) !important;
+  box-shadow: 0 0 0 2px var(--custom-hover-color, rgba(96, 165, 250, 0.2)) !important;
+  border: 2px solid var(--custom-hover-color, var(--accent-primary)) !important;
+  transition: all 0.2s ease;
+}
+
+.dashboardSelectDropdown {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-secondary) !important;
+}
+
+.dashboardSelectItem {
+  color: var(--text-primary) !important;
+}
+
+.dashboardSelectItem:hover {
+  background: var(--bg-tertiary) !important;
+}
+
+.dashboardSelectItemSelected {
+  background: var(--accent-primary) !important;
+  color: var(--btn-text) !important;
+}
+
+/* Dashboard-specific Modal.info classes */
+.dashboardModalConfirm {
+  background: var(--card-bg) !important;
+}
+
+.dashboardModalConfirmTitle {
+  color: var(--text-primary) !important;
+}
+
+.dashboardModalConfirmContent {
+  color: var(--text-primary) !important;
+}
+
+.dashboardModalConfirmBtns {
+  margin-top: 16px !important;
+}
+
+.dashboardModalConfirmBtns .dashboardButton {
+  background: var(--btn-primary-bg) !important;
+  border-color: var(--btn-primary-bg) !important;
+  color: var(--btn-text) !important;
+}
+
+.dashboardModalConfirmBtns .dashboardButton:hover {
+  background: var(--btn-primary-hover) !important;
+  border-color: var(--btn-primary-hover) !important;
+  border: 2px solid var(--custom-hover-color, var(--accent-primary)) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+
+
+
+.box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+
+}
+
+.boxDiv {
+  width: 8px;
+  height: 30px;
+  max-height: 50px;
+  opacity: 1;
+  background: #6789D8;
+}
+
+.toolCardItem {
+  align-items: center;
+  width: 100%;
+  /* padding-top: 5px;
+  padding-left: 10px; */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* Cho phép item chiếm toàn bộ không gian để margin-top: auto hoạt động */
+}
+
+.toolDescItem {
+  font-size: 0.9rem;
+  color: #454545;
+  padding: 0 0.5rem;
+
+}
+
+
+.toolTitleItem {
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+
+  /* margin-bottom: 0.3rem; */
+}
+
+.toolCardDesc {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+  /*background: #EEEEEE;*/
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.tabEmpty {
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  font-size: 16px;
+}
+
+/* Inline Tabs in Header */
+.tabButtonInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  color: #262626;
+  font-size: 15px;
+  font-weight: 550;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tabButtonInline:hover {
+  color: #2A6FCC;
+  border-radius: 0;
+}
+
+.tabActiveInline {
+  border-radius: 0;
+  border-bottom: 4px solid #BBBBBB;
+}
+
+/* Status bar under header showing active tab and clock */
+.tabStatusBarContainer {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+
+.tabStatusBar {
+  width: 100%;
+  background: #434D66A6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 24px;
+  color: white;
+  text-align: center;
+}
+
+.tabStatusLeft {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tabStatusRight {
+  font-size: 16px;
+}
+
+.tabStatusTitle {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.tabStatusSep {
+  margin: 0 8px;
+}
+
+.tabStatusDesc {
+  font-weight: 400;
+}
+
+/* Tool Info and Support sections */
+.toolInfoSection,
+.toolSupportSection {
+  margin-top: 16px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.toolInfoSection::before,
+.toolSupportSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.toolInfoLabel,
+.toolSupportLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toolInfoContent,
+.toolSupportContent {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #475569;
+  word-wrap: break-word;
+  font-weight: 400;
+  margin: 0;
+  text-align: left;
+  /* Giới hạn hiển thị 4 dòng với dấu ... */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.02em;
+  opacity: 0.95;
+}
+
+/* Style cho các element con để trông đẹp hơn */
+.toolInfoContent h1,
+.toolInfoContent h2,
+.toolInfoContent h3,
+.toolSupportContent h1,
+.toolSupportContent h2,
+.toolSupportContent h3 {
+  font-size: 14px !important;
+  margin: 8px 0 6px 0;
+  color: #1e293b;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.toolInfoContent p,
+.toolSupportContent p {
+  font-size: 13px !important;
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.toolInfoContent ul,
+.toolSupportContent ul {
+  font-size: 13px !important;
+  margin: 6px 0;
+  padding-left: 18px;
+}
+
+.toolInfoContent li,
+.toolSupportContent li {
+  font-size: 13px !important;
+  margin: 3px 0;
+  line-height: 1.4;
+}
+
+.toolInfoContent strong,
+.toolSupportContent strong {
+  font-size: 13px !important;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+
+/* Action buttons styling */
+.toolActionButtons {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.toolActionButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+}
+
+.toolActionButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toolActionButton:active {
+  transform: translateY(0);
+}
+
+/* Specific button colors */
+.toolActionButton.support {
+  background-color: #4e5c94;
+}
+
+.toolActionButton.support:hover {
+  background-color: #9ca8bc;
+}
+
+.toolActionButton.info {
+  background-color: #446ED9;
+}
+
+.toolActionButton.info:hover {
+  background-color: #3d5fc7;
+}
+
+.toolActionButton.enterApp {
+  background-color: #CC5E8F;
+}
+
+.toolActionButton.enterApp:hover {
+  background-color: #b54d7e;
+}
+
+/* Tool shortcut styling */
+.toolShortcut {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: transparent;
+  color: #989898;
+  font-weight: 600;
+  /* border: 1.5px solid #ACBBD8;
+  border-radius: 4px; */
+  padding: 4px 10px;
+  font-size: 11px;
+  z-index: 10;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Multiple Tag Options Styles */
+.tagOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tagOption {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tagCheckbox {
+  display: none;
+}
+
+.tagLabel {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+}
+
+.tagLabel:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tagOption input[type="checkbox"]:checked+.tagLabel {
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}

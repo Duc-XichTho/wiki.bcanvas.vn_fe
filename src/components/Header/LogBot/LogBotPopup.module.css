@@ -1,0 +1,148 @@
+.popup {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.popupHeader {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+}
+
+.popupHeader h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.closeButton:hover {
+  opacity: 0.7;
+}
+
+.popupContent {
+  padding: 0 16px 16px;
+  overflow-y: auto;
+  flex: 1;
+  height: calc(100% - 70px);
+  background: white;
+}
+
+.auditTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.auditTable th,
+.auditTable td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #eee; /* Added border to all cells */
+}
+
+.auditTable thead {
+  background: white;
+}
+
+.auditTable th {
+  background-color: white;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 2px solid #eee;
+}
+
+.detailButton {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.detailButton:hover {
+  background-color: #0056b3;
+}
+
+.detailModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.detailContent {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 50vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.detailHeader h3 {
+  margin: 0;
+}
+
+.tableWrapper {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.comparisonTable th,
+.comparisonTable td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #eee;
+}
+
+.comparisonTable th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.changedRow {
+  background-color: #ffebee;
+  color: white;
+}
+
+.changedRow td {
+  color: black;
+}

@@ -1,0 +1,199 @@
+/* Modal Title */
+.modalTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modalTitleIcon {
+  font-size: 20px;
+}
+
+.modalTitleText {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Modal Content */
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Instructions Section */
+.instructionsContainer {
+  background: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.instructionsHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.instructionsIcon {
+  font-size: 14px;
+}
+
+.instructionsTitle {
+  font-weight: 600;
+  color: #0c4a6e;
+  font-size: 14px;
+}
+
+.instructionsContent {
+  font-size: 13px;
+  color: #0c4a6e;
+  line-height: 1.5;
+}
+
+/* Current Selection */
+.currentSelection {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.currentSelectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 12px;
+}
+
+.selectedTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selectedTag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 16px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Options Container */
+.optionsContainer {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.optionsTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 16px;
+}
+
+.optionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.optionItem:hover {
+  background-color: #f9fafb;
+}
+
+.checkbox {
+  font-size: 14px;
+}
+
+.optionText {
+  font-size: 14px;
+  color: #374151;
+  margin-left: 8px;
+}
+
+.emptyState {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+  padding: 32px;
+  font-style: italic;
+}
+
+/* Footer Buttons */
+.cancelButton {
+  border: 1px solid #d1d5db;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.clearButton {
+  border: 1px solid #f59e0b;
+  color: #f59e0b;
+  font-size: 14px;
+  font-weight: 500;
+  background: white;
+}
+
+.clearButton:hover {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.clearButton:disabled {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.saveButton {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Invalid Warning */
+.invalidWarning {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+}
+
+/* Custom scrollbar */
+.optionsList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.optionsList::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.optionsList::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.optionsList::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

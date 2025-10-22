@@ -1,0 +1,230 @@
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.headerButtons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.closeButton {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  color: #6b7280;
+}
+
+.closeButton:hover {
+  color: #1f2937;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+}
+
+.buttonPrimary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.buttonPrimary:hover {
+  background-color: #2563eb;
+}
+
+.buttonSecondary {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+}
+
+.buttonSecondary:hover {
+  background-color: #f9fafb;
+}
+
+.buttonDisabled {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+}
+
+.tableContainer {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.table {
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  background-color: #f9fafb;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 500;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.fontMedium {
+  font-weight: 500;
+}
+
+.tableRow:hover {
+  background-color: #f9fafb;
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 0.25rem;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: #fef3c7;
+  color: #92400e;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+.bomList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.bomItem {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background-color: #f3f4f6;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+}
+
+/* Allocation Modal styles */
+.allocationModalContent {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.stickyLeft {
+  position: sticky;
+  left: 0;
+  background-color: #f9fafb;
+  min-width: 100px;
+  z-index: 10;
+}
+
+.stickyLeftSecond {
+  position: sticky;
+  left: 100px;
+  background-color: #f9fafb;
+  min-width: 200px;
+  z-index: 10;
+}
+
+.shortageRow {
+  background-color: #fee2e2;
+}
+
+.shortageWarning {
+  font-size: 0.75rem;
+  color: #dc2626;
+  font-weight: normal;
+  margin-top: 0.25rem;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.plannedQuantity {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.input {
+  width: 100%;
+  padding: 0.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.25rem;
+}
+
+.inputUnder {
+  background-color: #fee2e2;
+}
+
+.inputOver {
+  background-color: #fef3c7;
+}
+
+.textDanger {
+  color: #dc2626;
+}
+
+.modalFooter {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

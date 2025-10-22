@@ -1,0 +1,132 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background: #f9f9f9;
+  display: flex;
+}
+
+
+
+.sidebarBottom {
+  width: 330px;
+  height: 49%;
+  /*background-color: #ffffff;*/
+  /*padding: 0px 0px 0px 10px;*/
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 10px;
+  transition: box-shadow 0.3s ease;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+
+
+.content {
+  /*background-color: #ffffff;*/
+  width: calc(100% - 330px);
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.sidebarTopExpand {
+    height: 30%;
+    transition: height 0.3s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+}
+
+.sidebarBottomExpand {
+    height: calc(100% - 100px);
+}
+.sidebarContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sidebarTopCollapsed {
+    flex-basis: 40px; /* chỉ header */
+    max-height: 40px;
+    transition: height 1.5s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+    opacity: 0.5;
+    transform: translateY(-20px);
+}
+
+.sidebarTop {
+    transform: translateY(0);
+    width: 330px;
+    height: 20%;
+    /*background-color: #ffffff;*/
+    /*padding: 0px 0px 0px 10px;*/
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    font-size: 14px;
+    gap: 10px;
+    border-radius: 2px;
+    transition: height 1.5s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+    opacity: 1;
+    border-top: 2px solid #ECECEC;    /* 👈 Gạch ngăn phía trên */
+    border-bottom: 2px solid #ECECEC;
+
+}
+.sidebarTop, .sidebarTopCollapsed {
+    transition: height 1.5s, transform 0.5s;
+
+}
+
+.sidebarMidCollapsed {
+    flex-basis: 40px; /* chỉ header */
+    max-height: 40px;
+    transition: height 1.5s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+    opacity: 0.5;
+    transform: translateY(-20px);
+}
+
+.sidebarMid {
+    transform: translateY(0);
+    width: 330px;
+    height: 31%;
+    /*background-color: #ffffff;*/
+    /*padding: 0px 0px 0px 10px;*/
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    font-size: 14px;
+    gap: 10px;
+    border-radius: 2px;
+    overflow: hidden;
+    opacity: 1;
+    margin-top: 10px
+
+}
+.sidebarMid, .sidebarMidCollapsed {
+    transition: height 1.5s, transform 0.5s;
+}
+
+.settingsIcon {
+    position: fixed;
+    bottom: 5px;
+    left: 15px;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.sidebarContainer:hover .settingsIcon {
+    opacity: 1;
+}
+
+.settingsIcon:hover {
+    color: #1890ff;
+}
+

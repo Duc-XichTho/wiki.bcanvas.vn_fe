@@ -1,0 +1,112 @@
+.boxStyle {
+  position: fixed;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  z-index: 999 ;
+  padding: 16px;
+  min-width: 300px;
+  min-height: 200px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap : 10px
+}
+
+.headerStyle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.headerTitle {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.newQuestionButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #2d9d5b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.newQuestionButton:hover {
+  background: #1d4ed8;
+}
+
+
+.closeBtnStyle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.bodyStyle {
+  width: 100%;
+  height: calc(100% - 44px);
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.resizeHandle {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  border: none;
+  cursor: se-resize;
+  z-index: 2;
+}
+
+.resizeHandle::after {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-right: 3px solid #bbb;
+  border-bottom: 3px solid #bbb;
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  border-radius: 0 0 6px 0;
+}
+
+.dragHandleBtn {
+  background: none;
+  border: none;
+  cursor: grab;
+  font-size: 18px;
+  padding: 4px;
+}
+
+.dragHandleBtn:active {
+  cursor: grabbing;
+}
+
+.noCanvasBot {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}

@@ -1,0 +1,108 @@
+.container {
+    width: 100%;
+    padding: 1em;
+}
+
+.checkboxGroup {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.levelTitle {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.levelWrapper {
+    padding: 8px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.levelWrapper:last-child {
+    border-bottom: none;
+}
+
+.columnContent {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+:global(.ant-checkbox-wrapper) {
+    margin-right: 8px !important;
+}
+
+:global(.ant-table-cell) {
+    padding: 8px !important;
+    vertical-align: top !important;
+}
+
+:global(.ant-table) {
+    font-size: 14px;
+}
+
+.treeNode {
+  margin: 8px 0;
+}
+
+.nodeHeader {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.nodeHeader:hover {
+  background: #e6f7ff;
+}
+
+.expandIcon {
+  cursor: pointer;
+  padding: 4px;
+  margin-right: 8px;
+  color: #1890ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nodeName {
+  flex: 1;
+  font-weight: 500;
+  color: #333;
+  margin-right: 16px;
+}
+
+.nodeChildren {
+  margin-left: 24px;
+}
+
+.checkboxGroup {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* màu sắc cho từng cấp độ */
+.treeNode[style*="margin-left: 0px"] .nodeHeader {
+  background: #f0f5ff;
+  border-left: 4px solid #1890ff;
+}
+
+.treeNode[style*="margin-left: 24px"] .nodeHeader {
+  background: #f6ffed;
+  border-left: 4px solid #52c41a;
+}
+
+.treeNode[style*="margin-left: 48px"] .nodeHeader {
+  background: #fff7e6;
+  border-left: 4px solid #faad14;
+}
+
+.treeNode[style*="margin-left: 72px"] .nodeHeader {
+  background: #fff1f0;
+  border-left: 4px solid #ff4d4f;
+}

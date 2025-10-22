@@ -1,0 +1,705 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.leftPanel {
+  width: 33.333%;
+  border-right: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  overflow-y: auto;
+}
+
+.rightPanel {
+  background-color: white;
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  height: 88%;
+}
+
+/* Header Styles */
+.header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.returnButton,
+.createButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.returnButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  background-color: #22c55e;
+  transition: background-color 0.2s;
+}
+
+.returnButton:not(:disabled):hover {
+  background-color: #16a34a;
+}
+
+.returnButton:hover {
+  background-color: #16a34a;
+}
+
+.createButton {
+  background-color: #3b82f6;
+}
+
+.createButton:hover {
+  background-color: #2563eb;
+}
+
+.orderHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkbox {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.checkbox:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.returnButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Order List Styles */
+.ordersList {
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.orderCard {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.orderCard:hover {
+  background-color: #f9fafb;
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderId {
+  font-weight: 500;
+}
+
+.orderActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.actionIcon {
+  color: #6b7280;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.actionIcon:hover {
+  color: #3b82f6;
+}
+
+.orderInfo {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dates {
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Status Styles */
+.iconYellow {
+  color: #eab308;
+  width: 20px;
+  height: 20px;
+}
+
+.iconBlue {
+  color: #3b82f6;
+  width: 20px;
+  height: 20px;
+}
+
+.iconGreen {
+  color: #22c55e;
+  width: 20px;
+  height: 20px;
+}
+
+.iconRed {
+  color: #ff0000;
+  width: 20px;
+  height: 20px;
+}
+
+.iconOrange {
+  color: #ff9800;
+  width: 20px;
+  height: 20px;
+}
+
+.iconGray {
+  color: #6b7280;
+  width: 20px;
+  height: 20px;
+}
+
+.statusPending,
+.statusApproved,
+.statusCompleted,
+.statusDefault {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.statusPending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.statusApproved {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.statusCompleted {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.statusDefault {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* Order Details Styles */
+.orderDetails {
+  max-width: 100%;
+}
+
+.detailsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.detailsTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.detailsDates {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Notes Section */
+.notesSection {
+  margin-bottom: 1.5rem;
+}
+
+.notes {
+  background-color: #fefce8;
+  border: 1px solid #fef08a;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.notesHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.notesIcon {
+  color: #ca8a04;
+}
+
+.notesTextarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  resize: none;
+  font-family: inherit;
+  padding: 0.5rem;
+}
+
+.notesTextarea:focus {
+  outline: none;
+}
+
+/* Table Styles */
+.tableWrapper {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table th {
+  background-color: #f9fafb;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table td {
+  padding: 0.5rem 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.table tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 66.666%;
+  max-height: 90vh;
+}
+
+.modalTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.tableContainer {
+  overflow-y: auto;
+  max-height: 24rem;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.closeButton {
+  padding: 0.5rem 1rem;
+  color: #6b7280;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  background-color: #f3f4f6;
+}
+
+.viewButton {
+  color: #3b82f6;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.viewButton:hover {
+  color: #2563eb;
+}
+
+/* Action Cell */
+.actionCell {
+  text-align: right;
+}
+
+/* Approval Section */
+.approvalSection {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.approveButton {
+  background-color: #22c55e;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.approveButton:hover {
+  background-color: #16a34a;
+}
+
+.approvedButton {
+  background-color: #fff;
+  color: #22c55e;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  border: #22c55e 1px solid;
+  cursor: auto;
+  font-size: 0.875rem;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 2.5rem;
+}
+
+/* Output Section */
+.outputSection {
+  margin-bottom: 2rem;
+}
+
+/* BOM Section */
+.bomSection {
+  margin-bottom: 2rem;
+}
+
+/* Utility Classes */
+.textRed {
+  color: #ef4444;
+}
+
+.textGreen {
+  color: #22c55e;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .leftPanel {
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+  }
+
+  .rightPanel {
+    height: 50vh;
+  }
+
+  .modalContent {
+    width: 90%;
+  }
+}
+
+/* Focus States */
+/*button:focus,*/
+textarea:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalOverlay {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Scrollbar Styles */
+.leftPanel::-webkit-scrollbar,
+.rightPanel::-webkit-scrollbar,
+.tableContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.leftPanel::-webkit-scrollbar-track,
+.rightPanel::-webkit-scrollbar-track,
+.tableContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.leftPanel::-webkit-scrollbar-thumb,
+.rightPanel::-webkit-scrollbar-thumb,
+.tableContainer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.leftPanel::-webkit-scrollbar-thumb:hover,
+.rightPanel::-webkit-scrollbar-thumb:hover,
+.tableContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* NOTE */
+.notesTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.editActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editButton {
+  color: #6b7280;
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.editButton:hover {
+  color: #3b82f6;
+}
+
+/* Sản phẩm đầu ra */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 24rem;
+}
+
+.modalTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.cancelButton {
+  padding: 0.5rem 1rem;
+  color: #6b7280;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background-color: #f3f4f6;
+}
+
+.addButton {
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #2563eb;
+}
+
+.addButton:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.plusButton {
+  padding: 0.25rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 9999px;
+}
+
+.plusButton:hover {
+  background-color: #f3f4f6;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.editInput {
+  width: 60px;
+  padding: 4px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.rotating {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.statusDropdownContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.statusDropdown {
+  width: 160px;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: white;
+}
+
+.saveButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.saveButton:hover {
+  background-color: #2563eb;
+}

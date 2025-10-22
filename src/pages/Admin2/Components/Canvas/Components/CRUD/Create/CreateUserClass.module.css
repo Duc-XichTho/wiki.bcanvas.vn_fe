@@ -1,0 +1,201 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.container {
+  width: 80%;
+  height: 95%;
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.info {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+}
+
+.userclassname {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0em 1em;
+}
+
+.userclassname :global(.ant-input) {
+  font-weight: bold;
+  border-radius: 0px;
+  font-size: 1.5em;
+  border-bottom: 1px solid #d9d9d9;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.userclassname :global(.ant-input:focus) {
+  box-shadow: none;
+  border-bottom: 1px solid #1890ff;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.tranfer {
+  padding: 1em;
+}
+
+.companySelect {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.reportChart {
+  width: 100%;
+  padding: 1em;
+}
+
+.reportChartTitle {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #9c9c9c;
+}
+
+.reportChartSelectWrap {
+  width: 100%;
+}
+
+article {
+  position: relative;
+  width: 230px;
+  height: 60px;
+  margin: 5px;
+  float: left;
+  border: 2px solid #b5bfd9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+article div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 25px;
+  transition: .5s ease;
+  padding: 1em;
+}
+
+article input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+input[type=checkbox]:checked~div {
+  background-color: #2aa75e;
+  color: white;
+  font-weight: bold;
+}
+
+.reportChartGroup {
+  width: 100%;
+  padding: 1em;
+}
+
+.reportChartGroupTitle {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #9c9c9c;
+}
+
+.reportChartGroupSelect {
+  width: 100%;
+  height: 500px;
+  display: flex;
+}
+
+.reportChartGroupSub {
+  width: 20%;
+  height: 100%;
+}
+
+.reportChartGroupSubCheckAll {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reportChartGroupSubWrap {
+  width: 100%;
+  height: calc(100% - 50px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.reportChartGroupSubWrap article {
+  flex-shrink: 0;
+  height: 60px;
+}
+
+.nameData {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

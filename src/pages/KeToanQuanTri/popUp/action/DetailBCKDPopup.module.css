@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+.table1 {
+    width: 50%;
+}
+.table2 {
+    width: 30%;
+}

@@ -1,0 +1,151 @@
+.containerWrapper {
+  overflow: auto; /* Adjust for both horizontal and vertical overflow */
+  /*padding: 16px;*/
+  padding-right: 8px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  height: 80%;
+}
+
+.containerWrapper::-webkit-scrollbar {
+  height: 8px;
+  width: 4px; /* Add width for vertical scrollbar */
+}
+
+.containerWrapper::-webkit-scrollbar-track {
+  border-radius: 4px;
+}
+
+.containerWrapper::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+
+.container {
+  /*min-width: min-content;*/
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.step {
+  width: 100%;
+  height: 136px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  position: relative;
+  border: 2px solid #e8e8e8;
+  border-radius: 2px;
+  transition: border-color 0.2s ease-in-out;
+  background: #FFF;
+}
+
+.title {
+  font-size: 14px;
+  color: #454545;
+  margin-bottom: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  word-wrap: break-word;
+  height: 20px;
+}
+
+.lockIcon {
+  color: #ec0000;
+  flex-shrink: 0;
+  margin-left: 5px;
+}
+
+.indicator {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 20px;
+}
+
+.step.completed .indicator {
+  background-color: #4caf50;
+}
+
+.step.ongoing .indicator {
+  background-color: #fff;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.spinner {
+  color: white;
+}
+
+.step.selected {
+  border-color: #5bbf83;
+  box-shadow: 2px 2px 2px #b0abab;
+}
+
+.step:hover {
+  cursor: pointer;
+  background-color: #fafafa;
+}
+
+.arrows {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 1;
+  margin-top: 60px;
+}
+
+.step:hover .arrows {
+  opacity: 1;
+}
+
+.arrowButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.arrowButton:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.arrowIcon {
+  color: #666;
+}
+
+.arrowButton:hover .arrowIcon {
+  color: #333;
+}
+
+.taskCount {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+  text-align: center;
+}

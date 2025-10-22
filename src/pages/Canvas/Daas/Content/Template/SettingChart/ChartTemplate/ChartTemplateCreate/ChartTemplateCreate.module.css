@@ -1,0 +1,55 @@
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+}
+.contentContainer{
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+
+.chartOptions {
+    margin-bottom: 20px;
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkboxGroup {
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
+.columnSelection {
+    margin-bottom: 10px;
+    width: 40%;
+}
+
+.preview {
+    margin-bottom: 10px;
+    width: 60%;
+}
+
+.alert {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.createButton {
+    margin: 10px 10px 0 0;
+    padding: 10px 14px;
+}
+
+
+.selectField {
+    margin-top: 10px;
+}
+
+.conditions{
+    display: flex;
+    gap: 10px;
+    margin: 5px 0;
+}

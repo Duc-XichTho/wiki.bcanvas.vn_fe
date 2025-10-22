@@ -1,0 +1,24 @@
+.stepDetailContainer {
+    height: 100%;
+    width: 100%;
+}
+
+.subStepContainer {
+    height: calc(100% - 39px);
+    width: 100%;
+    overflow: auto;
+    border-bottom: 1px solid #E9E9E9;
+    margin-bottom: 5px;
+
+}
+
+.stepDetailButtonContainer {
+    height: 39px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 20px;
+    padding-right: 10px;
+    /*background: #E9E9E9;*/
+}

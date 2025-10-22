@@ -1,0 +1,13 @@
+.container{
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 15px;
+}
+
+.settingsWrapper {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}

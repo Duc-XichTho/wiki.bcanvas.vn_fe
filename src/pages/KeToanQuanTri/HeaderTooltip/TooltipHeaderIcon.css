@@ -1,0 +1,51 @@
+.icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.icon {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+
+.tooltip {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: normal; /* Cho phép xuống dòng */
+    opacity: 0.8;
+    max-width: 700px; /* Giới hạn chiều rộng tối đa */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    line-height: 1.4;
+    z-index: 100;
+}
+.tooltip span{
+    font-size: 14.5px;
+}
+
+.icon-text-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tooltip-2 {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: normal; /* Cho phép xuống dòng */
+    opacity: 0.8;
+    max-width: 300px; /* Giới hạn chiều rộng tối đa */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    line-height: 1.4;
+    z-index: 100;
+}
+.tooltip-2 span{
+    font-size: 14.5px;
+}

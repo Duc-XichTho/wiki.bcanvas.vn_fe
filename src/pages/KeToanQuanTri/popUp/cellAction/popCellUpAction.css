@@ -1,0 +1,38 @@
+.popup-cell {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.popup-cell:hover button #cell-icon {
+  color: var(--text-black) !important;
+  opacity: 1;
+}
+.popup-cell button #cell-icon {
+  color: rgba(255, 255, 255, 0) !important;
+  opacity: 0;
+}
+
+.popup-cell button #cell-icon:hover {
+  color: black !important;
+}
+.bckd-tien {
+  font-size: 14.5px !important;
+}
+.bckd-ratio {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-left: 5px;
+  padding-left: 1px;
+  width: 40px;
+  text-align: right;
+  height: 80%;
+  border-left: 1px solid #b7b7b7;
+  font-size: 12.5px !important;
+}
+.circle {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  margin-right: 25px;
+}

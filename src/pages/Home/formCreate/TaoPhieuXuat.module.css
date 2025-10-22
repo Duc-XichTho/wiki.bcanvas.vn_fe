@@ -1,0 +1,71 @@
+.modalContent {
+  display: flex;
+  height: 600px;
+}
+
+.sidebarModal {
+  width: 30%;
+  height: 100%;
+}
+
+.bodyModal {
+  width: 70%;
+  height: 100%;
+  padding: 0em 1em;
+}
+
+.sidebarModal :global(.ant-menu) {
+  border-inline-end: 0px !important;
+}
+
+.contentModal {
+  width: 100%;
+
+
+}
+
+.contentModalWrap {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /*overflow: auto;*/
+}
+
+.contentModalAction {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.left{
+  width: calc(20% - 5px);
+  border: 1px solid #919191;
+  border-radius: 5px;
+}
+.right{
+  width: 80%;
+}
+.top_left{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bottom_left{
+  width: 100%;
+  height: 80%;
+}
+
+.btn_tao_phieu{
+  margin-top: 20px;
+  display: block;
+  width: 100px;
+
+}

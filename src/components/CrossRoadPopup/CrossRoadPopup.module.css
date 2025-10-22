@@ -1,0 +1,241 @@
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 8px;
+  }
+  
+  .header {
+    width: 100%;
+    height: 10%;
+    display: flex;
+  }
+  
+  .headerContainer {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .headerTitleLarge {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .headerTitleLarge span {
+    font-size: 30px;
+  }
+  
+  .headerTitleSmall {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .headerTitleSmall span {
+    font-size: 20px;
+  }
+  
+  .body {
+    width: 100%;
+    max-height: 420px;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+  }
+  
+  .bodyContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+  
+  .bodyLeft {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .bodyLeftContainer {
+    width: 100%;
+    height: 50%;
+  }
+  
+  .bodyLeftContainer img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .bodyRight {
+    width: 100%;
+    height: 100%;
+    padding: 0em 0.3em;
+    display: grid;
+    align-items: center;
+    overflow: auto;
+    scrollbar-width: none;
+  }
+  
+  .bodyRightContainer {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 10px;
+    row-gap: 10px;
+    padding: 1em 0.5em 1em 0em;
+  }
+  
+  .dataset {
+    width: 100%;
+    min-height: 70px;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 0.2em;
+
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.346);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .dataset:hover {
+    transform: translateY(-5px);
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.346);
+  }
+  
+  .datasetContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+  
+  .datasetThumnail {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .datasetThumnail img {
+    width: 85%;
+    height: 80%;
+  }
+  
+  .datasetInfo {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5em;
+  }
+  
+  .datasetInfoContainer {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .datasetInfoTop {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .datasetInfoTop span {
+    font-weight: bold;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .datasetInfoBottom {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .datasetInfoBottom span {
+    font-size: 11px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .datasetHovered {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transform: translateY(-5px);
+  }
+  
+  .ribbonHovered {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transform: translateY(-5px);
+  }
+  
+  
+  .footer {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .footerContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+  
+  .footerLeft {
+    width: 25%;
+    height: 100%;
+  }
+  
+  .footerLeftTop {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footerLeftTop span {
+    font-size: 50px;
+  }
+  
+  .footerLeftBottom {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .footerRight {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+  }

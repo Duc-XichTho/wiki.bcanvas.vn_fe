@@ -1,0 +1,81 @@
+.main {
+  width: 100%;
+  height: 100%;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 70%;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0em 0.5em;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.actions {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.table {
+  width: 100%;
+  height: 95%;
+  overflow: auto;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userAvatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-weight: 500;
+}
+
+.userEmail {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.warning {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.warning div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

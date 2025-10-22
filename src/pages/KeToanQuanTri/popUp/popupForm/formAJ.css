@@ -1,0 +1,292 @@
+.popup-form {
+  width: 30%; /* Ban đầu form chỉ chiếm 50% */
+  transition: width 0.3s ease; /* Hiệu ứng chuyển đổi kích thước */
+}
+
+.popup-form select {
+  -webkit-appearance: none; /* Ẩn biểu tượng sổ xuống trên WebKit (Safari, Chrome) */
+  -moz-appearance: none; /* Ẩn biểu tượng sổ xuống trên Firefox */
+  appearance: none; /* Ẩn biểu tượng sổ xuống trên các trình duyệt hỗ trợ */
+  background: none; /* Loại bỏ nền để ẩn biểu tượng sổ xuống */
+  padding-right: 10px; /* Thêm padding để đảm bảo nội dung không bị cắt */
+}
+.form-group-aj label {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+.form-group-tc label {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+select::-ms-expand {
+  display: none; /* Ẩn biểu tượng sổ xuống trên Internet Explorer và Edge cũ */
+}
+
+.popup-form.expanded {
+  width: 58%; /* Khi form mở rộng chiếm toàn bộ */
+}
+.popup-form.expanded .top-left-aj {
+  width: 25%;
+}
+
+.mid-right,
+.bot-right {
+  display: none; /* Ẩn phần mid-right và bot-right ban đầu */
+  opacity: 0; /* Đảm bảo chúng không xuất hiện */
+  transition: opacity 0.3s ease; /* Hiệu ứng chuyển đổi độ trong suốt */
+}
+
+.popup-form.expanded .mid-right,
+.popup-form.expanded .bot-right {
+  display: block; /* Hiển thị các phần này khi form được mở rộng */
+  opacity: 1; /* Đảm bảo chúng hiện ra hoàn toàn */
+}
+
+.form-group-aj {
+  height: 70vh;
+  /*border-radius: 5px;*/
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding-right: 6px;
+  box-sizing: content-box;
+}
+.form-group-tc {
+  margin-top: 31px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding-right: 6px;
+  box-sizing: content-box;
+}
+
+.popup-form:hover .form-group-aj
+{
+  overflow-y: auto;
+  padding-right: 0px;
+}
+
+.form-group-aj label {
+  font-size: 13px;
+  color: #434343;
+}
+.form-group-tc label {
+  font-size: 13px;
+  color: #434343;
+}
+
+.top-form-aj {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 10px;
+  width: 100%;
+  margin-left: -10px;
+}
+
+.top-left-aj {
+  width: 55%;
+  display: flex;
+  justify-content: start;
+  align-items: end;
+}
+
+.top-left-aj .date-picker {
+  border-bottom: #7b7b7b 1px solid !important;
+  border-radius: 0 !important;
+  margin-left: 5px;
+  padding: 0 0 !important;
+  /*padding-bottom: 2px;*/
+  width: 20px;
+}
+
+.hr {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #d9d9d9;
+  margin: 10px 0 10px 0;
+  padding: 3px;
+}
+
+.hr p {
+  color: #434343;
+  font-weight: bold;
+}
+
+.form-content {
+  width: 100%;
+  height: 80%;
+}
+
+.content-aj-1 {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: end !important;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.content-aj-2 {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+.content-aj-2 select {
+  width: 158.39px;
+  border-bottom: #7b7b7b 1px solid;
+  color: #696969;
+}
+
+.content-group-aj-2 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+[class^='content-aj'] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content-aj-1 input,
+.content-aj-1 select {
+  width: 422.39px;
+  border-bottom: #7b7b7b 1px solid;
+  color: #696969;
+  height: 24px;
+}
+
+.mid-form-aj {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative; /* Cần thiết để định vị đường kẻ dọc */
+  margin-bottom: 30px;
+}
+
+.mid-left,
+.bot-left {
+  width: 100%; /* Ban đầu chiếm toàn bộ chiều rộng */
+  height: 100%;
+  transition: width 0.3s ease; /* Thêm hiệu ứng chuyển đổi khi thay đổi kích thước */
+}
+
+.mid-right,
+.bot-right {
+  width: 0%; /* Ban đầu ẩn */
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.3s ease; /* Thêm hiệu ứng chuyển đổi */
+}
+
+.bot-form-aj {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  margin-top: 10px;
+}
+.mid-form-aj.expanded .mid-left,
+.bot-form-aj.expanded .bot-left {
+  width: 49%; /* Sau khi bấm "Sao Chép", chiếm một nửa chiều rộng */
+}
+
+.mid-form-aj.expanded .mid-right,
+.bot-form-aj.expanded .bot-right {
+  width: 49%; /* Sau khi bấm "Sao Chép", phần bên phải chiếm một nửa chiều rộng */
+  opacity: 1;
+}
+
+.mid-form-aj.expanded .divider,
+.bot-form-aj.expanded .divider {
+  display: block; /* Hiển thị đường phân cách khi mở rộng */
+}
+
+.mid-form-aj .divider,
+.bot-form-aj .divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 2px dashed #696969; /* Đường kẻ dọc dạng nét đứt */
+  height: 100%;
+  z-index: 1;
+  display: none; /* Ban đầu ẩn */
+}
+
+.content-group-aj-2 select,
+.content-group-aj-2 input {
+  width: 158.39px;
+  height: 24px;
+}
+
+.footer-form-aj {
+  margin-top: 20px;
+  margin-left: 20px;
+  height: 13%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content-aj-1 select {
+  min-height: 36px;
+}
+.content-aj-1-input input {
+  height: 36px;
+  display: flex;
+  justify-content: start;
+  align-items: end;
+}
+/* Thêm hiệu ứng khi input được focus */
+.content-aj-1 input:focus,
+.content-aj-1 select:focus,
+.content-group-aj-2 input:focus,
+.content-group-aj-2 select:focus {
+  border-bottom: 2px solid var(--orange-light); /* Đổi màu border bottom thành xanh da trời khi focus */
+  outline: none; /* Bỏ viền mặc định của trình duyệt */
+}
+.content-aj-2 select:focus {
+  border-bottom: 2px solid var(--orange-light); /* Đổi màu border bottom thành xanh da trời khi focus */
+  outline: none;
+}
+/* Nếu muốn thêm hiệu ứng chuyển đổi màu sắc */
+.content-aj-1 input,
+.content-aj-1 select,
+.content-group-aj-2 input,
+.content-group-aj-2 select {
+  transition: border-bottom-color 0.3s ease; /* Thêm hiệu ứng chuyển đổi mượt mà */
+}
+
+/* Đảm bảo rằng khi không focus thì vẫn giữ màu sắc ban đầu */
+.content-aj-1 input,
+.content-aj-1 select,
+.content-group-aj-2 input,
+.content-group-aj-2 select {
+  border-bottom-color: #7b7b7b; /* Màu sắc ban đầu của border bottom */
+}
+.popup-form input,
+.popup-form select {
+  display: flex;
+  justify-content: start;
+  align-items: end;
+  padding: 0 2px -5px 10px;
+}
+/*CSS CỦA FORM QUẢN LÝ HỢP ĐỒNG*/
+/*.popup-form .date-picker {*/
+/*    width: 100%;*/
+/*    !*padding: 8px;*!*/
+/*    !* border: 1px solid #ccc; *!*/
+/*    border-radius: 4px;*/
+/*    font-size: 14px;*/
+/*}*/
+

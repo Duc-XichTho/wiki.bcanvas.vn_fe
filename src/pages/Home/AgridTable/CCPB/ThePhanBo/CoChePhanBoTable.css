@@ -1,0 +1,106 @@
+.co-che-phan-bo-table {
+    margin: 2em 2em;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #C2C2C2;
+    background-color: white;
+    box-shadow: 0px 4px 4px 0px #00000026;
+}
+
+.co-che-phan-bo-table-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5em;
+    gap: 15px;
+}
+.co-che-phan-bo-table-ma-co-che {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 1.5em;
+    gap: 5px;
+}
+.co-che-phan-bo-table-isOpen {
+    cursor: pointer;
+    width: 3.5%;
+    text-align: center;
+    padding-bottom: 1.5em;
+}
+
+
+.co-che-phan-bo-table-mo-ta {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 1.5em;
+    gap: 5px;
+}
+.co-che-phan-bo-table-ma-co-che > p,
+.co-che-phan-bo-table-mo-ta > p {
+    width: 57px;
+}
+
+.co-che-phan-bo-table-wrap-ma-co-che {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding-top: 1.5em;
+}
+
+
+.co-che-phan-bo-table-wrap-approve {
+    display: flex;
+    height: 30px;
+}
+
+.co-che-phan-bo-table-wrap-add-row {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap : 15px;
+}
+
+.co-che-phan-bo-table-wrap-delete {
+    width: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.disabled-approve {
+    position: relative;
+    color: white !important;
+    font-size: 14.5px !important;
+    background-color: #28a745 !important;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius: 8px;
+    padding: 5px ;
+    width: 100px !important;
+}
+.active-approve {
+    position: relative;
+    color: white !important;
+    font-size: 14.5px !important;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius: 8px;
+    padding: 5px ;
+    width: 100px !important;
+}
+
+.MuiInputBase-input::placeholder,
+.MuiInput-input::placeholder {
+    color: #5f5e5b;
+    padding-left: unset;
+    opacity: unset;
+}
+

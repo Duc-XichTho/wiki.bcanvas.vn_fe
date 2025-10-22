@@ -1,0 +1,186 @@
+
+.modal_main :global(.ant-layout) {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.title_step {
+    width: 60%;
+
+    :global(.ant-steps-item-title) {
+        text-align: center;
+        width: 100%;
+        padding: 0 !important;
+    }
+}
+
+.steps_container {
+    :global(.ant-steps-item) {
+    }
+
+    :global(.ant-steps-item-container) {
+
+    }
+
+    :global(.ant-steps-item-title) {
+
+    }
+
+    :global(.ant-steps-item-content) {
+    }
+
+    :global(.ant-steps-item:hover) {
+        :global(.ant-steps-icon) {
+            color: #2fb677 !important;
+        }
+
+        :global(.ant-steps-item-icon) {
+            border-color: #2fb677 !important;
+        }
+
+        :global(.ant-steps-item-title) {
+            color: #2fb677 !important;
+        }
+
+        :global(.ant-steps-item-description) {
+            color: #2fb677 !important;
+        }
+    }
+
+    :global(.ant-steps-icon) {
+        color: #259C63 !important;
+        transition: all 0.3s;
+    }
+
+    :global(.ant-steps-item-title),
+    :global(.ant-steps-item-description),
+    :global(.ant-steps-item-icon) {
+        transition: all 0.3s;
+    }
+    :global(.ant-steps-item-tail::after) {
+        background-color: #d9d9d9 !important;
+    }
+
+    :global(.ant-steps-item:hover) {
+        :global(.ant-steps-item-tail::after) {
+            background-color: #2fb677 !important;
+        }
+        :global(.ant-steps-item-icon) {
+            background-color: #2fb677 !important;
+        }
+
+        :global(.ant-steps-icon) {
+            color: white !important;
+        }
+
+        :global(.ant-steps-item-icon) {
+            border-color: #2fb677 !important;
+        }
+
+        :global(.ant-steps-item-title) {
+            color: #2fb677 !important;
+        }
+
+        :global(.ant-steps-item-description) {
+            color: #2fb677 !important;
+        }
+    }
+
+    :global(.ant-steps-item-icon) {
+        background-color: #259C63 !important;
+        border: #262626 !important;
+        transition: all 0.3s;
+    }
+
+    :global(.ant-steps-item-container:hover .ant-steps-item-icon) {
+        background-color: #2fb677 !important;
+    }
+
+    :global(.ant-steps-icon) {
+        color: white !important;
+    }
+    :global(.ant-steps-item-tail) {
+        padding: 0 48px !important;
+    }
+}
+
+.selected {
+    :global(.ant-steps-item-tail::after) {
+        background-color: #259C63 !important;
+    }
+
+    :global(.ant-steps-item:hover) {
+        &:not(:first-child) {
+            :global(.ant-steps-item-tail::after) {
+                background-color: #259C63 !important;
+            }
+    
+            :global(.ant-steps-item:hover .ant-steps-item-tail::after) {
+                background-color: #2fb677 !important;
+            }
+        }
+
+        :global(.ant-steps-icon) {
+            color: white !important;
+        }
+
+        :global(.ant-steps-item-icon) {
+            border-color: #2fb677 !important;
+        }
+
+        :global(.ant-steps-item-title) {
+            color: #2fb677 !important;
+        }
+
+        :global(.ant-steps-item-description) {
+            color: #2fb677 !important;
+        }
+    }
+
+    :global(.ant-steps-item-icon) {
+        background-color: #259C63 !important;
+        border: #262626 !important;
+        transition: all 0.3s;
+    }
+
+    :global(.ant-steps-item-container:hover .ant-steps-item-icon) {
+        background-color: #2fb677 !important;
+    }
+
+    :global(.ant-steps-icon) {
+        color: white !important;
+    }
+    :global(.ant-steps-item-tail) {
+        padding: 0 48px !important;
+    }
+}
+
+.unselected {
+    :global(.ant-steps-item-icon) {
+        background-color: #ffffff !important;
+        border-color: #259C63 !important;
+    }
+
+    :global(.ant-steps-icon) {
+        color: #259C63 !important;
+    }
+
+    :global(.ant-steps-item-tail::after) {
+        background-color: #d9d9d9 !important;
+    }
+}
+
+.current {
+    :global(.ant-steps-item-icon) {
+        background-color: #259C63 !important;
+        border: #262626 !important;
+    }
+
+    :global(.ant-steps-icon) {
+        color: white !important;
+    }
+
+    :global(.ant-steps-item-tail::after) {
+        background-color: #d9d9d9 !important;
+    }
+}

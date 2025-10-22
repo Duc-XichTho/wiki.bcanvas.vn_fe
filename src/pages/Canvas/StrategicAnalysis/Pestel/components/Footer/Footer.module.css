@@ -1,0 +1,45 @@
+.main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 cột đều nhau */
+  grid-template-rows: repeat(3, 1fr);    /* 3 hàng đều nhau */
+  gap: 12px;
+  width: 100%;
+  height: 75vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.item {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.148);
+  height: 100%;  /* mỗi item chiếm full chiều cao grid cell */
+  width: 100%;   /* full chiều rộng cell */
+  box-sizing: border-box;
+}
+
+.header {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f4f4f4;
+  box-shadow: 0 0.5px 2px rgba(0, 0, 0, 0.148);
+  font-size: 18px;
+  font-weight: bold;
+  color: #0d6dab;
+  padding: 8px 0 8px 30px;
+}
+
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+

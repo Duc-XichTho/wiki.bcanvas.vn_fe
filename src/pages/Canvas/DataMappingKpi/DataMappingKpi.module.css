@@ -1,0 +1,87 @@
+.header_list {
+    border-radius: 5px;
+    font-size: 25px;
+    color: #454545;
+
+}
+
+.header_list :global(.ant-list-header) {
+    border-bottom: 3px solid #B4B4B4 !important;
+    padding: 7px;
+    margin-bottom: 5px;
+
+}
+.header_list :global(.ant-list-items) {
+    padding: 0 10px;
+}
+
+.titleColumn {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    color: #019D9D;
+}
+
+.sidebar {
+    background: white;
+    width: 95%;
+    height: 100%;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    transition: width 0.3s ease;
+    padding: 10px 0 0 10px;
+}
+
+.sidebarCollapsed {
+    width: 80px;
+}
+
+.sidebar_list {
+    height: calc(100% - 200px);
+    overflow: auto;
+}
+
+.sidebar_list_item {
+    padding: 0 0 10px 0 !important;
+    border: none !important;
+
+}
+
+.card {
+    width: 95%;
+    min-height: 80px;
+    display: flex;
+    /*align-items: center;*/
+    background: white;
+    border-radius: 5px;
+    padding: 0 !important;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+}
+
+
+.card:hover {
+    border: 2px solid #39db8c;
+    background-color: #f3fffb;
+}
+
+.activeCard {
+    border: 2px solid #259c63;
+    background-color: rgba(228, 255, 240, 0.78);
+}
+
+
+.connector{
+    background-color: red !important;
+    cursor: pointer;
+}
+
+.cardBody :global(.ant-card-body) {
+    padding: 5px !important;
+}

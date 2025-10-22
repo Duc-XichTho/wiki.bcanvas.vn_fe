@@ -1,0 +1,5 @@
+export const SAB_FA = 'SAB Accounting'
+export const SAB_MA = ' B-Canvas FR'
+export const Canvas_APP  = 'B-Canvas DW'
+export const SAB_Workflow  = 'Workflow'
+export const Gateway   = 'Gateway'

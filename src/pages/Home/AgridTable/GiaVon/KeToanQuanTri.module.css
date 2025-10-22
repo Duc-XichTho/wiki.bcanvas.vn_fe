@@ -1,0 +1,305 @@
+.keToanQuanTri {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: row;
+}
+
+.phantich {
+    padding-left: 1em;
+    width: 20%;
+    /*height: 100%;*/
+}
+
+.outlet {
+    flex-grow: 1;
+    padding: 1em 1em 0em 1em;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.headerPowersheet {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px
+}
+
+.headerTitle {
+    display: flex;
+    width: max-content;
+    align-items: center;
+}
+
+.headerActionFilter {
+    display: flex;
+    justify-content: start;
+    flex: 1;
+    gap: 20px
+}
+
+.headerAction {
+    display: flex;
+    justify-content: flex-end;
+    flex: 2;
+    gap: 20px;
+    align-items: center;
+}
+
+.headerActionSelect {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    align-items: center;
+}
+
+.headerTitle > span {
+    color: #1C77E7;
+    font-size: 23px;
+    font-weight: bold;
+    line-height: 35.41px
+}
+
+.headerActionItem {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--header-text);
+    font-weight: 450;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.headerActionButton {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--header-text);
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 450;
+}
+
+.headerActionItem > span,
+.headerActionButton > span {
+    padding: 0 25px;
+    font-size: 14px;
+}
+
+.bookMarkButton {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: var(--sab-primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    z-index: 1000;
+}
+
+.bookMarkButton:hover {
+    background-color: var(--sab-primary-hover-color);
+}
+
+.bookmarksList {
+    position: fixed;
+    bottom: 3.2rem;
+    right: 1rem;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    width: 200px;
+    z-index: 1000;
+    color: var(--header-text);
+}
+
+.bookmarksItemContainer {
+    color: var(--header-text);
+    display: flex;
+    flex-direction: column;
+    margin-top: 14px;
+    gap: 11px;
+}
+
+.bookmarkItem {
+    cursor: pointer;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bookmarkItem:hover span {
+    color: #007BFF;
+}
+
+
+.buttonContent {
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.createButToan,
+.updateVas,
+.autoPhanLoai {
+    background: #EEEEEE;
+}
+
+.buttonOn {
+    /*background: #EEEEEE;*/
+    border: 1.5px solid var(--header-text);
+}
+
+.buttonCreate {
+    background: #1171E6;
+    color: white;
+    font-weight: bold;
+}
+
+.buttonItemOn {
+    /*background: #EEEEEE;*/
+    border: 1.5px solid var(--header-text);
+}
+
+.buttonOff {
+    background: #f9f9f9;
+    font-weight: bold;
+}
+
+.buttonSearch {
+    background: #EEEEEE;
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #5f5e5b;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.quickFilterInput {
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px; */
+    border: unset;
+    width: 130px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background: #EEEEEE;
+}
+
+.quickFilterInput::placeholder {
+    color: var(--header-text);
+    padding-left: unset;
+}
+
+.selectContent {
+    background-color: #f9f9f9;
+    color: var(--header-text);
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0 15px;
+    text-align: center;
+    font-size: 14px !important;
+    border: 1.5px solid var(--header-text);
+    height: 100%;
+    font-weight: 450;
+}
+
+.selectContent > option {
+    text-align: center !important;
+}
+
+/*.selectItem {*/
+/*    background-color: #eeeeee;*/
+/*    color: #5f5e5b;*/
+/*    font-size: 14.5px !important;*/
+/*}*/
+
+.form_content input {
+    height: 15px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.form_content {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.customSelect {
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 119%;
+    right: 0; /* Căn phải */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Đảm bảo menu nổi bật trên các phần tử khác */
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    height: auto;
+    /*margin-right: -135%;*/
+}
+
+.dropdown-menu-button1 {
+    position: absolute;
+    top: 100%; /* Đặt menu dropdown dưới hình ảnh ba chấm */
+    right: 0; /* Căn phải */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Đảm bảo menu nổi bật trên các phần tử khác */
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    /*margin-right: -135%;*/
+}
+
+/* SETTING CSS */
+.settingButton {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin-left: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.settingButton:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.filterDatePicker {
+    display: flex;
+    gap: 20px;
+}

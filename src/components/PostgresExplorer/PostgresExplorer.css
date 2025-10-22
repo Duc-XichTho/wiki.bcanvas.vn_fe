@@ -1,0 +1,160 @@
+.postgres-explorer-modal .ant-modal-body {
+  padding: 16px;
+}
+
+.postgres-explorer-tree {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.postgres-explorer-tree .ant-tree-node-content-wrapper {
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.postgres-explorer-tree .ant-tree-node-content-wrapper:hover {
+  background-color: #f5f5f5;
+}
+
+.postgres-explorer-tree .ant-tree-node-content-wrapper.ant-tree-node-selected {
+  background-color: #e6f7ff;
+}
+
+.postgres-explorer-tree .ant-tree-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.postgres-explorer-preview-table {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.postgres-explorer-preview-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.postgres-explorer-preview-table th {
+  background-color: #fafafa;
+  font-weight: 600;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  text-align: left;
+  font-size: 12px;
+}
+
+.postgres-explorer-preview-table td {
+  padding: 6px 12px;
+  border: 1px solid #d9d9d9;
+  font-size: 12px;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.postgres-explorer-preview-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.postgres-explorer-search {
+  margin-bottom: 16px;
+}
+
+.postgres-explorer-actions {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.postgres-explorer-info-card {
+  margin-bottom: 16px;
+}
+
+.postgres-explorer-info-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.postgres-explorer-info-card strong {
+  color: #1890ff;
+}
+
+.postgres-explorer-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #666;
+}
+
+.postgres-explorer-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #999;
+}
+
+.postgres-explorer-tree-container {
+  height: 400px;
+  overflow: auto;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.postgres-explorer-preview-container {
+  max-height: 300px;
+  overflow: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .postgres-explorer-modal .ant-modal {
+    width: 95% !important;
+    max-width: 600px;
+  }
+  
+  .postgres-explorer-content {
+    flex-direction: column;
+  }
+  
+  .postgres-explorer-tree-container {
+    height: 300px;
+  }
+  
+  .postgres-explorer-preview-container {
+    max-height: 200px;
+  }
+}
+
+/* Custom scrollbar */
+.postgres-explorer-tree-container::-webkit-scrollbar,
+.postgres-explorer-preview-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.postgres-explorer-tree-container::-webkit-scrollbar-track,
+.postgres-explorer-preview-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.postgres-explorer-tree-container::-webkit-scrollbar-thumb,
+.postgres-explorer-preview-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.postgres-explorer-tree-container::-webkit-scrollbar-thumb:hover,
+.postgres-explorer-preview-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+} 

@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.chain {
+  width: 20%;
+  height: 100%;
+  background-color: orange;
+}
+
+.subchain {
+  width: 25%;
+  height: 100%;
+  background-color: green;
+}
+
+.stepsection {
+  width: 55%;
+  height: 100%;
+  background-color: red;
+}
+
+.step {
+  width: 100%;
+  height: 20%;
+
+}
+
+.section {
+  width: 100%;
+  height: 80%;
+  background-color: white;
+}

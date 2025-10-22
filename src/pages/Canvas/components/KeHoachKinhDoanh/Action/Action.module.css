@@ -1,0 +1,152 @@
+.categories_container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.left_section {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+.categories_list {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    gap: 10px;
+}
+
+.categories_list2 {
+    margin-top: 20px;
+    display: flex;
+    justify-content: start;
+    font-size: 16px;
+    gap: 10px;
+}
+
+.categories_list3 {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    gap: 10px;
+}
+
+.categories_list_item {
+    margin-bottom: 8px;
+}
+
+.right_section {
+    height: 100%;
+    overflow: auto;
+    padding: 10px;
+}
+
+
+.option_item {
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(1, 1, 1, 1);
+    border-radius: 5px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    min-height: 40px;
+    transform-origin: left center;
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+.option_item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(100%);
+    transition: transform 0.2s ease-out;
+    z-index: 1;
+
+}
+
+.option_item:hover::before {
+    transform: translateX(0);
+}
+
+.option_item>* {
+    position: relative;
+    z-index: 1;
+}
+.selected {
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(1, 1, 1, 1);
+    border-radius: 5px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    min-height: 40px;
+    transform-origin: left center;
+    overflow: hidden;
+    background-color: #cbf4d6;
+    color: #1d6140;
+    padding-left: 10px;
+}
+
+.button {
+    display: flex;
+    gap: 10px;
+}
+
+.headerActionButton {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    background: #249e57;
+    color: white;
+    font-weight: bold;
+}
+
+.headerActionButton>span {
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+.setting {
+    width: 100%;
+    height: 100%;
+}
+
+.body {
+    width: 100%;
+    height: 95%;
+}
+
+.body :global(.ag-cell-wrapper) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.footer {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

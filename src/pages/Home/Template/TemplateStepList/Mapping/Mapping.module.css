@@ -1,0 +1,21 @@
+
+.modalContainer {
+    display: flex;
+    gap: 10px;
+    height: 75vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.md1 {
+    flex: 1;
+}
+
+.md2 {
+    width: 50%;
+    position: relative;
+}
+
+.mappingRow{
+
+}

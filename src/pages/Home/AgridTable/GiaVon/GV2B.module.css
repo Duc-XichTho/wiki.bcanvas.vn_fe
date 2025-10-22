@@ -1,0 +1,48 @@
+.headerPowersheet {
+  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px
+}
+
+.headerTitle {
+  display: flex;
+  width: max-content;
+  align-items: center;
+}
+
+.headerActionFilter {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex: 1;
+  gap: 20px
+}
+
+.headerAction {
+  display: flex;
+  justify-content: flex-end;
+  flex: 2;
+  gap: 20px
+}
+
+.headerActionSelect {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  align-items: center;
+}
+
+.headerTitle > span {
+  color: #1C77E7;
+  font-size: 23px;
+  font-weight: bold;
+  line-height: 35.41px
+}
+
+.headerAction {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

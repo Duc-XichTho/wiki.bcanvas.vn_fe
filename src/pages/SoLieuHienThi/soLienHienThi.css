@@ -1,0 +1,43 @@
+@import url('../../index.css');
+
+.group-finance-detail{
+    font-family: var(--font-family);
+    color: var(--text-color);
+    box-sizing: border-box;
+    padding: 5px 10px 5px 10px ;
+    border-radius: 5px;
+    width: 95%;
+}
+.title-finance-detail {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 5px;
+
+}
+.title-finance-detail span{
+    font-size: 16px;
+}
+.content-finance-detail{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.content-finance-detail span{
+    font-size: 20px ;
+}
+.perCen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55px;
+    height: 28px;
+    background: #E8E8E8;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.perCen span{
+    font-size: 14px;
+    font-weight: bold;
+}
+

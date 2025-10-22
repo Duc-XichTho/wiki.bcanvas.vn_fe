@@ -1,0 +1,194 @@
+.file-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 900px; /* Adjust the max-width for better centering */
+    margin: auto;
+    padding: 20px;
+}
+
+.file-upload-header {
+    font-weight: bold;
+    font-size: 18px; /* Increase font size for header */
+    margin-bottom: 10px;
+}
+
+.file-upload-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.file-upload-input {
+    width: 100%;
+    padding: 8px; /* Adjusted padding for input */
+}
+
+.column-list {
+    list-style-type: none;
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 15px; /* Increase padding for better readability */
+    width: 100%;
+    margin-right: 20px;
+    background-color: #f7f7f7;
+}
+
+.column-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.column-list li:last-child {
+    border-bottom: none;
+}
+
+.mapping-section {
+    width: 100%;
+}
+
+.select-box {
+    margin-bottom: 10px;
+}
+
+.select-box select {
+    margin-left: 10px;
+    padding: 10px; /* Increase padding for select box */
+    width: 100%;
+}
+
+.select-box label {
+    font-weight: bold;
+    width: 240px;
+    font-size: 14px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    gap: 10px; /* Add gap between buttons */
+}
+
+.button-primary {
+    background-color: #1976d2;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+.button-primary:hover {
+    background-color: #115a9c;
+}
+
+.button-secondary {
+    background-color: #999;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+.button-secondary:hover {
+    background-color: #777;
+}
+
+.upload-file-name {
+    padding: 10px;
+    margin-left: 20px;
+    font-style: italic;
+    font-size: 13px; /* Match the font size for subtle text */
+}
+
+.notice-text {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.4; /* Adjust line height for better readability */
+}
+
+.title-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 10px; /* Adjust spacing between file input and buttons */
+    padding-bottom: 5px;
+    border-bottom: 1px solid #878787;
+}
+
+.button-preview {
+    padding: 10px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #FFFFFF;
+    background-color: #1976d2; /* Same color as primary button for consistency */
+    border: none;
+    font-weight: normal;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    border-radius: 5px;
+}
+
+.button-preview:hover {
+    background-color: #115a9c;
+}
+
+.right-title-preview {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 30%;
+}
+.right-title-preview button{
+    margin-left: 10px;
+}
+
+.left-title-preview {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.left-title-preview input {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    background-color: #d9d9d9;
+    width: 100%;
+    max-width: 300px;
+}
+
+.left-title-preview span {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.4;
+}
+.import-mapping{
+    height: 520px;
+    overflow-y: auto;
+    border: 1px solid #d1d1d1;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.daduyet {
+    background: #00b655;
+    color: white !important;
+  }
+
+  .tuchoi {
+    background: #ef7d7f;
+    color: white !important;
+  }

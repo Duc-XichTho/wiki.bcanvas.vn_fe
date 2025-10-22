@@ -1,0 +1,330 @@
+/* Overlay */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50; animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Modal Container */
+.modalContainer {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 60vw;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Header */
+.modalHeader {
+    background-color: #259C63;
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.modalTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    transition: transform 0.2s;
+}
+
+.closeButton:hover {
+    transform: scale(1.1);
+}
+
+.icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Tabs */
+.tabContainer {
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.tabsWrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.tabButton {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+.tabButton:hover {
+    color: #259C63;
+}
+
+.activeTab {
+    border-bottom: 3px solid #259C63;
+    color: #259C63;
+}
+
+/* Guide Section */
+.guideContainer {
+    margin: 1rem 1.5rem;
+    padding: 1rem;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: flex-start;
+    border-left: 4px solid #259C63;
+}
+
+.infoIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.75rem;
+    color: #259C63;
+    flex-shrink: 0;
+}
+
+.guideTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.guideList {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.guideItem {
+    display: flex;
+    align-items: center;
+}
+
+.colorBox {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Modal Body */
+.modalBody {
+    padding: 1.5rem;
+    background: white;
+}
+
+/* Dropdown & Config */
+.presetSelection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.selectWrapper {
+    display: flex;
+    gap: 1rem;
+    flex-grow: 1;
+    margin-right: 1rem;
+    align-items: center;
+}
+
+.selectLabel {
+    font-weight: 500;
+    display: block;
+    text-align: left;
+}
+
+.select {
+    width: 30%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.2s;
+}
+
+.select:focus {
+    border-color: #259C63;
+    outline: none;
+}
+
+/* Config Section */
+.configSection {
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.sectionTitle {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    text-align: start;
+}
+
+/* Grid Layout */
+.weekGrid,
+.monthGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 0.75rem;
+}
+
+.yearGrid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+}
+
+.gridItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dayLabel,
+.weekLabel,
+.monthLabel {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.valueSelect {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    text-align: center;
+    transition: border-color 0.2s;
+}
+
+.valueSelect:focus {
+    border-color: #259C63;
+    outline: none;
+}
+
+.colorIndicator {
+    width: 100%;
+    height: 35px;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+}
+
+.valueLabel {
+    font-size: 1rem;
+    font-weight: 450;
+    margin-top: 0.25rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Footer */
+.modalFooter {
+    padding: 1rem 1.5rem;
+    background: #f3f4f6;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    gap : 10px
+}
+
+.cancelButton,
+.applyButton {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.cancelButton {
+    background: #d1d5db;
+    color: #374151;
+}
+
+.cancelButton:hover {
+    background: #9ca3af;
+}
+
+.applyButton {
+    background: #259C63;
+    color: white;
+}
+
+.applyButton:hover {
+    background: #1e7c4c;
+    transform: scale(1.05);
+}
+
+/* Rename Modal */
+.renameModalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.renameModalContainer {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.renameModalTitle {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.textInput {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.saveButton {
+    background: #259C63;
+    color: white;
+}
+
+.saveButton:hover {
+    background: #1e7c4c;
+}

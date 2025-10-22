@@ -1,0 +1,114 @@
+/* Tiptap2.module.css - Modern, minimal, light mode only */
+
+:root {
+  --tt-bg: #fff;
+  --tt-border: #e0e0e0;
+  --tt-toolbar-bg: #f7f7f7;
+  --tt-toolbar-border: #e0e0e0;
+  --tt-btn-bg: #259c63;
+  --tt-btn-bg-hover: #1e7c50;
+  --tt-btn-text: #fff;
+  --tt-btn-cancel-bg: #f5f5f5;
+  --tt-btn-cancel-text: #333;
+  --tt-editor-bg: #fafbfc;
+  --tt-editor-text: #222;
+}
+
+.main {
+  background: var(--tt-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 14px 10px 0 10px;
+  max-width: 700px;
+  margin: 0 auto;
+  border: 1px solid var(--tt-border);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tool_bar {
+  background: var(--tt-toolbar-bg);
+  border-radius: 8px;
+  border: 1px solid var(--tt-toolbar-border);
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 10px 5px;
+  transition: opacity 0.2s;
+  height: 40px;
+  display: flex;
+  overflow: auto;
+}
+
+.tiptap {
+  background: var(--tt-editor-bg);
+  border-radius: 8px;
+  border: 1px solid var(--tt-border);
+  flex: 1 1 0;
+  min-height: 0;
+  padding: 18px 16px 16px 16px;
+  color: var(--tt-editor-text);
+  font-size: 1.08rem;
+  margin-bottom: 18px;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+}
+
+.editorContent, .editorContentFull {
+  min-height: 0;
+  height: 100%;
+  outline: none;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.editorContentWrap {
+  min-height: 0;
+  height: 100%;
+  outline: none;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Button styles */
+:where(.ant-btn) {
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 0 18px;
+  height: 36px;
+  font-size: 1rem;
+  box-shadow: none;
+  border: none;
+  transition: background 0.18s, color 0.18s;
+}
+:where(.ant-btn-primary) {
+  background: var(--tt-btn-bg);
+  color: var(--tt-btn-text);
+}
+:where(.ant-btn-primary):hover {
+  background: var(--tt-btn-bg-hover);
+}
+:where(.ant-btn:not(.ant-btn-primary)) {
+  background: var(--tt-btn-cancel-bg);
+  color: var(--tt-btn-cancel-text);
+}
+:where(.ant-btn:not(.ant-btn-primary)):hover {
+  background: #e0e0e0;
+  color: #111;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .main {
+    padding: 10px 2vw;
+    max-width: 100vw;
+  }
+  .tiptap {
+    padding: 10px 4px;
+  }
+} 

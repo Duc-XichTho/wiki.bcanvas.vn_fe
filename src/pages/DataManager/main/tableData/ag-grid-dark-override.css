@@ -1,0 +1,48 @@
+/* Global AG Grid Dark Theme Override */
+.ag-theme-quartz-dark .ag-header-cell,
+.ag-theme-quartz-dark .ag-header-cell-text,
+.ag-theme-quartz-dark .ag-header-cell-label,
+.ag-theme-quartz-dark .ag-header-cell-filter-button,
+.ag-theme-quartz-dark .ag-header-cell-menu-button {
+    color: #ffffff !important;
+}
+
+.ag-theme-quartz-dark .ag-cell,
+.ag-theme-quartz-dark .ag-cell-value,
+.ag-theme-quartz-dark .ag-cell-wrapper {
+    color: #ffffff !important;
+}
+
+.ag-theme-quartz-dark .ag-row,
+.ag-theme-quartz-dark .ag-row-even,
+.ag-theme-quartz-dark .ag-row-odd {
+    color: #ffffff !important;
+}
+
+.ag-theme-quartz-dark .ag-status-bar,
+.ag-theme-quartz-dark .ag-status-bar-left,
+.ag-theme-quartz-dark .ag-status-bar-right {
+    color: #ffffff !important;
+}
+
+/* Force all text elements in dark theme */
+.ag-theme-quartz-dark * {
+    color: #ffffff !important;
+}
+
+/* Specific overrides for better coverage */
+.ag-theme-quartz-dark .ag-header,
+.ag-theme-quartz-dark .ag-body,
+.ag-theme-quartz-dark .ag-footer {
+    color: #ffffff !important;
+}
+
+.ag-theme-quartz-dark .ag-paging-panel,
+.ag-theme-quartz-dark .ag-paging-row-summary-panel {
+    color: #ffffff !important;
+}
+
+.ag-theme-quartz-dark .ag-menu,
+.ag-theme-quartz-dark .ag-menu-option {
+    color: #ffffff !important;
+}

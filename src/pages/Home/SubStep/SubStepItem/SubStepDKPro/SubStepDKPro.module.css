@@ -1,0 +1,41 @@
+.container {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 15px;
+}
+
+.settingsWrapper {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.settingsWrapper {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.settingsWrapper .editButton {
+    position: absolute;
+    left: 0;
+}
+
+.settingsWrapper .actionButtons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.settingsWrapper .editButton {
+  	order: 2;
+}
+
+.settingsWrapper .actionButtons .editButton {
+  	order: 3;
+}

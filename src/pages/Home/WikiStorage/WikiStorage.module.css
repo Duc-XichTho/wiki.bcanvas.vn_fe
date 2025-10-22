@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.leftPanel {
+  width: 45vw;
+  height: 100vh;
+  border-right: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Right Panel Styles */
+.rightPanel {
+  width: 55vw;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.emptyState {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.mainContent {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.settingsButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #495057;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.settingsButton:hover {
+  background: #f1f3f5;
+  color: #212529;
+}
+
+.settingsButton svg {
+  color: inherit;
+}
+
+.settingsButton span {
+  font-size: 14px;
+  font-weight: 500;
+}

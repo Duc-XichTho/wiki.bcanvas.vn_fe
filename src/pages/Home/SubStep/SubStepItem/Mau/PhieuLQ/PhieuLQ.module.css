@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+}
+
+.left {
+    min-width: 150px;
+    width: 10%;
+}
+
+.right {
+    margin: 0 15px;
+    display: flex;
+    width: 90%;
+}
+
+.list {
+    min-width: 150px;
+    width: 15%;
+}
+
+.listPhieu {
+    max-height: 600px;
+    overflow: auto;
+}
+.item {
+    display: flex;
+    gap: 5px;
+}
+.phieuName{
+
+}
+.detail{
+    width: 85%;
+}
+
+.detailView{
+    width: 100%;
+}
+
+.selectedItem{
+    font-weight: bold;
+}

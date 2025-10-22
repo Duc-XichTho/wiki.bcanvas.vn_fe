@@ -1,0 +1,174 @@
+.resultsContainer {
+  padding: 20px;
+}
+
+.resultHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.resultTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.statusSuccess {
+  background-color: #27ae60;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.statusError {
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.summaryCards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.summaryCard {
+  flex: 1;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.cardTitle {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+}
+
+.cardValue {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.cardValueSuccess {
+  font-size: 18px;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.cardValueError {
+  font-size: 18px;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.errorText {
+  color: #e74c3c;
+}
+
+.tableContainer {
+  margin-top: 20px;
+}
+
+.tableTitle {
+  font-size: 16px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #e1e5e8;
+}
+
+.resultsTable th {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 15px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.tableRowEven {
+  background-color: #f8f9fa;
+}
+
+.tableRowOdd {
+  background-color: white;
+}
+
+.resultsTable td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e1e5e8;
+  font-size: 14px;
+}
+
+.statusTagSuccess {
+  background-color: #27ae60;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.statusTagError {
+  background-color: #e74c3c;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 10px 0;
+}
+
+.primaryButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.secondaryButton {
+  background-color: #ecf0f1;
+  color: #7f8c8d;
+  border: 1px solid #bdc3c7;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.warningButton {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}

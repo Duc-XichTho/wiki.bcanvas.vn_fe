@@ -1,0 +1,64 @@
+.wrapper {
+    width: 100%;
+    height: 80vh;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 16px;
+    gap: 10px;
+}
+
+.textGroup {
+    margin-right: auto; /* đẩy về bên trái nếu muốn đẩy cụm text ra đầu hàng */
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.description {
+    font-size: 14px;
+    color: #555;
+    outline: none;
+}
+
+.modalInputGroup {
+    padding: 10px 0;
+}
+
+.input {
+    margin-left: 10px;
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
+
+.loading {
+    display: block;
+    margin: 20px auto;
+}
+
+.textGroup {
+    max-width: 80%;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 600;
+    color: #262626;
+    padding-left: 30px;
+}
+
+.description {
+    font-size: 13px;
+    color: #262626;
+    margin-top: 4px;
+    padding-left: 30px;
+}

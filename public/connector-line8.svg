@@ -1,0 +1,23 @@
+<svg viewBox="0 0 80 20" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="businessGreenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#166534">
+        <animate attributeName="stop-opacity" values="0;0.8;0" dur="1.5s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="50%" stop-color="#16a34a">
+        <animate attributeName="stop-opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%" stop-color="#166534">
+        <animate attributeName="stop-opacity" values="0;0.8;0" dur="1.5s" repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+  </defs>
+  
+  <rect 
+    x="5" 
+    y="8" 
+    width="70" 
+    height="4" 
+    fill="url(#businessGreenGradient)"
+  />
+</svg>

@@ -1,0 +1,178 @@
+.stepListWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 80%;
+    position: relative;
+    max-width:100%;
+    overflow-x: auto
+}
+
+.stepWrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  ; /* Cho phép cuộn ngang */
+
+}
+
+.list_header {
+    display: flex;
+    justify-content: start;
+    gap: 0 10px;
+    align-items: center;
+}
+
+.list_header > span {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+.step {
+    display: flex;
+    align-items: center;
+    /*position: relative;*/
+    min-width: 220px; /* Chiều rộng cố định của từng bước */
+
+}
+
+.stepIconWrapper {
+    min-width: 200px;
+    padding: 0 5px;
+    height: 60px;
+    position: relative;
+    cursor: pointer;
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moveStep {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hideMove {
+    display: none;
+}
+
+.editInput {
+    width: 90%;
+    height: 20px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.showMove {
+    opacity: 1;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.edit_icon {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.stepIcon {
+    padding: 10px 10px 0 10px;
+    display: flex;
+    justify-content: center;
+    width: 90px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    transition: background 0.3s ease-in-out;
+}
+
+.stepLabel {
+    padding: 10px 10px 0 10px;
+    font-size: 14.5px;
+    color: #262626;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 40px;
+}
+
+.done p {
+    color: #30b320; /* Xanh cho hoàn thành */
+}
+
+.notDoneYet p {
+    color: #e2ac31; /* Vàng cho đang làm */
+}
+
+.pending p {
+    color: #30a9bb; /* Xanh dương cho chờ */
+}
+
+.doing p {
+    color: #849cad; /* Xám cho chưa làm */
+}
+
+.statusStep {
+    height: 20px;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.highlight {
+    border: 1px solid #3B82F6;
+    border-radius: 5px;
+}
+
+.arrowConnector {
+
+    width: 40px;
+    height: 30px;
+    margin-top: -20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.arrowConnector img {
+    height: 25px;
+    width: 100%;
+}
+
+
+.newButton {
+    width: max-content;
+    height: 30px;
+    border-radius: 5px;
+    border: 1.5px solid #1F6DE1;
+    padding: 5px;
+    color: #1F6DE1;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.newButton:hover {
+    background: #1F6DE1;
+    border: 1.5px solid #ffffff;
+    color: #ffffff;
+}
+
+.skip {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}

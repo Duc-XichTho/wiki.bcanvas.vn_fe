@@ -1,0 +1,248 @@
+.modal :global(.ant-modal-content) {
+    padding-top: 10px !important;
+}
+
+.main {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    gap: 20px;
+}
+
+
+.sidebar {
+    width: 300px;
+    height: 100%;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 7px;
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+
+.outlet {
+    width: calc(100% - 320px);
+    height: 100%;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 7px;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background-color: white;
+
+
+}
+
+
+.function {
+    border-bottom: 1px solid #e5e7eb;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+}
+
+.add,
+.form {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add:hover,
+.form:hover {
+    background-color: #f3f4f6;
+}
+
+.list {
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.listWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.itemContainer {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.itemContainer:hover {
+    border-color: #d1d5db;
+    background-color: #f9fafb;
+}
+
+.itemContainer.active {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.nameContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.detail {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.steps {
+    padding: 24px 24px 0;
+}
+
+.stepContent {
+    flex: 1;
+    padding: 24px;
+    overflow: auto;
+}
+
+.importContent,
+.googleSheetContent,
+.formContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.mappingContent,
+.validationContent {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.thongKeContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #262626;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.actionButton {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #454545;
+}
+
+.actionButton:hover {
+    background-color: #f3f4f6;
+}
+
+.body {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+}
+
+.tabThongKe {
+    background: #FFFFFF;
+    color: #262626;
+    border-radius: 1px;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.tabDuLieuTongHop {
+    background: #FFFFFF;
+    color: #454545;
+    padding: 0.4em 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.tabCaiDatBang {
+    background: #FFFFFF;
+    color: #454545;
+    padding: 0.6em 0.9em;
+    border-radius: 1px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.tabKiemTraHopLe {
+    background: #FFFFFF;
+    color: #454545;
+    padding: 0.6em 0.9em;
+    border-radius: 1px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.active {
+    font-weight: bold;
+    border-width: 2px;
+}
+
+.wrapSpan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}

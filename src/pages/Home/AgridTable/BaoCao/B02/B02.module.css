@@ -1,0 +1,47 @@
+.main {
+  width: 100%;
+  padding: 1em 0em;
+  height: 850px;
+  display: flex;
+  flex-direction: row;
+}
+
+.headerActionButton {
+  width: 100px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.headerAction {
+  display: flex;
+  justify-content: flex-end;
+  flex: 2;
+  gap: 20px
+}
+
+
+.agGridReactWrapper {
+  width: 100%;
+}
+
+.zoomIn {
+  width: 95%;
+  height: 100%;
+  animation: zoomIn 0.3s ease forwards;
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

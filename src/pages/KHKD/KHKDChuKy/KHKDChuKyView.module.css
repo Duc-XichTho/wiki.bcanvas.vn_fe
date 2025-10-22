@@ -1,0 +1,65 @@
+
+.wrapper {
+    padding: 12px 12px 15px 12px;
+    border-radius: 12px;
+    margin-top: 16px;
+    box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.04),
+            0 3px 6px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.topControls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+
+}
+
+.customSelect :global(.ant-select-selector) {
+    color: rgba(134, 134, 134, 1) !important; /* màu chữ mong muốn */
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.customSelect:global(.ant-select-selection-item) {
+    color: rgba(134, 134, 134, 1) !important;
+}
+
+.monthLabel {
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(134, 134, 134, 1);
+}
+
+.chartContainer {
+    display: flex;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.chartItem {
+    flex : 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.05),
+            0 4px 8px rgba(0, 0, 0, 0.08);
+    background-color: #fff; /* tuỳ bạn */
+}
+.dhv {
+    display: flex;
+    margin-right: 10px;
+}
+.label {
+    width: 140px;
+    font-size: 13px;
+}
+.value {
+    font-size: 25px;
+    font-weight: 500;
+}

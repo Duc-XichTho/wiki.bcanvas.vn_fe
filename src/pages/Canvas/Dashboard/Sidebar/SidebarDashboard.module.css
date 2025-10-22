@@ -1,0 +1,197 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 2px;
+overflow: hidden;
+}
+
+.sidebar {
+  width: 330px;
+  height: 100%;
+  /*background-color: #ffffff;*/
+  border-right: 1px solid #ddd;
+  /*padding: 16px 0px 0px 0px;*/
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 10px;
+  border-radius: 2px;
+  background: white;
+}
+
+.sidebarTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.folderRight {
+  display: flex;
+  align-items: center;
+  gap : 7px
+}
+
+.folderRight > span {
+  font-size: 17px;
+  font-weight: 700;
+  color: #262626;
+}
+
+.menuItem {
+  margin-top: 5px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #262626;
+  font-weight: 500;
+  transition: 0.2s;
+  font-weight: 500;
+}
+
+.menuItem:hover {
+  background-color: #ebebeb;
+}
+
+.cardLabel{
+  padding-left: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  gap: 5px;
+}
+.iconCard{
+  width: 15px;
+  height: 15px;
+}
+.titleCard {
+  max-width: calc(100% - 20px);
+  flex: 1;
+}
+
+.menuItemActive {
+  background-color:#D9D9D9;
+  color: #000000;
+  font-weight: 700;
+}
+
+.content {
+  width: calc(100% - 330px);
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.searchBox {
+  width: 70%;
+  height: 30px;
+  border: 2px solid rgba(220, 220, 220, 1);
+  box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.1);
+  padding: 4px 8px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+.menu {
+  width: 100%;
+  height: calc(100% - 30px - 70px);
+  overflow: auto;
+  padding: 0 16px 16px 20px;
+  background-color: white;
+}
+
+.extraInfo {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  height: 50px;
+  margin-top: auto;
+  padding: 16px 0px 16px 10px;
+}
+
+.titleButton {
+  font-size: 16px;
+}
+
+
+.customButton {
+  color: rgba(38, 38, 38, 1) !important;
+  font-weight: 500 !important;
+  border-radius: 10px !important;
+  font-size: 13px;
+}
+
+.textFooter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8d8d8d;
+  background-color: #EFEFEF;
+  height: 48px; /* Hoặc tuỳ chỉnh chiều cao */
+  font-size: 16px;
+  border-radius: 0 0 2px 2px;
+}
+
+.header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 4px 0 4px 10px;
+  background-color: white; /* Nền trắng */
+  border-radius: 2px 2px 0 0;
+  height: 40px;
+  color: #262626;
+  font-weight: 700;
+  justify-content: space-between;
+  position: relative;
+  font-size: 15px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dropdownWrapper {
+  position: relative;
+}
+
+.settingsBtn {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.header:hover .settingsBtn {
+  opacity: 1;
+}
+
+
+.dotDasboard {
+  width: 10px;
+  height: 10px;
+  background-color: #3985F6; /* Hồng */
+  border-radius: 50%;
+}
+
+.headerTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.settingButton {
+    font-size: 13px;
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.settingButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

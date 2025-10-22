@@ -1,0 +1,24 @@
+.headerActionButton {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--header-text);
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 450;
+}
+
+.headerActionItem > span,
+.headerActionButton > span {
+    padding: 0 25px;
+    font-size: 14px;
+}
+
+.buttonCreate {
+    background: #1171E6;
+    color: white;
+    font-weight: bold;
+}

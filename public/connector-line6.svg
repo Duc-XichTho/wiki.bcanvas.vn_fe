@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 20">
+  <defs>
+    <!-- Rounded rectangle data bits with smaller radius -->
+    <rect id="dataBitMedium" width="4" height="4" rx="1" ry="1" fill="#949494"/>
+    <rect id="dataBitLarge" width="5" height="5" rx="1" ry="1" fill="#949494"/>
+    <rect id="dataBitXLarge" width="6" height="6" rx="1" ry="1" fill="#949494"/>
+  </defs>
+  
+  <!-- Top Row (Fast) -->
+  <use href="#dataBitLarge" x="0" y="3">
+    <animate attributeName="x" from="-10" to="90" dur="2.5s" begin="0s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+  <use href="#dataBitMedium" x="0" y="3.5">
+    <animate attributeName="x" from="-10" to="90" dur="2.5s" begin="0.8s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+  <use href="#dataBitLarge" x="0" y="3">
+    <animate attributeName="x" from="-10" to="90" dur="2.5s" begin="1.6s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+  
+  <!-- Middle Row (Medium) -->
+  <use href="#dataBitXLarge" x="0" y="9">
+    <animate attributeName="x" from="-10" to="90" dur="3s" begin="0.2s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+  <use href="#dataBitLarge" x="0" y="9.5">
+    <animate attributeName="x" from="-10" to="90" dur="3s" begin="1.2s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+  <use href="#dataBitXLarge" x="0" y="9">
+    <animate attributeName="x" from="-10" to="90" dur="3s" begin="2.2s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+  
+  <!-- Bottom Row (Slow) -->
+  <use href="#dataBitMedium" x="0" y="16">
+    <animate attributeName="x" from="-10" to="90" dur="3.5s" begin="0.4s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+  <use href="#dataBitXLarge" x="0" y="15">
+    <animate attributeName="x" from="-10" to="90" dur="3.5s" begin="1.6s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+  <use href="#dataBitLarge" x="0" y="15.5">
+    <animate attributeName="x" from="-10" to="90" dur="3.5s" begin="2.8s" repeatCount="indefinite" calcMode="linear"/>
+  </use>
+</svg>

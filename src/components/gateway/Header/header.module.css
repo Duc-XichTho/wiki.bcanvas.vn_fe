@@ -1,0 +1,1350 @@
+.headerContainer {
+	height: 50px;
+	padding: 10px 50px;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #d9d9d9;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.headerLogo {
+	line-height: 60px;
+	margin-right: 60px;
+  margin-left: 20px;
+	font-weight: 600;
+	font-size: 18px;
+}
+
+.dropdownContainer {
+	position: relative;
+}
+
+.dropdownButton {
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 8px 16px;
+	font-weight: bold;
+	cursor: pointer;
+	min-width: 150px;
+	text-align: center;
+	border-radius: 10px;
+	font-size: 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #454545;
+}
+
+.dropdownIcon {
+	margin-left: 8px;
+}
+
+.dropdownMenu {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: white;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	width: 100%;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	z-index: 10;
+	margin-top: 4px;
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.dropdownItem {
+	display: flex;
+	align-items: center;
+	padding: 8px 12px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+}
+
+.dropdownItem:hover {
+	background-color: #f5f5f5;
+}
+
+.dropdownItem.selected {
+	background-color: #e6f7ff;
+	font-weight: bold;
+}
+
+.spacer {
+	flex-grow: 1;
+}
+
+.settingsButton {
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: #555;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s, color 0.2s;
+}
+
+.settingsButton:hover {
+	background-color: rgba(0, 0, 0, 0.05);
+	color: #333;
+}
+
+/* Modal Styling */
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(4px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modalContent {
+	background: white;
+	border-radius: 16px;
+	padding: 28px;
+	min-width: 480px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+	max-width: 90vw;
+}
+
+.modalHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 28px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #eef2f6;
+}
+
+.modalHeader h3 {
+	font-size: 1.5rem;
+	color: #1a2b3c;
+	font-weight: 600;
+	margin: 0;
+}
+
+.closeButton {
+	background: transparent;
+	border: none;
+	color: #64748b;
+	padding: 8px;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.closeButton:hover {
+	background: #f1f5f9;
+	color: #334155;
+}
+
+.formGroup {
+	margin-bottom: 24px;
+}
+
+.formGroup label {
+	display: block;
+	font-weight: 500;
+	color: #334155;
+	font-size: 0.95rem;
+}
+
+.formGroup input[type="text"] {
+	width: 100%;
+	padding: 12px 16px;
+	border: 2px solid #e2e8f0;
+	border-radius: 10px;
+	font-size: 15px;
+	transition: all 0.2s;
+	background: #f8fafc;
+}
+
+.formGroup input[type="text"]:hover {
+	border-color: #cbd5e1;
+}
+
+.formGroup input[type="text"]:focus {
+	border-color: #3b82f6;
+	outline: none;
+	background: white;
+	box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.formGroup small {
+	display: block;
+	color: #64748b;
+	font-size: 13px;
+	margin-top: 6px;
+	line-height: 1.5;
+}
+
+/* Checkbox Container Styles */
+.checkboxContainer {
+	display: flex;
+	align-items: flex-start;
+	padding: 16px;
+	background: #f8fafc;
+	border-radius: 12px;
+	margin-bottom: 8px;
+	transition: all 0.2s;
+	border: 2px solid #e2e8f0;
+}
+
+.checkboxContainer:hover {
+	background: #f1f5f9;
+	border-color: #cbd5e1;
+}
+
+/* Checkbox Wrapper */
+.checkboxWrapper {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+}
+
+/* Custom Checkbox */
+.checkbox {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 22px;
+	height: 22px;
+	border: 2px solid #cbd5e1;
+	border-radius: 6px;
+	cursor: pointer;
+	position: relative;
+	transition: all 0.2s;
+	flex-shrink: 0;
+}
+
+.checkbox:checked {
+	background-color: #3b82f6;
+	border-color: #3b82f6;
+}
+
+.checkbox:checked::after {
+	content: '';
+	position: absolute;
+	left: 7px;
+	top: 3px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+.checkbox:hover:not(:disabled) {
+	border-color: #3b82f6;
+}
+
+.checkbox:disabled {
+	background-color: #e2e8f0;
+	border-color: #cbd5e1;
+	cursor: not-allowed;
+}
+
+/* Checkbox Label Container */
+.checkboxLabelContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.checkboxLabel {
+	font-size: 15px;
+	color: #334155;
+	font-weight: 500;
+}
+
+.checkboxDescription {
+	font-size: 13px;
+	color: #64748b;
+	line-height: 1.5;
+}
+
+/* Modal Footer Styles */
+.modalFooter {
+	display: flex;
+	justify-content: flex-end;
+	gap: 12px;
+	margin-top: 32px;
+	padding-top: 20px;
+	border-top: 1px solid #eef2f6;
+}
+
+/* Buttons */
+.cancelButton, .saveButton {
+	padding: 12px 20px;
+	border-radius: 10px;
+	font-size: 15px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.cancelButton {
+	background: #f1f5f9;
+	border: none;
+	color: #475569;
+}
+
+.cancelButton:hover:not(:disabled) {
+	background: #e2e8f0;
+	color: #334155;
+}
+
+.saveButton {
+	background: #3b82f6;
+	border: none;
+	color: white;
+}
+
+.saveButton:hover:not(:disabled) {
+	background: #2563eb;
+	transform: translateY(-1px);
+}
+
+.saveButton:active:not(:disabled) {
+	transform: translateY(0);
+}
+
+.saveButton:disabled, .cancelButton:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+	transform: none;
+}
+
+/* Success and Error Messages */
+.successMessage, .errorMessage {
+	padding: 16px;
+	border-radius: 12px;
+	margin-bottom: 20px;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	line-height: 1.5;
+}
+
+.successMessage {
+	background: #f0fdf4;
+	color: #166534;
+	border: 1px solid #bbf7d0;
+}
+
+.errorMessage {
+	background: #fef2f2;
+	color: #991b1b;
+	border: 1px solid #fecaca;
+}
+
+/* Loading Spinner */
+.spinner {
+	width: 18px;
+	height: 18px;
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 50%;
+	border-top-color: white;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+	.modalContent {
+		min-width: unset;
+		width: 90%;
+		padding: 20px;
+	}
+
+	.modalHeader h3 {
+		font-size: 1.25rem;
+	}
+
+	.cancelButton, .saveButton {
+		padding: 10px 16px;
+		font-size: 14px;
+	}
+}
+
+/* Add these styles to your existing header.module.css */
+
+.headerContainer {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+	height: 80px;
+	background-color: #d3d3d3;
+    position: relative;
+    z-index: 100;
+}
+
+.headerLogo {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+.headerControls {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.spacer {
+    flex: 1;
+}
+
+/* Company Dropdown */
+.dropdownContainer {
+    position: relative;
+    margin-right: 10px;
+}
+
+.dropdownButton {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+	background-color: #ffffff;
+	color: #454545;
+}
+
+/*.dropdownButton:hover {*/
+/*    background-color: #ececec;*/
+/*}*/
+
+.dropdownIcon {
+    margin-left: 6px;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    margin-top: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.dropdownItem {
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.dropdownItem:hover {
+    background-color: #f5f5f5;
+}
+
+.selected {
+    background-color: #e6f7ff;
+    color: #1890ff;
+}
+
+.settingsButton {
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.settingsButton:hover {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* User Dropdown */
+.userDropdownContainer {
+    position: relative;
+}
+
+.userButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid #e0e0e0;
+    background: none;
+    padding: 0;
+    transition: transform 0.2s;
+}
+
+.userButton:hover {
+    transform: scale(1.05);
+}
+
+.userAvatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.userAvatarFallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0084ff;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.userDropdownMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 220px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.userInfo {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.userName {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.userEmail {
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdownDivider {
+    height: 1px;
+    background-color: #f0f0f0;
+    margin: 4px 0;
+}
+
+.dropdownItemIcon {
+    margin-right: 8px;
+}
+
+/* ====================== NOTIFICATION STYLES ====================== */
+.notificationContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	margin-left: 2px; /* Đẩy 2 phần ra xa nhau */
+}
+
+.notificationButton {
+	background: none;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px;
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	transition: background-color 0.2s;
+	color: #666;
+}
+
+.notificationButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #333;
+}
+
+.notificationButton:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Add specific styles for the log icon */
+.notificationButton svg[data-icon="history"] {
+  color: #666;
+}
+
+.notificationButton:hover svg[data-icon="history"] {
+  color: #333;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  background-color: #ff4d4f;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.notificationDropdown {
+  position: absolute;
+  top: 100%;
+  right: -10px;
+  width: 350px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  margin-top: 8px;
+  overflow: hidden;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.notificationHeader {
+  padding: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+.notificationHeader h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.markAllReadButton {
+  background: none;
+  border: none;
+  color: #0084ff;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.markAllReadButton:hover {
+  background-color: rgba(0, 132, 255, 0.08);
+  text-decoration: none;
+}
+
+.notificationList {
+  overflow-y: auto;
+  max-height: 500px;
+  padding: 8px 0;
+}
+
+.notificationItem {
+  position: relative;
+  cursor: pointer;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f5f5f5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  transition: background-color 0.2s;
+  background-color: #f9f9f9;
+}
+
+.notificationItem:last-child {
+  border-bottom: none;
+}
+
+.notificationItem:hover {
+  background-color: #f0f8ff;
+}
+
+.notificationRead {
+  background-color: white;
+}
+
+.notificationContent {
+  flex: 1;
+  padding-right: 12px;
+}
+
+.notificationItemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.notificationTicket {
+  font-weight: 600;
+  color: #1890ff;
+  font-size: 13px;
+  background-color: rgba(24, 144, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.notificationTime {
+  color: #888;
+  font-size: 12px;
+}
+
+.notificationMessage {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.notificationUser {
+  font-weight: 600;
+  color: #333;
+}
+
+.unreadDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #0084ff;
+  margin-left: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.2);
+}
+
+.emptyNotifications {
+  padding: 32px 16px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 16px;
+}
+
+.loadingNotifications {
+  padding: 24px 16px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+/* Admin button and dropdown styles */
+.adminContainer {
+	display: flex;
+	align-items: center; /* Đảm bảo nó thẳng hàng với các phần khác */
+	justify-content: center;
+	position: relative; /* Giữ vị trí ổn định */
+}
+
+.adminButton {
+	background: none;
+	border: none;
+	color: #454545;
+	cursor: pointer;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.2s;
+
+	/* Đảm bảo kích thước đồng nhất */
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	line-height: 0;
+}
+
+.adminButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.adminDropdownMenu {
+	position: absolute;
+	top: 100%; /* Hiển thị ngay dưới button */
+	left: 50%;
+	transform: translateX(-50%); /* Canh giữa */
+	background: white;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	padding: 8px 0;
+	min-width: 150px;
+}
+
+/* Permission modal styles */
+.modalHeaderIcon {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.formIcon, .sectionIcon {
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.selectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.selectIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #555;
+}
+
+.companySelect, .userSelect {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 14px;
+  appearance: none;
+}
+
+.addUserForm {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.addUserControls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.addUserButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.addUserButton:hover {
+  background-color: #3a7bc8;
+}
+
+.addUserButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.permissionsTable {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 0.5fr;
+  background: #f5f5f5;
+  padding: 10px 0;
+  font-weight: 600;
+}
+
+.tableHeaderCell {
+  padding: 10px 15px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.tableHeaderIcon {
+  margin-right: 6px;
+  color: #555;
+}
+
+.tableBody {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 0.5fr;
+  border-top: 1px solid #e0e0e0;
+  align-items: center;
+}
+
+.tableCell {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+}
+
+.userEmail {
+  font-weight: 500;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.toggleButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.toggleButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggleActive .toggleIcon {
+  color: #4a90e2;
+}
+
+.toggleButton:not(.toggleActive) .toggleIcon {
+  color: #aaa;
+}
+
+.loadingPermissions, .noPermissions {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  border-top: 1px solid #e0e0e0;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #4a90e2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeButton:hover {
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.removeButton:disabled {
+  color: #cccccc;
+  cursor: not-allowed;
+}
+
+.removeIcon {
+  color: #e74c3c;
+}
+
+/* Replace the toggle styles with checkbox styles */
+.permissionCheckbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.permissionCheckbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Update the remove button to work with the trash icon */
+.removeButton {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeButton:hover {
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.removeButton:disabled {
+  color: #cccccc;
+  cursor: not-allowed;
+}
+
+.removeIcon {
+  color: #e74c3c;
+}
+
+/* Add styles for the edited row and save button */
+.editedRow {
+  background-color: rgba(74, 144, 226, 0.05);
+}
+
+.saveChangesContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.saveChangesButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.saveChangesButton:hover {
+  background-color: #45a049;
+}
+
+.saveChangesButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Confirmation modal styles */
+.confirmModalContent {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  margin: 0 20px;
+}
+
+.confirmModalHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.confirmModalHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  color: #e74c3c;
+}
+
+.confirmModalBody {
+  padding: 20px;
+}
+
+.confirmModalBody p {
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.confirmModalBody p:last-child {
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.confirmModalFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 20px;
+  border-top: 1px solid #eaeaea;
+  gap: 10px;
+}
+
+.cancelButton {
+  padding: 8px 16px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #333;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancelButton:hover {
+  background: #eaeaea;
+}
+
+.deleteButton {
+  padding: 8px 16px;
+  background: #e74c3c;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.deleteButton:hover {
+  background: #d62c1a;
+}
+
+.deleteButton:disabled, .cancelButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.smallSpinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-left-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.settingItem {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.2s;
+}
+
+.settingItem:hover {
+  background: #f9fafb;
+}
+
+.settingContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.settingInfo {
+  flex: 1;
+}
+
+.settingTitle {
+  font-weight: 500;
+  color: #111827;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.settingDescription {
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e5e7eb;
+  transition: 0.2s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.2s;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+input:checked + .slider {
+  background-color: #3b82f6;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Disabled state */
+input:disabled + .slider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.switch:hover input:not(:disabled) + .slider {
+  background-color: #d1d5db;
+}
+
+.switch:hover input:checked:not(:disabled) + .slider {
+  background-color: #2563eb;
+}
+
+.notificationItem.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+}
+
+.loadingSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.backCanvas  {
+  width: 40px;
+  height: 38px;
+  background-color: rgba(250, 250, 250, 1);
+  border-radius: 12px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

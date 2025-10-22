@@ -1,0 +1,351 @@
+/* DefaultDashboardCard.module.css */
+
+/* Loading spinner animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Loading container */
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    flex-direction: column;
+}
+
+/* Loading spinner */
+.loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1890ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Loading text */
+.loadingText {
+    margin-top: 16px;
+    color: #666;
+}
+
+/* Main container */
+.mainContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Title styles */
+.title {
+    line-height: 1.4;
+    margin: 0;
+    flex: 1;
+    font-weight: 400;
+    color: #262626;
+}
+
+/* Help button */
+.helpButton {
+    margin-left: 4px;
+}
+
+/* Score display container */
+.scoreDisplayContainer {
+    padding: 0px;
+    width: 40vw;
+}
+
+/* Total score container */
+.totalScoreContainer {
+    text-align: center;
+    margin-bottom: 8px;
+    padding: 0px 16px;
+    border-radius: 6px;
+    height: 180px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Total score label */
+.totalScoreLabel {
+    color: #4B4B4B;
+    font-size: 16px;
+    margin-top: 16px;
+}
+
+/* Total score divider */
+.totalScoreDivider {
+    background: #fff;
+    margin: 0;
+    margin-top: 8px;
+}
+
+/* Total score grade */
+.totalScoreGrade {
+    color: #4B4B4B;
+    font-size: 64px;
+    margin-top: -8px;
+}
+
+/* Help text */
+.helpText {
+    font-size: 11px;
+    padding: 0 12px;
+    text-align: center;
+}
+
+/* Section card */
+.sectionCard {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /*border-radius: 4px;*/
+    /*box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);*/
+}
+
+/* Section title */
+.sectionTitle {
+    color: #666;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+}
+
+/* Section grade */
+.sectionGrade {
+    margin: 8px 0 4px 0;
+}
+
+/* Legend container */
+.legendContainer {
+    width: 95%;
+    padding: 12px ;
+    background: #06040412
+}
+
+/* Legend paragraph */
+.legendParagraph {
+    margin: 0;
+    font-size: 12px;
+}
+
+/* Modal styles */
+.modalBody {
+    height: calc(90vh - 110px);
+    overflow-y: auto;
+    padding: 16px 24px;
+}
+
+.detailModalBody {
+    height: calc(90vh - 110px);
+    overflow-y: auto;
+    padding: 8px 8px;
+}
+
+/* Form styles */
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Section card in config */
+.configSectionCard {
+    border-left: 4px solid;
+    margin-bottom: 16px;
+}
+
+/* Section title in config */
+.configSectionTitle {
+    font-weight: bold;
+}
+
+/* KPI weights container */
+.kpiWeightsContainer {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+/* KPI weight item */
+.kpiWeightItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 4px;
+}
+
+/* KPI weight label */
+.kpiWeightLabel {
+    flex: 1;
+    margin-right: 8px;
+}
+
+/* KPI weight input */
+.kpiWeightInput {
+    width: 80px;
+}
+
+/* Empty state */
+.emptyState {
+    color: #999;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Analysis content */
+.analysisContent {
+    font-size: 14px;
+    color: #333;
+    padding: 16px;
+}
+
+/* Analysis container */
+.analysisContainer {
+    margin-bottom: 16px;
+}
+
+/* Analysis box */
+.analysisBox {
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+/* Divider styles */
+.divider {
+    margin: 16px 0;
+}
+
+/* Input addon */
+.inputAddon {
+    background: #f5f5f5;
+    border-color: #d9d9d9;
+}
+
+/* Textarea */
+.textarea {
+    width: 100%;
+}
+
+/* Select */
+.select {
+    width: 100%;
+}
+
+/* Button group */
+.buttonGroup {
+    display: flex;
+    gap: 8px;
+}
+
+/* Card hover effect */
+.cardHoverable:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mainContainer {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .modalBody {
+        padding: 12px 16px;
+    }
+
+    .detailModalBody {
+        padding: 4px 4px;
+    }
+}
+
+/* Utility classes */
+.textCenter {
+    text-align: center;
+}
+
+.flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexBetween {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.marginTop16 {
+    margin-top: 16px;
+}
+
+.marginBottom16 {
+    margin-bottom: 16px;
+}
+
+.padding16 {
+    padding: 16px;
+}
+
+.borderRadius4 {
+    border-radius: 4px;
+}
+
+.borderRadius8 {
+    border-radius: 8px;
+}
+
+.boxShadow {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.transition {
+    transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+
+    .helpText,
+    .legendContainer {
+        display: none;
+    }
+
+    .mainContainer {
+        flex-direction: row;
+    }
+
+    .title {
+        text-align: left;
+    }
+
+    .sectionCard {
+        height: 100px;
+    }
+
+    .sectionCard :global(h3.ant-typography) {
+        margin-top: 0;
+    }
+
+    .totalScoreContainer {
+        width: 68vw;
+    }
+}

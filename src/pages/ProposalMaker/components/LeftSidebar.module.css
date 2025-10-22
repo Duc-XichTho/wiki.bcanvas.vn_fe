@@ -1,0 +1,55 @@
+.panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.panelSectionBorder { padding: 1rem; border-bottom: 1px solid #e5e7eb; }
+.headerActionsRow { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+.h3Title { font-weight: 500; color: #111827; }
+.btnNew { display: flex; align-items: center; gap: .25rem; padding: .25rem .5rem; background: #3b82f6; color: #fff; border-radius: .375rem; font-size: .875rem; transition: background-color .2s ease; }
+.btnNew:hover { background: #2563eb; }
+.iconXs { width: 12px; height: 12px; }
+.searchWrapRelative { position: relative; margin-bottom: .75rem; }
+.searchIcon { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: #9ca3af; }
+.searchInput { width: 100%; padding: .5rem 1rem .5rem 2.5rem; font-size: .875rem; border: 1px solid #d1d5db; border-radius: .5rem; outline: none; }
+.searchInput:focus { border-color: #3b82f6; }
+.vSpace2 { display: grid; row-gap: .5rem; }
+.tagLabel { display: block; font-size: .75rem; font-weight: 500; color: #374151; margin-bottom: .25rem; }
+.tagsWrap { display: flex; flex-wrap: wrap; gap: .25rem; max-height: 3rem; overflow: hidden; }
+.tagButton { padding: .25rem .5rem; font-size: .75rem; border-radius: .25rem; transition: background-color .2s; background: #f3f4f6; color: #4b5563; }
+.tagButton:hover { background: #e5e7eb; }
+.tagButtonActive { background: #3b82f6; color: #fff; }
+.idTagButtonActive { background: #10b981; color: #fff; }
+.moreButtonBlue { padding: .25rem .5rem; font-size: .75rem; color: #2563eb; border-radius: .25rem; }
+.moreButtonBlue:hover { background: #eff6ff; }
+.moreButtonGreen { padding: .25rem .5rem; font-size: .75rem; color: #059669; border-radius: .25rem; }
+.moreButtonGreen:hover { background: #ecfdf5; }
+.moreDropdownItem { font-size: .875rem; }
+.docList { padding: 1rem; display: flex; flex-direction: column; overflow-y: auto; gap: 10px; }
+.docItem { height: max-content; padding: .75rem; border-radius: .5rem; border: 1px solid #e5e7eb; cursor: pointer; transition: border-color .2s, background-color .2s; }
+.docItem:hover { border-color: #93c5fd; }
+.docItemActive { border-color: #3b82f6; background: #eff6ff; }
+.docItemHeader { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: .5rem; }
+.docItemHeaderLeft { flex: 1 1 0%; }
+.docItemTitle { font-weight: 500; font-size: .875rem; color: #111827; margin-bottom: .25rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.badgesRow { display: flex; gap: .25rem; margin-bottom: .25rem; }
+.badgeType { padding: .125rem .375rem; background: #dbeafe; color: #1d4ed8; font-size: .75rem; border-radius: .25rem; }
+.badgeId { padding: .125rem .375rem; background: #d1fae5; color: #047857; font-size: .75rem; border-radius: .25rem; }
+.meta { font-size: .75rem; color: #4b5563; }
+.dupBtn { opacity: 0; transition: opacity .2s; padding: .25rem; border-radius: .25rem; }
+.docItem:hover .dupBtn { opacity: 1; }
+.dupBtn:hover { background: #dbeafe; }
+.dupIcon { width: 12px; height: 12px; color: #2563eb; }
+.statusRow { display: flex; align-items: center; gap: .5rem; font-size: .75rem; }
+.statusItem { display: flex; align-items: center; gap: .25rem; }
+.lockIcon { width: 12px; height: 12px; color: #6b7280; }
+.unlockIcon { width: 12px; height: 12px; color: #10b981; }
+.lockText { color: #6b7280; }
+.editableText { color: #16a34a; }
+.sharedRow { display: flex; align-items: center; gap: .25rem; }
+.shareIcon { width: 12px; height: 12px; color: #3b82f6; }
+.shareText { color: #2563eb; }
+

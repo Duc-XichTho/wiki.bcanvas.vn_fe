@@ -1,0 +1,8 @@
+.modal .ant-modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.modal .ant-list-item {
+    padding: 8px 0;
+}

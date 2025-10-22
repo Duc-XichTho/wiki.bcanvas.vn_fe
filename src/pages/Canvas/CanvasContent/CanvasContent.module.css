@@ -1,0 +1,320 @@
+@import url(../../../styles/colors.css);
+
+.main {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-image: url('/public/backgroudDashboard.png'); /* hoặc '../assets/Fire.png' nếu bạn import từ asset */
+  background-size: cover;             /* Phóng ảnh vừa container */
+  background-position: center;        /* Canh giữa ảnh */
+  background-repeat: no-repeat;       /* Không lặp lại ảnh */
+}
+
+
+/* .header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0em 1em;
+  flex-shrink: 0;
+} */
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding: 0em 1em;
+  width: calc(100%);
+  height: 50px;
+  z-index: 10;
+}
+
+.headerLeft {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerLeft :global(.ant-select-selection-item) {
+  font-weight: bold;
+  color: #fff;
+}
+
+.headerLeft :global(.ant-select-suffix svg) {
+  color: #fff;
+  display: none;
+}
+
+.headerRight {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+/* .content {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+  padding-bottom: 7em;
+} */
+
+.contentElement {
+  /*position: relative;*/
+  /*flex: 1;*/
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  min-height: 0;
+  padding-bottom: 7em;
+  padding-top: 40px;
+}
+
+.layoutElementContainer {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.37);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 100%;
+}
+
+.layoutElementHeader {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid #dfdbdb;
+}
+
+.layoutElementInfo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 0 10px;
+  gap: 3px;
+}
+
+.layoutElementChild {
+  width: 80px;
+  height: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.layoutElementInfo p,
+.layoutElementInfoFull p {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.layoutElementSetting {
+  width: 30px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.layoutElementComponent {
+  width: 100%;
+  height: 100%;
+  /* flex: 1; */
+  /* min-height: 0; */
+  /* color: #002db7; */
+  overflow: auto;
+  /* position: relative; */
+
+}
+
+.layoutElementComponent::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.layoutElementComponent::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.layoutElementComponent::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.layoutElementComponent::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.zoomIn {
+  animation: zoomIn 0.5s ease-out forwards;
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.previewWrapper {
+  height: 100%;
+  position: relative;
+}
+
+.previewContent {
+  /* aspect-ratio: 16/9;
+  background-color: #f3f4f6; */
+  border-radius: 10px;
+  color: #6b7280;
+  height: 100%;
+  padding: 10px 0px 0px 0px;
+  /* pointer-events: none;
+  user-select: none; */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* z-index: 10; */
+}
+
+.sider {
+  background-color: #fff;
+}
+
+.sider :global(.ant-layout-sider) {
+  background-color: #fff !important;
+}
+
+.sider :global(.ant-layout-sider-trigger) {
+  background-color: #fff;
+}
+
+.sider :global(.anticon-left svg) {
+  color: #262626 !important
+}
+
+.sider :global(.anticon-right svg) {
+  color: #262626 !important
+}
+
+.titleCanvasContainer {
+  font-size: 17px;
+  color: #262626;
+  font-weight: bold;
+}
+
+.select {
+  background-color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.select > span {
+  color: #454545 !important;
+  font-weight: 500;
+}
+
+
+.descriptionCanvasContainer {
+  font-size: 13px;
+  color: #565656;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: help;
+}
+
+.layoutElementContainer {
+  position: relative;
+}
+
+.layoutElementContainer .floatButtons {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.layoutElementContainer:hover .floatButtons {
+  opacity: 1;
+}
+
+.customForm {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap : 3px
+}
+
+.customForm > p {
+  color: rgba(78, 135, 201, 1);
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.itemContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.itemName {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemText {
+  font-size: 11px;
+  white-space: nowrap; /* Đảm bảo không bị xuống dòng */
+}
+
+
+.customSwitch:global(.ant-switch.ant-switch-checked) {
+  background: var(--sab-header-bg) !important;
+}

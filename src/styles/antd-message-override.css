@@ -1,0 +1,54 @@
+/* CSS Override cho Ant Design Message - Độ ưu tiên cao nhất */
+html body .ant-message,
+body .ant-message,
+#root .ant-message,
+.ant-message {
+  position: fixed !important;
+  top: 55px !important;
+  right: 9px !important;
+  left: auto !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  z-index: 9999 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  max-width: calc(100vw - 32px) !important;
+}
+
+html body .ant-message .ant-message-notice,
+body .ant-message .ant-message-notice,
+#root .ant-message .ant-message-notice,
+.ant-message .ant-message-notice {
+  margin-bottom: 8px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+}
+
+html body .ant-message .ant-message-notice-content,
+body .ant-message .ant-message-notice-content,
+#root .ant-message .ant-message-notice-content,
+.ant-message .ant-message-notice-content {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05) !important;
+  background: white !important;
+}
+
+/* Ghi đè tất cả các transform có thể có */
+html body .ant-message,
+body .ant-message,
+#root .ant-message,
+.ant-message {
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  -o-transform: none !important;
+} 

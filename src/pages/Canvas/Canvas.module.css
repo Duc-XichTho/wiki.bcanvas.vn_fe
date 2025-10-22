@@ -1,0 +1,54 @@
+.sider {
+  background-color: #F1F2F3;
+}
+
+.sider :global(.ant-layout-sider) {
+  flex: 0 0 110px !important;
+  max-width: 110px !important;
+  min-width: 110px !important;
+  width: 0px !important;
+  background-color: #F1F2F3;
+}
+
+.sider :global(.ant-layout-sider-children) {
+  background-color: #F1F2F3;
+  width: 100%;
+}
+
+.sider :global(.ant-layout-sider-trigger) {
+  background-color: #F1F2F3;
+  width: 100%;
+}
+
+.sider :global(.anticon-left svg) {
+  color: #D4D4D4
+}
+
+.sider :global(.anticon-right svg) {
+  color: #D4D4D4
+}
+
+.menu :global(.ant-menu) {
+  margin-top: 1em;
+  background-color: #F1F2F3;
+  border-inline-end: none !important;
+}
+
+.menu :global(.ant-menu-item) {
+  border: none;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.392);
+  margin-bottom: 1.5em;
+}
+
+.menu :global(.ant-menu-item-icon) {
+  font-size: 12px !important;
+  line-height: 15px !important;
+  font-weight: 500;
+}
+
+.menu :global(.ant-menu-item-selected) {
+  background-color: #0d5eab;
+  color: white;
+}

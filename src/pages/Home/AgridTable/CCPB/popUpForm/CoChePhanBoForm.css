@@ -1,0 +1,128 @@
+.co-che-phan-bo-popup {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.co-che-phan-bo-popup-form {
+    width: 50%;
+    height: max-content;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.co-che-phan-bo-popup-header {
+    width: 100%;
+    height: 7%;
+}
+
+.co-che-phan-bo-popup-header span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.co-che-phan-bo-popup-body {
+    width: 100%;
+    height: 86%;
+    margin-bottom: 1em;
+}
+
+.co-che-phan-bo-popup-body-ag-grid-title {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 15px 0px 0px 0px;
+}
+
+.co-che-phan-bo-popup-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 7%;
+}
+
+.co-che-phan-bo-popup-footer-wrap {
+    width: 13%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.co-che-phan-bo-popup-body-mo-ta-and-ma-co-che {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.co-che-phan-bo-popup-body-ma-co-che {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px
+}
+
+.co-che-phan-bo-popup-body-mo-ta > p,
+.co-che-phan-bo-popup-body-ma-co-che > p {
+    width: max-content;
+}
+
+.co-che-phan-bo-popup-body-mo-ta {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.co-che-phan-bo-popup-body-select {
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #5f5e5b;
+    border-radius: 8px;
+    background-color: #eeeeee;
+    width: 135px;
+    padding: 3px 0;
+    margin-left: 50px;
+}
+
+.co-che-phan-bo-popup-body-select select {
+    background: #eee;
+    border-radius: 10px;
+    width: 150px;
+    padding: 3px 0;
+    margin-left: 10px;
+    color: #5f5e5b !important;
+    height: 29px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.co-che-phan-bo-popup-body-add-row {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px
+}

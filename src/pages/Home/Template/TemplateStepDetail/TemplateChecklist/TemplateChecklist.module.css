@@ -1,0 +1,77 @@
+.inputListContainer {
+    padding: 0 10px 10px;
+    margin: 0 auto;
+}
+
+.checklistHeader {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 0 8px;
+}
+
+.checklistActions,
+.editActions {
+    display: flex;
+    gap: 8px;
+}
+
+.newItemInput {
+    display: flex;
+    margin-bottom: 12px;
+    gap: 8px;
+}
+
+.newItemInput input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.newItemInput button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.checklistContainer {
+    margin-top: 10px;
+}
+
+.checklistItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.checklistItem input[type="checkbox"] {
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.checklistItem span {
+    flex-grow: 1;
+    transition: text-decoration 0.2s ease;
+}
+
+.checklistItem.completed span {
+    text-decoration: line-through;
+    color: #888;
+    opacity: 0.7;
+}
+
+.removeItem,
+.removeTask {
+    margin-left: auto;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 3px 8px;
+    cursor: pointer;
+}

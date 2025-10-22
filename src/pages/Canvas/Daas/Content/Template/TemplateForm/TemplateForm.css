@@ -1,0 +1,20 @@
+.template-form-container {
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.date-fields-container {
+  display: flex;
+  gap: 16px;
+}
+
+.date-fields-container .ant-form-item {
+  flex: 1;
+}
+
+.form-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+} 

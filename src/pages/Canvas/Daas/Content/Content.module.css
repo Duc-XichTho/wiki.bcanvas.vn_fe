@@ -1,0 +1,715 @@
+
+.headerContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap:10px;
+    height: 10%;
+    margin-bottom: 10px;
+}
+
+
+
+.headerInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 3px 10px 3px 10px;
+    width: 400px;
+}
+
+.container {
+    height: 93vh;
+    width: 100%;
+    padding: 10px;
+    overflow-y: hidden;
+}
+
+
+.info {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Nút kết nối API */
+.apiButton {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    font-size: 16px;
+    gap: 10px;
+}
+
+.select {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    position: relative;
+    font-size: 16px;
+    gap: 5px;
+}
+
+.customMenu {
+    max-width: 180px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-color);
+
+}
+
+.customMenu .ant-popover-content {
+    height: 20px;
+    line-height: 30px;
+}
+
+.customMenu .ant-popover-content:hover {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.apiButton > span {
+    cursor: pointer;
+}
+
+.dropdown {
+    color: #28a745;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mainContent {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    /*padding: 20px 15px 15px 15px;*/
+    gap: 15px;
+}
+
+.mainContent2 {
+    /*display: flex;*/
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    gap: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.mainContent2Wrap {
+    width: 85%;
+    height: 100%;
+}
+
+.headerTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.reportHeader {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 450;
+    gap: 25px
+}
+
+.reportHeader > span {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.name {
+    color: black;
+}
+
+/* Phần nội dung chính */
+.valueContent {
+    /*background-color: #D9D9D9;*/
+    height: 85%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.valueContent2 {
+    height: 100%;
+    width: 70%;
+    /*display: flex;*/
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+}
+
+
+/* Placeholder */
+.placeholder {
+    width: 100%;
+    height: 95%;
+    overflow: auto;
+}
+
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    height: 4%;
+}
+
+.tabs button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #666;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.tabs button:hover {
+    color: #000;
+}
+
+.tabs .activeTab {
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
+}
+.sidebar {
+    width: 29%;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.collapsed {
+    width: 5%;
+    height: 100%;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    margin-top: 13px;
+}
+
+.header2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    margin-top: 2px;
+}
+
+.headerLeft {
+    color: #454545;
+    display: flex;
+    align-items: center;
+    padding: 11px 20px 11px 20px;
+    border-radius: 2px;
+}
+
+.headerLeft > span {
+    display: inline-block; /* Hiển thị trên 1 dòng */
+    overflow: hidden; /* Ẩn nội dung thừa */
+    text-overflow: ellipsis; /* Hiển thị dấu "..." khi nội dung bị cắt */
+    white-space: nowrap; /* Ngăn văn bản xuống dòng */
+    max-width: 100%; /* Đảm bảo không bị tràn */
+    font-size: 20px;
+    color: #454545;
+}
+
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 10%;
+}
+
+.uploadButton {
+    background: #FFFAF1;
+    color: #454545;
+    border-radius: 6px;
+    border: 1px solid #E3B497;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    width: max-content;
+}
+
+.uploadButton > span {
+    font-size: 11px;
+    padding: 4px 7px;
+
+}
+
+.icon {
+    font-size: 16px;
+    cursor: pointer;
+    color: #555;
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    justify-content: space-between;
+}
+
+.tags > img {
+    width: 18px;
+    height: 18px;
+}
+
+
+.tags > p {
+    font-size: 11px;
+    color: #868686;
+    flex-shrink: 0; /* Không bị co lại */
+    margin-left: 5px;
+}
+.tagRight{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.bookmark{
+    margin-top: 3px;
+}
+.tag {
+    background: #E8E8E8;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #606060;
+    border: 1px solid #D2D2D2;
+}
+
+
+.item {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 10px;
+}
+
+.item:hover {
+    background: #ddd;
+}
+
+
+.fileList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+    height: 85%;
+    overflow: auto;
+    padding: 10px 10px 10px 0px;
+}
+
+.fileCard {
+    background: white;
+    padding: 7px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0px 1px 1px 0px #00000040;
+    height: 69px;
+    border: 1px solid #e8e8e8;
+
+}
+
+
+.fileType {
+    padding: 13px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.fileInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fileTitle {
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn tối đa 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.4; /* Điều chỉnh khoảng cách dòng */
+    max-width: 100%; /* Đảm bảo không bị cắt ngang */
+    color: #454545;
+    word-break: break-word; /* Cho phép cắt từ nếu quá dài */
+    overflow-wrap: anywhere; /* Xuống dòng ở bất kỳ đâu */
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.fileMeta {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.tagName {
+    font-size: 11px;
+    color: #555;
+    display: flex;
+    width: 30%;
+}
+
+.tagName > span {
+    white-space: nowrap; /* Ngăn xuống dòng */
+    overflow: hidden; /* Ẩn phần dư */
+    text-overflow: ellipsis; /* Hiển thị "..." khi bị cắt */
+    max-width: 100px; /* Điều chỉnh theo kích thước mong muốn */
+    display: inline-block; /* Giúp áp dụng hiệu ứng */
+}
+
+.updateAt {
+    font-size: 11px;
+    color: #555;
+    display: flex;
+    justify-content: center;
+    width: 55%;
+}
+
+.fileActions {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    justify-content: end;
+}
+
+.bookmarkIcon, .optionsIcon {
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+}
+
+.bookmarkIcon:hover, .optionsIcon:hover {
+    color: #333;
+}
+
+.fileTypeName {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+
+.headerOption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 7px;
+    position: relative;
+}
+
+.buttonSearch {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #5f5e5b;
+    justify-content: center;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.buttonSearch > img {
+    height: 20px;
+}
+
+.filterTag {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.filterTag {
+    color: #868686;
+    font-size: 15px;
+}
+.filterTag > img {
+    width: 18px;
+    height: 18px;
+}
+.wrapSpan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 150px;
+    z-index: 10;
+}
+
+.dropdownMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdownMenu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dropdownMenu li:hover {
+    background: #f0f0f0;
+}
+
+.quickFilterInput {
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px; */
+    border: unset;
+    width: 76px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: #FCFCFC;
+}
+
+.quickFilterInput::placeholder {
+    color: var(--header-text);
+    padding-left: unset;
+}
+
+.popoverContainer {
+    padding: 10px;
+    max-width: 250px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.popoverTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+.tagPopUp {
+    padding: 4px 8px;
+    font-size: 12px;
+    color: #454545;
+    border-radius: 19px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.selectedTag {
+    background: #F9F9F9;
+    border: 1px solid #D2D2D2
+}
+
+.deleteOption {
+    font-size: 14px;
+    font-weight: bold;
+    color: #d9534f;
+    cursor: pointer;
+    padding: 8px 0;
+    border-top: 1px solid #ddd;
+}
+
+.deleteOption:hover {
+    color: #c9302c;
+}
+
+.turnOnOption {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2EA856;
+    cursor: pointer;
+    padding: 8px 0;
+    border-top: 1px solid #ddd;
+}
+
+.turnOnOption:hover {
+    color: #2EA856;
+}
+
+.setting {
+}
+
+.settingIcon {
+    opacity: 0.5; /* Mờ icon khi không hover */
+    transition: opacity 0.3s ease-in-out;
+    margin-top: 5px;
+    margin-right: 13px;
+}
+
+.setting:hover .settingIcon {
+    opacity: 1; /* Hiển thị icon khi hover */
+}
+
+.dropdown1 :global(.ant-dropdown-menu) {
+    padding: 0 !important;
+}
+
+.dropdown1 :global(.ant-dropdown-menu-item) {
+    padding: 0 !important;
+}
+
+.item_dropDown:hover {
+    background: #e6e6e6 !important;
+}
+
+.planInfo {
+    display: flex;
+    border: 1px solid rgba(217, 217, 217, 1);
+    align-items: center;
+    gap: 27px;
+    padding: 3px 10px 3px 10px;
+    border-radius: 10px;
+}
+
+
+.container_top {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    height: 120px;
+    gap: 15px;
+    padding-left: 30px;
+    border-radius: 5px;
+}
+
+.total {
+    width: 150px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    padding: 5px 16px;
+    height: 75px;
+}
+
+.total span {
+
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--header-text);
+}
+
+.ip_con {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
+    width: 170px;
+    height: 75px;
+}
+
+.ip_con span {
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--header-text);
+}
+
+.flexRow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0;
+    padding: 16px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.selectBox {
+    min-width: 200px;
+}
+.add,
+.form,
+.tableSetting {
+    padding: 0.3em 1em;
+    background-color: #f6f6f6;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.add > span,
+.form > span {
+    font-size: 15px;
+    color: #262626;
+}
+
+.search {
+    width: 100%;
+    height: 7%;
+    display: flex;
+    align-items: center;
+}
+
+.searchWrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+    border-radius: 5px;
+}
+
+
+.searchBox {
+    color: #262626;
+    width: 100%;
+    height: 100%;
+    padding: 0 0.8em;
+    font-size: 16px;
+    background-color: rgba(0,0,0,0);
+}
+
+.tagsContainer{
+    padding: 12px;
+    height: 90%;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 2px;
+}

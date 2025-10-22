@@ -1,0 +1,42 @@
+.container {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    height: 70vh;
+    overflow: auto;
+}
+.selectionList{
+    width: 100%;
+
+    padding: 0;
+
+}
+.listCard{
+    width: 25%;
+}
+
+.selectors{
+}
+
+.listStep{
+
+}
+
+.listSheet{
+
+}
+
+.sheet{
+
+}
+.modal2{
+    height: 70vh;
+    overflow: auto;
+}
+.data_table{
+    width: 100%;
+    border: 1px solid #909090;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}

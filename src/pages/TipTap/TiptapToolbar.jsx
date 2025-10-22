@@ -1,0 +1,331 @@
+import { useRef, useEffect } from 'react';
+import css from './TipTap.module.css';
+import {
+  BoldIcon, HighlightIcon, ItalicIcon, StrikeIcon, UnderlineIcon,
+  BlockquoteIcon, BulletListIcon, OrderedListIcon, ImageIcon,
+  InsertTableIcon, ColumnInsertLeftIcon, ColumnInsertRightIcon,
+  DeleteColumnIcon, RowInsertTopIcon, RowInsertBottomIcon,
+  DeleteRowIcon, DeleteTableIcon, CellMergeIcon, SplitCellIcon,
+  SetColorIcon, EraserIcon, FontFillIcon, AlignLeftIcon, AlignCenterIcon,
+  AlignRightIcon,
+} from "./ListIcon";
+
+export function TiptapToolbar({
+  editor,
+  tableMenuOpen,
+  setTableMenuOpen,
+  fontMenuOpen,
+  setFontMenuOpen,
+  colorPickerMenuOpen,
+  setColorPickerMenuOpen
+}) {
+  const tableMenuRef = useRef(null);
+  const colorPickerRef = useRef(null);
+  const fontMenuRef = useRef(null);
+
+  const addImage = () => {
+    const url = window.prompt('URL')
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run()
+    }
+  }
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (tableMenuRef.current && !tableMenuRef.current.contains(event.target)) {
+        setTableMenuOpen(false);
+      }
+      if (colorPickerRef.current && !colorPickerRef.current.contains(event.target)) {
+        setColorPickerMenuOpen(false);
+      }
+      if (fontMenuRef.current && !fontMenuRef.current.contains(event.target)) {
+        setFontMenuOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  if (!editor) {
+    return null;
+  }
+
+  return (
+    <div className={css.controlGroup}>
+      <div className={css.buttonGroup}>
+        <button
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          className={editor.isActive('bold') ? css.isActive : ''}
+        >
+          <BoldIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHighlight().run()}
+          className={editor.isActive('highlight') ? css.isActive : ''}
+        >
+          <HighlightIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          className={editor.isActive('italic') ? css.isActive : ''}
+        >
+          <ItalicIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+          className={editor.isActive('strike') ? css.isActive : ''}
+        >
+          <StrikeIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          className={editor.isActive('underline') ? css.isActive : ''}
+        >
+          <UnderlineIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          className={editor.isActive('blockquote') ? css.isActive : ''}
+        >
+          <BlockquoteIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          className={editor.isActive('bulletList') ? css.isActive : ''}
+        >
+          <BulletListIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          className={editor.isActive('orderedList') ? css.isActive : ''}
+        >
+          <OrderedListIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          className={editor.isActive('heading', { level: 1 }) ? css.isActive : ''}
+        >
+          H1
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          className={editor.isActive('heading', { level: 2 }) ? css.isActive : ''}
+        >
+          H2
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+          className={editor.isActive('heading', { level: 3 }) ? css.isActive : ''}
+        >
+          H3
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+          className={editor.isActive('heading', { level: 4 }) ? css.isActive : ''}
+        >
+          H4
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
+          className={editor.isActive('heading', { level: 5 }) ? css.isActive : ''}
+        >
+          H5
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
+          className={editor.isActive('heading', { level: 6 }) ? css.isActive : ''}
+        >
+          H6
+        </button>
+        <button onClick={addImage}><ImageIcon /></button>
+        <div className={css.tableMenuContainer} ref={tableMenuRef}>
+          <button
+            onClick={() => setTableMenuOpen(!tableMenuOpen)}
+            className={tableMenuOpen ? css.isActive : ''}
+          >
+            <InsertTableIcon />
+          </button>
+          {tableMenuOpen && (
+            <div className={css.tableDropdownMenu}>
+              <button onClick={() => {
+                editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+                setTableMenuOpen(false);
+              }}>
+                <InsertTableIcon /> <span>Thêm bảng</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().addColumnBefore().run();
+                setTableMenuOpen(false);
+              }}>
+                <ColumnInsertRightIcon /> <span>Thêm cột bên trái</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().addColumnAfter().run();
+                setTableMenuOpen(false);
+              }}>
+                <ColumnInsertLeftIcon /> <span>Thêm cột bên phải</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().deleteColumn().run();
+                setTableMenuOpen(false);
+              }}>
+                <DeleteColumnIcon /> <span>Xóa cột</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().addRowBefore().run();
+                setTableMenuOpen(false);
+              }}>
+                <RowInsertTopIcon /> <span>Thêm dòng bên trên</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().addRowAfter().run();
+                setTableMenuOpen(false);
+              }}>
+                <RowInsertBottomIcon /> <span>Thêm dòng bên dưới</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().deleteRow().run();
+                setTableMenuOpen(false);
+              }}>
+                <DeleteRowIcon /> <span>Xóa dòng</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().deleteTable().run();
+                setTableMenuOpen(false);
+              }}>
+                <DeleteTableIcon /> <span>Xóa bảng</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().mergeCells().run();
+                setTableMenuOpen(false);
+              }}>
+                <CellMergeIcon /> <span>Hợp nhất ô</span>
+              </button>
+              <button onClick={() => {
+                editor.chain().focus().splitCell().run();
+                setTableMenuOpen(false);
+              }}>
+                <SplitCellIcon /> <span>Tách ô</span>
+              </button>
+            </div>
+          )}
+        </div>
+        <div className={css.colorPickerContainer} ref={colorPickerRef}>
+          <button
+            onClick={() => setColorPickerMenuOpen(!colorPickerMenuOpen)}
+            className={colorPickerMenuOpen ? css.isActive : ''}
+          >
+            <SetColorIcon />
+          </button>
+          {colorPickerMenuOpen && (
+            <div className={css.colorPickerDropdown}>
+              <input
+                type="color"
+                className={css.colorPicker}
+                onInput={event => editor.chain().focus().setColor(event.target.value).run()}
+                value={editor.getAttributes('textStyle').color}
+                data-testid="setColor"
+              />
+              <button
+                onClick={() => {
+                  editor.chain().focus().unsetColor().run();
+                  setColorPickerMenuOpen(false);
+                }}
+                data-testid="unsetColor"
+              >
+                Unset color
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className={css.fontMenuContainer} ref={fontMenuRef}>
+          <button
+            onClick={() => setFontMenuOpen(!fontMenuOpen)}
+            className={fontMenuOpen ? css.isActive : ''}
+          >
+            <FontFillIcon />
+          </button>
+          {fontMenuOpen && (
+            <div className={css.fontDropdownMenu}>
+              <button
+                onClick={() => {
+                  editor.chain().focus().setFontFamily('Comic Sans MS').run();
+                  setFontMenuOpen(false);
+                }}
+                className={
+                  editor.isActive('textStyle', { fontFamily: 'Comic Sans MS' })
+                    ? css.isActive
+                    : ''
+                }
+                data-test-id="comic-sans"
+              >
+                <span style={{ fontFamily: 'Comic Sans MS' }}>Comic Sans</span>
+              </button>
+              <button
+                onClick={() => {
+                  editor.chain().focus().setFontFamily('serif').run();
+                  setFontMenuOpen(false);
+                }}
+                className={editor.isActive('textStyle', { fontFamily: 'serif' }) ? css.isActive : ''}
+                data-test-id="serif"
+              >
+                <span style={{ fontFamily: 'serif' }}>Serif</span>
+              </button>
+              <button
+                onClick={() => {
+                  editor.chain().focus().setFontFamily('monospace').run();
+                  setFontMenuOpen(false);
+                }}
+                className={editor.isActive('textStyle', { fontFamily: 'monospace' }) ? css.isActive : ''}
+                data-test-id="monospace"
+              >
+                <span style={{ fontFamily: 'monospace' }}>Monospace</span>
+              </button>
+              <button
+                onClick={() => {
+                  editor.chain().focus().setFontFamily('cursive').run();
+                  setFontMenuOpen(false);
+                }}
+                className={editor.isActive('textStyle', { fontFamily: 'cursive' }) ? css.isActive : ''}
+                data-test-id="cursive"
+              >
+                <span style={{ fontFamily: 'cursive' }}>Cursive</span>
+              </button>
+              <button
+                onClick={() => {
+                  editor.chain().focus().unsetFontFamily().run();
+                  setFontMenuOpen(false);
+                }}
+                data-test-id="unsetFontFamily"
+              >
+                <EraserIcon /> <span>Bỏ font</span>
+              </button>
+            </div>
+          )}
+        </div>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign('left').run()}
+          className={editor.isActive({ textAlign: 'left' }) ? css.isActive : ''}
+        >
+          <AlignLeftIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign('center').run()}
+          className={editor.isActive({ textAlign: 'center' }) ? css.isActive : ''}
+        >
+          <AlignCenterIcon />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setTextAlign('right').run()}
+          className={editor.isActive({ textAlign: 'right' }) ? css.isActive : ''}
+        >
+          <AlignRightIcon />
+        </button>
+      </div>
+    </div>
+  );
+}

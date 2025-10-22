@@ -1,0 +1,83 @@
+.createStoragePopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.createStoragePopup.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.createPopupContent {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 90%;
+}
+
+.createPopupTitle {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.createPopupInput {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  outline: none;
+}
+
+.createPopupInput:focus {
+  border-color: #3b82f6;
+}
+
+.createPopupButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.createPopupButton {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.createButtonCancel {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.createButtonCancel:hover {
+  background-color: #d1d5db;
+}
+
+.createButtonConfirm {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.createButtonConfirm:hover {
+  background-color: #2563eb;
+}

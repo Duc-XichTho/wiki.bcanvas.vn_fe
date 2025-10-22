@@ -1,0 +1,73 @@
+.modal {
+    border-radius: 12px;
+}
+
+.modalContent {
+    padding: 8px 0;
+}
+
+.description {
+    color: #666;
+    margin-bottom: 24px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.form {
+    margin-top: 16px;
+}
+
+.input {
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    transition: all 0.3s ease;
+}
+
+.input:hover {
+    border-color: #40a9ff;
+}
+
+.input:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.cancelButton {
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    color: #666;
+    font-weight: 500;
+    min-width: 80px;
+}
+
+.cancelButton:hover {
+    border-color: #40a9ff;
+    color: #40a9ff;
+}
+
+.submitButton {
+    border-radius: 8px;
+    background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%);
+    border: none;
+    font-weight: 500;
+    min-width: 100px;
+    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.3);
+}
+
+.submitButton:hover {
+    background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
+    box-shadow: 0 4px 8px rgba(24, 144, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+.submitButton:active {
+    transform: translateY(0);
+}

@@ -1,0 +1,853 @@
+.mainContainer {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+		'Open Sans', 'Helvetica Neue', sans-serif;
+	padding: 15px 0;
+	color: #333;
+	background-color: #eceaea;
+	height: 100%;
+}
+
+.settingIcon {
+	line-height: 20px;
+	transition: transform 0.2s;
+}
+
+.settingIcon:hover {
+	transform: rotate(90deg);
+}
+
+.leftHeader {
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.headerLabel {
+	font-weight: bold;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.headerLeft {
+	display: flex;
+	align-items: center;
+	gap: 7px; /* Giảm khoảng cách giữa "Thẻ công việc/ ticket" và "Tạo mới" */
+}
+
+.footerButtonAdd {
+	display: flex;
+	align-items: center;
+	gap: 4px; /* Giảm khoảng cách giữa icon và chữ */
+	padding: 4px 8px;
+	background-color: #ffffff;
+	border-radius: 8px;
+	color: #454545;
+}
+
+.profileIcon {
+	background-color: #1e90ff;
+	color: white;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+}
+
+.filterTabs {
+	display: flex;
+	margin-bottom: 15px;
+	gap: 10px;
+}
+
+.filterTab {
+	padding: 4px 16px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	background: none;
+	font-size: 14px;
+	cursor: pointer;
+	color: #454545;
+}
+
+.secondaryTabs {
+	display: flex;
+	margin-bottom: 15px;
+	align-items: center;
+	gap: 10px;
+}
+
+.secondaryTab {
+	padding: 4px 30px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	background: none;
+	font-size: 14px;
+	cursor: pointer;
+	color: #454545;
+}
+
+.activeTab {
+	border-color: #1e90ff;
+	color: #1e90ff;
+}
+
+.searchButton {
+	border: none;
+	background: none;
+	cursor: pointer;
+	padding: 0;
+	display: flex;
+	align-items: center;
+}
+
+.componentLabel {
+	display: flex;
+	align-items: center;
+	margin: 15px 0;
+	color: #c792ea;
+	font-size: 14px;
+}
+
+.componentIcon {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background-color: #c792ea;
+	border-radius: 50%;
+	margin-right: 8px;
+}
+
+.ticketListContainer {
+	height: calc(100vh - 300px); /* Reduced height to accommodate footer */
+	overflow-y: auto;
+	margin-right: -10px;
+	padding-right: 10px;
+}
+
+.ticketList {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	padding-bottom: 20px; /* Add some padding at the bottom */
+}
+
+/* Custom scrollbar styling */
+.ticketListContainer::-webkit-scrollbar {
+	width: 6px;
+}
+
+.ticketListContainer::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 10px;
+}
+
+.ticketListContainer::-webkit-scrollbar-thumb {
+	background: #ccc;
+	border-radius: 10px;
+}
+
+.ticketListContainer::-webkit-scrollbar-thumb:hover {
+	background: #aaa;
+}
+
+/* For Firefox */
+.ticketListContainer {
+	scrollbar-width: thin;
+	scrollbar-color: #ccc #f1f1f1;
+}
+
+.ticketItem {
+	display: flex;
+	border: 1px solid #eee;
+	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+	background-color: #f5f5f5;
+}
+
+.orangeTicket{
+	display: flex;
+	justify-content: center; /* Căn giữa theo chiều ngang */
+	align-items: center; /* Căn giữa theo chiều dọc */
+	height: 100%; /* Đảm bảo phần tử cha có chiều cao */
+}
+.orangeTicket .ticketStatus {
+	width: 8px;
+	height: 10px;
+	display: block;
+	border-radius: 2px;
+	margin-right: 5px;
+	background-color: #ff7043;
+}
+
+.greenTicket{
+	display: flex;
+	justify-content: center; /* Căn giữa theo chiều ngang */
+	align-items: center; /* Căn giữa theo chiều dọc */
+	height: 100%; /* Đảm bảo phần tử cha có chiều cao */
+}
+.greenTicket .ticketStatus {
+	width: 8px;
+	height: 10px;
+	display: block;
+	border-radius: 2px;
+	margin-right: 5px;
+	background-color: #4caf50;
+}
+.blueTicket {
+	display: flex;
+	justify-content: center; /* Căn giữa theo chiều ngang */
+	align-items: center; /* Căn giữa theo chiều dọc */
+	height: 100%; /* Đảm bảo phần tử cha có chiều cao */
+}
+.blueTicket .ticketStatus {
+	width: 8px;
+	height: 10px;
+	display: block;
+	border-radius: 2px;
+	margin-right: 5px;
+	background-color: #2196f3;
+}
+
+.ticketContent {
+	padding: 8px 15px;
+	display: flex;
+	flex-grow: 1;
+}
+
+.ticketCheck {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 10px;
+}
+
+.warningIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #ff9800;
+	font-size: 20px;
+	margin-right: 10px;
+	width: 20px;
+}
+
+.ticketInfo {
+	flex-grow: 1;
+}
+
+.ticketTitle {
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+
+.ticketMeta {
+	display: flex;
+	align-items: center;
+	color: #888;
+	font-size: 11px; /* Smaller text size */
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.ticketTimeUser {
+	display: flex;
+	align-items: center;
+}
+
+.ticketTagsContainer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.ticketTags {
+	margin-left: auto;
+	display: flex;
+	gap: 8px;
+	overflow: hidden;
+}
+
+.ticketTag {
+	display: flex;
+	align-items: center;
+	max-width: 120px;
+	overflow: hidden;
+}
+
+.tagLabel {
+	color: #666;
+	font-weight: 500;
+	margin-right: 2px;
+}
+
+.tagValue {
+	color: #888;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 80px;
+}
+
+.commentIcon {
+	margin-left: 8px;
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.profileInitial {
+	background-color: #673ab7;
+	color: white;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.searchContainer {
+	margin: 10px 0 15px 0;
+	position: relative;
+}
+
+.searchInput {
+	width: 100%;
+	padding: 8px 12px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	font-size: 14px;
+	outline: none;
+	transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+	border-color: #1e90ff;
+}
+
+.noResults {
+	padding: 20px 0;
+	text-align: center;
+	color: #888;
+	font-style: italic;
+}
+
+.componentCount {
+	font-weight: bold;
+	margin-left: 5px;
+}
+
+/*!* Footer styles *!*/
+/*.leftFooter {*/
+/*	display: flex;*/
+/*	justify-content: center;*/
+/*	gap: 10px;*/
+/*	padding-top: 15px;*/
+/*	border-top: 1px solid #eee;*/
+/*}*/
+
+.footerButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+	border: 1px solid #ffffff;
+	border-radius: 8px;
+	background-color: #ffffff;
+	color: #737171;
+	font-size: 14px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+/*.footerButton:hover {*/
+/*	border-color: none;*/
+/*	color: #000000;*/
+/*}*/
+
+.buttonIcon {
+	color: #737171;
+}
+
+/*.footerButton:hover .buttonIcon {*/
+/*	color: #000000;*/
+/*}*/
+
+/* Modal styles */
+.modalOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modalContent {
+	background-color: white;
+	border-radius: 8px;
+	width: 500px;
+	max-width: 90%;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.modalHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 16px 20px;
+	border-bottom: 1px solid #eee;
+}
+
+.modalHeader h3 {
+	margin: 0;
+	font-size: 18px;
+	color: #333;
+}
+
+.closeButton {
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: #888;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.closeButton:hover {
+	color: #333;
+}
+
+.createForm {
+	padding: 20px;
+}
+
+.formGroup {
+	margin-bottom: 16px;
+}
+
+.formGroup label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 14px;
+	color: #555;
+}
+
+.formGroup input,
+.formGroup select {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-size: 14px;
+	color: #333;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+	border-color: #1e90ff;
+	outline: none;
+}
+
+.formActions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 12px;
+	margin-top: 24px;
+}
+
+.cancelButton {
+	padding: 8px 16px;
+	background: none;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	color: #666;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.submitButton {
+	padding: 8px 16px;
+	background-color: #4caf50;
+	border: 1px solid #4caf50;
+	border-radius: 6px;
+	color: white;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.cancelButton:hover {
+	border-color: #ccc;
+	background-color: #f9f9f9;
+}
+
+.submitButton:hover {
+	background-color: #3d9140;
+}
+
+/* Error message */
+.errorMessage {
+	background-color: #ffebee;
+	color: #d32f2f;
+	padding: 12px;
+	border-radius: 6px;
+	margin-bottom: 16px;
+	font-size: 14px;
+	border-left: 3px solid #d32f2f;
+}
+
+/* Loading state for buttons */
+.submitButton:disabled, 
+.cancelButton:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+/* Type-based select styling */
+.selectCustomer {
+	border-left: 3px solid #ff7043 !important;
+}
+
+.selectEmployee {
+	border-left: 3px solid #4caf50 !important;
+}
+
+.selectInternal {
+	border-left: 3px solid #2196f3 !important;
+}
+
+/* Type indicators in the form */
+.typeIndicator {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	margin-right: 8px;
+}
+
+.customerIndicator {
+	background-color: #ff7043;
+}
+
+.employeeIndicator {
+	background-color: #4caf50;
+}
+
+.internalIndicator {
+	background-color: #2196f3;
+}
+
+/* Tag Settings Modal */
+.tagSettingsContent {
+	padding: 20px;
+}
+
+.addTagSection, .manageTagsSection {
+	margin-bottom: 24px;
+}
+
+.addTagSection h4, .manageTagsSection h4 {
+	font-size: 16px;
+	margin-bottom: 12px;
+	color: #333;
+}
+
+.addTagForm {
+	display: flex;
+	gap: 8px;
+}
+
+.tagInput {
+	flex: 1;
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+.addTagButton {
+	background-color: #4caf50;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+.addTagButton:hover {
+	background-color: #3d9140;
+}
+
+.tagSearchBox {
+	position: relative;
+	margin-bottom: 16px;
+}
+
+.tagSearchIcon {
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #888;
+}
+
+.tagSearchInput {
+	width: 100%;
+	padding: 8px 12px 8px 36px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-size: 14px;
+}
+
+.tagsList {
+	max-height: 300px;
+	overflow-y: auto;
+	border: 1px solid #eee;
+	border-radius: 6px;
+}
+
+.tagItem {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 16px;
+	border-bottom: 1px solid #eee;
+}
+
+.tagItem:last-child {
+	border-bottom: none;
+}
+
+.removeTagButton {
+	background: none;
+	border: none;
+	color: #d32f2f;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px;
+	opacity: 0.7;
+	transition: opacity 0.2s;
+}
+
+.removeTagButton:hover {
+	opacity: 1;
+}
+
+.noTagsFound {
+	padding: 16px;
+	text-align: center;
+	color: #888;
+	font-style: italic;
+}
+
+/* Loading indicators */
+.buttonLoader {
+	width: 16px;
+	height: 16px;
+	border: 2px solid #ffffff;
+	border-radius: 50%;
+	border-top-color: transparent;
+	animation: spin 0.8s linear infinite;
+	display: inline-block;
+}
+
+.loadingTags {
+	padding: 16px;
+	text-align: center;
+	color: #888;
+	font-style: italic;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+/* Disabled state for inputs and buttons */
+.tagInput:disabled,
+.addTagButton:disabled,
+.removeTagButton:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+/* Improved tag confirmation UI */
+.tagItemHighlighted {
+	background-color: #fff8e1;
+	transition: background-color 0.2s ease;
+}
+
+.inlineConfirmation {
+	display: flex;
+	gap: 8px;
+}
+
+.confirmButton {
+	background-color: #f44336;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	padding: 4px 10px;
+	font-size: 12px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 40px;
+}
+
+.confirmButton:hover {
+	background-color: #d32f2f;
+}
+
+.cancelConfirmButton {
+	background-color: #e0e0e0;
+	color: #333;
+	border: none;
+	border-radius: 4px;
+	padding: 4px 10px;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.cancelConfirmButton:hover {
+	background-color: #bdbdbd;
+}
+
+.smallLoader {
+	width: 12px;
+	height: 12px;
+	border: 2px solid #ffffff;
+	border-radius: 50%;
+	border-top-color: transparent;
+	animation: spin 0.8s linear infinite;
+	display: inline-block;
+}
+
+/* Add to your existing CSS */
+
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    color: #777;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.selectedTicket {
+    background-color: rgba(0, 132, 255, 0.05);
+}
+
+/* Add this to your existing CSS */
+.picSelect {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.picSelect:focus {
+    border-color: #0084ff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 132, 255, 0.2);
+}
+
+/* Add this to your existing CSS */
+.chatIcon {
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Add these styles to your CSS file */
+
+.ticketTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.copyButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  margin-left: 5px;
+  flex-shrink: 0;
+}
+
+.copyButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  opacity: 1;
+}
+
+.ticketItem:hover .copyButton {
+  opacity: 0.8;
+}
+.dropdownButton {
+    background: transparent; /* Xóa nền xám */
+    border: none; /* Xóa viền */
+    padding: 0; /* Xóa padding dư thừa */
+    display: flex; /* Căn giữa icon */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* Hiển thị con trỏ khi hover */
+	color: #454545;
+}

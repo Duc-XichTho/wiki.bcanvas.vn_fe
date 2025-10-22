@@ -1,0 +1,30 @@
+.leftPanelContent {
+    background-color: white;
+    padding: 10px;
+    font-size: 16px;
+    overflow-y: auto;
+    flex-grow: 1; /* Giúp phần nội dung chiếm phần còn lại của panel */
+}
+
+.headerName {
+    font-weight: 600;
+    width: 100%;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap : 10px;
+    transition: background-color 0.3s;
+    padding: 10px 5px;
+
+}
+
+.arrow {
+    font-size: 13px;
+    transition: transform 0.3s;
+    font-weight: 600;
+
+}
+
+

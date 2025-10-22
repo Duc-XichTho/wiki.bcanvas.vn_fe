@@ -1,0 +1,157 @@
+.previewBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.previewImage {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.previewPdf {
+    width: 100%;
+    height: 83vh;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.31);
+    margin: auto;
+}
+
+.previewDoc {
+    width: 100%;
+    height: 70vh;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.31);
+    margin: auto;
+}
+
+.docContent {
+    height: 100%;
+}
+
+.previewDefault {
+    text-align: center;
+    font-size: 16px;
+    color: #555;
+}
+
+.previewBody p {
+    margin: 10px 0;
+}
+
+
+
+.main {
+    width: 100%;
+    height: 100%;
+    color: #454545;
+}
+
+.quill {
+    width: 100%;
+    height: 96%;
+    color: #454545;
+    display: flex;
+}
+
+.quill :global(.ql-container),
+.quill :global(.ql-toolbar),
+.quill :global(.ql-editor) {
+    border: none !important;
+}
+
+.reactQuill {
+    width: 100%;
+    height: 100%;
+}
+
+.reactQuill :global(.ql-toolbar) {
+    width: 100%;
+    height: 5%;
+}
+
+.reactQuill :global(.ql-container) {
+    width: 100%;
+    height: 95%;
+}
+
+.reactQuill :global(.ql-editor) {
+    width: 100%;
+    height: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: #ECEAE7 #fffefe00;
+    line-height: 1.6;
+}
+
+.reactQuill :global(.ql-editor h1) {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.reactQuill :global(.ql-editor h2) {
+    font-size: 16.5px;
+    font-weight: bold;
+}
+
+.nonEditing :global(.ql-container) {
+    width: 100%;
+    height: 100%;
+}
+
+
+.buttons {
+    width: 100%;
+    height: 4%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: #454545;
+    padding-right: 1em;
+}
+
+.buttons2 {
+    width: 100%;
+    height: 4%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: #454545;
+}
+
+.buttonWrapBF {
+    width: max-content;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-items: flex-end;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.buttonWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.buttonWrap img {
+    width: 20px;
+    margin-right: 5px;
+}
+
+.buttonWrap span {
+    font-size: 16.5px;
+}
+
+.buttonWrapAF {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+    gap: 20px;
+}

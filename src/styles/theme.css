@@ -1,0 +1,103 @@
+/* Light Theme (Default) */
+:root {
+  /* Background Colors */
+  --bg-primary: #f3f3f3;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  
+  /* Text Colors */
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  
+  /* Border Colors */
+  --border-primary: #e5e7eb;
+  --border-secondary: #d1d5db;
+  --border-tertiary: #f3f4f6;
+  
+  /* Accent Colors */
+  --accent-primary: #3b82f6;
+  --accent-secondary: #2563eb;
+  --accent-success: #16a34a;
+  --accent-warning: #f59e0b;
+  --accent-error: #ef4444;
+  
+  /* Shadow Colors */
+  --shadow-light: rgba(0, 0, 0, 0.03);
+  --shadow-medium: rgba(0, 0, 0, 0.08);
+  --shadow-heavy: rgba(0, 0, 0, 0.12);
+  
+  /* Card Colors */
+  --card-bg: #ffffff;
+  --card-border: #d1d5db;
+  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  --card-shadow-hover: 0 4px 16px rgba(59, 130, 246, 0.08);
+  
+  /* Button Colors */
+  --btn-primary-bg: #3b82f6;
+  --btn-primary-hover: #2563eb;
+  --btn-secondary-bg: #6b7280;
+  --btn-secondary-hover: #374151;
+  --btn-text: #ffffff;
+  
+  /* Input Colors */
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-focus: #3b82f6;
+  
+  /* Tag Colors */
+  --tag-bg: #f3f4f6;
+  --tag-text: #6b7280;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  /* Background Colors */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  
+  /* Border Colors */
+  --border-primary: #334155;
+  --border-secondary: #475569;
+  --border-tertiary: #64748b;
+  
+  /* Accent Colors */
+  --accent-primary: #60a5fa;
+  --accent-secondary: #3b82f6;
+  --accent-success: #22c55e;
+  --accent-warning: #fbbf24;
+  --accent-error: #f87171;
+  
+  /* Shadow Colors */
+  --shadow-light: rgba(0, 0, 0, 0.2);
+  --shadow-medium: rgba(0, 0, 0, 0.3);
+  --shadow-heavy: rgba(0, 0, 0, 0.4);
+  
+  /* Card Colors */
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --card-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  --card-shadow-hover: 0 4px 16px rgba(96, 165, 250, 0.15);
+  
+  /* Button Colors */
+  --btn-primary-bg: #60a5fa;
+  --btn-primary-hover: #3b82f6;
+  --btn-secondary-bg: #64748b;
+  --btn-secondary-hover: #475569;
+  --btn-text: #ffffff;
+  
+  /* Input Colors */
+  --input-bg: #1e293b;
+  --input-border: #475569;
+  --input-focus: #60a5fa;
+  
+  /* Tag Colors */
+  --tag-bg: #334155;
+  --tag-text: #cbd5e1;
+} 

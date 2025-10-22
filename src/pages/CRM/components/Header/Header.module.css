@@ -1,0 +1,140 @@
+/* Header.module.css */
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  min-height: 60px;
+}
+
+.header_left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.backCanvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backCanvas:hover {
+  transform: scale(1.05);
+}
+
+.appIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+
+.headerLogo {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.header_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.tabContainer {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 4px;
+  backdrop-filter: blur(10px);
+}
+
+.tab {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tab:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tabActive {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.header_right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.runningText {
+  flex: 1;
+  min-width: 0;
+}
+
+.username {
+  display: flex;
+  align-items: center;
+}
+
+/* Dark theme adjustments */
+.navContainer[style*="dark"] .tabContainer {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navContainer[style*="dark"] .tab {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.navContainer[style*="dark"] .tab:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navContainer[style*="dark"] .tabActive {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Light theme adjustments */
+.navContainer:not([style*="dark"]) .tabContainer {
+  background: #f3f4f6;
+}
+
+.navContainer:not([style*="dark"]) .tab {
+  color: #6b7280;
+}
+
+.navContainer:not([style*="dark"]) .tab:hover {
+  color: #111827;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.navContainer:not([style*="dark"]) .tabActive {
+  background: white;
+  color: #2563eb;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}

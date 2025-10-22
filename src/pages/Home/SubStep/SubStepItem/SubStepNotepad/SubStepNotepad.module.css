@@ -1,0 +1,99 @@
+.inputListContainer {
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.notepadHeader {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
+
+.notepadActions {
+  display: flex;
+  gap: 10px;
+}
+
+.notepadActions,
+.editActions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+}
+
+/*button:hover {*/
+/*    background-color: #e0e0e0;*/
+/*}*/
+
+/*.editActions button:first-child {*/
+/*    background-color: #4CAF50;*/
+/*    color: white;*/
+/*    border: none;*/
+/*}*/
+
+/*.editActions button:last-child {*/
+/*    background-color: #f44336;*/
+/*    color: white;*/
+/*    border: none;*/
+/*}*/
+
+/*.notepadActions button:nth-child(3) {*/
+/*    background-color: #4CAF50;*/
+/*    color: white;*/
+/*    border: none;*/
+/*}*/
+
+/*.notepadActions button:nth-child(4) {*/
+/*    background-color: #f44336;*/
+/*    color: white;*/
+/*    border: none;*/
+/*}*/
+
+.inputList {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.inputContainer {
+  margin: 10px;
+}
+.headerInput {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.btns {
+  display: flex;
+  gap: 10px;
+}
+.w20 {
+  width: 20%;
+  margin: 10px 0;
+}
+.w40 {
+  width: 40%;
+  margin: 10px 0;
+}
+.w60 {
+  width: 60%;
+  margin: 10px 0;
+}
+
+.w80 {
+  width: 80%;
+  margin: 10px 0;
+}
+
+.w100 {
+  width: 100%;
+  margin: 10px 0;
+}

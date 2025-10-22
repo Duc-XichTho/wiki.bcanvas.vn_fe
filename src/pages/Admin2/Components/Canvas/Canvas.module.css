@@ -1,0 +1,92 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.sidebar {
+  width: 350px;
+  height: 100%;
+}
+
+.createUserClass {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}
+
+.listUserClass {
+  height: calc(100% - 50px);
+  width: 100%;
+}
+
+.listUserClassWrap {
+  width: 100%;
+  height: 100%;
+}
+
+.titleElement {
+  width: 100%;
+  height: 40px;
+  padding-left: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.listElement {
+  width: 100%;
+  height: calc(50% - 40px);
+  overflow: auto;
+  padding: 0.5em 1em 1em 1em;
+}
+
+.userClass {
+  width: 100%;
+  height: 70px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  padding: 1em;
+  margin-bottom: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.userClass:hover {
+  background-color: #f0f0f0;
+  transform: translateX(5px);
+}
+
+.userClass.selected {
+  background-color: #2aa75e;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.userClass:active {
+  transform: scale(0.98);
+  transition: transform 0.1s;
+}
+
+@keyframes selectAnimation {
+  from {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.selected {
+  animation: selectAnimation 0.3s ease-out;
+}
+
+.content {
+  flex: 1;
+}

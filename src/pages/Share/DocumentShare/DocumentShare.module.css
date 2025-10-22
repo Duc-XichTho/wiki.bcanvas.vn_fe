@@ -1,0 +1,23 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mainWrap {
+  width: 50%;
+  height: 97%;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+@media (max-width: 768px) {
+  .mainWrap {
+    width: 100%;
+    height: 97%;
+  }
+}

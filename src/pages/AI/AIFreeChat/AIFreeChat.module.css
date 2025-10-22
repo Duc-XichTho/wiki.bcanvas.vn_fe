@@ -1,0 +1,378 @@
+.aiLayout {
+    display: flex;
+    height: 100%;
+    gap: 20px;
+    padding: 20px;
+}
+
+.aiSidebar {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.aiMain {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+}
+
+.aiSection {
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    border: 1px solid #f0f0f0;
+}
+
+.aiSectionTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.aiSectionTitle h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.settingsButton {
+    color: #666;
+}
+
+.settingsButton:hover {
+    color: #1677ff;
+    background-color: #e6f4ff;
+}
+
+.questionContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+}
+
+.sendButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.aiSectionHistoryChat {
+    border: 1px solid #f0f0f0;
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.historyHeader {
+    margin-bottom: 16px;
+}
+
+.historyTitle h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.newQuestionButton {
+    color: #666;
+}
+
+.newQuestionButton:hover {
+    color: #1677ff;
+    background-color: #e6f4ff;
+}
+
+.aiList {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.aiCard {
+    margin-bottom: 8px;
+    transition: all 0.2s;
+}
+
+.aiCard:hover {
+    background-color: #f5f5f5;
+}
+
+.selectedCard {
+    border-color: #1677ff !important;
+    background-color: #e6f4ff;
+}
+
+.aiDate {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: end;
+}
+
+.markedContent {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    padding: 15px;
+    height: calc(100% - 30px);
+    overflow-y: auto;
+}
+
+.markedContent h1,
+.markedContent h2,
+.markedContent h3,
+.markedContent h4,
+.markedContent h5,
+.markedContent h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.markedContent h1 {
+    font-size: 2em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+
+.markedContent h2 {
+    font-size: 1.5em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+
+.markedContent h3 {
+    font-size: 1.25em;
+}
+
+.markedContent h4 {
+    font-size: 1em;
+}
+
+.markedContent p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.markedContent code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markedContent pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 3px;
+    margin-bottom: 16px;
+}
+
+.markedContent pre code {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: 0;
+    word-break: normal;
+    white-space: pre;
+}
+
+.markedContent blockquote {
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+    margin: 0 0 16px 0;
+}
+
+.markedContent ul,
+.markedContent ol {
+    padding-left: 2em;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.markedContent table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    margin-top: 0;
+    margin-bottom: 16px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.markedContent table th,
+.markedContent table td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+}
+
+.markedContent table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+}
+
+.markedContent table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+.markedContent img {
+    max-width: 100%;
+    box-sizing: content-box;
+    background-color: #fff;
+}
+
+.markedContent hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+}
+
+.markedContent a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.markedContent a:hover {
+    text-decoration: underline;
+}
+.modelSelection {
+    padding: 0 10px;
+    margin-bottom: 12px;
+}
+
+.webSearchToggle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 0 10px;
+}
+
+.webSearchToggle .ant-switch {
+    background-color: #d9d9d9;
+}
+
+.webSearchToggle .ant-switch-checked {
+    background-color: #1677ff;
+}
+
+.webSearchToggle .ant-switch-inner {
+    font-size: 12px;
+}
+
+.blinkingText {
+    animation: blink 1.5s infinite;
+    font-size: 14px;
+    color: red;
+}
+
+@keyframes blink {
+     0% { opacity: 1; }
+     50% { opacity: 0.5; }
+     100% { opacity: 1; }
+ }
+
+.aiSectionTemplate {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.2s;
+}
+
+.aiSectionTemplate:hover {
+    background-color: #e6f4ff;
+    color: #1677ff;
+}
+
+.allMainContainer {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.headerAnswer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.headerAnswer h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.buttonHeader {
+    display: flex;
+    gap: 8px;
+}
+
+.aiMainBottom {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 0;
+}
+
+.aiAnswerBox {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 0 200px;
+}
+
+.aiAnswerContent {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+}
+
+.aiDataBox {
+    height: 300px;
+    min-height: 0;
+}
+
+.aiDataContent {
+    height: 100%;
+    overflow-y: auto;
+    padding: 16px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+}

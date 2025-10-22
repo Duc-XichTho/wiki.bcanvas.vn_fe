@@ -1,0 +1,9 @@
+.container {
+    /*position: fixed;*/
+    height: 100%;
+    overflow: auto;
+}
+
+.steps {
+    padding: 0 15px;
+}

@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+}
+
+.left{
+    width: 20%;
+}
+
+.right{
+    width: 80%;
+}
+
+.selectedItem{
+    font-weight: bold;
+}

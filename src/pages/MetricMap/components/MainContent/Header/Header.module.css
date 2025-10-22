@@ -1,0 +1,140 @@
+.header {
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #e5e7eb;
+  padding: 14px 16px 4px 16px;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleSection {
+  flex: 1;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.description {
+  color: #6b7280;
+  margin: 0;
+  font-size: 16px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.editButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.editButton:hover {
+  background-color: #e5e7eb;
+}
+
+.editButtonActive {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+}
+
+.editIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.lockContainer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.lockLabel {
+  font-size: 12px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.lockToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lockToggleText {
+  font-size: 12px;
+  color: #374151;
+}
+
+.lockPasswordWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.lockPasswordInput {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 6px 28px 6px 8px;
+  min-width: 180px;
+  font-size: 12px;
+}
+
+.lockToggleVisibilityButton {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 2px;
+}
+
+.lockToggleVisibilityButton:hover {
+  color: #111827;
+}
+
+.lockSaveButton {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.lockSaveButton:hover {
+  background: #2563eb;
+}
+
+.lockSaveButtonDisabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}

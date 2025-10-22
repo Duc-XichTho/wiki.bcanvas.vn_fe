@@ -1,0 +1,79 @@
+/* TemplateDK.module.css */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.settingsButton {
+    margin-left: 15px;
+    transition: all 0.3s ease;
+}
+
+.settingsButton:hover {
+    background-color: #1677ff !important;
+    color: white !important;
+}
+
+.outsideFormContainer {
+    width: 100%;
+    padding: 0 16px;
+}
+
+.outsideForm {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.settingsModal .ant-modal-body {
+    padding: 24px;
+}
+
+.settingsForm {
+    width: 100%;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.formItem {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.selectInput {
+    width: 100%;
+}
+
+.submitButton {
+    width: 100%;
+    margin-top: 16px;
+}
+
+/* Label styles */
+.labelContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.labelContainer > span {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.85);
+    margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .outsideFormContainer {
+        padding: 0 8px;
+    }
+
+    .settingsModal {
+        max-width: calc(100vw - 16px) !important;
+        width: calc(100vw - 16px) !important;
+    }
+}

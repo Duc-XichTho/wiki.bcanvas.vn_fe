@@ -1,0 +1,151 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.sidebar {
+  width: 330px;
+  height: 100%;
+  background-color: #ffffff;
+  /*border-right: 1px solid #ddd;*/
+  padding: 16px 0px 0px 0px;
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 10px;
+}
+
+.sidebarTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 0px 0px 0px 10px;
+}
+
+.folderRight {
+  display: flex;
+  align-items: center;
+  gap : 7px
+}
+
+.folderRight > span {
+  font-size: 16px;
+  font-weight: 700;
+  color: #262626;
+}
+
+
+.menuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #262626;
+  font-weight: 500;
+  transition: 0.2s;
+  height: 30px;
+}
+
+.titleCard {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+
+}
+
+
+
+.menuItem:hover {
+  background-color: #e6f4ea;
+}
+
+.menuItemActive {
+  background-color: rgba(45, 157, 104, 1);
+  color: white;
+}
+
+.menuItemActive:hover {
+  background-color: rgba(45, 157, 104, 1);
+  color: white;
+}
+
+.content {
+  width: calc(100% - 330px);
+  padding: 20px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.searchBox {
+  width: 85%;
+  border: 2px solid rgba(220, 220, 220, 1) !important;
+  box-shadow: 1px 2px 1px 1px rgba(0, 0, 0, 0.1) !important;
+  padding: 4px 8px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+
+.bookMark {
+  cursor: pointer;
+  width: 15%;
+  display: flex;
+  align-items: center;
+}
+
+
+
+.headerSidebar {
+  gap : 20px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  padding: 16px 0px 16px 10px;
+}
+
+.menu {
+  width: 100%;
+  height: calc(100% - 30px - 70px);
+  overflow: auto;
+  padding: 4px 8px 20px 8px;
+
+}
+
+.extraInfo {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  height: 50px;
+  margin-top: auto;
+  padding: 16px 0px 16px 10px;
+}
+
+.customButton {
+  color: rgba(38, 38, 38, 1) !important;
+  font-weight: 500 !important;
+  border-radius: 10px !important;
+}
+
+.titleButton {
+  font-size: 16px;
+
+}
+
+.textFooter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8d8d8d;
+  background-color: #EFEFEF;
+  height: 50px; /* Hoặc tuỳ chỉnh chiều cao */
+  font-size: 16px;
+}

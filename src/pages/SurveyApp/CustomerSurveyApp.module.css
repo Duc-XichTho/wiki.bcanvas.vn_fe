@@ -1,0 +1,3856 @@
+/* Main Layout */
+.appContainer {
+  height: 100vh;
+  background-color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Back Canvas Button */
+.backCanvas {
+  width: 40px;
+  height: 38px;
+  background-color: rgba(250, 250, 250, 1);
+  border-radius: 12px;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.backCanvas:hover {
+  background-color: rgba(240, 240, 240, 1);
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.3);
+}
+
+.mainLayout {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -20rem;
+  width: 20rem;
+  height: 100vh;
+  background-color: #f3f4f6;
+  border-right: 2px solid #9ca3af;
+  transition: left 0.3s ease;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    position: fixed;
+    top: 4.5rem; /* Account for topBar height */
+    left: 0;
+    display: block;
+    width: 20rem;
+    height: calc(100vh - 4.5rem); /* Adjust height to account for topBar */
+  }
+  
+  .sidebarOpen {
+    left: 0;
+  }
+}
+
+.sidebarOpen {
+  left: 0;
+}
+
+/* Sidebar Backdrop */
+.sidebarBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+
+@media (min-width: 1024px) {
+  .sidebarBackdrop {
+    display: none;
+  }
+}
+
+.sidebarHeader {
+  padding: 1rem;
+  border-bottom: 2px solid #9ca3af;
+  background-color: white;
+}
+
+.sidebarHeaderContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.sidebarTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.sidebarTitleContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.trashButton {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.trashButton:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.sidebarCloseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background-color: transparent;
+  color: #6b7280;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sidebarCloseButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+@media (min-width: 1024px) {
+  .sidebarCloseButton {
+    display: none;
+  }
+}
+
+.sidebarMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebarButton {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: left;
+  transition: all 0.2s;
+  font-weight: 500;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #d1d5db;
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.sidebarButton:hover {
+  background-color: #e5e7eb;
+}
+
+.sidebarButton.active {
+  background-color: #2563eb;
+  color: white;
+}
+
+.sidebarButtonIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: inline;
+  margin-right: 0.75rem;
+}
+
+/* Main Content */
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .mainContent {
+    margin-left: 20rem;
+    /* margin-top: 4rem; Account for topBar height */
+  }
+}
+
+.mobileHeader {
+  background-color: white;
+  border-bottom: 2px solid #9ca3af;
+  padding: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+@media (min-width: 1024px) {
+  .mobileHeader {
+    display: none;
+  }
+}
+
+.mobileHeaderContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobileMenuButton {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 2px solid #d1d5db;
+  background-color: transparent;
+}
+
+.mobileMenuButton:hover {
+  background-color: #f3f4f6;
+}
+
+@media (min-width: 1024px) {
+  .mobileMenuButton {
+    display: none;
+  }
+}
+
+.mobileTitle {
+  font-weight: 600;
+  color: #111827;
+  font-size: 1.125rem;
+}
+
+.addButton {
+  padding: 0.75rem;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.addButton:hover {
+  background-color: #1d4ed8;
+}
+
+.addButtonIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Content Area */
+.contentArea {
+  flex: 1;
+  overflow: auto;
+}
+
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6b7280;
+}
+
+.emptyStateContent {
+  text-align: center;
+}
+
+.emptyStateIcon {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 1rem;
+  color: #9ca3af;
+}
+
+.emptyStateText {
+  font-size: 1rem;
+}
+
+/* File List */
+.fileList {
+  padding: 1rem;
+  height: 100%;
+  overflow: auto;
+}
+
+.searchInput {
+  width: 100%;
+}
+
+.searchInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.filterSection {
+  margin-bottom: 1rem;
+}
+
+.filterLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.filterTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filterTag {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+
+.filterTag:hover {
+  border-color: #93c5fd;
+}
+
+.filterTag.active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.clearButton {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+  color: #4b5563;
+}
+
+.clearButton:hover {
+  background-color: #d1d5db;
+}
+
+.fileListItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fileCard {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  background-color: white;
+}
+
+.fileCard:hover {
+  border-color: #9ca3af;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.fileCard.selected {
+  background-color: #eff6ff;
+  border-color: #93c5fd;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.fileCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.fileCardContent {
+  flex: 1;
+}
+
+.fileCardTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.fileCardTitle {
+  font-weight: 600;
+  color: #111827;
+  font-size: 0.875rem;
+  flex: 1;
+}
+
+.fileCardTitle:hover {
+  color: #2563eb;
+}
+
+.scoreIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.scoreDot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+
+.scoreDot.score1 { background-color: #f87171; }
+.scoreDot.score2 { background-color: #fb923c; }
+.scoreDot.score3 { background-color: #facc15; }
+.scoreDot.score4 { background-color: #4ade80; }
+.scoreDot.score5 { background-color: #22c55e; }
+.scoreDot.default { background-color: #d1d5db; }
+
+.scoreText {
+  font-size: 0.75rem;
+  color: #4b5563;
+}
+
+.fileTags {
+  margin-bottom: 0.5rem;
+}
+
+.fileTagsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.fileTag {
+  padding: 4px;
+  background-color: #e5e7eb;
+  color: #374151;
+  font-size: 12px;
+  border-radius: 16px;
+  height: 24px;
+}
+
+.fileTagMore {
+  padding: 0.25rem 0.5rem;
+  background-color: #e5e7eb;
+  color: #6b7280;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+}
+
+.editTagsButton {
+  background: rgba(0,0,0,0);
+}
+
+.editTagsButton:hover {
+  background: rgba(0,0,0,0);
+}
+
+.editTagsInput {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+}
+
+.editTagsInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.editTagsButtons {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.saveTagsButton {
+  padding: 0.25rem 0.5rem;
+  background-color: #2563eb;
+  color: white;
+  font-size: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.saveTagsButton:hover {
+  background-color: #1d4ed8;
+}
+
+.cancelTagsButton {
+  padding: 0.25rem 0.5rem;
+  background-color: #d1d5db;
+  color: #374151;
+  font-size: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.cancelTagsButton:hover {
+  background-color: #9ca3af;
+}
+
+.fileCardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.statusBadge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.statusBadge.waiting {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.statusBadge.progressing {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.statusBadge.frozen {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}
+
+@media (min-width: 1024px) {
+  .mobileMenu {
+    display: none;
+  }
+}
+
+.mobileMenu.hidden {
+  display: none;
+}
+
+.mobileMenuContent {
+  background-color: #f3f4f6;
+  width: 20rem;
+  height: 100%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.mobileMenuHeader {
+  padding: 1rem;
+  border-bottom: 1px solid #d1d5db;
+  background-color: white;
+}
+
+.mobileMenuHeaderContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.mobileMenuTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.closeButton {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.closeButton:hover {
+  background-color: #f3f4f6;
+}
+
+/* Template Selector Modal */
+.templateSelector {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.templateSelector.hidden {
+  display: none;
+}
+
+.templateSelectorContent {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-width: 28rem;
+  width: 100%;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.templateSelectorHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.templateSelectorTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.templateSelectorSubtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.templateSelectorBody {
+  padding: 1.5rem;
+}
+
+.templateOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.templateOption {
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.templateOption:hover {
+  border-color: #93c5fd;
+  background-color: #eff6ff;
+}
+
+.templateOptionTitle {
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.templateOptionDescription {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.templateSelectorFooter {
+  padding: 1.5rem;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  padding: 0.5rem 1rem;
+  color: #4b5563;
+}
+
+.cancelButton:hover {
+  color: #111827;
+}
+
+/* Table View Modal */
+.tableViewModal {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-width: 90vw;
+  width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .tableViewModal {
+    max-width: 95vw;
+    max-height: 90vh;
+  }
+  
+  .surveyTableButton {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .surveyTableButton span {
+    display: none;
+  }
+}
+
+.modalBody {
+  flex: 1;
+  overflow: auto;
+  padding: 1.5rem;
+}
+
+.modalFooter {
+  padding: 1.5rem;
+  border-top: 1px solid #f3f4f6;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.tableHeader {
+  background-color: #f9fafb;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.tableRow {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.tableRow:hover {
+  background-color: #f9fafb;
+}
+
+.tableCell {
+  padding: 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: top;
+  word-wrap: break-word;
+  max-width: 300px;
+}
+
+.tableCell:last-child {
+  border-bottom: none;
+}
+
+/* Survey View Table Button */
+.surveyTableButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.surveyTableButton:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.surveyTableButton:active {
+  transform: translateY(0);
+}
+
+/* Survey View */
+.surveyView {
+  padding: 1.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.surveyHeader {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.surveyHeaderActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.surveyHeaderContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+}
+
+.backButton {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.backButton:hover {
+  background-color: #f3f4f6;
+}
+
+@media (min-width: 1024px) {
+  .backButton {
+    display: none;
+  }
+}
+
+.surveyTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.surveyProgress {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.savingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #059669;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.savingSpinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #059669;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Title Editing Styles */
+.titleDisplayContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.surveyTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  margin: 0;
+}
+
+.surveyTitle:hover {
+  color: #3b82f6;
+}
+
+.titleEditIcon {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.titleEditIcon:hover {
+  color: #3b82f6;
+  background-color: #f3f4f6;
+}
+
+.titleEditContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.titleEditInput {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  background-color: #f9fafb;
+  border: 2px solid #3b82f6;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  outline: none;
+  min-width: 300px;
+}
+
+.titleEditInput:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.titleEditButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.titleSaveButton {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.titleSaveButton:hover {
+  background-color: #059669;
+}
+
+.titleCancelButton {
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.titleCancelButton:hover {
+  background-color: #4b5563;
+}
+
+.surveyTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.surveyTag {
+  padding: 0.25rem 0.75rem;
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.875rem;
+  border-radius: 9999px;
+}
+
+.editTagsContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.editTagsInput {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  min-width: 200px;
+}
+
+.editTagsInput:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.editTagsButtons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.saveTagsButton {
+  padding: 0.25rem 0.5rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.saveTagsButton:hover {
+  background-color: #059669;
+}
+
+.cancelTagsButton {
+  padding: 0.25rem 0.5rem;
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancelTagsButton:hover {
+  background-color: #4b5563;
+}
+
+.editTagsButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editTagsButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #9ca3af;
+}
+
+/* Section Navigation */
+.sectionNavigationButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sectionNavigationButton {
+  padding: 0.5rem 0.75rem;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sectionNavigationButton:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.sectionNavigationButtonActive {
+  background: #f9fafb;
+  border-color: #2563eb;
+  color: #2563eb;
+  box-shadow: 0 2px 4px 0 rgba(37, 99, 235, 0.2);
+}
+
+.sectionNavigationButtonActive:hover {
+  background: #f9fafb;
+  border-color: #1d4ed8;
+  color: #1d4ed8;
+  box-shadow: 0 3px 6px 0 rgba(37, 99, 235, 0.25);
+}
+
+.sectionNavigationButtonContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionCompletedIcon {
+  width: 1rem;
+  height: 1rem;
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.surveyItems {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Section Header Item */
+.sectionHeaderItem {
+  margin: 1rem 0;
+}
+
+.sectionHeaderContent {
+  text-align: left;
+}
+
+.sectionHeaderTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.sectionHeaderTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionHeaderToggleButton {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sectionHeaderToggleButton:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.sectionHeaderToggleIcon {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.sectionHeaderToggleIcon.expanded {
+  transform: rotate(180deg);
+}
+
+.sectionHeaderDescriptionContainer {
+  margin-top: 0.75rem;
+}
+
+.sectionHeaderDescription {
+  font-size: 1rem;
+  color: #000000;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Survey Item Components */
+.surveyItem {
+  background-color: white;
+  border-radius: 0.75rem;
+  border: 2px solid #d1d5db;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.surveyItemContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.checkboxButton {
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.checkboxIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.checkboxIcon.checked {
+  color: #2563eb;
+}
+
+.checkboxIcon.unchecked {
+  color: #9ca3af;
+}
+
+.itemContent {
+  flex: 1;
+}
+
+.itemTitle {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  font-size: 1.125rem;
+  color: #111827;
+}
+
+.itemTitle.completed {
+  color: #6b7280;
+  text-decoration: line-through;
+}
+
+.itemDescription {
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+.itemDescription.completed {
+  color: #9ca3af;
+}
+
+.itemDescriptionLine {
+  margin: 0.25rem 0;
+  line-height: 1.4;
+}
+
+/* Note Section */
+.noteSection {
+  margin-top: 1rem;
+}
+
+.noteButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #2563eb;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+
+.noteButton:hover {
+  color: #1d4ed8;
+  background-color: #dbeafe;
+}
+
+.noteIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.noteContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.noteGuide {
+  padding: 1rem;
+  background-color: #eff6ff;
+  border: 2px solid #bfdbfe;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+}
+
+.noteGuideTitle {
+  font-weight: 500;
+  color: #1e40af;
+  margin-bottom: 0.25rem;
+}
+
+.noteGuideContent {
+  margin-top: 0.5rem;
+}
+
+.noteGuideLine {
+  margin: 0.25rem 0;
+  line-height: 1.4;
+}
+
+.noteInputSection {
+  margin-top: 1rem;
+}
+
+.noteInputLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.noteTextarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  resize: none;
+  background-color: white;
+  color: #111827;
+}
+
+.noteTextarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.noteTextarea.completed {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+/* MCQ Options */
+.mcqOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mcqOptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s;
+}
+
+.mcqOptionContainer:hover {
+  background-color: #f9fafb;
+}
+
+.mcqOptionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mcqOption {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+.mcqCheckbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #2563eb;
+  border-color: #d1d5db;
+  border-radius: 0.25rem;
+}
+
+.mcqCheckbox:focus {
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.mcqOptionText {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.mcqOptionText.completed {
+  color: #9ca3af;
+}
+
+/* Choice Note Section */
+.choiceNoteSection {
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.choiceNoteInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background-color: white;
+  color: #111827;
+  transition: all 0.2s;
+}
+
+.choiceNoteInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.choiceNoteInput.completed {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.choiceNoteInput::placeholder {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.choiceNoteDisplayContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 0.375rem;
+}
+
+.choiceNoteText {
+  color: #1e40af;
+  font-size: 0.875rem;
+  font-weight: bold;
+  flex: 1;
+}
+
+.choiceNotePlaceholder {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-style: italic;
+  flex: 1;
+}
+
+.choiceNoteEditButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  background: none;
+  color: #3b82f6;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.choiceNoteEditButton:hover {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.choiceNoteEditButton:disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.choiceNoteEditIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.choiceNoteEditContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.choiceNoteEditButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.choiceNoteSaveButton {
+  padding: 0.25rem 0.75rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.choiceNoteSaveButton:hover {
+  background-color: #2563eb;
+}
+
+.choiceNoteSaveButton:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.choiceNoteCancelButton {
+  padding: 0.25rem 0.75rem;
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.choiceNoteCancelButton:hover {
+  background-color: #e5e7eb;
+}
+
+.choiceNoteCancelButton:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.choiceNoteToggleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: 0.5rem;
+}
+
+.choiceNoteToggleButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.choiceNoteToggleButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.choiceNoteToggleButton:disabled {
+  background-color: transparent;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.choiceNoteIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Context Menu */
+.contextMenu {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 0.5rem 0;
+  min-width: 150px;
+}
+
+.contextMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  color: #374151;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.contextMenuItem:hover {
+  background-color: #f3f4f6;
+  color: #dc2626;
+}
+
+.contextMenuIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* QA Textarea */
+.qaTextarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  resize: none;
+  background-color: white;
+  color: #111827;
+}
+
+.qaTextarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.qaTextarea.completed {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+/* Sales Action Section */
+.salesActionSection {
+  margin-top: 2rem;
+  background-color: white;
+  border-radius: 0.75rem;
+  border: 2px solid #d1d5db;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.salesActionTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+.salesActionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.scoreSection {
+  margin-bottom: 1.5rem;
+}
+
+.scoreLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.scoreButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.scoreButton {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  transition: all 0.2s;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+
+.scoreButton:hover {
+  background-color: #e5e7eb;
+}
+
+.scoreButton.selected {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.summarySection {
+  margin-bottom: 1.5rem;
+}
+
+.summaryLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.summaryTextarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  resize: none;
+  background-color: white;
+  color: #111827;
+}
+
+.summaryTextarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .actionGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.actionInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  background-color: white;
+  color: #111827;
+}
+
+.actionInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.actionLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.actionLabelOptional {
+  color: #6b7280;
+  font-weight: normal;
+}
+
+.statusSection {
+  margin-bottom: 1.5rem;
+}
+
+.statusLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.statusButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.statusButton {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.statusButton:hover {
+  background-color: #e5e7eb;
+}
+
+.statusButton.waiting.active {
+  background-color: #eab308;
+  color: white;
+}
+
+.statusButton.frozen.active {
+  background-color: #6b7280;
+  color: white;
+}
+
+.statusButton.progressing.active {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.saveSection {
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.saveButton {
+  padding: 0.75rem 1.5rem;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.saveButton:hover {
+  background-color: #1d4ed8;
+}
+
+/* Template Settings */
+.templateSettings {
+  padding: 1.5rem;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.templateSettingsHeader {
+  margin-bottom: 2rem;
+}
+
+.templateSettingsTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.templateSettingsSubtitle {
+  font-size: 1rem;
+  color: #4b5563;
+}
+
+.templateCards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.templateCard {
+  background-color: white;
+  border-radius: 0.75rem;
+  border: 2px solid #d1d5db;
+  overflow: hidden;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.templateCardHeader {
+  padding: 1.5rem;
+  border-bottom: 2px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.templateCardHeaderContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.templateCardInfo {
+  flex: 1;
+}
+
+.templateCardTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  width: auto;
+}
+
+.templateCardDescription {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-top: 0.25rem;
+  width: auto;
+}
+
+.templateCardCount {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.editButton {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  font-weight: 500;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.editButton:hover {
+  background-color: #1d4ed8;
+}
+
+.templateCardActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.deleteButton:hover {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+  transform: scale(1.05);
+}
+
+.deleteButton:active {
+  transform: scale(0.95);
+}
+
+.deleteButton svg {
+  width: 1rem;
+  height: 1rem;
+  transition: all 0.2s ease;
+}
+
+.deleteButton:hover svg {
+  transform: rotate(12deg);
+}
+
+.templateEditForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.templateEditTitle {
+  width: 300px;
+  max-width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  background-color: white;
+  color: #111827;
+  transition: all 0.2s;
+}
+
+.templateEditTitle:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.templateEditDescription {
+  width: 800px;
+  max-width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  background-color: white;
+  color: #374151;
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.templateEditDescription:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.templateEditField {
+  position: relative;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.templateEditField:hover .templateEditIcon {
+  opacity: 1;
+}
+
+.templateEditDisplay {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  position: relative;
+}
+
+.templateEditTextGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+  width: fit-content;
+  flex: 1;
+}
+
+.templateEditTextGroup h3,
+.templateEditTextGroup p {
+  margin: 0;
+  width: auto;
+}
+
+.templateEditDisplay h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.4;
+}
+
+.templateEditDisplay p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.templateEditIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: transparent;
+  color: #9ca3af;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  opacity: 0.6;
+  padding: 0.125rem;
+  margin-top: 0.125rem;
+}
+
+.templateEditIcon:hover {
+  background-color: #f3f4f6;
+  color: #3b82f6;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.templateEditIcon:active {
+  transform: scale(0.95);
+}
+
+.templateEditInputGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  animation: slideIn 0.2s ease-out;
+}
+
+.templateEditInputGroup input,
+.templateEditInputGroup textarea {
+  /* flex: 1; */
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.templateEditActions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+.templateEditSaveButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.templateEditSaveButton:hover {
+  background-color: #059669;
+}
+
+.templateEditCancelButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.templateEditCancelButton:hover {
+  background-color: #4b5563;
+}
+
+.templateCardBody {
+  padding: 1.5rem;
+}
+
+.templateItemsGrid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.templateItemPreview {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.templateItemDot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+}
+
+.templateItemDot.titleDesc { background-color: #3b82f6; }
+.templateItemDot.mcq { background-color: #22c55e; }
+.templateItemDot.qa { background-color: #a855f7; }
+
+.templateItemTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.templateItemBadge {
+  margin-left: auto;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+}
+
+.templateItemBadge.titleDesc {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.templateItemBadge.mcq {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.templateItemBadge.qa {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+}
+
+.templateMoreItems {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+  padding: 0.5rem;
+}
+
+/* Template Editor */
+.templateEditor {
+  padding: 1.5rem;
+  border-top: 2px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.templateEditorHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.templateEditorTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.templateEditorButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.addItemButton {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.addItemButton.titleDesc {
+  background-color: #2563eb;
+  color: white;
+}
+
+.addItemButton.titleDesc:hover {
+  background-color: #1d4ed8;
+}
+
+.addItemButton.mcq {
+  background-color: #16a34a;
+  color: white;
+}
+
+.addItemButton.mcq:hover {
+  background-color: #15803d;
+}
+
+.addItemButton.qa {
+  background-color: #9333ea;
+  color: white;
+}
+
+.addItemButton.qa:hover {
+  background-color: #7c3aed;
+}
+
+.templateItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.templateItemEditor {
+  background-color: white;
+  border-radius: 0.5rem;
+  border-left: 4px solid;
+  border: 2px solid #e5e7eb;
+  padding: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.templateItemEditor.titleDesc {
+  border-left-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.templateItemEditor.mcq {
+  border-left-color: #22c55e;
+  background-color: #f0fdf4;
+}
+
+.templateItemEditor.qa {
+  border-left-color: #a855f7;
+  background-color: #faf5ff;
+}
+
+.templateItemHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.templateItemInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.templateItemNumber {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.templateItemType {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.templateItemActions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.actionButton {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+  transition: all 0.2s;
+}
+
+.actionButton:hover {
+  background-color: #f3f4f6;
+}
+
+.actionButton.delete {
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+.actionButton.delete:hover {
+  background-color: #fef2f2;
+}
+
+.actionIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.templateItemForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formInput {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  background-color: white;
+  color: #111827;
+}
+
+.formInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.formTextarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  resize: none;
+  background-color: white;
+  color: #111827;
+}
+
+.formTextarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.optionsSection {
+  margin-top: 1rem;
+}
+
+.optionsLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.75rem;
+}
+
+.optionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.optionItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}
+
+.optionInputContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.optionInput {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  background-color: white;
+  color: #111827;
+}
+
+.optionInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.removeOptionButton {
+  padding: 0.75rem;
+  color: #dc2626;
+  border-radius: 0.5rem;
+  border: 2px solid #fca5a5;
+  transition: all 0.2s;
+}
+
+.removeOptionButton:hover {
+  background-color: #fef2f2;
+}
+
+.addOptionButton {
+  font-size: 0.875rem;
+  color: #2563eb;
+  font-weight: 500;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.addOptionButton:hover {
+  color: #1d4ed8;
+  background-color: #eff6ff;
+}
+
+.optionNoteContainer {
+  margin-left: 1rem;
+}
+
+.optionNoteInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background-color: white;
+  color: #111827;
+  transition: all 0.2s;
+}
+
+.optionNoteInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3b82f6;
+  border-color: #3b82f6;
+}
+
+.optionNoteInput::placeholder {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.formButtons {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.saveFormButton {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.saveFormButton:hover {
+  background-color: #1d4ed8;
+}
+
+.cancelFormButton {
+  padding: 0.5rem 1rem;
+  border: 2px solid #d1d5db;
+  color: #374151;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cancelFormButton:hover {
+  background-color: #f9fafb;
+}
+
+.templateItemDisplay {
+  margin-top: 1rem;
+}
+
+.templateItemDisplayTitle {
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.templateItemDisplayDescription {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.templateItemDisplayDescriptionLine {
+  margin: 0.25rem 0;
+  line-height: 1.4;
+}
+
+.templateItemDisplayNote {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.templateItemDisplayNoteIcon {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.templateItemDisplayNoteContent {
+  flex: 1;
+}
+
+.templateItemDisplayNoteLine {
+  margin: 0.25rem 0;
+  line-height: 1.4;
+}
+
+.templateItemDisplayOptions {
+  margin-top: 0.75rem;
+}
+
+.templateItemDisplayOptionsLabel {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.templateItemDisplayOptionsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.templateItemDisplayOptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.25rem;
+}
+
+.templateItemDisplayOption {
+  font-size: 0.75rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.templateItemDisplayOptionNote {
+  font-size: 0.625rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.templateEmptyState {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+.templateEmptyStateText {
+  font-size: 1rem;
+}
+
+.templateEmptyStateSubtext {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Textarea Formatting Styles */
+.textareaWithFormatting {
+  margin-bottom: 1rem;
+}
+
+.textareaHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.textareaLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.formattingButtons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.formatButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  background-color: white;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.formatButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #9ca3af;
+}
+
+.formatButton:active {
+  background-color: #e5e7eb;
+  transform: translateY(1px);
+}
+
+/* Top Bar */
+.topBar {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Top Bar Buttons */
+.topBarTabs {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.topBarTab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  background-color: white;
+  color: #374151;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.topBarTab:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.topBarTabActive {
+  background-color: white;
+  color: #2563eb;
+  border-color: #2563eb;
+  box-shadow: 0 4px 8px 0 rgba(37, 99, 235, 0.25);
+}
+
+.topBarTabActive:hover {
+  background-color: white;
+  border-color: #1d4ed8;
+  color: #1d4ed8;
+  box-shadow: 0 6px 12px 0 rgba(37, 99, 235, 0.3);
+}
+
+.topBarTabIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.mobileMenuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1.25rem;
+}
+
+.mobileMenuButton:hover {
+  background-color: #f3f4f6;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .topBarTabs {
+    display: none;
+  }
+  
+  .mobileMenuButton {
+    display: flex;
+  }
+  
+  .topBarTitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .topBarTab {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+  
+  .topBarTabs {
+    gap: 0.5rem;
+  }
+}
+
+.topBarMenuButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 8px 16px;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.topBarMenuButton svg {
+  width: 16px;
+  height: 16px;
+}
+
+.topBarMenuButton:hover {
+  background-color: #f3f4f6;
+}
+
+.topBarTitle {
+  font-weight: 600;
+  color: #111827;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.topBarAddButton {
+  padding: 8px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topBarAddButton:hover {
+  background-color: #1d4ed8;
+}
+
+/* Loading State */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #6b7280;
+}
+
+.loadingSpinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Create Template Button */
+.createTemplateButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+}
+
+.createTemplateButton:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.createTemplateButton:active {
+  transform: translateY(0);
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.modalCloseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background-color: transparent;
+  color: #6b7280;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modalCloseButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.modalForm {
+  padding: 1.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.formInput,
+.formTextarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.formTextarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.cancelButton {
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: #6b7280;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.submitButton:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Responsive Modal */
+@media (max-width: 640px) {
+  .modal {
+    margin: 1rem;
+    max-width: none;
+  }
+  
+  .modalActions {
+    flex-direction: column;
+  }
+  
+  .cancelButton,
+  .submitButton {
+    width: 100%;
+  }
+}
+
+/* TableDataFormat Component Styles */
+.tableDataContent {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.tableDataHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.tableDataTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tableDataTitle h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.tableIcon {
+  width: 24px;
+  height: 24px;
+  color: #2563eb;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  color: #6b7280;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.tableDataBody {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.filtersSection {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.searchSection {
+  flex-shrink: 0;
+}
+
+.searchInput {
+  position: relative;
+  max-width: 400px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+}
+
+.searchInput input {
+  width: 100%;
+  padding: 0.25rem 0.75rem 0.25rem 2.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.searchInput input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.filterOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  flex: 1;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filterGroup label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 30px;
+}
+
+.tagsFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tagFilterButton {
+  padding: 0.375rem 0.75rem;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tagFilterButton:hover {
+  background-color: #e5e7eb;
+}
+
+.tagFilterButton.selected {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.templateSelect {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background-color: white;
+  min-width: 150px;
+}
+
+.clearFiltersButton {
+  padding: 0.5rem 1rem;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clearFiltersButton:hover {
+  background-color: #dc2626;
+}
+
+.tableDataGrid {
+  flex: 1;
+  overflow: hidden;
+  padding: 1.5rem 2rem;
+}
+
+.surveyListSection h3,
+.surveyContentSection h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.surveyNameCell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.surveyName {
+  font-weight: 500;
+  color: #111827;
+}
+
+.surveyTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.surveyTag {
+  padding: 0.125rem 0.375rem;
+  background-color: #e0e7ff;
+  color: #3730a3;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.surveyTagMore {
+  padding: 0.125rem 0.375rem;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.templateType {
+  color: #059669;
+  font-weight: 500;
+}
+
+.contentHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.backButton {
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.backButton:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.noContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+/* Responsive styles for TableDataFormat */
+@media (max-width: 768px) {
+  .tableDataHeader {
+    padding: 1rem;
+  }
+  
+  .filtersSection {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .searchSection {
+    width: 100%;
+  }
+  
+  .filterOptions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .tagsFilter {
+    justify-content: flex-start;
+  }
+  
+  .tableDataGrid {
+    padding: 1rem;
+  }
+  
+  .contentHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* Template Section Styles */
+.templateSectionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.templateSectionPreview {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.templateSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.templateSectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.templateSectionBadge {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.templateSectionDescription {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.templateMoreSections {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  background-color: #f1f5f9;
+  border-radius: 0.375rem;
+}
+
+/* Template Section Editor Styles */
+.templateSectionEditor {
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.templateSectionEditorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.templateSectionEditorInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+}
+
+.templateSectionToggle {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.templateSectionToggle:hover {
+  background-color: #e2e8f0;
+}
+
+.templateSectionToggle .expanded {
+  transform: rotate(180deg);
+}
+
+.templateSectionTitleGroup,
+.templateSectionDescriptionGroup {
+  flex: 1;
+}
+
+.templateSectionEditInputGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.templateSectionEditTitle {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+}
+
+.templateSectionEditDescription {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  resize: vertical;
+}
+
+.templateSectionEditActions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.templateSectionEditSaveButton,
+.templateSectionEditCancelButton {
+  padding: 0.25rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.templateSectionEditSaveButton {
+  background-color: #10b981;
+  color: white;
+}
+
+.templateSectionEditSaveButton:hover {
+  background-color: #059669;
+}
+
+.templateSectionEditCancelButton {
+  background-color: #ef4444;
+  color: white;
+}
+
+.templateSectionEditCancelButton:hover {
+  background-color: #dc2626;
+}
+
+.templateSectionEditDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.templateSectionEditorTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.templateSectionEditorDescription {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.templateSectionEditIcon {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.templateSectionEditIcon:hover {
+  background-color: #e2e8f0;
+  color: #374151;
+}
+
+.templateSectionEditorActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.templateSectionDeleteButton {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.templateSectionDeleteButton:hover {
+  background-color: #dc2626;
+}
+
+.templateSectionEditorBody {
+  padding: 1rem;
+}
+
+.templateSectionItemsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.templateSectionItemsTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+.templateSectionItemsButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.templateSectionItemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.templateSectionEmptyState {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+}
+
+.templateSectionEmptyStateText {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0 0 0.25rem 0;
+}
+
+.templateSectionEmptyStateSubtext {
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.addSectionButton {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.addSectionButton:hover {
+  background-color: #2563eb;
+}
+
+.templateSectionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Deleted Surveys Modal */
+.deletedSurveysList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.deletedSurveyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.deletedSurveyItem:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.deletedSurveyInfo {
+  flex: 1;
+}
+
+.deletedSurveyTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+}
+
+.deletedSurveyDate {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 0.5rem 0;
+}
+
+.deletedSurveyTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.deletedSurveyTag {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.restoreButton {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.restoreButton:hover {
+  background: #059669;
+}
+
+/* Section display styles */
+.fileSections {
+  margin-top: 0.75rem;
+}
+
+.fileSectionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fileSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.sectionCompleted {
+  /* background-color: #dcfce7; */
+  color: #166534;
+  border: 1px solid #16a34a;
+}
+
+.sectionIncomplete {
+  /* background-color: #fef2f2; */
+  color: #dc2626;
+  border: 1px solid #dc2626;
+}
+
+.sectionTitle {
+  font-weight: 500;
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.sectionProgress {
+  font-weight: 600;
+  margin-right: 0.25rem;
+}
+
+.sectionCompletedIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+/* Action info styles */
+.fileActionInfo {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.actionText {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Table column styles */
+.surveyTagsCell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.125rem;
+  align-items: center;
+  padding: 0.25rem 0;
+  min-height: 2rem;
+}
+
+.surveyTag {
+  background-color: #f3f4f6;
+  color: #374151;
+  padding: 0 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid #d1d5db;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.125rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  height: 25px;
+  box-sizing: border-box;
+}
+
+.surveyTag:hover {
+  background-color: #e5e7eb;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.noTags {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.sectionsCell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  min-height: 25px;
+}
+
+.sectionText {
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  height: 25px;
+  margin-top: 4px;
+  padding: 0 0.5rem;
+}
+
+.sectionCompleted {
+  color: #16a34a;
+}
+
+.sectionIncomplete {
+  color: #dc2626;
+}
+
+.noSections {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-style: italic;
+}

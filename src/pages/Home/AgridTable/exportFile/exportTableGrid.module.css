@@ -1,0 +1,29 @@
+.dropdownItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: none;
+    /*padding: 8px 12px;*/
+    text-align: left;
+    cursor: pointer;
+    font-size: 16.5px;
+    color: #5f5e5b;
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.dropdownItem:hover {
+    background: #165591; /* Hiệu ứng hover */
+    color: white !important;
+}
+
+.export {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /*padding: 0px 0px;*/
+    gap: 3px;
+}

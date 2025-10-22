@@ -1,0 +1,182 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modalHeader {
+    padding: 16px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modalHeader span {
+    font-weight: bold;
+}
+
+.modalInput {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.modalContent {
+    padding: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.categoryItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.categoryActions {
+    display: flex;
+    gap: 4px;
+}
+
+.actionButton {
+    padding: 4px;
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionButton:hover {
+    background: #f8f9fa;
+    color: #212529;
+}
+
+.addNewItem {
+    margin-top: 16px;
+}
+
+.addButton {
+    padding: 8px 16px;
+    border: none;
+    background: #0d6efd;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.addButton:hover {
+    background: #0b5ed7;
+}
+
+.modalFooter {
+    padding: 16px;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.saveButton {
+    padding: 8px 24px;
+    background: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.saveButton:hover {
+    background: #0b5ed7;
+}
+
+.addNewItemWrapper {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.addInput {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.addInput:focus {
+    outline: none;
+    border-color: #0d6efd;
+}
+
+.categoryActions {
+    display: flex;
+    gap: 8px;
+}
+
+.actionButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.actionButton:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.editInput {
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: inherit;
+    width: 200px;
+}
+
+.checkIcon {
+    color: #4CAF50;
+}
+
+.categoryItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.categoryItem:last-child {
+    border-bottom: none;
+}

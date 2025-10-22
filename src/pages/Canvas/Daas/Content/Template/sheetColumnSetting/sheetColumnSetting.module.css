@@ -1,0 +1,182 @@
+.percentageCell {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 100%;
+    margin-top: 9px;
+}
+
+.percentageText {
+    min-width: 45px;
+    width: auto;
+    text-align: right;
+    font-size: 12px;
+    white-space: nowrap;
+    padding-left: 5px;
+}
+
+.percentageSymbol {
+    font-size: 10px;
+    margin-left: 1px;
+}
+
+.percentageBar {
+    flex: 1;
+    height: 16px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.percentageFill {
+    height: 100%;
+    background: #259C63;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.colorPicker {
+    margin-top: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    gap: 10px
+}
+
+.colorPickerPopover {
+    position: absolute;
+    z-index: 2;
+    top: 40px;
+}
+
+.colorPickerCover {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.tooltip {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.deleteButton,
+.copyButton {
+    background-color: #6C757D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.deleteButton {
+    margin-right: 15px;
+}
+
+/* Hover effect: slightly darker and bold */
+.deleteButton:hover,
+.copyButton:hover {
+    background-color: #5a6268;
+    font-weight: 600;
+}
+
+.dropdownOptionsRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.addOptionWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 40%;
+}
+
+.addOptionInput {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.addOptionButton {
+    padding: 8px 12px;
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.addOptionButton:hover {
+    background-color: var(--hover-color);
+}
+
+.optionList {
+    width: 55%;
+    max-height: 650px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px;
+}
+
+.optionItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    /*border: 1px solid #e0e0e0;*/
+    color: var(--text-light);
+    transition: background-color 0.3s ease;
+}
+
+.optionItem:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.removeOptionButton {
+    background-color: #6C757D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.removeOptionButton:hover {
+    background-color: #5a6268;
+    font-weight: 600;
+}
+
+.custom-selected {
+    background-color: var(--your-dynamic-theme-color) !important;
+    color: white !important;
+}
+
+
+

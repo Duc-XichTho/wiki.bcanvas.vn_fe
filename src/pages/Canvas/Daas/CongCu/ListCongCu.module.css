@@ -1,0 +1,601 @@
+@import "../../../../styleGlobal.css";
+
+.sidebar {
+    width: 100%;
+    height: 100%;
+    transition: width 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebarCollapsed {
+    width: 100%;
+}
+
+.sidebarCollapsed .buttonWrapper {
+    padding: 4px 10px;
+    margin-right: 0px !important;
+}
+
+.sidebarCollapsed .tabs {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+}
+
+.sidebarCollapsed .tabs {
+    margin-top: 10px;
+}
+
+.sidebarToggleCollapsed,
+.sidebarToggle {
+    position: absolute;
+    top: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.sidebarToggleCollapsed {
+    right: 6px;
+}
+
+.sidebarToggle {
+    right: 10px;
+}
+
+.toggleIcon {
+    width: 24px;
+    height: 24px;
+}
+
+.headerSidebar {
+    width: 100%;
+    height: 5%;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.searchContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 15px;
+    height: 5%;
+}
+
+
+.headerName {
+    color: #454545;
+    font-weight: 500;
+    font-size: 27px;
+}
+
+.button {
+    /*background-color: red;*/
+    width: 100%;
+    margin-top: 10px;
+
+    /*background-color: white;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap: 80px;
+}
+
+.buttonWrapper {
+    border-radius: 2px;
+    display: flex;
+    width: max-content;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.buttonWrapper > img {
+    width: 24px;
+    height: 24px;
+}
+
+
+.buttonRight {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 19px;
+    padding: 0 12px;
+}
+
+
+.tabs {
+    width: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 15px 14px 15px 14px;
+    margin-top: 15px;
+}
+
+.tabs :global(.ant-menu) {
+    width: 100% !important;
+}
+
+.tabsIcon {
+    width: 20px;
+    margin-right: 0.5em;
+}
+
+.tabsTitle > span {
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.36px;
+    color: var(--text-color);
+}
+
+.collapsedItem {
+    justify-content: center;
+}
+
+/*ToolTipSideBar*/
+
+.tooltipWrapper {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+}
+
+.textEllipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+}
+
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.2s ease-in-out;
+}
+
+.tooltipWrapper:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.quickFilterInput {
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px; */
+    border: unset;
+    width: max-content;
+    font-size: 12.5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.quickFilterInput::placeholder {
+    color: var(--header-text);
+    padding-left: unset;
+}
+
+.buttonSearch {
+    border-radius: 8px;
+    display: flex;
+    width: 10%;
+    align-items: center;
+    position: relative;
+    color: #5f5e5b;
+    justify-content: start;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.buttonSearch > img {
+    height: 20px;
+}
+
+
+.listTag {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 7%;
+    padding: 0 10px;
+    margin-top: 5px;
+    position: relative;
+}
+
+.tagContainer {
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    align-items: flex-start;
+}
+
+
+.tag {
+    align-items: center;
+    display: flex;
+    padding: 0px 10px;
+    border-radius: 16px;
+    font-size: 12.5px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    height: 25px;
+}
+
+.activeTag {
+    border: 1px solid #007bff;
+}
+
+.locNangCao {
+    align-items: center;
+    display: flex;
+}
+
+.advancedFilter {
+    font-size: 13px;
+    color: rgba(69, 69, 69, 1);
+    white-space: nowrap; /* Giữ nguyên một dòng */
+    cursor: pointer;
+}
+
+.setting {
+    display: flex;
+    justify-content: center;
+    width: 13%;
+}
+
+.settingIcon {
+    opacity: 0.5; /* Mờ icon khi không hover */
+    transition: opacity 0.3s ease-in-out;
+
+}
+
+.setting:hover .settingIcon {
+    opacity: 1; /* Hiển thị icon khi hover */
+}
+
+.category:not(:first-child) {
+    margin-top: 25px;
+}
+
+.category:first-child {
+    margin-top: 5px;
+}
+
+
+.category {
+    position: relative;
+    width: 100%;
+}
+
+.categoryTitle {
+    font-weight: bold;
+    font-size: 16px;
+    color: #454545;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.card {
+    display: flex;
+    /*align-items: center;*/
+    border-radius: 5px;
+    padding: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.card.activeCard ,
+.subItem.activeCard {
+    border: 2px solid #54a1e4; /* Viền màu xanh cho card được chọn */
+    background-color: #e8f3fc;
+}
+
+.notification {
+    width: 7%;
+    display: flex;
+}
+
+.statusIcon {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.cardContent {
+    width: 100%;
+}
+
+.cardTitle {
+    font-weight: normal;
+    color: #454545;
+    font-size: 14.5px;
+}
+
+.cardInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.cardInfoRight,
+.cardInfoLeft {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+}
+
+.cardInfoRight > img {
+    width: 14px;
+    height: 14px;
+    margin-top: 4px;
+}
+
+
+.iconButton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.defaultIcon {
+    transition: opacity 0.2s ease-in-out;
+}
+
+.hoverIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Ẩn icon khi không hover */
+    transition: opacity 0.2s ease-in-out;
+    width: 28px;
+    height: 28px;
+}
+
+.iconButton:hover .defaultIcon {
+    opacity: 0; /* Ẩn icon mặc định khi hover */
+}
+
+.iconButton:hover .hoverIcon {
+    opacity: 1; /* Hiện icon khi hover */
+}
+
+
+.popoverContainer {
+    padding: 10px;
+    min-width: 280px;
+    max-width: 330px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.editFields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #454545;
+}
+
+.checkboxGroup {
+    margin-top: 15px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 120px;
+}
+
+.modalContent {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.labelCreate {
+    height: 10%;
+    width: 100%;
+}
+
+.listTab {
+    height: 80%;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.listTabContainer {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    padding-right: 1em;
+}
+
+
+.nameTab {
+    display: flex;
+    align-items: center;
+    width: 70%;
+    overflow: hidden;
+}
+
+.nameTab > span {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color : #454545;
+}
+
+/* Item checkbox */
+.checkboxItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.inputField {
+    width: 100%; /* Đảm bảo input không bị thu nhỏ */
+}
+.popoverTags {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px; /* Khoảng cách giữa các tag */
+}
+
+.tagPopUp {
+    padding: 4px 8px;
+    font-size: 12px;
+    color: #454545;
+    border-radius: 19px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.disabled {
+    cursor: not-allowed;
+    opacity: 0.6; /* Làm mờ một chút để báo hiệu không thể nhấn */
+}
+
+.selectedTag {
+    background: #F9F9F9;
+    border: 1px solid #D2D2D2
+}
+
+.deleteOption {
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 0;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: end;
+    gap : 5px;
+    margin-top: 10px;
+}
+
+
+.listType {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    padding: 10px;
+    height: 5%;
+    margin-top: 10px;
+
+}
+
+.type {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #454545;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.colorBox {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.type.activeType {
+    border-color: rgba(35, 79, 150, 0.27);
+    background-color: rgba(35, 79, 150, 0.1);
+}
+
+.bookmarkIcon, .optionsIcon {
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+}
+
+
+.categoryTitleRight {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.subItems {
+    margin-left: 9px;
+    margin-top: 15px;
+}
+
+.subItem {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 15px 10px 15px 10px;
+    display: flex;
+    align-items: center;
+    gap:  10px;
+}
+
+.subItem > span {
+    color: #454545;
+    font-weight: bold;
+    font-size: 14.5px;
+}
+
+

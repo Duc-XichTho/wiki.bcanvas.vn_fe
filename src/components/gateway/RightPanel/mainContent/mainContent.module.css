@@ -1,0 +1,660 @@
+/* Container Layout */
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Header Section */
+.header {
+    display: flex;
+    align-items: center; /* Căn giữa nút và trạng thái */
+    gap: 10px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.status {
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 0px 20px;
+}
+
+.attach span {
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    background-color: #FF7C7C;
+    border-radius: 100%;
+    padding: 0px 5px;
+    color: #fff;
+    margin-left: 3px;
+}
+
+/* Info Section */
+.info {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Giảm khoảng cách giữa các phần tử */
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.pic {
+    display: flex;
+    align-items: center;
+}
+
+.dateInput, .tagSelect {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 4px 8px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+
+.tagSelect {
+    min-width: 120px;
+}
+
+.formattedDate {
+    color: #777;
+    font-size: 13px;
+    margin-left: 5px;
+}
+
+.infoIcon {
+    color: #666;
+}
+
+/* Main Content Section */
+.mainContent {
+    flex-grow: 1;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.mainContent .label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Footer Section */
+.footer {
+    margin-top: auto;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footerSpacer {
+    flex-grow: 1;
+}
+
+.attachmentSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.attachButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6px 12px;
+    color: #555;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.attachButton:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.attachmentList {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+    max-height: 100px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.attachmentItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.fileName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+}
+
+.removeFileButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.removeFileButton:hover {
+    color: #f44336;
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.confirmButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    transition: background-color 0.2s;
+}
+
+.confirmButton:hover:not(:disabled) {
+    background-color: #388e3c;
+}
+
+.confirmButton:disabled {
+    background-color: #e0e0e0;
+    color: #9e9e9e;
+    cursor: not-allowed;
+}
+
+.smallLoader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Title Section */
+.titleContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.editTitleButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.editTitleButton:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.titleEditContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.titleInput {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border: 1px solid #0084ff;
+    border-radius: 4px;
+    width: 100%;
+    outline: none;
+}
+
+.titleEditActions {
+    display: flex;
+    gap: 4px;
+}
+
+.saveButton, .cancelButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.saveButton:hover {
+    background-color: rgba(0, 128, 0, 0.1);
+}
+
+.cancelButton:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+/* Editor Section */
+.contentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.saveStatus {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+}
+
+.editorContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+}
+
+.editorToolbar {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.toolbarGroup {
+    display: flex;
+    gap: 2px;
+    margin-right: 6px;
+    border-right: 1px solid #e0e0e0;
+    padding-right: 6px;
+}
+
+.toolbarGroup:last-child {
+    border-right: none;
+}
+
+.toolbarSpacer {
+    flex-grow: 1;
+}
+
+.editorToolbar button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #555;
+}
+
+.editorToolbar button:hover {
+    background-color: #e9e9e9;
+}
+
+.editorToolbar button.isActive {
+    background-color: #e0e0e0;
+    color: #000;
+}
+
+.editorToolbar button.saveButton {
+    display: flex;
+    align-items: center;
+    background-color: #4caf50;
+    color: white;
+    padding: 4px 12px;
+}
+
+.editorToolbar button.saveButton:hover {
+    background-color: #45a049;
+}
+
+.tiptapEditor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.tiptapEditor :global(.ProseMirror) {
+    padding: 16px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 200px;
+}
+
+.tiptapEditor :global(.ProseMirror p) {
+    margin: 0 0 1em 0;
+}
+
+.tiptapEditor :global(.ProseMirror h1) {
+    font-size: 1.5em;
+    margin: 1em 0 0.5em;
+}
+
+.tiptapEditor :global(.ProseMirror h2) {
+    font-size: 1.3em;
+    margin: 1em 0 0.5em;
+}
+
+.tiptapEditor :global(.ProseMirror ul),
+.tiptapEditor :global(.ProseMirror ol) {
+    padding-left: 2em;
+    margin: 0.5em 0;
+}
+
+.tiptapEditor :global(.ProseMirror a) {
+    color: #0084ff;
+    text-decoration: underline;
+}
+
+.tiptapEditor :global(.ProseMirror blockquote) {
+    border-left: 3px solid #ddd;
+    padding-left: 1em;
+    margin-left: 0;
+    color: #666;
+}
+
+.tiptapEditor :global(.ProseMirror pre) {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 0.75em 1em;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+}
+
+.tiptapEditor :global(.ProseMirror table) {
+    border-collapse: collapse;
+    margin: 1em 0;
+    overflow: hidden;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tiptapEditor :global(.ProseMirror th),
+.tiptapEditor :global(.ProseMirror td) {
+    border: 1px solid #ddd;
+    padding: 0.5em;
+    position: relative;
+    vertical-align: top;
+}
+
+.tiptapEditor :global(.ProseMirror th) {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.tiptapEditor :global(.ProseMirror img) {
+    max-width: 100%;
+    height: auto;
+}
+
+.tiptapEditor :global(.ProseMirror .has-focus) {
+    border-radius: 2px;
+    box-shadow: 0 0 0 2px #0084ff;
+}
+
+.tiptapEditor :global(.ProseMirror p[style*="text-align:center"]) {
+    text-align: center;
+}
+
+.tiptapEditor :global(.ProseMirror p[style*="text-align:right"]) {
+    text-align: right;
+}
+
+.tiptapEditor :global(.ProseMirror mark) {
+    background-color: #ffeeba;
+}
+
+/* Add these to fix CSS module usage with global classes */
+:global(.ql-toolbar.ql-snow) {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: #f9f9f9;
+    border-color: #ddd;
+}
+
+:global(.ql-container.ql-snow) {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-color: #ddd;
+    font-size: 14px;
+}
+
+:global(.ql-editor) {
+    min-height: 200px;
+}
+
+/* Link Modal */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.linkModal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.linkModal h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.linkInput {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.linkActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.confirmLinkButton, .cancelLinkButton {
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+}
+
+.confirmLinkButton {
+    background-color: #0084ff;
+    color: white;
+}
+
+.cancelLinkButton {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.confirmLinkButton:hover {
+    background-color: #0065c5;
+}
+
+.cancelLinkButton:hover {
+    background-color: #d0d0d0;
+}
+
+/* Update footer and attachment styles */
+
+.footer {
+    margin-top: auto;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footerSpacer {
+    flex-grow: 1;
+}
+
+/* Move this from the header section to the footer section */
+.attach {
+    display: flex;
+    align-items: center;
+}
+
+.attach span {
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    background-color: #FF7C7C;
+    border-radius: 100%;
+    padding: 0px 5px;
+    color: #fff;
+    margin-left: 3px;
+}
+
+.confirmButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 8px 28px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirmButton:hover {
+    background-color: #45a049;
+}
+
+.confirmButton:active {
+    background-color: #3e8e41;
+}
+
+/* Add these styles for editor images */
+
+.tiptapEditor :global(.editor-image) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1em 0;
+    border-radius: 4px;
+}
+
+.tiptapEditor :global(.ProseMirror img) {
+    max-width: 100%;
+    height: auto;
+}
+
+.tiptapEditor :global(.ProseMirror img.ProseMirror-selectednode) {
+    outline: 2px solid #0084ff;
+    border-radius: 2px;
+}
+
+.picSelect {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 4px 8px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    min-width: 120px;
+}
+
+/* Add after the existing .confirmButton styles */
+.resetButton {
+    background-color: #ff9800;
+}
+
+.resetButton:hover:not(:disabled) {
+    background-color: #f57c00;
+}
+
+.resetButton:disabled {
+    background-color: #e0e0e0;
+    color: #9e9e9e;
+    cursor: not-allowed;
+}
+.dropdownButton {
+    background: transparent; /* Xóa nền xám */
+    border: none; /* Xóa viền */
+    padding: 0; /* Xóa padding dư thừa */
+    display: flex; /* Căn giữa icon */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* Hiển thị con trỏ khi hover */
+    color: #454545;
+}
+.copyButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+}
+
+.copyButton:hover {
+    opacity: 0.7;
+}

@@ -1,0 +1,155 @@
+/* Container chính */
+.container {
+  display: flex;
+  height: calc(100vh - 70px);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Sidebar - 15% */
+.sidebar {
+  width: 18%;
+  background: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+}
+
+.sidebarContent {
+  padding: 16px;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.sidebarTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.resetButton {
+  /* Button styles sẽ được handle bởi Ant Design */
+}
+
+/* Nhóm bước */
+.stepGroup {
+  margin-bottom: 20px;
+}
+
+.groupTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #545454;
+  margin-bottom: 8px;
+  padding: 4px 0;
+}
+
+.stepItem {
+  padding: 8px 12px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  border-radius: 6px;
+  background: transparent;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.stepItem:hover {
+  background: #f0f0f0;
+}
+
+.stepItemActive {
+  background: #1890ff;
+  color: #fff;
+  border: 1px solid #1890ff;
+}
+
+.stepItemActive:hover {
+  background: #40a9ff;
+}
+
+/* Main Content - 85% */
+.mainContent {
+  width: 85%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentHeader {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  background: #fafafa;
+}
+
+.contentTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.contentBody {
+  flex: 1;
+  padding: 10px;
+  overflow: auto;
+}
+
+/* Empty state */
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  color: #999;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 18px;
+}
+
+.emptyDescription {
+  margin: 8px 0 0 0;
+  font-size: 14px;
+}
+
+/* Import chi phí specific styles */
+.importCfContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.importCfTitle {
+  /* Typography styles sẽ được handle bởi Ant Design */
+}
+
+.importCfRadioGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: start;
+}
+
+.importCfDescription {
+  height: 35px;
+  margin-top: 10px;
+}
+
+.importCfContent {
+  height: calc(100% - 100px);
+  overflow-y: auto;
+}

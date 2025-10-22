@@ -1,0 +1,397 @@
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /*border: 1px solid #bdbdbd;*/
+    background-color: #ffffff;
+    border-radius: 10px;
+
+    box-shadow: 2px 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 14px;
+    gap: 10px;
+}
+
+
+.sidebarTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 0px 7px 10px;
+    border-radius: 3px;
+}
+
+.folderRight {
+    display: flex;
+    align-items: center;
+    gap: 7px
+}
+
+.folderRight>span {
+    font-size: 20px;
+    font-weight: 700;
+    color: #6E6E6E;
+}
+
+.menuItemDark {
+
+    color: #fff;
+    display: flex;
+    height: 30px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    padding: 7px 5px 7px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.2s;
+
+}
+
+.menuItemDark:hover {
+    background-color: #545d66;
+}
+
+.menuItemActiveDark {
+    background-color: #545d66;
+}
+
+.menuItem {
+    display: flex;
+    height: 30px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    padding: 7px 5px 7px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #262626;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+
+.menuItem:hover {
+    background-color: #f4f4f4;
+}
+
+.menuItemActive:hover {
+    background-color: #cff1e9;
+    /* Màu nền sáng hơn, dịu hơn */
+    color: #333333;
+    /* Màu chữ không trắng gắt */
+}
+
+.cardLabel {
+    padding-left: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    gap: 5px;
+}
+
+.iconCard {
+    width: 15px;
+    height: 15px;
+}
+
+.titleCard {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    max-width: 100%;
+
+}
+
+.menuItemActive {
+    background-color: #e6e6e6;
+    /* Màu nền sáng hơn, dịu hơn */
+    color: #333333;
+    /* Màu chữ không trắng gắt */
+    transition: all 0.2s ease;
+    /* Thêm mượt mà khi thay đổi */
+    font-weight: bold;
+}
+
+.content {
+    width: calc(100% - 330px);
+    padding: 10px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.searchBox {
+    background: #ffffff;
+    width: 100%;
+    font-size: 13px;
+    border-radius: 6px;
+}
+
+
+
+.searchBoxDark {
+    background: #334155;
+    width: 100%;
+    border: 1px solid #4a5568 !important;
+    font-size: 13px;
+    border-radius: 6px;
+    color: #fff;
+}
+
+
+
+
+
+/* Tùy chỉnh màu placeholder cho dark theme */
+.searchBoxDark :global(.ant-input)::placeholder {
+    color: #ffffff ; 
+    opacity: 1;
+}
+
+
+.buttonActionGroup {
+    display: flex;
+    padding-left: 10px;
+    gap: 10px;
+}
+
+.buttonAction {
+    box-shadow: 1px 2px 1px 0px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(200, 200, 200, 1);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.buttonAction.active {
+    background-color: #ffffff;
+}
+
+.active>span {
+    color: #262626 !important;
+    font-weight: bold;
+}
+
+.activeDark>span {
+    color: #fff;
+    text-shadow:
+        0 0 5px #ffffff,
+        0 0 10px #ffffff,
+        0 0 20px #ffffff,
+        0 0 40px #ffffff;
+}
+
+.bookMark {
+    cursor: pointer;
+    width: 15%;
+    display: flex;
+    align-items: center;
+}
+
+
+.headerSidebar {
+    gap: 12px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.searchContainer {
+    flex: 1;
+    height: 100%;
+    min-width: 0;
+}
+
+.toggleContainer {
+    flex-shrink: 0;
+}
+
+.toggleButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #1890ff, #40a9ff);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.3);
+}
+
+.toggleButton:hover {
+    background: linear-gradient(135deg, #40a9ff, #69c0ff);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(24, 144, 255, 0.4);
+}
+
+.toggleButton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(24, 144, 255, 0.3);
+}
+
+.toggleButtonDark {
+    background: linear-gradient(135deg, #722ed1, #9254de);
+    box-shadow: 0 2px 4px rgba(114, 46, 209, 0.3);
+}
+
+.toggleButtonDark:hover {
+    background: linear-gradient(135deg, #9254de, #b37feb);
+    box-shadow: 0 4px 8px rgba(114, 46, 209, 0.4);
+}
+
+.toggleIcon {
+    font-size: 14px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.toggleText {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 100px);
+    overflow: auto;
+    padding: 4px 8px 20px 8px;
+    gap: 2px
+}
+
+.menuDark {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 100px);
+    overflow: auto;
+    padding: 4px 8px 20px 8px;
+    gap: 2px;
+
+}
+.menuDark {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 100px);
+    overflow: auto;
+    padding: 4px 8px 20px 8px;
+    gap: 2px;
+  
+    /* Firefox */
+    scrollbar-width: thin;  
+    scrollbar-color: #5c5e7e #243348;         /* thumb màu #555, track màu #111 */
+  }
+  
+
+  
+.extraInfo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 50px;
+    margin-top: auto;
+    padding: 16px 0;
+}
+
+.extraInfo>button {
+    width: 40%;
+    height: 30px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    border: 1px solid #D9D9D9;
+    cursor: pointer;
+    font-size: 14px;
+    /*color: #262626;*/
+    font-weight: 500;
+    transition: 0.2s;
+    box-shadow: 1px 2px 1px 1px #00000040;
+
+}
+
+.customButton {
+    color: rgba(38, 38, 38, 1) !important;
+    font-weight: 500 !important;
+    border-radius: 10px !important;
+}
+
+.titleButton {
+    font-size: 16px;
+
+}
+
+.textFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #8d8d8d;
+    background-color: #EFEFEF;
+    height: 50px;
+    /* Hoặc tuỳ chỉnh chiều cao */
+    font-size: 16px;
+}
+
+.disabledItem {
+    color: #ababab;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.newDot {
+    color: #1677ff;
+    margin-left: 4px;
+    display: inline-flex;
+    vertical-align: top;
+}
+
+.modalKPI :global(.ant-modal-close) {
+    top: 8px;
+    width: 10px;
+    height: 10px
+}
+
+.option_card {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.menuWithButton {
+    height: calc(100% - 140px);
+    /* Adjusted height to make space for buttons */
+}

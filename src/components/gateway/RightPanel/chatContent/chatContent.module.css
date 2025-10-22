@@ -1,0 +1,1013 @@
+/* ====================== LAYOUT & CONTAINERS ====================== */
+.mainContainer {
+    margin: 0 15px;
+}
+
+/* Chat Container */
+.chatContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Chat Header */
+.chatHeader {
+    padding: 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chatHeader h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.chatHeaderContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Messages Container */
+.messagesContainer {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ====================== MESSAGES ====================== */
+/* Message Item */
+.messageItem {
+    display: flex;
+    max-width: 80%;
+}
+
+.currentUser {
+    margin-left: auto;
+    flex-direction: row-reverse;
+}
+
+.otherUser {
+    margin-right: auto;
+}
+
+.messageContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.senderName {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.messageRow {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.messageBubble {
+    padding: 8px 12px;
+    border-radius: 18px;
+    max-width: 380px;
+    word-wrap: break-word;
+    background-color: #f0f0f0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.currentUser .messageBubble {
+    background-color: #0084ff;
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.otherUser .messageBubble {
+    background-color: #e4e6eb;
+    color: #050505;
+    border-bottom-left-radius: 4px;
+}
+
+.messageTime {
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+    align-self: flex-end;
+}
+
+.currentUser .messageTime {
+    margin-right: 8px;
+}
+
+.otherUser .messageTime {
+    margin-left: 8px;
+}
+
+.messageText {
+    margin-bottom: 6px;
+}
+
+/* ====================== USER AVATARS ====================== */
+.avatarContainer {
+    margin-right: 8px;
+    align-self: flex-end;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.avatarImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.mentionAvatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #4267B2;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-right: 8px;
+    overflow: hidden;
+}
+
+/* ====================== CHAT INPUT AREA ====================== */
+.chatInputContainer {
+    padding: 10px 15px;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+}
+
+.chatForm {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.inputWrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+}
+
+/* Tagged Input Container */
+.taggedInputContainer {
+    position: relative;
+    flex: 1;
+    display: flex;
+    max-height: 120px; /* Limit the maximum height */
+    overflow: hidden;
+}
+
+.chatInput {
+    width: 100%;
+    min-height: 40px; /* Minimum height for one line */
+    max-height: 120px; /* Match container max height */
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+    background-color: transparent;
+    color: black;
+    caret-color: black;
+    line-height: 1.5;
+    font-family: inherit;
+    resize: none; /* Disable manual resizing */
+    overflow-y: auto; /* Enable vertical scrolling */
+    white-space: pre-wrap; /* Allow line breaks */
+}
+
+.chatInput:focus {
+    border-color: #0084ff;
+}
+
+.chatInput:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.taggedInputOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #333;
+    pointer-events: none;
+    white-space: pre-wrap; /* Allow line breaks */
+    overflow-y: auto; /* Enable vertical scrolling */
+    box-sizing: border-box;
+    line-height: 1.5;
+    font-family: inherit;
+}
+
+.chatInput:disabled + .taggedInputOverlay {
+    opacity: 0.7;
+    background-color: #f5f5f5;
+}
+
+/* Input Action Buttons */
+.attachButton, .emojiButton, .sendButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.attachButton:hover, .emojiButton:hover {
+    background-color: #e4e6eb;
+    color: #0084ff;
+}
+
+.sendButton {
+    color: #0084ff;
+}
+
+.sendButton:hover {
+    background-color: rgba(0, 132, 255, 0.1);
+}
+
+.sendButton:disabled {
+    color: #bbb;
+    cursor: not-allowed;
+}
+
+.emojiButton {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.emojiButton:hover {
+    color: #0084ff;
+}
+
+.emojiButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ====================== MENTION SYSTEM ====================== */
+.mentionDropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 200px;
+    overflow-y: auto;
+    width: 250px;
+    z-index: 10;
+}
+
+.mentionDropdown::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid white;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.02);
+}
+
+.mentionItem {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.mentionItemSelected {
+    background-color: #f3f4f6;
+}
+
+.mentionName {
+    font-size: 14px;
+}
+
+.mentionTag {
+    background-color: rgba(66, 103, 178, 0.1);
+    color: #4267B2;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-weight: 500;
+}
+
+.inputMentionTag {
+    color: #0084ff;
+    font-weight: 500;
+    background-color: rgba(0, 132, 255, 0.1);
+    border-radius: 3px;
+    padding: 0;
+    display: inline;
+    vertical-align: baseline;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* ====================== EMOJI PICKER ====================== */
+.emojiPickerContainer {
+    position: relative;
+}
+
+.emojiPickerWrapper {
+    position: absolute;
+    bottom: 45px;
+    right: 0;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* ====================== ATTACHMENTS ====================== */
+/* Attachment preview container */
+.attachmentPreviewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+}
+
+.attachmentPreviewItem {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+}
+
+.attachmentThumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.removeAttachmentButton {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+}
+
+.removeAttachmentButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Styles for media messages */
+.messageAttachments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.attachmentPreview {
+    max-width: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.attachmentImage {
+    max-width: 100%;
+    display: block;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.attachmentImage:hover {
+    transform: scale(1.03);
+}
+
+/* ====================== MESSAGE ACTIONS ====================== */
+.messageAction {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    display: none;
+    padding: 4px;
+    border-radius: 50%;
+}
+
+.otherUser .messageAction {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.messageBubble:hover .messageAction {
+    display: block;
+}
+
+.messageAction:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.otherUser .messageAction:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+.messageActions {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.messageBubble:hover .messageActions {
+    opacity: 1;
+}
+
+/* ====================== MESSAGE EDIT MODE ====================== */
+.editMessageContainer {
+    display: flex;
+    border-radius: 18px;
+    background-color: #0084ff;
+    padding: 4px;
+    margin-bottom: 4px;
+}
+
+.editMessageInput {
+    flex: 1;
+    border: none;
+    border-radius: 14px;
+    padding: 6px 10px;
+    font-size: 14px;
+    outline: none;
+    margin-right: 4px;
+}
+
+.editActions {
+    display: flex;
+    gap: 4px;
+}
+
+.saveEditButton, .cancelEditButton {
+    border: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.saveEditButton {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.saveEditButton:hover:not(:disabled) {
+    background-color: #43A047;
+}
+
+.cancelEditButton {
+    background-color: #F44336;
+    color: white;
+}
+
+.cancelEditButton:hover:not(:disabled) {
+    background-color: #E53935;
+}
+
+.saveEditButton:disabled, .cancelEditButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ====================== MESSAGE MENU ====================== */
+.leftMenuContainer {
+    position: relative;
+    align-self: center;
+}
+
+.menuButton {
+    background: none;
+    border: none;
+    color: #777;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.menuButton:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    opacity: 1;
+}
+
+.messageMenu {
+    position: absolute;
+    left: 0;
+    top: 24px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+}
+
+.menuIconItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #555;
+    border-radius: 4px;
+    margin: 2px 0;
+}
+
+.menuIconItem:hover {
+    background-color: #f1f1f1;
+    color: #222;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    color: #333;
+}
+
+.menuItem:hover {
+    background-color: #f1f1f1;
+}
+
+.menuItem svg {
+    color: #666;
+}
+
+/* ====================== CONNECTION STATUS ====================== */
+.connectionStatus {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.connected {
+    color: #4caf50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.disconnected {
+    color: #f44336;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ====================== MODAL ====================== */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    animation: modalFadeIn 0.2s ease-out;
+}
+
+.modalHeader {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: #f8f8f8;
+}
+
+.modalHeader h3 {
+    margin: 0 0 0 12px;
+    font-size: 16px;
+    color: #333;
+}
+
+.warningIcon {
+    color: #f44336;
+}
+
+.modalBody {
+    padding: 16px;
+}
+
+.modalBody p {
+    margin: 0 0 8px;
+    color: #555;
+}
+
+.modalWarning {
+    color: #f44336;
+    font-size: 13px;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px 16px;
+    border-top: 1px solid #f0f0f0;
+    gap: 12px;
+}
+
+.cancelButton, .deleteButton {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.cancelButton {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.cancelButton:hover {
+    background-color: #e0e0e0;
+}
+
+.deleteButton {
+    background-color: #f44336;
+    color: white;
+}
+
+.deleteButton:hover {
+    background-color: #e53935;
+}
+
+/* ====================== LIGHTBOX ====================== */
+.lightboxOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.2s ease;
+}
+
+.lightboxContent {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    animation: scaleIn 0.2s ease;
+}
+
+.lightboxImageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 90vh;
+}
+
+.lightboxImage {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.lightboxCloseButton {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 2001;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.lightboxCloseButton:hover {
+    opacity: 1;
+}
+
+.lightboxNavButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.lightboxNavButton:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.lightboxNavPrev {
+    left: -70px;
+}
+
+.lightboxNavNext {
+    right: -70px;
+}
+
+.lightboxCounter {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 14px;
+}
+
+/* ====================== LOADING STATES ====================== */
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    color: #777;
+}
+
+.emptyState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #777;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px;
+}
+
+.loader {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0084ff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 8px;
+}
+
+.smallLoader {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 132, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #0084ff;
+    animation: spin 0.8s linear infinite;
+}
+
+.errorMessage {
+    color: #f44336;
+    font-size: 13px;
+    margin-top: 5px;
+    background-color: rgba(244, 67, 54, 0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/* ====================== INFINITE SCROLL ====================== */
+.loadMoreSpinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 132, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #0084ff;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 5px;
+}
+
+.loadMoreContainer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.loadMoreButton {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 18px;
+    padding: 8px 16px;
+    color: #0084ff;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.loadMoreButton:hover {
+    background-color: #e0e0e0;
+}
+
+.scrollToBottomButton {
+    position: absolute;
+    left: 50%;
+    bottom: 80px;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #0084ff;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    opacity: 1;
+}
+
+.scrollToBottomButton:hover {
+    background-color: #0073e6;
+}
+
+/* ====================== DEBUG PANEL ====================== */
+.debugPanel {
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    background-color: #f8f8f8;
+    font-size: 12px;
+}
+
+.debugInfo {
+    margin-bottom: 8px;
+}
+
+.debugButtons {
+    display: flex;
+    gap: 5px;
+}
+
+.debugButtons button {
+    font-size: 11px;
+    padding: 3px 8px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.debugButtons button:hover {
+    background-color: #ddd;
+}
+
+/* ====================== ANIMATIONS ====================== */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}

@@ -1,0 +1,44 @@
+.panel { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 0.5rem; height: 100%; display: flex; flex-direction: column; overflow-y: auto;}
+.panelSectionBorder { padding: 1rem; border-bottom: 1px solid #e5e7eb; }
+.h3TitleDark { font-weight: 500; color: #111827; }
+.vSpace3 { display: grid; row-gap: .75rem; }
+.labelXs { display: block; font-size: .75rem; font-weight: 500; color: #374151; margin-bottom: .25rem; }
+.inputText { width: 100%; padding: .5rem; font-size: .875rem; border: 1px solid #d1d5db; border-radius: .375rem; outline: none; }
+.inputText:focus { border-color: #3b82f6; }
+.textarea { width: 100%; padding: .5rem; font-size: .875rem; border: 1px solid #d1d5db; border-radius: .375rem; outline: none; resize: none; }
+.refBox { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: .375rem; padding: .75rem; }
+.betweenRowMb3 { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }
+.labelMutedXs { font-size: .75rem; font-weight: 500; color: #374151; }
+.btnXsPrimary { display: inline-flex; align-items: center; gap: .25rem; padding: .25rem .5rem; background: #3b82f6; color: #fff; font-size: .75rem; border-radius: .25rem; transition: background-color .2s; }
+.btnXsPrimary:hover { background: #2563eb; }
+.refItem { background: #ffffff; border: 1px solid #e5e7eb; border-radius: .375rem; padding: .5rem; }
+.betweenRowMb2 { display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; }
+.refIndex { font-size: .75rem; color: #6b7280; }
+.btnIconDanger { color: #ef4444; font-size: .75rem; padding: .25rem; border-radius: .25rem; }
+.btnIconDanger:hover { color: #b91c1c; }
+.mb2 { margin-bottom: .5rem; }
+.emptyRef { text-align: center; padding: 1rem 0; color: #6b7280; }
+.vSpace2 { display: grid; row-gap: .5rem; }
+.betweenRow { display: flex; align-items: center; justify-content: space-between; }
+.labelXsEm { font-weight: 500; font-size: .75rem; color: #374151; }
+.btnXsGhostBlue { display: inline-flex; align-items: center; gap: .25rem; padding: .25rem .5rem; color: #2563eb; font-size: .75rem; border-radius: .25rem; }
+.btnXsGhostBlue:hover { background: #eff6ff; }
+.inlineGap2 { display: flex; align-items: center; gap: .5rem; }
+.flex1 { flex: 1 1 0%; }
+.btnXsGreen { display: inline-flex; align-items: center; gap: .25rem; padding: .25rem .5rem; background: #10b981; color: #fff; font-size: .75rem; border-radius: .25rem; transition: background-color .2s; }
+.btnXsGreen:hover { background: #059669; }
+.mt2 { margin-top: .5rem; }
+.controlsBox { padding-top: .75rem; border-top: 1px solid #e5e7eb; display: grid; row-gap: .75rem; }
+.textSm { font-size: .875rem; color: #374151; }
+.toggle { position: relative; display: inline-flex; height: 1.5rem; width: 2.75rem; align-items: center; border-radius: 9999px; transition: background-color .2s; }
+.toggleOff { background: #e5e7eb; }
+.toggleOnBlue { background: #2563eb; }
+.toggleOnGreen { background: #16a34a; }
+.toggleThumb { height: 1rem; width: 1rem; transform: translateX(.25rem); border-radius: 9999px; background: #ffffff; transition: transform .2s; }
+.toggleThumbOn { transform: translateX(1.5rem); }
+.toggleThumbOff { transform: translateX(.25rem); }
+.textSmMuted { font-size: .875rem; color: #6b7280; }
+.variablesBox { flex: 1 1 auto; padding: 1rem; }
+.emptyVars { font-size: .875rem; color: #6b7280; text-align: center; padding: 2rem 0; }
+.helpTextXs { font-size: .75rem; color: #6b7280; margin-top: .25rem; }
+

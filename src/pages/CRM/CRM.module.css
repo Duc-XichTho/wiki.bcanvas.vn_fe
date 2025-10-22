@@ -1,0 +1,51 @@
+/* CRM.module.css */
+.crmContainer {
+  min-height: 100vh;
+  background: #f9fafb;
+}
+
+.mainContent {
+  display: flex;
+  min-height: calc(100vh - 60px);
+}
+
+.contentArea {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #f9fafb;
+}
+
+.loadingSpinner {
+  font-size: 18px;
+  color: #6b7280;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.errorContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #f9fafb;
+}
+
+.errorMessage {
+  font-size: 18px;
+  color: #dc2626;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #fecaca;
+}

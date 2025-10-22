@@ -1,0 +1,350 @@
+.chainContainer {
+    width: 100%;
+    display: flex;
+    padding: 1.5% 1.5% 1% 1.5%;
+    height: 100%;
+    overflow: hidden;
+    gap: 1.5%;
+    z-index: 1000;
+    /*background: #fcfcfc;*/
+
+}
+
+.listCardContainer {
+    /*background: white;*/
+    height: calc(100% - 10px);
+    /*padding: 10px 0 10px 10px;*/
+    overflow: hidden;
+    border-radius: 5px;
+    transition: width 0.4s ease, background-color 0.4s ease; /* Hiệu ứng mượt */
+}
+
+.isCollapsed {
+    width: 2%;
+    background: #F9F9F9
+}
+
+.createCard {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    background: #2EA863;
+    color: white;
+}
+
+.createCard > div {
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+.btnItem {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    background: rgba(0,0,0,0);
+    border: 0.5px solid #9D9D9D;
+    color: #454545;
+}
+
+.btnItem > div {
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+.unCollapsed {
+    width: 26%;
+    /*-webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);*/
+    /*-moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);*/
+    /*box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);*/
+}
+
+.listCard {
+    height: calc(100% - 133px);
+    width: 100%;
+    overflow: auto;
+
+}
+
+.listCard::-webkit-scrollbar {
+    width: 6px; /* Độ rộng của thanh cuộn dọc */
+    height: 6px; /* Độ cao của thanh cuộn ngang */
+}
+
+.listCard::-webkit-scrollbar-track {
+    background: #F9F9F9; /* Màu nền của track */
+    border-radius: 10px; /* Bo góc cho track */
+}
+
+.listCard::-webkit-scrollbar-thumb {
+    background: #D3D3D3; /* Màu của tay nắm */
+    border-radius: 10px; /* Bo góc cho thumb */
+}
+
+.listCard::-webkit-scrollbar-thumb:hover {
+    background: #B0B0B0; /* Màu khi di chuột qua */
+}
+
+.cardDetailContainer {
+    height: 100%;
+    overflow: hidden;
+    flex: 1;
+}
+
+.headerContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+}
+
+.salesFlow {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 10px
+}
+
+.headerSalesFlow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.nameSalesFlow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.nameSalesFlow span {
+    font-family: var(--font-family);
+    font-size: 18px;
+    font-weight: 700;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.nameSalesFlow img {
+
+}
+
+.imgSettingCard {
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+}
+
+.imgSettingCard:hover img {
+    opacity: 1;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+}
+
+.newButton {
+    width: max-content;
+    height: 38px;
+    border-radius: 10px;
+    border: 1.5px solid #1F6DE1;
+    line-height: 38px;
+}
+
+.newButton > span {
+    padding: 10px 25px;
+    color: #1F6DE1;
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.36px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+}
+
+.searchContainer {
+    display: flex;
+    /*justify-content: end;*/
+    align-items: center;
+    width: 100px;
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #F9F9F9;
+    gap: 8px;
+    width: 100px;
+}
+
+.searchBox > input {
+    background: #F9F9F9;
+    width: 65%;
+}
+
+.searchBox > img {
+    height: 17px;
+}
+
+.filtersContainer {
+    display: flex;
+    width: 100%;
+    height: 31px;
+    gap: 7px;
+}
+
+.statusFilter {
+    max-width: 150px;
+}
+
+.timeFilter {
+    padding: 6px 7px;
+    font-size: 13px;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    color: #454545;
+    display: flex;
+    align-items: center;
+    max-width: 150px;
+}
+
+.timeFilter > img {
+    margin-left: 10px;
+    margin-top: 8px;
+}
+
+.timeFilter > select {
+    color: #454545;
+    width: 70%;
+    margin-right: 10px;
+}
+.timeFilter select, option {
+    background: rgba(0,0,0,0);
+}
+
+.customSelect {
+    padding: 6px 20px;
+    font-size: 13px;
+    border: 1px solid #8C8C8C;
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+    color: #818181;
+    width: max-content;
+
+}
+
+.iconSvg {
+    display: flex;
+    gap: 10px;
+    justify-content: start;
+    cursor: pointer;
+    position: relative;
+    width: max-content;
+    flex: 1;
+    margin-left: 15px;
+    color: #454545;
+    line-height: 30px;
+    font-size: 13.3333px;
+}
+
+.iconSvg > img {
+    height: 26px;
+    width: 30px;
+}
+
+
+.notification {
+    display: flex;
+    width: max-content;
+    gap: 20px
+}
+
+.itemNotification {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: max-content;
+}
+
+.itemNotification > span {
+    font-size: 12.5px;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 40px; /* Điều chỉnh vị trí dựa trên icon */
+    /*right: 10px;*/
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    width: max-content;
+}
+
+.dropdownMenu div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #5f5e5b;
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+    padding: 0 10px;
+}
+
+.dropdownMenu div:hover {
+    background: #165591; /* Hiệu ứng hover */
+    color: white !important;
+}
+
+
+.customMenu {
+    max-width: 180px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-color);
+
+}
+
+.customMenu .ant-popover-content {
+    height: 20px;
+    line-height: 30px;
+}
+
+.customMenu .ant-popover-content:hover {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.titleHeader {
+    display: flex;
+    /*align-items: center;*/
+    gap: 5px;
+}

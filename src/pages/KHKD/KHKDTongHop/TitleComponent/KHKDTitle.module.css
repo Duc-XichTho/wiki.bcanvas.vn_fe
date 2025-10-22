@@ -1,0 +1,19 @@
+.headerButton {
+    margin-left: auto;
+    padding: 7px 20px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.headerTitle {
+    width: 95%;
+}

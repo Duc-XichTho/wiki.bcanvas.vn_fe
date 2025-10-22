@@ -1,0 +1,1 @@
+export const LIST_COMPANY_KEY = 'LIST_COMPANY'

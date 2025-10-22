@@ -1,0 +1,129 @@
+.inputListContainer {
+    padding: 10px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.inputList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inputContainer {
+    margin: 10px;
+}
+
+.headerInput {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inputItem {
+    margin: 1% 1% 1% 0;
+
+}
+
+.btns {
+    display: flex;
+    visibility: hidden;
+}
+
+.inputItem:hover .btns {
+    visibility: visible;
+}
+
+/* Các phần tử có class w20, w40, w60 sẽ có chiều rộng tính theo phần trăm */
+.w20 {
+    width: 18%; /* Điều chỉnh lại chiều rộng từ 19% lên 20% để 5 phần tử tổng cộng có chiều rộng bằng 100% */
+    margin: 10px 10px 10px 0;
+}
+
+.w40 {
+    width: calc(36% + 10px);
+    margin: 10px 10px 10px 0;
+}
+
+.w60 {
+    width: calc(54% + 20px);
+    margin: 10px 10px 10px 0;
+}
+
+.w80 {
+    width: calc(72% + 30px);
+    margin: 10px 10px 10px 0;
+}
+
+.w100 {
+    width: calc(90% + 40px);
+    margin: 10px 10px 10px 0;
+}
+.select_op {
+    width: 100%;
+}
+
+.modalContainer {
+    display: flex;
+    gap: 10px;
+    height: 75vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.md1 {
+    flex: 1;
+}
+
+.md2 {
+    width: 50%;
+    position: relative;
+}
+
+
+.selectContainer {
+    border: 1px solid #d9d9d9; /* Light gray border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Padding inside the box */
+    margin-bottom: 10px; /* Space between each select group */
+    transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.selectContainer:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+.btnAdd {
+    display: flex;
+    height: 30px;
+    color: #454545;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    line-height: 24px;
+    padding: 0 5px;
+    cursor: pointer;
+    gap: 5px;
+    width: fit-content;
+    border: none;
+}
+.calcContainer{
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.calc{
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px dashed #d9d9d9;
+    margin-bottom: 10px;
+}
+.calc > *{
+    width: 33%;
+}
+.calc > button {
+    margin-top: -5px;
+    transform: translateX(42%);
+}

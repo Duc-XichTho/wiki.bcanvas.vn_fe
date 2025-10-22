@@ -1,0 +1,169 @@
+.modal {
+  /* Modal specific styles */
+}
+
+.content {
+  padding: 16px 0;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 12px;
+}
+
+.radioGroup {
+  width: 100%;
+}
+
+.radioOption {
+  display: block;
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.radioOption:hover {
+  border-color: #1890ff;
+  background-color: #f6ffed;
+}
+
+.radioOption :global(.ant-radio-checked) {
+  border-color: #1890ff;
+  background-color: #e6f7ff;
+}
+
+.radioContent {
+  margin-left: 8px;
+}
+
+.radioTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 4px;
+}
+
+.radioDescription {
+  font-size: 12px;
+  color: #8c8c8c;
+  line-height: 1.4;
+}
+
+.userSelect {
+  margin-bottom: 8px;
+}
+
+.userSelect :global(.ant-select-selector) {
+  min-height: 40px;
+  border-radius: 6px;
+}
+
+.userSelect :global(.ant-select-selection-item) {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  margin: 2px;
+}
+
+.selectedCount {
+  font-size: 12px;
+  color: #8c8c8c;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* User Class Management Styles */
+.userClassManagement {
+  padding: 16px 0;
+}
+
+.tablesContainer {
+  display: flex;
+  gap: 24px;
+  height: 500px;
+}
+
+.userClassTable {
+  flex: 1;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.userAssignmentTable {
+  flex: 1;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.tableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.tableHeader h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.createUserClassForm {
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .content {
+    padding: 12px 0;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .radioOption {
+    padding: 10px;
+  }
+  
+  .radioTitle {
+    font-size: 13px;
+  }
+  
+  .radioDescription {
+    font-size: 11px;
+  }
+  
+  .tablesContainer {
+    flex-direction: column;
+    height: auto;
+    gap: 16px;
+  }
+  
+  .userClassTable,
+  .userAssignmentTable {
+    flex: none;
+  }
+}

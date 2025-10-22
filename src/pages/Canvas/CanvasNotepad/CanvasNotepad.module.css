@@ -1,0 +1,88 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+}
+
+.quillContainer {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.quillMain {
+  flex: 1;
+  overflow: hidden;
+}
+
+.reactQuillMain {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.reactQuillMain :global(.ql-container) {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 16px;
+  border: none !important;
+}
+
+.reactQuillMain :global(.ql-toolbar) {
+  height: auto;
+  flex-shrink: 0;
+  border: none !important;
+}
+
+.reactQuillMain :global(.ql-editor) {
+  height: auto;
+  flex-shrink: 0;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.loadingCircle {
+  border: 4px solid #f3f3f3; /* Màu nền */
+  border-top: 4px solid #3498db; /* Màu của vòng tròn */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.buttonWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.buttonWrap img {
+  width: 20px;
+  margin-right: 5px;
+}
+
+.buttonWrap span {
+  font-size: 16.5px;
+}

@@ -1,0 +1,32 @@
+.tableWrapper ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.tableWrapper ::-webkit-scrollbar-thumb {
+  background: #d3d3d3;
+  border-radius: 4px;
+}
+
+.tableWrapper ::-webkit-scrollbar-thumb:hover {
+  background: #d3d3d3;
+}
+
+.tableWrapper ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.tableWrapper :global(.ant-table-cell) {
+  padding: 5px 10px !important;
+}
+
+.nameHangHoa {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}

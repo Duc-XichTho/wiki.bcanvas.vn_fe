@@ -1,0 +1,26 @@
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .userAvatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .userDetails {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .userName {
+    font-weight: 500;
+  }
+  
+  .userEmail {
+    color: #666;
+    font-size: 0.9em;
+  }

@@ -1,0 +1,363 @@
+.main {
+  width: 100%;
+  height: 100%;
+  padding: 1em 4em 0em 4em;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  width: 100%;
+  height: 5%;
+  display: flex;
+}
+
+.headerLeft {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.headerLeft span {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.headerRight {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.body {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  /*overflow: auto;*/
+  gap: 10px;
+}
+
+.ruleName {
+  width: 100%;
+  height: 50px;
+  display: flex;
+}
+
+.ruleName div:nth-child(1) {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.ruleName div:nth-child(2) {
+  width: 85%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ruleDesc {
+  width: 100%;
+  height: 50px;
+  display: flex;
+}
+
+.ruleDesc div:nth-child(1) {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.ruleDesc div:nth-child(2) {
+  width: 85%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ruleRatio {
+  width: 100%;
+  height: 50px;
+  display: flex;
+}
+
+.ruleRatio div:nth-child(1) {
+  width: 15%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.ruleRatio div:nth-child(2) {
+  width: 85%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.source {
+  width: 100%;
+  display: flex;
+  background-color: #cbf4d6;
+}
+
+.sourceLeft {
+  width: 25%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.sourceRight {
+  width: 85%;
+  overflow: auto;
+
+}
+
+.sourceTop {
+  width: 100%;
+  height: 40px;
+  display: flex;
+}
+
+.sourceBoDuLieu {
+  width: 50%;
+  height: 100%;
+  display: flex;
+}
+
+.sourceBoDuLieu div:nth-child(1) {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.sourceBoDuLieu div:nth-child(2) {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.sourceCotDuLieu {
+  width: 50%;
+  height: 100%;
+  display: flex;
+}
+
+.sourceCotDuLieu div:nth-child(1) {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.sourceCotDuLieu div:nth-child(2) {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.sourceBottom {
+  width: 100%;
+  display: flex;
+}
+
+.sourceBottomTitle {
+  width: 10%;
+  display: flex;
+  align-items: center;
+}
+
+.sourceBottomBody {
+  width: 90%;
+  max-height: 178px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.conditionItem {
+  width: 100%;
+  height: 60px;
+  border: 1px solid;
+  display: flex;
+  padding: 0.3em;
+  border-radius: 10px;
+}
+
+.item_cotDuLieu {
+  width: 30%;
+  height: 100%;
+  border-right: 1px solid;
+}
+
+.item_cotDuLieu_title {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_cotDuLieu_value {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_dieuKienLoc {
+  width: 30%;
+  height: 100%;
+  border-right: 1px solid;
+}
+
+.item_dieuKienLoc_title {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_dieuKienLoc_value {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_giaTriLoc {
+  width: 40%;
+  height: 100%;
+}
+
+.item_giaTriLoc_title {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_giaTriLoc_value {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mappingCreate {
+  width: 100%;
+  height: 100%;
+}
+
+.infoRule {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ruleNameMapping {
+  width: 50%;
+  height: 50px;
+  display: flex;
+}
+
+.ruleNameMapping div:nth-child(1) {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.ruleNameMapping div:nth-child(2) {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ruleDescMapping {
+  width: 50%;
+  height: 50px;
+  display: flex;
+}
+
+.ruleDescMapping div:nth-child(1) {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.ruleDescMapping div:nth-child(2) {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.customHeader {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  width: 100%;
+}
+
+.headerTitle {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.headerSubtitle {
+  font-size: 12px;
+  color: #666;
+}
+
+.mappingModalFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}

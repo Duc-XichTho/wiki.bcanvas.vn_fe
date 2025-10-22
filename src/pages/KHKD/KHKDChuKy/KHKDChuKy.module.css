@@ -1,0 +1,11 @@
+.custom-modal {
+    max-width: 80%; /* Adjust modal width */
+    border-radius: 10px; /* Add rounded corners */
+}
+
+.modal-content {
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd; /* Add border */
+    border-radius: 8px;
+}

@@ -1,0 +1,122 @@
+.main {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content {
+    height: 89%;
+    width: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+.header {
+    width: 100%;
+    background: #fff;
+}
+
+.headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    position: relative;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.fileNameContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #fafafa;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.fileNameContainer:hover {
+    background: #f5f5f5;
+}
+
+.fileIcon {
+    width: 16px;
+    height: 16px;
+    color: #8c8c8c;
+}
+
+.fileName {
+    font-size: 16px;
+    color: #262626;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+.fileName::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fileNameContainer:hover .fileName::after {
+    opacity: 1;
+}
+
+.tabs {
+    margin: 0;
+}
+
+.tabs :global(.ant-tabs-nav) {
+    margin: 0;
+}
+
+.tabs :global(.ant-tabs-tab) {
+    padding: 8px 16px;
+    margin: 0 4px;
+    transition: all 0.2s ease;
+}
+
+.tabs :global(.ant-tabs-tab:hover) {
+    color: #1890ff;
+}
+
+.tabs :global(.ant-tabs-tab.ant-tabs-tab-active) {
+    color: #1890ff;
+}
+
+.tabs :global(.ant-tabs-ink-bar) {
+    background: #1890ff;
+}
+
+.fileSectionTemplate {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.fileSectionTemplate:hover {
+    background-color: #e6f4ff;
+    color: #1677ff;
+}

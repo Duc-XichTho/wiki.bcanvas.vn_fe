@@ -1,0 +1,57 @@
+/* CSS cho Modal */
+.popUpForm {
+  position: absolute;
+  top: 9%;
+  left: 35%;
+  /* transform: translate(-50%, -50%); */
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 84vh;
+  border-radius: 13px;
+  width: 31%;
+}
+
+.formContent {
+  height: 100%;
+  padding: 20px;
+}
+
+.formField {
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-height: 71vh;
+  overflow-y: auto;
+}
+
+.formActions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+.tableDetail {
+  width: 100%;
+  height: 75%;
+  overflow-y: auto;
+}
+
+.create_model__box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: hidden;
+}
+.ant-table-header {
+  position: sticky; /* Make header sticky */
+  top: 0; /* Stick to the top of the container */
+  z-index: 1; /* Ensure it is above other content */
+}
+
+.selectDetail {
+  width: 150px;
+}
+
+.tableContainer {}

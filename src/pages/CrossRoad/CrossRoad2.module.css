@@ -1,0 +1,108 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.container {
+  width: 50%;
+  height: 75%;
+  display: flex;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.left {
+  width: 40%;
+  height: 100%;
+}
+
+.leftTop {
+  width: 100%;
+  height: 85%;
+  display: grid;
+  place-items: center;
+  padding: 0.5em 1em;
+  overflow: auto;
+}
+
+.leftTop :global(.ant-card) {
+  border: none;
+}
+
+.leftTop :global(.ant-card-grid) {
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: 10px;
+  box-shadow: none;
+  padding: 16px;
+}
+
+.leftBotton {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  padding-bottom: 1em;
+}
+
+.cardContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.cardIcon {
+  width: 50px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.cardIcon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.cardInfo {
+  width: calc(100% - 50px);
+  height: 100%;
+}
+
+.cardTitle {
+  width: 100%;
+  height: 50%;
+  color: #262626;
+  font-weight: 600;
+}
+
+.cardDesc {
+  width: 100%;
+  height: 50%;
+  color: #868686;
+}
+
+.right {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.rightContainer {
+  width: 55%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rightHour {
+  font-size: 5em;
+}

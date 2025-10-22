@@ -1,0 +1,137 @@
+.stepListWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    overflow-x: auto;
+    height: 80%;
+    width: 100%;
+    position: relative;
+}
+
+.stepListTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.stepListTitle > img {
+    cursor: pointer;
+}
+
+.stepWrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap : 5px
+}
+
+
+.step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    gap: 5px;
+}
+
+.stepIconWrapper {
+    height: 70px;
+    position: relative;
+    cursor: pointer;
+    width: 135px;
+}
+.stepIconWrapper:hover{
+    background: #dddddd;
+
+    border-radius: 5px;
+}
+.stepIcon {
+    padding: 5px 5px 0 5px;
+    display: flex;
+    justify-content: center;
+    width: auto;
+    height: 40px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    transition: background 0.3s ease-in-out;
+}
+
+
+.stepLabel {
+    padding: 5px 5px 0 5px;
+    font-size: 13px;
+    color: #262626;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 135px;
+    height: 30px;
+}
+.stepLabel p{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+}
+.done p {
+    color: #30b320 ; /* Xanh cho hoàn thành */
+}
+
+.notDoneYet p {
+    color: #e2ac31; /* Vàng cho đang làm */
+}
+
+.pending p {
+    color: #30a9bb; /* Xanh dương cho chờ */
+}
+
+.doing p {
+    color: #849cad; /* Xám cho chưa làm */
+}
+
+.statusStep {
+    height: 20px;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.highlight {
+    background: #E9E9E9;
+    border-radius: 5px;
+}
+
+.arrowConnector {
+    width: 40px;
+    height: 30px;
+    margin-top: -30px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+.arrowConnector img{
+    height: 63px;
+    width: 100%;
+}
+
+.skip {
+    height: 30px;
+    width: 100%;
+    text-align: center;
+}
+.skip > button {
+    background: #d9d9d9;
+    border-radius: 10px;
+}
+
+.isFull {
+    cursor: pointer;
+}

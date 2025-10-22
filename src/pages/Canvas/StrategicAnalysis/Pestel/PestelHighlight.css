@@ -1,0 +1,29 @@
+
+
+.markdown-content h1, .markdown-content h2, .markdown-content h3 {
+  color: #007bff;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 1em;
+  background-color: #b3c6e04a;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border-left: 2px solid #007bff;
+  line-height: 1.6;
+}
+.markdown-content ul {
+  margin-left: 1.5em;
+  font-size: 14px;
+}
+.markdown-content a {
+  color: #007bff;
+  text-decoration: underline;
+}
+.markdown-content strong {
+  font-weight: bold;
+}
+.markdown-content p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #262626;
+}

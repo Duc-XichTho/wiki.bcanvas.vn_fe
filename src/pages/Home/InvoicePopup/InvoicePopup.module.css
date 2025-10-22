@@ -1,0 +1,246 @@
+.invoiceContent {
+    padding: 20px;
+    width: 100%;
+}
+
+/* Close Button */
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.closeButton:hover {
+    color: #000;
+}
+
+/* Section Styling */
+.section {
+    margin-bottom: 20px;
+}
+
+.sectionTitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    display: flex;
+    gap: 10px
+}
+
+
+/* Grid Layouts */
+.gridThree {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.gridFull {
+    grid-column: span 3;
+
+}
+
+.gridTwo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+/* Form Elements */
+.label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+.input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Items Section */
+
+.tableContainer {
+    overflow-x: auto;
+    width: 100%;
+    border: 1px solid #ddd; /* Viền nhẹ */
+    border-radius: 8px;
+}
+
+.itemHeaders {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    width: max-content;
+
+}
+
+.tableContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.itemRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    width: max-content;
+}
+
+.removeItemButton {
+    background-color: #fff;
+    border: 1px solid #ff4444;
+    color: #ff4444;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.removeItemButton:hover {
+    background-color: #ff4444;
+    color: white;
+}
+
+.addItemButton {
+    display: flex;
+    align-items: center;
+    color: #2196f3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.addItemButton:hover {
+    color: #1976d2;
+}
+
+/* Total Section */
+.totalSection {
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+.totalText {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+/* Action Buttons */
+.actionButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+}
+
+.previewButton,
+.draftButton,
+.submitButton {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.previewButton {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.previewButton:hover {
+    background-color: #e0e0e0;
+}
+
+.draftButton {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.draftButton:hover {
+    background-color: #e0e0e0;
+}
+
+.submitButton {
+    background-color: #2196f3;
+    color: white;
+}
+
+.submitButton:hover {
+    background-color: #1976d2;
+}
+
+.radioLabel {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.radioLabel input[type="radio"] {
+    margin-right: 5px;
+}
+
+.textareaInput {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.paymentMethodGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+@media (max-width: 768px) {
+    .paymentMethodGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.select {
+    width: 100%;
+}
+
+/* Add styles for the wrapper divs */
+.itemRow > div {
+    padding: 0 4px;
+}
+
+/* Style for the remove button container */
+.itemRow > div:last-child {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,17 @@
+.settingsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.settingItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.settingItem span {
+    font-size: 14px;
+    color: #333;
+} 

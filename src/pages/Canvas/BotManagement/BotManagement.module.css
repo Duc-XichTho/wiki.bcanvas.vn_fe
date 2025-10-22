@@ -1,0 +1,191 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlayVisible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.container {
+  background: white;
+  width: 90%;
+  max-width: 1600px;
+  height: 90vh;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+  display: flex;
+}
+
+.overlayVisible .container {
+  transform: translateY(0);
+}
+
+.leftPanel {
+  width: 320px;
+  border-right: 1px solid #e5e7eb;
+  background: white;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.rightPanel {
+  flex: 1;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  overflow-y: auto;
+}
+
+.header {
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.scrollArea {
+  height: calc(100% - 65px);
+  overflow-y: auto;
+}
+
+.cardList {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.card:hover {
+  background: #f9fafb;
+}
+
+.cardSelected {
+  border-color: #3b82f6;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.cardTitle {
+  font-weight: 500;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.model {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  gap: 7px;
+}
+
+.buttonOutline {
+  border: 1px solid #e5e7eb;
+  background: white;
+}
+
+.buttonOutline:hover {
+  background: #f9fafb;
+}
+
+.buttonPrimary {
+  background: #3b82f6;
+  color: white;
+}
+
+.buttonPrimary:hover {
+  background: #2563eb;
+}
+
+.buttonGhost {
+  background: transparent;
+}
+
+.buttonGhost:hover {
+  background: #f9fafb;
+}
+
+.dataPacks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 10px;
+}
+
+.label {
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.cardActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.deleteIcon {
+  color: #ef4444;
+}
+
+.deleteIcon:hover {
+  color: #dc2626;
+}

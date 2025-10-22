@@ -1,0 +1,57 @@
+.form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 80%;
+}
+.form-group-tc {
+  border-radius: 5px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding-right: 6px;
+  box-sizing: content-box;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  border: 1px;
+}
+
+.form-buttons button {
+  border: 1px solid black;
+  padding: 2px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-content h2 {
+  margin-top: 0;
+}
+
+.form-content label {
+  display: block;
+  margin: 10px 0;
+}
+
+.form-content input,
+.form-content select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 2px solid black;
+}

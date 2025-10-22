@@ -1,0 +1,22 @@
+.settingsIcon {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: #64748b;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.settingsIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.settingsIcon:hover {
+  background: #f1f5f9;
+  color: #2563eb;
+}

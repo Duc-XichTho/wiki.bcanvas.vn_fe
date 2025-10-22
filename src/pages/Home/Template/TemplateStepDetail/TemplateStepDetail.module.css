@@ -1,0 +1,85 @@
+.subStepContainer {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0 10px 10px;
+    overflow: hidden;
+}
+
+.btnAdd {
+    display: flex;
+    height: 30px;
+    color: #454545;
+    background: #EAEAEA;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    line-height: 24px;
+    padding: 0 10px;
+    cursor: pointer;
+    gap: 5px;
+    width: fit-content;
+    border: none;
+    margin-bottom: 10px;
+}
+.btnSave{
+    height: 35px;
+    border: none;
+    padding:  5px;
+}
+.itemName input{
+    width: 30%;
+}
+.btnSave{
+    display: flex;
+    height: 35px;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    line-height: 24px;
+    cursor: pointer;
+    gap: 5px;
+    width: fit-content;
+}
+
+.listContainer {
+    height: 100%;
+    overflow: auto;
+    padding: 10px;
+}
+
+.listContainer button {
+    background: none;
+}
+
+.itemContainer {
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fafafa;
+    padding: 10px;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+}
+
+.itemName {
+    display: flex;
+    gap: 5px;
+}
+.itemNameView {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+.itemNameView span {
+    display: flex;
+    align-items: center;
+    line-height: 26px;
+    gap: 10px;
+}
+.btnRightContainer{
+    visibility: hidden;
+    display: flex;
+}
+.itemContainer:hover .btnRightContainer{
+    visibility: visible;
+}

@@ -1,0 +1,87 @@
+.checklistHeader {
+    display: flex;
+    justify-content: flex-start;
+    margin: 8px 0;
+    
+}
+
+.checklistActions,
+.editActions {
+    display: flex;
+    gap: 8px;
+}
+
+.checklistActions button,
+.editActions button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.checklistActions button:hover,
+.editActions button:hover {
+    background-color: #e0e0e0;
+}
+
+.newItemInput {
+    display: flex;
+    margin-bottom: 12px;
+    gap: 8px;
+}
+
+.newItemInput input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.newItemInput button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.checklistContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checklistItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.checklistItem input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.checklistItem span {
+    flex-grow: 1;
+    transition: text-decoration 0.2s ease;
+}
+
+.completed span {
+    color: #888;
+}
+
+.removeItem {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+}

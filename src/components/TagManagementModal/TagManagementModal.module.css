@@ -1,0 +1,84 @@
+.modalContent {
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.tagsCard {
+  margin-bottom: 16px;
+}
+
+.tagsTable {
+  margin-top: 16px;
+}
+
+.colorDisplay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.colorPreview {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  flex-shrink: 0;
+}
+
+.tagPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.previewTag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+  border: 1px solid;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.helpCard {
+  background: #fafafa;
+}
+
+.helpItem {
+  text-align: center;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.helpItem h4 {
+  margin: 0 0 8px 0;
+  color: #1890ff;
+  font-size: 14px;
+}
+
+.helpItem p {
+  margin: 0;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modalContent {
+    max-height: 60vh;
+  }
+  
+  .colorDisplay {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .helpItem {
+    padding: 12px;
+  }
+}

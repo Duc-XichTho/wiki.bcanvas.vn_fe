@@ -1,0 +1,184 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.sidebar {
+  width: 17%;
+  height: 100%;
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.content {
+  width: 83%;
+  height: 100%;
+}
+
+.backHome {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  padding-left: 0.6em;
+  align-items: center;
+}
+
+.backHomeItem {
+  cursor: pointer;
+}
+
+.menu {
+  width: 100%;
+  height: 95%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.menuItem {
+  width: 100%;
+  height: 6%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+.menuItem span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menuUserClass {
+  width: 100%;
+  height: 33%;
+}
+
+.menuChain {
+  width: 100%;
+  height: 60%;
+}
+
+.menuHeader {
+  width: 100%;
+  height: 5%;
+  padding: 20px 0px 15px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menuTitle {
+  flex: 1;
+}
+
+.menuTitle span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.changePosition {
+  display: flex;
+}
+
+.menuContent {
+  width: 100%;
+  height: 95%;
+  overflow-y: auto;
+padding: 20px 5px;
+}
+
+.menuData {
+  padding: 1em;
+  cursor: pointer;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menuItem:hover,
+.menuData:hover {
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.selected {
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.menuData.selected:hover {
+  border-radius: 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.menuItem.selected:hover {
+  border-radius: 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+:global(.ant-modal-footer) {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.chainInfoContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chainInfo {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.chainInfo span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chainAction {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.popoverContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

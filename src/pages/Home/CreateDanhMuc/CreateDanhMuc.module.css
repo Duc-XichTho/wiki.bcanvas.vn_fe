@@ -1,0 +1,39 @@
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+.container_content{
+    width: 100%;
+    height: 80vh;
+}
+.btnAdd {
+    margin-top: 10px;
+    display: flex;
+    height: 30px;
+    color: #454545;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    line-height: 24px;
+    padding: 0 5px;
+    cursor: pointer;
+    gap: 5px;
+    width: fit-content;
+    border: 1px solid ;
+}
+.modalcontent{
+    height: 800px;
+    /*border-radius: 10px;*/
+    transition: 0.22s ;
+}
+.active{
+    /*border: 1px solid #d1d1d1;*/
+}
+.active:hover{
+    /*-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.31);*/
+    /*-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.31);*/
+    /*box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.31);*/
+    /*border-radius: 10px;*/
+}

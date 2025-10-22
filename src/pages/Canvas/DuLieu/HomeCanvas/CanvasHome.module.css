@@ -1,0 +1,45 @@
+.container {
+    width: 100%;
+    height: 100%;
+    background: #f9f9f9;
+}
+
+.headerContent {
+    width: 100%;
+    height: 60px;
+}
+
+.outlet {
+    display: flex;
+    width: 100%;
+    height: calc(100% - 47px);
+    gap: 10px
+}
+
+.sidebar {
+    width: 12%;
+    height: 100%;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100% ;
+    position: absolute;
+}
+
+.contentNoTabMessage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 100%;
+}
+
+.noTabMessage {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+    color: #666;
+}

@@ -1,0 +1,171 @@
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.menuGroup {
+    width: 100%;
+    height: 100%;
+}
+
+.menuHeader {
+    width: 100%;
+    height: 5%;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menuTitle {
+    flex: 1;
+}
+
+.menuTitle span {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.changePosition {
+    display: flex;
+    gap: 10px;
+}
+
+.menuContent {
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+    padding: 5px 15px;
+}
+
+.menuData {
+    padding: 1em;
+    cursor: pointer;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menuData:hover {
+    border-radius: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.selected {
+    border-radius: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.menuData.selected:hover {
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+:global(.ant-modal-footer) {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.stepInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stepInfo {
+    width: 95%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.stepAction {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.popoverContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.subStepHeader {
+    flex: 1;
+    display: flex;
+}
+
+.subStepName {
+    flex: 1;
+}
+
+.subStepName span {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subStepType {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.subStepType span {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subStepHeaderEditMode {
+    flex: 1;
+}
+
+.subStepNameEditMode {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1em;
+}
+
+.subStepNameArrow {
+    display: flex;
+    gap: 1em;
+}
+
+.subStepBody {
+    max-height: 600px;
+}
+
+.modalCreate {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}

@@ -1,0 +1,8 @@
+export const TIEN_TUC_THOI = "Tiền tức thời"
+export const DANH_MUC_SP_BAN = "Danh sách sản phẩm bán"
+export const DANH_SACH_KMKQKD = "Danh sách khoản mục KQKD"
+export const DANH_SACH_KMTC = "Danh sách khoản mục thu chi"
+export const DANH_SACH_NHAN_VIEN = "Danh sách nhân viên"
+export const CONG_NO_PHAI_THU = "Công nợ phải thu"
+export const CONG_NO_PHAI_TRA = "Công nợ phải trả"
+export const TON_KHO_TUC_THOI = "Tồn kho tức thời"

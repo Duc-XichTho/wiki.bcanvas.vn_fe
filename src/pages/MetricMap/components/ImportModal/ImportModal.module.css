@@ -1,0 +1,22 @@
+.content {
+  padding: 0;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .content {
+    padding: 0;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+}

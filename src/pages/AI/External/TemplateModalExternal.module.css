@@ -1,0 +1,139 @@
+.templateContainer {
+    display: flex;
+    gap: 24px;
+    height: 600px;
+}
+
+.templateList {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.templateListHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.templateListTitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.templateCount {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.templateItem {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+}
+
+.templateItem:hover {
+    border-color: #1677ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.templateItem.selected {
+    border-color: #1677ff;
+    background-color: #e6f4ff;
+}
+
+.templateQuestion {
+    font-size: 14px;
+    color: #1f2937;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.templateMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.templateActions {
+    display: flex;
+    gap: 8px;
+}
+
+.addTemplateSection {
+    flex: 1;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.addTemplateHeader {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1f2937;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.templateInput {
+    margin-bottom: 16px;
+}
+
+.templateInput textarea {
+    font-size: 14px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    resize: none;
+}
+
+.templateInput textarea:focus {
+    border-color: #1677ff;
+    box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.1);
+}
+
+.actionButton {
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.editButton {
+    color: #1677ff;
+}
+
+.editButton:hover {
+    background-color: #e6f4ff;
+}
+
+.deleteButton {
+    color: #dc2626;
+}
+
+.deleteButton:hover {
+    background-color: #fee2e2;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e9ecef;
+} 

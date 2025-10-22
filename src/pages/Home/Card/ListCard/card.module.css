@@ -1,0 +1,183 @@
+/* Container của danh sách */
+.listCardContainer {
+    padding: 1rem;
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* Phần tử card */
+.cardItem {
+    padding: 16px;
+    border-radius: 0.3rem;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0 1px 9px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgb(217, 213, 213);
+    background: #fcfcfc;
+
+}
+
+.cardItem.selected {
+    border: 1px solid #1F6DE1;
+    /*background-color: #F1F1F1;;*/
+}
+
+
+/* Header của card */
+.cardBody,
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cardBody {
+    margin-top: 10px;
+}
+
+
+.cardTitle {
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.cardHeaderLeft {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cardHeaderLeft img {
+    margin-right: 8px;
+}
+
+
+.cardHeaderRight {
+    /*flex: 1;*/
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 13px;
+    width: 55%;
+}
+
+.cardHeaderRight > img {
+    height: 14px;
+}
+
+.cardDate {
+    font-size: 12px;
+    color: #757575;
+    margin-right: 15px;
+}
+
+/* Mô tả và công ty */
+.cardDescription,
+.cardCompany {
+    font-size: 12.5px;
+    color: #757575;
+}
+
+/* Footer của card */
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.cardAmount {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* Trạng thái */
+.cardCode {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap : 5px
+}
+
+.cardStatus {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap : 5px;
+    width: 20%;
+}
+
+.statusBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #D4F0EC;
+    border-radius: 10px;
+    padding: 4px 8px;
+    width: 80%;
+    height: 27px;
+    font-size: 13px;
+    font-weight: 450;
+    color: #686868;
+}
+
+
+/* Các trạng thái cụ thể */
+.statusPending {
+    background-color: #ace0ef;
+    color: #2a4388;
+}
+
+.statusCompleted {
+    background-color: #a9eeb6;
+    color: #248627;
+}
+
+.statusProcessing {
+    background-color: #fde0b8;
+    color: #9f4d00;
+}
+
+.statusCancelled {
+    background-color: #ffbcbc;
+    color: #be4141;
+}
+
+.statusDraft {
+    background-color: #e7e7e7;
+    color: #535353;
+}
+
+.statusDefault {
+    background-color: #e7e7e7;
+    color: #535353;
+}
+
+
+.progressBar {
+    width: 35%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    border-radius: 10px 0 0 10px;
+    background-color: #4caf50;
+}

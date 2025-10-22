@@ -1,0 +1,172 @@
+.formContainer {
+    width: 100%;
+    height: 100%;
+}
+
+.section {
+    background-color: #f8f9fa;
+    padding: 0.5em;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.sectionTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.sectionTitleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.monthRange {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.selectBox {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.formRow {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.formGroup {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.formGroup input,
+.formGroup select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.formGroupRatio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.conditionsContainer {
+    margin-top: 15px;
+}
+
+.conditionsLabel {
+    display: block;
+    margin-bottom: 10px;
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.conditionRow {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.conditionSelect {
+    width: 28%;
+    padding: 8px 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.conditionValue {
+    width: 18%;
+    padding: 8px 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.conditionSeparator {
+    padding: 0 5px;
+    color: #7f8c8d;
+}
+
+.addButton {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.removeButton {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.actionButtons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 10px 0;
+}
+
+.primaryButton {
+    background-color: #259c63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.secondaryButton {
+    background-color: #ecf0f1;
+    color: #7f8c8d;
+    border: 1px solid #bdc3c7;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.warningButton {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}

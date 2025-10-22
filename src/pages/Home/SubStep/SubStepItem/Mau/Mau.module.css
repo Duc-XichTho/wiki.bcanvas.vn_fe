@@ -1,0 +1,277 @@
+.phieu {
+    display: flex;
+    width: 100%;
+    height: max-content;
+    overflow: auto;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+
+.textareaAutoresize {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    overflow: hidden;
+    min-height: 50px; /* Chiều cao tối thiểu */
+}
+
+
+.contentRight {
+    display: flex;
+    width: 75%;
+    gap: 20px;
+    border: 1px solid #E6E6E6;
+    border-radius: 10px;
+    background: #F7F7F7;
+    /*max-height: 1000px;*/
+    overflow: auto;
+
+}
+
+.bar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 25%;
+    border: 1px solid #E6E6E6;
+    border-radius: 10px;
+    background: #F7F7F7;
+    /*align-items: left;*/
+
+}
+
+.form {
+    width: 70%;
+}
+
+.btns {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--header-text);
+    height: 30px;
+    cursor: pointer;
+    font-weight: 450;
+    border: 0.5px solid #888888;
+}
+
+.lineBorder {
+    border-bottom: 1px solid #ccc;
+    margin: 15px 15px 15px 15px
+}
+
+
+.buttonHeader {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin: 25px 0 0px 0px;
+    justify-content: center;
+}
+
+.btns > div {
+    padding: 0 45px;
+    font-size: 14px;
+}
+
+.list {
+    /*margin: 18px 0px 0px 0px;*/
+    font-weight: 450;
+    color: #262626;
+    overflow: auto;
+    width: 100%;
+    padding-top: 15px;
+    /*border-top: 1px solid #b8b8b8;*/
+}
+
+.listItem {
+    margin: 5px 0 15px 0px
+}
+
+/* Tùy chỉnh thanh cuộn */
+.list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background-color: #b8b8b8;
+    border-radius: 4px;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+    background-color: #8a8a8a;
+    cursor: pointer;
+
+}
+
+.list::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+    border-radius: 4px;
+}
+
+.nameContainer {
+    /*display: flex;*/
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 5px 5px 9px 5px
+}
+
+.selected {
+    background-color: rgba(220, 220, 220, 0.62); /* Màu nền khi phần tử được chọn */
+    font-weight: 450; /* Có thể làm đậm chữ hoặc thêm hiệu ứng khác */
+}
+
+.item {
+    margin: 6px 0 0px 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    width: 90%;
+}
+
+.itemTime {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #454545;
+    width: 90%;
+    margin: 0px 0px 0px 5px;
+}
+
+.itemTime > p {
+    font-weight: 400;
+    line-height: 18.15px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    font-size: 13px;
+}
+
+.itemTime > span {
+    font-weight: 400;
+    font-size: 14px;
+    color: #248627;
+    margin-left: 5px;
+}
+
+
+.item > span {
+    font-size: 14px;
+}
+
+.phieuDetail {
+    width: 100%;
+    display: block;
+    padding: 10px
+}
+
+.maPhieu {
+    margin-bottom: 10px;
+}
+
+.infoContainer {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.infoItem {
+    width: 45%;
+}
+
+.infoItem2 {
+    width: 23%;
+}
+
+.infoLabel {
+    font-size: 13px;
+    color: #454545;
+
+}
+
+.infoValue {
+    padding: 5px;
+    font-weight: bold;
+    color: #454545;
+    font-size: 14.5px;
+    display: flex;
+    gap: 5px;
+}
+
+.table {
+    margin-top: 15px;
+}
+
+
+.note {
+    margin: 10px 0px 0px 0px;
+    font-weight: 450;
+    color: #262626;
+    overflow: auto;
+    width: 100%;
+    /*border-top: 1px solid #b8b8b8;*/
+}
+
+.auto_line_break {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    resize: none;
+    font-family: "Roboto", sans-serif;
+    color: #248627 ; /* Đổi màu chữ thành tím */
+    font-size: 14px;
+    background: #f7f7f7;
+    outline: none !important;
+    padding: 10px;
+}
+
+.marginDefault {
+    margin: 30px 0;
+}
+
+.marginWithContent {
+    margin: 30px 0;
+}
+
+.customMenu {
+    max-width: 180px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-color);
+
+}
+
+.customMenu .ant-popover-content {
+    height: 20px;
+    line-height: 30px;
+}
+
+.customMenu .ant-popover-content:hover {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.titleList {
+    margin-left: 14px;
+    color: #848484;
+    font-size: 13.5px;
+    font-weight: 450;
+}
+
+.min-width-column {
+    min-width: 100px;
+    background-color: red !important;
+  }
+.phieu_body{
+    height: 600px;
+    overflow-y: auto;
+}

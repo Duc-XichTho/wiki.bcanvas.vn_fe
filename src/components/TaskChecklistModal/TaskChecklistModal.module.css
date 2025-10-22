@@ -1,0 +1,498 @@
+.modalContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  width: 320px;
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  margin-bottom: 15px; /* Khoảng cách với nút help button */
+}
+
+.modal.collapsed {
+  height: auto;
+  max-height: 120px;
+}
+
+.headerNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.navButtons {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  justify-content: end;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+}
+
+.navButton:hover {
+  background-color: #e5e7eb;
+}
+
+.navSeparator {
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+}
+
+.exitButton {
+  background: none;
+  border: none;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.exitButton:hover {
+  background-color: #fef2f2;
+}
+
+.collapseButton {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.collapseButton:hover {
+  background-color: #f3f4f6;
+}
+
+.blueHeader {
+  border-top: 1px solid #e5e7eb;
+  padding: 8px;
+  text-align: center;
+}
+
+.blueHeader h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.content {
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainTitle {
+  color: #454545;
+  font-size: 13px;
+  margin: 0 0 10px 0;
+  line-height: 1.4;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 5px;
+}
+
+.instruction {
+  color: #454545;
+  font-size: 14px;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskItem {
+  padding: 8px 0;
+}
+
+.taskContent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.taskCheckbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.taskCheckbox input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  background: white;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.taskCheckbox input[type="checkbox"]:checked + .checkmark {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.taskCheckbox input[type="checkbox"]:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.taskText {
+  color: #374151;
+  font-size: 13px;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.taskActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.guideLink {
+  background: #E2E2E2;
+  border: none;
+  color: #326EBF;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.guideLink:hover {
+  background-color: #eff6ff;
+}
+
+.infoButton {
+  background: #f0f9ff;
+  border: none;
+  color: #0369a1;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.infoButton:hover {
+  background-color: #e0f2fe;
+}
+
+.guideIcon {
+  font-size: 12px;
+}
+
+.taskSeparator {
+  border: none;
+  height: 1px;
+  background: #e5e7eb;
+  margin: 8px 0;
+}
+
+.loadingContainer, .errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.noTasks {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.navButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.navButton:disabled:hover {
+  background-color: transparent;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal {
+    width: 90vw;
+    max-width: 400px;
+    margin-top: 20px;
+  }
+  
+  .overlay {
+    padding: 10px;
+  }
+}
+
+/* Info Viewer Modal Styles */
+.infoViewerOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+  }
+}
+
+.infoViewerContent {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 85vw;
+  max-width: 900px;
+  height: 75vh;
+  max-height: 700px;
+  padding: 20px;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #374151;
+  pointer-events: auto;
+  animation: slideIn 0.3s ease forwards;
+  transform: scale(0.9) translateY(20px);
+}
+
+@keyframes slideIn {
+  from {
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.infoViewerCloseButton {
+  position: absolute;
+  top: 45px;
+  right: 60px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  animation: fadeInButton 0.4s ease forwards;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+@keyframes fadeInButton {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.infoViewerCloseButton:hover {
+  background: rgba(0, 0, 0, 0.2);
+  color: #374151;
+}
+
+.infoViewerContentInner {
+  padding-top: 20px;
+}
+
+.infoViewerContent p {
+  margin: 0 0 12px 0;
+}
+
+.infoViewerContent p:last-child {
+  margin-bottom: 0;
+}
+
+.infoViewerContent ul, .infoViewerContent ol {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+
+.infoViewerContent li {
+  margin: 4px 0;
+}
+
+.infoViewerContent h1, .infoViewerContent h2, .infoViewerContent h3, 
+.infoViewerContent h4, .infoViewerContent h5, .infoViewerContent h6 {
+  margin: 16px 0 8px 0;
+  font-weight: 600;
+  color: #111827;
+}
+
+.infoViewerContent h1 {
+  font-size: 24px;
+}
+
+.infoViewerContent h2 {
+  font-size: 20px;
+}
+
+.infoViewerContent h3 {
+  font-size: 18px;
+}
+
+.infoViewerContent strong, .infoViewerContent b {
+  font-weight: 600;
+}
+
+.infoViewerContent em, .infoViewerContent i {
+  font-style: italic;
+}
+
+.infoViewerContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 12px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.infoViewerContent blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 16px;
+  margin: 16px 0;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.infoViewerContent code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+}
+
+.infoViewerContent pre {
+  background: #f3f4f6;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+.infoViewerContent pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .infoViewerContent {
+    width: 90vw;
+    height: 80vh;
+    max-height: none;
+    padding: 16px;
+  }
+  
+  .infoViewerContentInner {
+    padding-top: 16px;
+  }
+}

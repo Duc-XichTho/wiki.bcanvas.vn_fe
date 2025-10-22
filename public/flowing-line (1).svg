@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 60">
+  <style>
+    .flowing-line {
+      animation: flow 1.5s linear infinite;
+    }
+    @keyframes flow {
+      from {
+        stroke-dashoffset: 0;
+      }
+      to {
+        stroke-dashoffset: -23;
+      }
+    }
+  </style>
+  
+  <!-- Animated line with smaller gap -->
+  <line
+    x1="0" y1="2" x2="200" y2="2"
+    stroke="#969696"
+    stroke-width="2"
+    stroke-dasharray="20 3"
+    class="flowing-line"
+
+  />
+</svg>

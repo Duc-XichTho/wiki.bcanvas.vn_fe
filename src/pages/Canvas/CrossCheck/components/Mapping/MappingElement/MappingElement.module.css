@@ -1,0 +1,87 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mappingCreate {
+  width: 60%;
+  height: 100%;
+}
+
+.infoRule {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ruleNameMapping {
+  width: 50%;
+  height: 50px;
+  display: flex;
+}
+
+.ruleNameMapping div:nth-child(1) {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.ruleNameMapping div:nth-child(2) {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ruleDescMapping {
+  width: 50%;
+  height: 50px;
+  display: flex;
+}
+
+.ruleDescMapping div:nth-child(1) {
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.ruleDescMapping div:nth-child(2) {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.customHeader {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  width: 100%;
+}
+
+.headerTitle {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.headerSubtitle {
+  font-size: 12px;
+  color: #666;
+}
+
+.mappingModalFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}

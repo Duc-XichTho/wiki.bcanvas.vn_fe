@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 105 30" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -20;
+      }
+    }
+    .dotted-line {
+      stroke: #636363;
+      stroke-width: 2.5;
+      stroke-linecap: butt;
+      stroke-dasharray: 12 8;
+      animation: dash 1.5s linear infinite;
+    }
+    .label {
+      font-family: 'Reddit Sans', Arial, sans-serif;
+      font-size: 12.5px;
+      fill: #454545;
+      text-anchor: middle;
+    }
+  </style>
+  <text class="label" x="52.5" y="12"></text>
+  <line class="dotted-line" x1="0" y1="20" x2="105" y2="20" />
+</svg>

@@ -1,0 +1,508 @@
+.keToanQuanTri {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: row;
+}
+
+.phantich {
+    padding-left: 1em;
+    width: 20%;
+    /*height: 100%;*/
+}
+
+.outlet {
+    flex-grow: 1;
+    padding: 1em 1em 0em 1em;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.headerPowersheet {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.headerPowersheet2 {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.headerTitle {
+    display: flex;
+    width: max-content;
+    align-items: center;
+}
+
+.headerActionFilter {
+    display: flex;
+    justify-content: start;
+    flex: 1;
+    gap: 20px;
+}
+
+.headerAction {
+    display: flex;
+    justify-content: flex-end;
+    flex: 2;
+    gap: 20px;
+    align-items: center;
+}
+
+.headerActionSelect {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    align-items: center;
+}
+
+.headerTitle > span {
+    color: #454545;
+    font-size: 23px;
+    font-weight: bold;
+    line-height: 35.41px;
+}
+
+.headerActionItem {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    /*color: var(--header-text);*/
+    font-weight: 450;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.actionToogle {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--header-text);
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 450;
+    gap : 10px
+}
+
+.actionToogle > span {
+    font-size: 15px;
+}
+
+.headerActionButton {
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--header-text);
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 450;
+    gap : 20px
+}
+
+.headerActionItem > span,
+.headerActionButton > span {
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+.buttonSaveLayout {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: white;
+    font-weight: 450;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0 12px;
+    gap: 5px;
+}
+
+.filterChoose {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-weight: 450;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0 12px;
+}
+
+.filterChoose > img {
+    width: 22px;
+    height: 22px;
+}
+
+.iconWrapper {
+    margin-right: 8px; /* Khoảng cách giữa icon và văn bản */
+    font-size: 16px; /* Kích thước biểu tượng */
+}
+
+.bookMarkButton {
+    position: fixed;
+    bottom: 0.8rem;
+    right: 1rem;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.bookmarksList {
+    position: fixed;
+    bottom: 3.2rem;
+    right: 1rem;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    width: 200px;
+    z-index: 1000;
+    color: var(--header-text);
+}
+
+.bookmarksItemContainer {
+    color: var(--header-text);
+    display: flex;
+    flex-direction: column;
+    margin-top: 14px;
+    gap: 11px;
+    font-weight: normal !important;
+}
+
+.bookmarkItem {
+    cursor: pointer;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.bookmarksItemContainer > span ,
+.bookmarkItem > span {
+    font-weight: unset !important;
+}
+
+.bookmarkItem:hover span {
+    color: #007bff;
+}
+
+.buttonContent {
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.createButToan,
+.updateVas,
+.autoPhanLoai {
+    background: #eeeeee;
+}
+
+.buttonDeleteMany {
+    background: #FF585B;
+    color: white;
+}
+
+.buttonOn {
+    background: #FFFFFF;
+    border: 0.5px solid var(--header-text);
+}
+
+.buttonSave {
+    background: #ffaa3a;
+    color: white;
+}
+
+.buttonCreate {
+    background: #249e57;
+    color: white;
+    font-weight: bold;
+}
+
+.buttonItemOn {
+    background: rgba(128, 0, 128, 0.8);
+    font-weight: bold;
+    /*border: 0.5px solid var(--header-text);*/
+}
+
+.buttonItemOn .filterChoose > span {
+    color: white !important;
+}
+
+.buttonOff .filterChoose > span {
+    color: var(--header-text) !important;
+}
+
+.buttonOff {
+    background: #FFFFFF;
+    font-weight: bold;
+    border: 0.5px solid var(--header-text);
+}
+
+.buttonSearch {
+    background: #eeeeee;
+    border-radius: 8px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #5f5e5b;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.quickFilterInput {
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 4px; */
+    border: unset;
+    width: 130px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background: #eeeeee;
+}
+
+.quickFilterInput::placeholder {
+    color: var(--header-text);
+    padding-left: unset;
+}
+
+.selectContent {
+    background-color: #f9f9f9;
+    color: var(--header-text);
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0 15px;
+    text-align: center;
+    font-size: 14px !important;
+    border: 1.5px solid var(--header-text);
+    height: 100%;
+    font-weight: 450;
+}
+
+.selectContent > option {
+    text-align: center !important;
+}
+
+/*.selectItem {*/
+/*    background-color: #eeeeee;*/
+/*    color: #5f5e5b;*/
+/*    font-size: 14.5px !important;*/
+/*}*/
+
+.form_content input {
+    height: 15px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.form_content {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+
+
+.dropdownMenu {
+    position: absolute;
+    top: 119%;
+    right: 0; /* Căn phải */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Đảm bảo menu nổi bật trên các phần tử khác */
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    height: auto;
+    /*margin-right: -135%;*/
+}
+
+.dropdown-menu-button1 {
+    position: absolute;
+    top: 100%; /* Đặt menu dropdown dưới hình ảnh ba chấm */
+    right: 0; /* Căn phải */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Đảm bảo menu nổi bật trên các phần tử khác */
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    /*margin-right: -135%;*/
+}
+
+/* SETTING CSS */
+.settingButton {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin-left: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.settingButton:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.header {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tab {
+    border-radius: 20px;
+    padding: 0.4em 2em;
+}
+
+.tab span {
+    cursor: pointer;
+}
+
+.active {
+    background-color: #1c77e7;
+    color: white;
+    font-weight: bold;
+}
+
+.dropdownItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: none;
+    /*padding: 8px 12px;*/
+    text-align: left;
+    cursor: pointer;
+    font-size: 16.5px;
+    color: #5f5e5b;
+    width: 100%;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.dropdownItem:hover {
+    background: #165591; /* Hiệu ứng hover */
+    color: white !important;
+}
+
+.rotateIcon {
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.settingsIcon {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #64748b;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.settingsIcon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.settingsIcon:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+}
+
+.switchCustom {
+    height: 100%;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    padding-top: 4px;
+    padding-right: 1px;
+}
+
+.switchCustom * {
+    font-size: 14px !important;
+}
+
+.switchCustom > div {
+    top: 5px !important;
+    width: 19px !important;
+    height: 19px !important;
+}
+
+.customButton {
+    border-radius: 16px !important;
+}
+
+.customSelect :global(.ant-select-selector) {
+    border-radius: 16px !important;
+    /*padding: 7px 10px 5px 10px;*/
+}
+
+.popoverItem {
+    cursor: pointer;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.popoverItem:hover {
+    background-color: #e6f7ff;
+}
+
+.popoverContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonAction {
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(200, 200, 200, 1);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}

@@ -1,0 +1,140 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  width: 500px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  padding: 16px;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+
+.closeButton:hover {
+  color: #333;
+}
+
+.modalTabs {
+  display: flex;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 0 16px;
+}
+
+.tabButton {
+  padding: 12px 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.tabButton:hover {
+  color: #333;
+}
+
+.activeTab {
+  color: #333;
+  border-bottom-color: #333;
+}
+
+.modalContent {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.addItemForm {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.addItemInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.addButton {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  cursor: pointer;
+  color: #666;
+}
+
+.addButton:hover {
+  background: #e5e5e5;
+  color: #333;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+}
+
+.removeButton:hover {
+  color: #ff4444;
+}
+
+.selectWrapper {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.selectWrapper select {
+    flex: 1;
+}

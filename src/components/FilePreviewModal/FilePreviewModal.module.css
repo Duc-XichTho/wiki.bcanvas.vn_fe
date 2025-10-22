@@ -1,0 +1,63 @@
+.filePreviewModal {
+  /* Modal specific styles */
+}
+
+.fileInfoHeader {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e8e8e8;
+  background-color: #fafafa;
+}
+
+.fileInfoText {
+  font-size: 14px;
+  color: #666;
+}
+
+.filePreviewContent {
+  flex: 1;
+  overflow: hidden;
+}
+
+.imagePreview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+}
+
+.imagePreview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.unsupportedFile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.unsupportedFileIcon {
+  font-size: 48px;
+}
+
+.unsupportedFileText {
+  font-size: 16px;
+  color: #666;
+}
+
+.unsupportedFileExtension {
+  font-size: 14px;
+  color: #999;
+}
+
+.iframePreview {
+  width: 100%;
+  height: 100%;
+  border: none;
+}

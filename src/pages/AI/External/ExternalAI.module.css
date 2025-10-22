@@ -1,0 +1,501 @@
+.aiLayout {
+    display: flex;
+    height: calc(100%);
+    background-color: #f5f5f5;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.aiSidebar {
+    width: 22%;
+    padding: 10px 12px 24px 15px;
+    /*border-right: 1px solid #eee;*/
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+.aiSection {
+    margin-bottom: 24px;
+    height: calc(50% - 24px);
+    width: 100%;
+    overflow-y: auto;
+    border: 1px solid rgba(216, 216, 216, 1);
+    border-radius: 5px;
+    padding: 10px 0 0 10px;
+    box-sizing: border-box;
+
+}
+
+
+.aiSectionTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px 0 0;
+    gap: 5px;
+    height: 5%;
+}
+
+.aiSectionTemplate {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    background: rgba(214, 214, 214, 1);
+    border-radius: 10px;
+
+}
+
+.aiSectionTemplate > span {
+    padding: 5px 10px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 1)
+}
+
+.questionContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    width: 97%;
+    height: 80%;
+}
+
+
+.sendButton {
+    align-self: flex-end;
+    height: 36px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sendButton svg {
+    margin-right: 4px;
+}
+
+.aiMain {
+    width: calc(100% - 22%);
+    padding: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.allMainContainer {
+    height: 100%;
+    padding: 10px;
+    overflow: auto;
+    display: flex;
+    gap: 24px;
+}
+
+.aiAnswerBox {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    width: 80%;
+}
+
+.listFile {
+    width: calc(100% - 80%);
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 15px;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+.listFileTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+
+
+.processedCount {
+    animation: blink 1.5s infinite;
+    font-size: 14px;
+    color: red;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.settingsButton {
+    padding: 4px;
+    height: auto;
+}
+
+.settingsButton:hover {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+}
+
+.ocrModalContent {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.listFileItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #1f2937;
+    padding: 10px 0;
+    font-weight: 200;
+}
+
+.listFileItemTitle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.listFileItemName {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.markedContent {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    padding: 15px;
+}
+
+.markedContent h1,
+.markedContent h2,
+.markedContent h3,
+.markedContent h4,
+.markedContent h5,
+.markedContent h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.markedContent h1 {
+    font-size: 2em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+
+.markedContent h2 {
+    font-size: 1.5em;
+    border-bottom: 1px solid #eaecef;
+    padding-bottom: 0.3em;
+}
+
+.markedContent h3 {
+    font-size: 1.25em;
+}
+
+.markedContent h4 {
+    font-size: 1em;
+}
+
+.markedContent p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.markedContent code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markedContent pre {
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 3px;
+    margin-bottom: 16px;
+}
+
+.markedContent pre code {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: 0;
+    word-break: normal;
+    white-space: pre;
+}
+
+.markedContent blockquote {
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+    margin: 0 0 16px 0;
+}
+
+.markedContent ul,
+.markedContent ol {
+    padding-left: 2em;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.markedContent table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    margin-top: 0;
+    margin-bottom: 16px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.markedContent table th,
+.markedContent table td {
+    padding: 6px 13px;
+    border: 1px solid #dfe2e5;
+}
+
+.markedContent table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+}
+
+.markedContent table tr:nth-child(2n) {
+    background-color: #f6f8fa;
+}
+
+.markedContent img {
+    max-width: 100%;
+    box-sizing: content-box;
+    background-color: #fff;
+}
+
+.markedContent hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: #e1e4e8;
+    border: 0;
+}
+
+.markedContent a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.markedContent a:hover {
+    text-decoration: underline;
+}
+
+/* Chat History Styles */
+.aiSectionHistoryChat {
+    border: 1px solid #f0f0f0;
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.historyHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.historyTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.historyTitle h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.aiList {
+    flex: 1;
+    overflow-y: auto;
+}
+
+
+.aiCard {
+    width: 100%;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    transition: all 0.3s;
+    margin-bottom: 8px;
+}
+
+.aiCard:hover {
+    border-color: #1677ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selectedCard {
+    border-color: #1677ff;
+    background-color: #f0f7ff;
+}
+
+.aiDate {
+    font-size: 12px;
+    color: #999;
+}
+
+.processTime {
+    background-color: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #4b5563;
+}
+
+.deleteButton {
+    color: #6b7280;
+    padding: 4px;
+    height: auto;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.historyCard:hover .deleteButton {
+    opacity: 1;
+}
+
+.deleteButton:hover {
+    color: #ef4444;
+    background-color: #fee2e2;
+}
+
+.emptyHistory {
+    padding: 48px 0;
+}
+
+.customeButton {
+    height: 100%;
+    width: 80px;
+}
+
+.listFileItemActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fileNoteDropdown {
+    display: flex;
+    align-items: center;
+}
+
+.fileNoteDropdown button {
+    padding: 0;
+    height: auto;
+}
+
+.fileNoteDropdown button:hover {
+    background: transparent;
+}
+
+.fileNoteInfo {
+	width: 100%;
+    display: flex;
+    justify-content: end;
+	border-bottom:  1px solid #f0f0f0;
+}
+
+.fileNotePath {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #fff;
+	font-size: 14px;
+}
+
+.fileNoteName {
+	color: #fff;
+	font-weight: 500;
+}
+
+.ocrSettings {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ocrSettings h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.ocrSettings .fileList {
+    margin-bottom: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.ocrSettings .listFileItem {
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ocrSettings .listFileItem:last-child {
+    border-bottom: none;
+}
+
+.ocrSettings .listFileItemTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ocrSettings .listFileItemName {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ocrSettings .ocrActions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.blinkingText {
+    animation: blink 1.5s infinite;
+    font-size: 14px;
+    color: red;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}

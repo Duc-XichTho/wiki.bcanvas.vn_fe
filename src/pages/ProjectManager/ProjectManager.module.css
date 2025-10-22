@@ -1,0 +1,7 @@
+.mainContent {
+  display: flex;
+  gap: 12px;
+  padding: 10px 20px;
+  height: calc(100vh - 67px);
+  background-color: #d8e5e6;
+}

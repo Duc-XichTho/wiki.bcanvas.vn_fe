@@ -1,0 +1,144 @@
+
+.main_modal :global(.ant-modal-content) {
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+.main_modal :global(.ant-modal-footer) {
+    padding: 0;
+    margin: 0;
+}
+
+.modal_title {
+    gap: 6px;
+    font-weight: 500;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 20px 16px 10px 16px;
+    background-color: #ffffff;
+}
+
+.modal_title > span {
+    font-size: 24px;
+}
+.modal_footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 48px;
+    padding: 0 16px;
+    gap: 20px;
+}
+
+.main_column {
+
+    box-sizing: border-box;
+    border-right: 1px solid #cfcfcf;
+    height: 100%;
+    overflow: hidden;
+
+}
+.title_column{
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 4px solid #45A679;
+    width: 90%;
+    height: 36px;
+    text-align: start;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.option_list {
+    height: 450px ;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.option_item {
+    padding: 5px 5px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(1, 1, 1, 1);
+    border-radius: 5px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    min-height: 40px;
+    transform-origin: left center;
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.option_item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(100%);
+    transition: transform 0.2s ease-out;
+    z-index: 1;
+    
+}
+
+.option_item:hover::before {
+    transform: translateX(0);
+}
+
+.option_item > * {
+    position: relative;
+    z-index: 1;
+}
+
+.option_item:hover {
+    transform: scale(1.2);
+ 
+}
+
+.selected {
+    padding: 5px 5px;
+    cursor: pointer;
+    transition: all 0.07s cubic-bezier(1, 1, 1, 1);
+    border-radius: 5px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    min-height: 40px;
+    transform-origin: left center;
+    overflow: hidden;
+    background-color: #cbf4d6;
+    color: #1d6140;
+}
+
+.groupHeader {
+    padding: 8px 0;
+    font-weight: bold;
+    cursor: default;
+    margin-top: 8px;
+}
+
+.groupHeader:first-child {
+    margin-top: 0;
+}
+.detail_button {
+    padding: 2px 8px 2px 8px;
+    font-size: 12px;
+    background-color: white;
+    border: 1px solid #C5C5C5;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.detail_button:hover {
+    background-color: #bababa;
+}

@@ -1,0 +1,11 @@
+.mainContent {
+	display: flex;
+}
+
+.leftPanel {
+	width: 25%;
+}
+
+.rightPanel {
+	width: 75%;
+}
