@@ -55,6 +55,7 @@ export default function ProfileSelect({color = '#454545'}) {
             await logout();
             handleClose();
             navigate("/", { replace: true });
+            window.location.reload();
         } catch (error) {
             console.error("Error logging out:", error);
             message.error("Có lỗi xảy ra khi đăng xuất. Vui lòng thử lại sau!", {

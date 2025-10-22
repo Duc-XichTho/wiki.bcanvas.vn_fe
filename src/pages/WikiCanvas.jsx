@@ -3,37 +3,37 @@ import { RotateCcw, Plus, Edit2, X, Check, MoreHorizontal, Palette, HelpCircle, 
 import styles from './Dashboard.module.css';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AI_Meter, ICON_CROSSROAD_LIST } from '../icon/svg/IconSvg.jsx';
-import { createSetting, getSettingByType, updateSetting, getSchemaResources, getSchemaBackground, updateSchemaTools } from '../apis/settingService';
-import { sendRegistrationEmail } from '../apis/gateway/emailService';
+import { createSetting, getSettingByType, updateSetting, getSchemaResources, getSchemaBackground, updateSchemaTools } from '../apis/settingService.jsx';
+import { sendRegistrationEmail } from '../apis/gateway/emailService.jsx';
 import { Modal, Input, Button, Dropdown, ColorPicker, Select, Upload, Checkbox, Popconfirm, message, Divider } from 'antd';
-import { getUserClassByEmail } from '../apis/userClassService';
-import { MyContext } from '../MyContext';
+import { getUserClassByEmail } from '../apis/userClassService.jsx';
+import { MyContext } from '../MyContext.jsx';
 import { Tooltip } from 'antd';
 import { formatCurrency } from '../generalFunction/format.js';
 import { SettingOutlined, UploadOutlined } from '@ant-design/icons';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../contexts/ThemeContext.jsx';
 import ProfileSelect from './Home/SelectComponent/ProfileSelect.jsx';
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { getAllPath, updatePath } from '../apis/adminPathService';
-import instance, { updateSchemaHeader } from '../apis/axiosInterceptors';
-import { getSchemaTools } from '../apis/settingService';
-import { getAllKpiBenchmark, createNewKpiBenchmark, updateKpiBenchmark, deleteKpiBenchmark } from '../apis/kpiBenchmarkService';
+import { getAllPath, updatePath } from '../apis/adminPathService.jsx';
+import instance, { updateSchemaHeader } from '../apis/axiosInterceptors.jsx';
+import { getSchemaTools } from '../apis/settingService.jsx';
+import { getAllKpiBenchmark, createNewKpiBenchmark, updateKpiBenchmark, deleteKpiBenchmark } from '../apis/kpiBenchmarkService.jsx';
 import { Row, Col, Typography } from 'antd';
-import FirstTimePopup from '../components/FirstTimePopup';
+import FirstTimePopup from '../components/FirstTimePopup.jsx';
 import { marked } from 'marked';
-import Loading3DTower from '../components/Loading3DTower';
+import Loading3DTower from '../components/Loading3DTower.jsx';
 import { v4 as uuidv4 } from 'uuid';
 import { SiN8N } from "react-icons/si";
 import N8N from './N8N/N8N.jsx';
-import ResourcePanel from '../components/ResourcePanel';
-import TagManagementModal from '../components/TagManagementModal/TagManagementModal';
-import TaskChecklistModal from '../components/TaskChecklistModal/TaskChecklistModal';
-import TaskManagementModal from '../components/TaskManagementModal/TaskManagementModal';
-import ToolReorderModal from '../components/ToolReorderModal/ToolReorderModal';
+import ResourcePanel from '../components/ResourcePanel/index.js';
+import TagManagementModal from '../components/TagManagementModal/TagManagementModal.jsx';
+import TaskChecklistModal from '../components/TaskChecklistModal/TaskChecklistModal.jsx';
+import TaskManagementModal from '../components/TaskManagementModal/TaskManagementModal.jsx';
+import ToolReorderModal from '../components/ToolReorderModal/ToolReorderModal.jsx';
 const { Text } = Typography;
 import { FULL_DASHBOARD_APPS } from '../CONST.js';
 
-const Dashboard = () => {
+const WikiCanvas = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dashboardApps = useMemo(() => FULL_DASHBOARD_APPS, [FULL_DASHBOARD_APPS]); // Empty dependency array để chỉ tạo một lần
@@ -136,7 +136,7 @@ const Dashboard = () => {
     background: '#FFFFFF',
     textColor: '#454545',
     superAdminColor: '#66A2E7',
-    iconApp: '/LogoB.png'
+    iconApp: '/LogoC.png'
   });
 
   // Status Bar Theme states
@@ -149,6 +149,18 @@ const Dashboard = () => {
     background: '#303237',
     textColor: '#A5A5A5'
   });
+
+  // Topbar background image setting
+  const [topbarBgImageUrl, setTopbarBgImageUrl] = useState('');
+  const [showTopbarBgModal, setShowTopbarBgModal] = useState(false);
+  const [topbarBgDraftUrl, setTopbarBgDraftUrl] = useState('');
+  const [topbarBgPendingFile, setTopbarBgPendingFile] = useState(null);
+  const [topbarBgPreviewUrl, setTopbarBgPreviewUrl] = useState('');
+
+  // Topbar text color setting
+  const [topbarTextColor, setTopbarTextColor] = useState('');
+  const [showTopbarTextColorModal, setShowTopbarTextColorModal] = useState(false);
+  const [tempTopbarTextColor, setTempTopbarTextColor] = useState('');
 
   // Theme Settings Modal states
   const [themeSettingsModalVisible, setThemeSettingsModalVisible] = useState(false);
@@ -552,7 +564,6 @@ const Dashboard = () => {
   // Xóa useEffect gây infinite loop - thay vào đó xử lý trực tiếp trong onChange
   const fetchDashboardSetting = async () => {
     try {
-      console.log('fetchDashboardSetting called - selectedSchema:', selectedSchema, 'isSuperAdmin:', currentUser?.isSuperAdmin);
       let existing;
       if (activeTab === 'app') {
         existing = await getSettingByType('DASHBOARD_SETTING');
@@ -563,57 +574,27 @@ const Dashboard = () => {
       } else {
         existing = await getSettingByType('DASHBOARD_SETTING');
       }
-
+      console.log('existing', existing);
       // Load resources from backend using getSchemaResources
       try {
-        console.log('🔍 [DEBUG] Fetching resources from master schema...');
         const resourcesData = await getSchemaResources('master');
-        console.log('🔍 [DEBUG] Raw resources data from API:', resourcesData);
 
         if (resourcesData && resourcesData.setting) {
-          console.log('🔍 [DEBUG] Setting exists, checking format...');
-          console.log('🔍 [DEBUG] Setting type:', typeof resourcesData.setting);
-          console.log('🔍 [DEBUG] Is array?', Array.isArray(resourcesData.setting));
-          console.log('🔍 [DEBUG] Has resources property?', resourcesData.setting.resources !== undefined);
-          console.log('🔍 [DEBUG] Has pinnedResourceId property?', resourcesData.setting.pinnedResourceId !== undefined);
 
           // Check if the setting is the new format (with pinnedResourceId) or old format (just resources array)
           if (resourcesData.setting.resources && resourcesData.setting.pinnedResourceId !== undefined) {
-            // New format: { resources: [...], pinnedResourceId: "..." }
-            console.log('🔍 [DEBUG] Using NEW format - loading resources with pinned info');
-            console.log('🔍 [DEBUG] Resources count:', resourcesData.setting.resources.length);
-            console.log('🔍 [DEBUG] Pinned resource ID:', resourcesData.setting.pinnedResourceId);
-
             setResources(resourcesData.setting.resources);
             setPinnedResourceId(resourcesData.setting.pinnedResourceId);
-
-            console.log('✅ [DEBUG] Successfully loaded resources with pinned info:', {
-              resourcesCount: resourcesData.setting.resources.length,
-              pinnedResourceId: resourcesData.setting.pinnedResourceId,
-              resourceIds: resourcesData.setting.resources.map(r => r.id)
-            });
           } else if (Array.isArray(resourcesData.setting)) {
-            // Old format: just resources array
-            console.log('🔍 [DEBUG] Using OLD format - loading resources array only');
-            console.log('🔍 [DEBUG] Resources count:', resourcesData.setting.length);
-
             setResources(resourcesData.setting);
             setPinnedResourceId(null);
 
-            console.log('✅ [DEBUG] Successfully loaded resources (old format):', {
-              resourcesCount: resourcesData.setting.length,
-              pinnedResourceId: null,
-              resourceIds: resourcesData.setting.map(r => r.id)
-            });
           } else {
-            console.log('⚠️ [DEBUG] Unknown format detected, treating as old format');
             setResources(resourcesData.setting);
             setPinnedResourceId(null);
           }
           setResourcesSettingId(resourcesData.id); // Store the setting ID
-          console.log('🔍 [DEBUG] Resources setting ID:', resourcesData.id);
         } else {
-          console.log('🔍 [DEBUG] No setting found, creating new one...');
           // Create DASHBOARD_RESOURCES setting if it doesn't exist
           const newSetting = await createSetting({
             type: 'DASHBOARD_RESOURCES',
@@ -623,12 +604,10 @@ const Dashboard = () => {
             }
           });
           setResourcesSettingId(newSetting.id); // Store the new setting ID
-          console.log('✅ [DEBUG] Created new resources setting with ID:', newSetting.id);
         }
       } catch (error) {
         console.error('❌ [DEBUG] Error loading resources:', error);
         try {
-          console.log('🔍 [DEBUG] Attempting to create new setting after error...');
           // Create DASHBOARD_RESOURCES setting if it doesn't exist
           const newSetting = await createSetting({
             type: 'DASHBOARD_RESOURCES',
@@ -646,19 +625,19 @@ const Dashboard = () => {
 
       if (existing.setting) {
         console.log('Setting tools from existing setting:', existing.setting);
-        
+
         // Luôn sử dụng array format, thêm order field nếu chưa có
         let toolsToProcess = Array.isArray(existing.setting) ? existing.setting : Object.values(existing.setting).filter(tool => tool && tool.id);
-        
+
         // Thêm order field cho tools chưa có
         toolsToProcess = toolsToProcess.map((tool, index) => ({
           ...tool,
           order: tool.order !== undefined ? tool.order : index
         }));
-        
+
         // Sắp xếp theo order field
         toolsToProcess.sort((a, b) => (a.order || 0) - (b.order || 0));
-        
+
         // Kết hợp với thông tin từ schema master cho user thường
         const combinedTools = await combineAppsWithMasterInfo(toolsToProcess);
         setTools(combinedTools);
@@ -669,7 +648,7 @@ const Dashboard = () => {
           ...tool,
           order: index
         }));
-        
+
         await updateSetting({
           ...existing,
           setting: toolsWithOrder
@@ -789,6 +768,7 @@ const Dashboard = () => {
       loadResourcesForSchema();
     }
   }, [currentUser?.isSuperAdmin, selectedSchema, activeTab]); // Chỉ chạy khi user, schema hoặc activeTab thay đổi
+
   const loadMasterSchemaTools = async () => {
     setIsSwitchingSchema(true);
     try {
@@ -808,6 +788,7 @@ const Dashboard = () => {
       loadMasterSchemaTools();
     }
   }, [selectedSchema, activeTab]);
+  
 
   useEffect(() => {
     async function fetchUserClass() {
@@ -904,13 +885,9 @@ const Dashboard = () => {
     const loadBackgroundSettings = async () => {
       try {
         const existing = await getSchemaBackground('master');
-        console.log('Loading dashboard background from master schema:', existing);
-
         if (existing && existing.setting && typeof existing.setting === 'string') {
-          console.log('Setting dashboard background:', existing.setting);
           setBackgroundImageUrl(existing.setting);
         } else {
-          console.log('No existing dashboard background found, using default');
           setBackgroundImageUrl('/simple_background.png');
         }
       } catch (error) {
@@ -950,8 +927,32 @@ const Dashboard = () => {
       }
     };
 
-    loadTopbarTheme();
+    const loadTopbarBgImage = async () => {
+      try {
+        const existing = await getSettingByType('TOPBAR_BG_IMAGE');
+        if (existing && typeof existing.setting === 'string') {
+          setTopbarBgImageUrl(existing.setting);
+        }
+      } catch (error) {
+        // ignore if not found
+      }
+    };
+
+    const loadTopbarTextColor = async () => {
+      try {
+        const existing = await getSettingByType('TOPBAR_TEXT_COLOR');
+        if (existing && typeof existing.setting === 'string') {
+          setTopbarTextColor(existing.setting);
+        }
+      } catch (error) {
+        // ignore if not found
+      }
+    };
+
+    // loadTopbarTheme();
     loadStatusBarTheme();
+    loadTopbarBgImage();
+    loadTopbarTextColor();
   }, []);
 
   // Default to "Tất cả Module" on mobile
@@ -1288,7 +1289,7 @@ const Dashboard = () => {
         ...tool,
         order: index
       }));
-      
+
       // Cập nhật setting với array format
       const updatedSetting = {
         ...existing,
@@ -1826,6 +1827,20 @@ const Dashboard = () => {
     return false; // Prevent default upload behavior
   };
 
+  // Handle file select: only set preview and remember file. Upload happens on Save
+  const handleTopbarBgFileUpload = (file) => {
+    if (!file || !file.type?.startsWith('image/')) {
+      Modal.error({ title: 'Lỗi', content: 'Vui lòng chọn file hình ảnh!' });
+      return false;
+    }
+    setTopbarBgPendingFile(file);
+    // File preview
+    const localUrl = URL.createObjectURL(file);
+    setTopbarBgPreviewUrl(localUrl);
+    setTopbarBgDraftUrl('');
+    return false; // Prevent default upload
+  };
+
   // Hàm xử lý lưu guideline settings
   const handleSaveGuideline = async () => {
     try {
@@ -2041,15 +2056,15 @@ const Dashboard = () => {
   }, []);
 
   // Sync active tab from URL param
-  useEffect(() => {
-    if (tab) {
-      setActiveTab(tab);
-      navigate(`/dashboard/${tab}`);
-    } else {
-      setActiveTab('app');
-      navigate(`/dashboard/app`);
-    }
-  }, [tab]);
+  // useEffect(() => {
+  //   if (tab) {
+  //     setActiveTab(tab);
+  //     navigate(`/dashboard/${tab}`);
+  //   } else {
+  //     setActiveTab('app');
+  //     navigate(`/dashboard/app`);
+  //   }
+  // }, [tab]);
 
   const handleTabChange = (newTab) => {
     setActiveTab(newTab);
@@ -2468,54 +2483,35 @@ const Dashboard = () => {
   // Menu items cho Settings dropdown
   const settingsMenuItems = [
 
-    ((import.meta.env.VITE_DOMAIN_URL == 'https://demo.bcanvas.vn' || import.meta.env.VITE_DOMAIN_URL == 'http://localhost:5173') && isSchemaMaster &&
     {
-      key: 'reset-du-lieu-demo',
-      label: (
-        <Popconfirm
-          title="Bạn có chắc chắn muốn reset dữ liệu demo không?"
-          okText="Xác nhận"
-          cancelText="Huỷ"
-          onConfirm={resetDuLieuDemo}
-          trigger="click"
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <RotateCcw size={16} />
-            <span>Reset dữ liệu demo</span>
-          </div>
-        </Popconfirm>
-      ),
-
-    }),
-    (selectedSchema === 'master' && currentUser?.isSuperAdmin) && {
-      key: 'tool-reorder',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <ArrowUpDown size={16} />
-          <span>Sắp xếp công cụ</span>
-        </div>
-      ),
-      onClick: () => setShowToolReorderModal(true),
-    },
-    (currentUser?.isSuperAdmin) && {
-      key: 'task-checklist',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <QuestionMark size={16} />
-          <span>Task Checklist</span>
-        </div>
-      ),
-      onClick: () => setShowTaskManagementModal(true),
-    },
-    (currentUser?.isSuperAdmin || currentUser?.isAdmin) && {
-      key: 'topbar-theme',
+      key: 'topbar-bg-image',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Palette size={16} />
-          <span>Theme Topbar</span>
+          <span>Cài đặt ảnh nền Topbar</span>
         </div>
       ),
-      onClick: handleOpenTopbarThemeModal,
+      onClick: () => {
+        // Initialize draft with current value; reset temp states
+        setTopbarBgDraftUrl(topbarBgImageUrl || '');
+        if (topbarBgPreviewUrl) URL.revokeObjectURL(topbarBgPreviewUrl);
+        setTopbarBgPreviewUrl('');
+        setTopbarBgPendingFile(null);
+        setShowTopbarBgModal(true);
+      },
+    },
+    {
+      key: 'topbar-text-color',
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Palette size={16} />
+          <span>Cài đặt màu chữ Topbar</span>
+        </div>
+      ),
+      onClick: () => {
+        setTempTopbarTextColor(topbarTextColor || '');
+        setShowTopbarTextColorModal(true);
+      },
     },
     (currentUser?.isSuperAdmin || currentUser?.isAdmin) && {
       key: 'statusbar-theme',
@@ -2527,131 +2523,6 @@ const Dashboard = () => {
       ),
       onClick: handleOpenStatusBarThemeModal,
     },
-    (isMobile && currentUser?.isSuperAdmin) && {
-      key: 'total-token',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <SettingOutlined size={16} />
-          <span>Cài đặt tổng token</span>
-        </div>
-      ),
-      onClick: () => {
-        setNewTotalToken(totalToken);
-        setShowTokenModal(true);
-      }
-    },
-    (currentUser?.isSuperAdmin) && {
-      key: 'diagram-factory',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <AI_Meter size={16} />
-          <span>Diagram Factory</span>
-        </div>
-      ),
-      onClick: () => {
-        navigate('/diagram-factory');
-      }
-    },
-    (currentUser?.isSuperAdmin) && {
-      key: 'ai-file',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <AI_Meter size={16} />
-          <span>Document Factory</span>
-        </div>
-      ),
-      onClick: () => {
-        navigate('/ai-file');
-      }
-    },
-    {
-      key: 'countdown-colors',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Palette size={16} />
-          <span>Setting Count down</span>
-        </div>
-      ),
-      onClick: () => {
-        setShowDaysCountdownColorModal(true);
-      }
-    },
-    (currentUser?.isSuperAdmin || currentUser?.isAdmin || currentUser?.isEditor) && {
-      key: 'theme',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Palette size={16} />
-          <span>Bộ theme màu (Chart)</span>
-        </div>
-      ),
-      onClick: handleOpenColorModal,
-    },
-    (currentUser?.isSuperAdmin) && {
-      key: 'background-settings',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Palette size={16} />
-          <span>Cài đặt hình nền</span>
-        </div>
-      ),
-      onClick: handleOpenBackgroundSettingsModal,
-    },
-    // (currentUser?.isSuperAdmin || currentUser?.isAdmin || currentUser?.isEditor) && {
-    //   key: 'background',
-    //   label: (
-    //     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-    //       <Palette size={16} />
-    //       <span>Màu Dashboard</span>
-    //     </div>
-    //   ),
-    //   onClick: handleOpenBackgroundModal,
-    // },
-    ((import.meta.env.VITE_DOMAIN_URL == 'https://demo.bcanvas.vn' || import.meta.env.VITE_DOMAIN_URL == 'http://localhost:5173') &&
-    {
-      key: 'reset-du-lieu-demo',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Palette size={16} />
-          <span>Reset dữ liệu demo</span>
-        </div>
-      ),
-      popConfirm: {
-        title: 'Bạn có chắc chắn muốn reset dữ liệu demo không?',
-        onConfirm: () => {
-          resetDuLieuDemo();
-        }
-      }
-    }),
-    {
-      key: 'guide',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <HelpCircle size={16} />
-          <span>Hướng dẫn sử dụng</span>
-        </div>
-      ),
-      onClick: handleShowGuide,
-    },
-    (currentUser?.isSuperAdmin || currentUser?.isAdmin || currentUser?.isEditor) && {
-      key: 'guideline-settings',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <HelpCircle size={16} />
-          <span>Cài đặt Guideline</span>
-        </div>
-      ),
-      onClick: handleOpenGuidelineModal,
-    },
-    (currentUser?.isSuperAdmin || currentUser?.isAdmin || currentUser?.isEditor) && {
-      key: 'context-instruction-settings',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <MessageSquare size={16} />
-          <span>Cài đặt Context Instruction</span>
-        </div>
-      ),
-      onClick: handleOpenContextInstructionModal,
-    },
     (currentUser?.isSuperAdmin || currentUser?.isAdmin) && {
       key: 'tag-management-settings',
       label: (
@@ -2661,27 +2532,6 @@ const Dashboard = () => {
         </div>
       ),
       onClick: () => setShowTagManagementModal(true),
-    },
-    (selectedSchema === 'master' && (currentUser?.isSuperAdmin || currentUser?.isAdmin || currentUser?.isEditor)) && {
-      key: 'kpi-benchmark',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <SettingOutlined size={16} />
-          <span>Cấu hình KPI Benchmark</span>
-        </div>
-      ),
-      onClick: handleOpenKpiBenchmarkModal,
-    },
-
-    {
-      key: 'contact',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Phone size={16} />
-          <span>Liên hệ</span>
-        </div>
-      ),
-      onClick: handleContact,
     },
   ];
 
@@ -2706,7 +2556,9 @@ const Dashboard = () => {
           justifyContent: 'center',
           width: '100%',
           height: '5rem',
-          background: topbarTheme.background,
+          background: topbarBgImageUrl ? `url(${topbarBgImageUrl})` : topbarTheme.background,
+          backgroundSize: topbarBgImageUrl ? 'cover' : undefined,
+          backgroundPosition: topbarBgImageUrl ? 'center' : undefined,
           ...(topbarTheme.name === 'light' && {
             borderBottom: '4px solid #E0E0E0'
           }),
@@ -2740,254 +2592,8 @@ const Dashboard = () => {
               ) : (
                 <div className={styles.headerRow}>
                   <img src={topbarTheme.iconApp} alt="logo" width={30} height={30} />
-                  <span style={{ fontSize: '18px', fontWeight: 'bold', color: topbarTheme?.name === 'dark' ? topbarTheme?.superAdminColor : topbarTheme?.textColor }}>BCANVAS WORKSPACE</span>
-                  <div>
-                    <span
-                      style={{
-                        fontSize: '13px',
-                        cursor: currentUser?.isSuperAdmin ? 'pointer' : 'default',
-                        padding: '4px 8px',
-                        borderRadius: '12px',
-                        transition: 'all 0.2s',
-                        background: themeSettings.backgroundType === 'gradient'
-                          ? `linear-gradient(${themeSettings.gradientDirection}, ${themeSettings.gradientColors.join(', ')})`
-                          : themeSettings.backgroundColor,
-                        color: themeSettings.textColor
-                      }}
-                      onClick={currentUser?.isSuperAdmin ? () => {
-                        // Load description từ schema vào temp settings
-                        setTempThemeSettings(prev => ({
-                          ...prev,
-                          description: selectedSchema?.description || ''
-                        }));
-                        setThemeSettingsModalVisible(true);
-                      } : undefined}
-                      onMouseEnter={currentUser?.isSuperAdmin ? (e) => {
-                        e.target.style.opacity = '0.8';
-                        e.target.style.transform = 'scale(1.02)';
-                      } : undefined}
-                      onMouseLeave={currentUser?.isSuperAdmin ? (e) => {
-                        e.target.style.opacity = '1';
-                        e.target.style.transform = 'scale(1)';
-                      } : undefined}
-                    >
-                      {selectedSchema == 'master' ? 'Admin' : (selectedSchema?.description || 'Badge')}
-                    </span>
-                  </div>
-                  {!isMobile && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      {currentUser?.isSuperAdmin ? (
-                        <Select
-                          placeholder="Chọn Schema"
-                          value={selectedSchema?.path || 'master'}
-                          loading={loadingSchemas || isSwitchingSchema}
-                          disabled={isSwitchingSchema}
-                          bordered={false}
-                          onChange={async (value) => {
-                            setActiveTab('app');
-                            setIsSwitchingSchema(true);
-                            try {
-                              if (value === 'master') {
-                                // Chuyển về schema gốc
-                                setSelectedSchema('master');
-                                if (setCurrentUser) {
-                                  setCurrentUser(prev => ({
-                                    ...prev,
-                                    schema: 'master' || 'Schema gốc'
-                                  }));
-                                }
-                                // Clear localStorage và header
-                                localStorage.removeItem('selectedSchemaId');
-                                updateSchemaHeader(null);
-                                // Load tools từ setting đã lưu cho schema master
-                                await fetchDashboardSetting();
-                                console.log('Switched to master schema, loaded from settings');
+                  <span style={{ fontSize: '18px', fontWeight: 'bold', color: topbarTextColor || (topbarTheme?.name === 'dark' ? topbarTheme?.superAdminColor : topbarTheme?.textColor) }}>WIKI CANVAS </span>
 
-                                // Load resources for master schema
-                                try {
-                                  const resourcesData = await getSchemaResources('master');
-
-                                  if (resourcesData && resourcesData.setting) {
-                                    setResources(resourcesData.setting);
-                                    setResourcesSettingId(resourcesData.id);
-                                  }
-                                } catch (error) {
-                                  console.log('Error loading master schema resources:', error);
-                                }
-                              } else {
-                                // Chọn schema khác
-                                const schema = availableSchemas.find(s => s.id.toString() === value);
-                                if (schema) {
-                                  setSelectedSchema(schema);
-                                  if (setCurrentUser) {
-                                    setCurrentUser(prev => ({
-                                      ...prev,
-                                      schema: schema.name || schema.path
-                                    }));
-                                  }
-                                  // Save to localStorage
-                                  localStorage.setItem('selectedSchemaId', schema.id.toString());
-                                  // Update axios header for future requests
-                                  updateSchemaHeader(schema.id.toString());
-
-                                  try {
-                                    // Lấy tools thực tế được cấu hình cho schema này
-                                    const schemaToolsResponse = await getSchemaTools(schema.path);
-                                    console.log('Schema tools response:', schemaToolsResponse);
-
-                                    if (schemaToolsResponse && schemaToolsResponse.setting && schemaToolsResponse.setting.length > 0) {
-                                      // Kết hợp với thông tin từ schema master
-                                      const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
-                                      setTools(combinedApps);
-                                      console.log(`Using configured tools for schema ${schema.path}: ${combinedApps.length} apps`);
-                                    } else {
-                                      // Fallback: sử dụng logic lọc cũ nếu chưa có cấu hình
-                                      let schemaSpecificApps;
-                                      if (schema.path === 'dev') {
-                                        schemaSpecificApps = dashboardApps; // Schema dev: hiển thị tất cả app
-                                      } else if (schema.path === 'test') {
-                                        schemaSpecificApps = dashboardApps.filter(app =>
-                                          ['data-manager', 'k9', 'adminApp'].includes(app.id)
-                                        ); // Schema test: chỉ hiển thị một số app cơ bản
-                                      } else if (schema.path === 'staging') {
-                                        schemaSpecificApps = dashboardApps.filter(app =>
-                                          app.tag !== 'under-development'
-                                        ); // Schema staging: hiển thị app production
-                                      } else {
-                                        schemaSpecificApps = dashboardApps.filter(app =>
-                                          app.tag === 'Working' || app.tag === 'On-demand'
-                                        ); // Schema khác: hiển thị app theo quy tắc mặc định
-                                      }
-
-                                      // Kết hợp với thông tin từ schema master
-                                      const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
-                                      setTools(combinedApps);
-                                      console.log(`Fallback: using filtered tools for schema ${schema.path}, showing ${combinedApps.length} apps`);
-                                    }
-                                  } catch (error) {
-                                    console.error('Lỗi khi lấy tools cho schema:', error);
-                                    // Fallback: sử dụng logic lọc cũ
-                                    let schemaSpecificApps;
-                                    if (schema.path === 'dev') {
-                                      schemaSpecificApps = dashboardApps;
-                                    } else if (schema.path === 'test') {
-                                      schemaSpecificApps = dashboardApps.filter(app =>
-                                        ['data-manager', 'k9', 'adminApp'].includes(app.id)
-                                      );
-                                    } else if (schema.path === 'staging') {
-                                      schemaSpecificApps = dashboardApps.filter(app =>
-                                        app.tag !== 'under-development'
-                                      );
-                                    } else {
-                                      schemaSpecificApps = dashboardApps.filter(app =>
-                                        app.tag === 'Working' || app.tag === 'On-demand'
-                                      );
-                                    }
-
-                                    // Kết hợp với thông tin từ schema master
-                                    const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
-                                    setTools(combinedApps);
-                                    console.log(`Error fallback: using filtered tools for schema ${schema.path}, showing ${combinedApps.length} apps`);
-                                  }
-
-                                  // Load resources from master schema (always use master for resources)
-                                  try {
-                                    const resourcesData = await getSchemaResources('master');
-
-                                    if (resourcesData && resourcesData.setting) {
-                                      setResources(resourcesData.setting);
-                                      setResourcesSettingId(resourcesData.id);
-                                    }
-                                  } catch (error) {
-                                    console.log('Error loading master schema resources:', error);
-                                  }
-                                }
-                              }
-                              // Thay vì reload toàn bộ trang, chỉ reload component
-                              // Reload data thay vì reload trang
-                              try {
-                                setIsSwitchingSchema(true);
-                                // await fetchDashboardSetting();
-                                loadResourcesForSchema();
-
-                                // Force re-render để đảm bảo UI được cập nhật
-                                setTools([]);
-                                // Đảm bảo URL được cập nhật đúng
-                                const currentPath = location.pathname;
-                                if (currentPath === '/dashboard' || currentPath === '/dashboard/') {
-                                  navigate('/dashboard/app', { replace: true });
-                                }
-                                setTimeout(() => {
-
-
-                                  // loadMasterSchemaTools();
-                                  fetchDashboardSetting();
-                                }, 100);
-                                window.location.reload();
-
-                              } catch (reloadError) {
-                                console.error('Error reloading data after schema switch:', reloadError);
-                                // Fallback: reload trang nếu có lỗi
-                                window.location.reload();
-                              }
-                            } catch (error) {
-                              console.error('Error switching schema:', error);
-                            } finally {
-                              // Thêm delay nhỏ để đảm bảo loading hiển thị đủ lâu
-                              setTimeout(() => {
-                                setIsSwitchingSchema(false);
-                              }, 500);
-                            }
-                          }}
-                          style={{
-                            fontSize: '18px',
-                            fontWeight: 'bold',
-                            minWidth: '200px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: topbarTheme.background,
-                            color: topbarTheme.textColor,
-                            height: '35px',
-                          }}
-                          className={styles.headerTitleSelect}
-                          options={[
-                            {
-                              label: 'Schema gốc (Mặc định)'.toUpperCase(),
-                              value: 'master'
-                            },
-                            ...availableSchemas.map(schema => ({
-                              label: (schema?.name || schema?.path || `Schema ${schema.id}`),
-                              value: schema.id.toString()
-                            }))
-                          ]}
-                        />
-                      ) : (
-                        <h1 className={styles.headerTitle}
-                          style={{ color: topbarTheme.textColor }}
-                        >
-                          {(currentUser?.schema && !currentUser?.isSuperAdmin) ? currentUser?.schema : currentUser?.isSuperAdmin ? selectedSchema?.path : title}
-                        </h1>
-                      )}
-                      {currentUser?.isSuperAdmin && (
-                        <span onClick={e => { navigate('/admin-path') }}
-                          style={{
-                            // backgroundColor: 'var(--bg-tertiary)',
-                            padding: '5px 10px',
-                            borderRadius: '10px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '5px',
-                            cursor: 'pointer',
-                            fontWeight: 500,
-                            color: topbarTheme.superAdminColor,
-                          }}>
-                          Super Admin
-                          {/* <SettingOutlined style={{ fontSize: 18, cursor: 'pointer' }} /> */}
-                        </span>
-                      )}
-                    </div>
-                  )}
                 </div>
               )}
 
@@ -3046,7 +2652,7 @@ const Dashboard = () => {
             <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
               {
                 !isMobile && <>
-                  <Button
+                  {/* <Button
                     onClick={() => {
                       window.open(`${import.meta.env.VITE_DOMAIN_URL}/process-guide`, '_blank');
                     }}
@@ -3103,8 +2709,9 @@ const Dashboard = () => {
                           <AI_Meter style={{ marginLeft: 8, fontSize: 18, cursor: 'pointer' }} />
                         </Tooltip>
                       )} */}
-                      {/* AICU: {formatCurrency(totalUsed)} / {formatCurrency(totalToken)}*/}
-                      {isMobile ? (
+                  {/* AICU: {formatCurrency(totalUsed)} / {formatCurrency(totalToken)}*/}
+                  {/* {
+                      isMobile ? (
                         <span>
                           AI Meter: {((totalUsed / totalToken) * 100).toFixed(0)}%
                         </span>
@@ -3117,7 +2724,7 @@ const Dashboard = () => {
                       )}
 
                     </span>
-                  </Tooltip>
+                  </Tooltip> */}
                   {(currentUser?.isAdmin || currentUser?.isSuperAdmin) &&
                     <Dropdown
                       menu={{ items: settingsMenuItems }}
@@ -3127,7 +2734,7 @@ const Dashboard = () => {
                       <Button type="text" style={{ color: topbarTheme.textColor }}>
                         <span style={{
                           fontSize: '16px',
-                          color: topbarTheme.textColor,
+                          color: topbarTextColor,
                         }}>Setting
                         </span>
                       </Button>
@@ -3152,7 +2759,34 @@ const Dashboard = () => {
                 </>
               }
 
-              <ProfileSelect color={topbarTheme.textColor} />
+              {/* <ProfileSelect color={topbarTheme.textColor} /> */}
+
+              {
+                (currentUser?.isAdmin || currentUser?.isSuperAdmin) ? (
+                  <>
+                    <div>
+                      {/* <Button type="text" style={{ color: topbarTheme.textColor }}>
+                        <span style={{ fontSize: '16px', color: topbarTheme.textColor }}>
+                          {currentUser?.name + ' - Power User'}
+                        </span>
+                      </Button> */}
+                      <ProfileSelect color={topbarTextColor} />
+
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <Button type="text" style={{ color: topbarTheme.textColor }} onClick={() => {
+                        navigate('/login');
+                      }}>Đăng nhập </Button>
+                      <Button type="text" style={{ color: topbarTheme.textColor }} onClick={() => {
+                        navigate('/workspace-registration');
+                      }}>Đăng ký Power User </Button>
+                    </div>
+                  </>
+                )
+              }
             </div>
           </div>
         </div>
@@ -3176,8 +2810,8 @@ const Dashboard = () => {
                   {(() => {
                     const filtered = tagOptions?.length > 0 ? tagOptions.filter(opt => (opt.label || '').toLowerCase().includes(tagSearch.toLowerCase())) : [];
                     const maxInline = 6;
-                    const inline = filtered?.slice(0, maxInline);
-                    const overflow = filtered?.slice(maxInline);
+                    const inline = filtered.slice(0, maxInline);
+                    const overflow = filtered.slice(maxInline);
 
                     return (
                       <>
@@ -3291,101 +2925,7 @@ const Dashboard = () => {
           )}
           {/* Tool/List or Tab Content by Path */}
           <div style={{ display: 'flex', gap: '24px', height: 'calc(100vh - 130px)' }}>
-            {!isMobile && (
-              <div style={{ width: '170px', marginTop: 15 }}>
-                {/* Days remaining widgets - styled like sample and color from settings */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 25, maxHeight: 'calc(100vh - 140px)', overflowY: 'auto', paddingRight: 6 }}>
-                  {/* Add countdown button */}
 
-                  {/* Month card */}
-                  {showFixedCountdowns.month && (
-                    <div style={{
-                      color: daysCountdownTextColors,
-                      borderRadius: 20,
-                      padding: '0px 16px',
-                      textAlign: 'center',
-                    }}>
-                      <div style={{ fontSize: 38, fontWeight: 500, lineHeight: 1, color: daysCountdownTextColors }}>{daysInMonth}</div>
-                      <div style={{ height: 1, opacity: 0.85, margin: '0px 0 6px' }} />
-                      <div style={{ fontSize: 13, fontWeight: 500, opacity: 0.95, color: daysCountdownTextColors }}>
-                        Ngày còn lại trong tháng {monthDisplay}
-                      </div>
-                    </div>
-                  )}
-                  {/* Year card */}
-                  {showFixedCountdowns.year && (
-                    <div style={{
-                      color: daysCountdownTextColors,
-                      borderRadius: 20,
-                      padding: '0px 16px',
-                      textAlign: 'center',
-                    }}>
-                      <div style={{ fontSize: 38, fontWeight: 500, lineHeight: 1, color: daysCountdownTextColors }}>{daysInYear}</div>
-                      <div style={{ height: 1, opacity: 0.85, margin: '0px 0 6px' }} />
-                      <div style={{ fontSize: 13, fontWeight: 500, opacity: 0.95, color: daysCountdownTextColors }}>
-                        Ngày còn lại đến hết năm {yearDisplay}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Render user-defined countdown items */}
-                  {countdownItems.filter(it => !it.isHidden).map((it) => {
-                    const now = currentTime instanceof Date ? currentTime : new Date();
-                    const target = new Date(it.target);
-                    const isExpired = target <= now;
-
-                    // Tự động ẩn countdown đã hết hạn
-                    // if (isExpired) return null;
-
-                    return (
-                      <div key={it.id} style={{
-                        color: daysCountdownTextColors,
-                        borderRadius: 20,
-                        padding: '0px 16px',
-                        textAlign: 'center',
-                      }}>
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>
-                          <button
-                            onClick={() => handleEditCountdown(it)}
-                            style={{
-                              marginTop: 6,
-                              border: 'none',
-                              background: 'transparent',
-                              color: daysCountdownTextColors,
-                              cursor: 'pointer',
-                              fontSize: '11px'
-                            }}
-                            title="Sửa"
-                          >
-                            ✏️
-                          </button>
-                          <button
-                            onClick={() => handleDeleteCountdown(it.id)}
-                            style={{
-                              marginTop: 6,
-                              border: 'none',
-                              background: 'transparent',
-                              color: daysCountdownTextColors,
-                              cursor: 'pointer'
-                            }}
-                            title="Xóa"
-                          >
-                            ×
-                          </button>
-                        </div>
-                        <div style={{ fontSize: 40, fontWeight: 500, lineHeight: 1, color: daysCountdownTextColors }}>
-                          {computeRemaining(it.target, it.unit)}
-                        </div>
-                        <div style={{ height: 1, opacity: 0.85, margin: '0px 0 6px' }} />
-                        <div style={{ fontSize: 14, fontWeight: 500, opacity: 0.95, color: daysCountdownTextColors }}>
-                          {it.description}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
             <div className={styles.contentContainer} style={{ flex: 1 }}>
               {activeTab === 'app' || activeTab === 'research-bpo' || activeTab === 'training-productivity' ? (
                 (showToolsLoading || isSwitchingSchema) ? (
@@ -4082,7 +3622,7 @@ const Dashboard = () => {
             </div>
 
             {/* Resource Panel - Right Sidebar */}
-            {activeTab !== 'n8n' && !isMobile && (
+            {/* {activeTab !== 'n8n' && !isMobile && (
               <div style={{
                 flexShrink: 0,
                 height: '100%',
@@ -4092,7 +3632,7 @@ const Dashboard = () => {
                   currentUser={currentUser}
                 />
               </div>
-            )}
+            )} */}
           </div>
         </>
       )}
@@ -4241,6 +3781,169 @@ const Dashboard = () => {
           </>
         )}
       </Modal>
+      <Modal
+        title="Cài đặt ảnh nền Topbar"
+        open={showTopbarBgModal}
+        onCancel={() => {
+          // cleanup preview object url
+          if (topbarBgPreviewUrl) URL.revokeObjectURL(topbarBgPreviewUrl);
+          setTopbarBgPreviewUrl('');
+          setTopbarBgPendingFile(null);
+          setTopbarBgDraftUrl('');
+          setShowTopbarBgModal(false);
+        }}
+        onOk={async () => {
+          try {
+            let finalUrl = topbarBgDraftUrl?.trim();
+            // If user selected a file, upload now
+            if (topbarBgPendingFile) {
+              const { uploadFileService } = await import('../apis/uploadFileService.jsx');
+              const response = await uploadFileService([topbarBgPendingFile]);
+              if (!response || !response.files || response.files.length === 0) {
+                throw new Error('Upload failed');
+              }
+              finalUrl = response.files[0].fileUrl;
+            }
+            if (!finalUrl) {
+              Modal.error({ title: 'Thiếu dữ liệu', content: 'Vui lòng nhập URL hoặc chọn ảnh.' });
+              return;
+            }
+            const existing = await getSettingByType('TOPBAR_BG_IMAGE');
+            if (existing && existing.id) {
+              await updateSetting({ ...existing, setting: finalUrl });
+            } else {
+              await createSetting({ type: 'TOPBAR_BG_IMAGE', setting: finalUrl });
+            }
+            // apply to external state
+            setTopbarBgImageUrl(finalUrl);
+            // cleanup and close
+            if (topbarBgPreviewUrl) URL.revokeObjectURL(topbarBgPreviewUrl);
+            setTopbarBgPreviewUrl('');
+            setTopbarBgPendingFile(null);
+            setTopbarBgDraftUrl('');
+            setShowTopbarBgModal(false);
+            Modal.success({ title: 'Thành công', content: 'Đã lưu ảnh nền Topbar' });
+          } catch (e) {
+            Modal.error({ title: 'Lỗi', content: 'Không thể lưu ảnh nền Topbar' });
+          }
+        }}
+        okText="Lưu"
+        cancelText="Hủy"
+        width={520}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div>
+            <div style={{ marginBottom: 6, fontWeight: 500 }}>URL ảnh nền Topbar:</div>
+            <Input
+              value={topbarBgDraftUrl}
+              onChange={(e) => setTopbarBgDraftUrl(e.target.value)}
+              placeholder="/simple_background.png hoặc URL đầy đủ"
+            />
+          </div>
+          <div>
+            <div style={{ margin: '8px 0 6px', fontWeight: 500 }}>Tải ảnh từ máy:</div>
+            <Upload
+              beforeUpload={handleTopbarBgFileUpload}
+              showUploadList={false}
+              accept="image/*"
+            >
+              <Button icon={<UploadOutlined />}>Chọn ảnh</Button>
+            </Upload>
+            <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 6 }}>
+              Chọn ảnh để xem trước. Ảnh chỉ được upload khi bấm Lưu.
+            </div>
+          </div>
+          {(topbarBgPreviewUrl || topbarBgDraftUrl) && (
+            <div>
+              <div style={{ marginBottom: 6, fontWeight: 500 }}>Xem trước:</div>
+              <div style={{
+                width: '100%',
+                height: 80,
+                backgroundImage: `url(${topbarBgPreviewUrl || topbarBgDraftUrl})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                border: '1px solid var(--border-secondary)',
+                borderRadius: 8
+              }} />
+            </div>
+          )}
+        </div>
+      </Modal>
+
+      <Modal
+        title="Cài đặt màu chữ Topbar"
+        open={showTopbarTextColorModal}
+        onCancel={() => {
+          setTempTopbarTextColor('');
+          setShowTopbarTextColorModal(false);
+        }}
+        onOk={async () => {
+          try {
+            const existing = await getSettingByType('TOPBAR_TEXT_COLOR');
+            if (existing && existing.id) {
+              await updateSetting({ ...existing, setting: tempTopbarTextColor });
+            } else {
+              await createSetting({ type: 'TOPBAR_TEXT_COLOR', setting: tempTopbarTextColor });
+            }
+            setTopbarTextColor(tempTopbarTextColor);
+            setTempTopbarTextColor('');
+            setShowTopbarTextColorModal(false);
+            Modal.success({ title: 'Thành công', content: 'Đã lưu màu chữ Topbar' });
+          } catch (e) {
+            Modal.error({ title: 'Lỗi', content: 'Không thể lưu màu chữ Topbar' });
+          }
+        }}
+        okText="Lưu"
+        cancelText="Hủy"
+        width={520}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div>
+            <div style={{ marginBottom: 6, fontWeight: 500 }}>Màu chữ Topbar:</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <input
+                type="color"
+                value={tempTopbarTextColor || '#454545'}
+                onChange={(e) => setTempTopbarTextColor(e.target.value)}
+                style={{ width: 50, height: 40, border: '1px solid #d9d9d9', borderRadius: 6, cursor: 'pointer' }}
+              />
+              <Input
+                value={tempTopbarTextColor}
+                onChange={(e) => setTempTopbarTextColor(e.target.value)}
+                placeholder="#454545 hoặc tên màu"
+                style={{ flex: 1 }}
+              />
+            </div>
+            <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 6 }}>
+              Chọn màu hoặc nhập mã màu hex/tên màu CSS.
+            </div>
+          </div>
+          {tempTopbarTextColor && (
+            <div>
+              <div style={{ marginBottom: 6, fontWeight: 500 }}>Xem trước:</div>
+              <div style={{
+                padding: '12px',
+                backgroundColor: '#f5f5f5',
+                border: '1px solid var(--border-secondary)',
+                borderRadius: 8,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <img src={topbarTheme.iconApp} alt="logo" width={24} height={24} />
+                <span style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  color: tempTopbarTextColor
+                }}>
+                  WIKI CANVAS
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      </Modal>
+
       <Modal
         title="Cài đặt tổng token cho AI"
         open={showTokenModal}
@@ -6080,7 +5783,7 @@ const Dashboard = () => {
                 background: '#FFFFFF',
                 textColor: '#454545',
                 superAdminColor: '#66A2E7',
-                iconApp: '/LogoB.png'
+                iconApp: '/LogoC.png'
               };
               handleSaveTopbarTheme(lightTheme);
             }}
@@ -6122,7 +5825,7 @@ const Dashboard = () => {
                   backgroundColor: '#f4f4f4',
                   borderRadius: 4
                 }} />
-                <span style={{ fontSize: 18, fontWeight: 'bold', color: '#454545' }}>BCANVAS WORKSPACE</span>
+                <span style={{ fontSize: 18, fontWeight: 'bold', color: '#454545' }}>WIKI CANVAS </span>
               </div>
             </div>
 
@@ -6181,7 +5884,7 @@ const Dashboard = () => {
                   backgroundColor: '#2a3650',
                   borderRadius: 4
                 }} />
-                <span style={{ fontSize: 18, fontWeight: 'bold', color: '#94BEF2' }}>BCANVAS WORKSPACE</span>
+                <span style={{ fontSize: 18, fontWeight: 'bold', color: '#94BEF2' }}>WIKI CANVAS </span>
               </div>
             </div>
 
@@ -6629,7 +6332,7 @@ const Dashboard = () => {
                 fontWeight: 'bold',
                 color: topbarTheme?.name === 'dark' ? topbarTheme?.superAdminColor : topbarTheme?.textColor
               }}>
-                BCANVAS WORKSPACE
+                WIKI CANVAS
               </div>
               <span style={{
                 padding: '4px 8px',
@@ -6834,4 +6537,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default WikiCanvas;

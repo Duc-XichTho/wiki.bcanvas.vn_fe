@@ -73,16 +73,16 @@ const AuthRoute = () => {
 		);
 	}
 
-	if (!currentUser?.email) {
+	// if (!currentUser?.email) {
 
-		const isFormTemplateRoute = /^\/form-template\/\d+$/.test(location.pathname);
+	// 	const isFormTemplateRoute = /^\/form-template\/\d+$/.test(location.pathname);
 
-		if (isFormTemplateRoute) {
-			return <Navigate to={location.pathname} replace />;
-		} else {
-			return <Navigate to='/' replace />;
-		}
-	}
+	// 	if (isFormTemplateRoute) {
+	// 		return <Navigate to={location.pathname} replace />;
+	// 	} else {
+	// 		return <Navigate to='/' replace />;
+	// 	}
+	// }
 
 	const ROUTES_CUA_VUA = ['/admin'];
 

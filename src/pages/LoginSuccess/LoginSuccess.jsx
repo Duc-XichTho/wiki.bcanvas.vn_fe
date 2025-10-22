@@ -32,9 +32,9 @@ export default function LoginSuccess() {
     const timer = setTimeout(() => {
       window.close();
       if (isMobile) {
-        navigate('/dashboard');
+        navigate('/');
       } else {
-        navigate('/dashboard');
+        navigate('/');
       }
     }, 3000);
 

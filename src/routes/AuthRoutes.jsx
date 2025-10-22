@@ -253,6 +253,7 @@ const HomeManagement = lazy(() => import('../pages/BusinessWikibook/components/'
 const AiFile = lazy(() => import('../pages/AIFileTool/AIFile.jsx'));
 const StorageTool = lazy(() => import('../pages/StorageTool/StorageTool.jsx'));
 const AIWorkAutomation = lazy(() => import('../pages/AIWorkAutomation/AIWorkAutomation.jsx'));
+const WikiCanvas = lazy(() => import('../pages/WikiCanvas.jsx'));
 const fallback = (
 	<div
 		style={{
@@ -289,9 +290,9 @@ export const AuthRoutes = ({ listCompany, isMobile }) => (
 				<Route path="content/:contentId" element={<DiagramFactoryContent />} />
 			</Route>
 		</Route>
-		<Route path='/dashboard' element={<Dashboard />} />
+		<Route path='/dashboard' element={<WikiCanvas />} />
 
-		<Route path='/dashboard/:tab' element={<Dashboard />} />
+		<Route path='/dashboard/:tab' element={<WikiCanvas />} />
 		{/* <Route path={'/mobile-dashboard'} element={<Suspense fallback={fallback}><ViewDashboard /></Suspense>} /> */}
 
 		<Route path={'/geo'} element={<Suspense fallback={fallback}><Geo /></Suspense>} />
