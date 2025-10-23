@@ -3306,7 +3306,7 @@ const WikiCanvas = () => {
                             )}
                             <div className={styles.toolActionButtons} onClick={(e) => e.stopPropagation()}>
                               {/* Display Tags - moved to bottom */}
-                              {tool.tags && tool.tags.length > 0 && (
+                              {/* {tool.tags && tool.tags.length > 0 && (
                                 <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12px', display: 'flex', justifyContent: 'start' }}>
                                   <div className={styles.toolTags}>
                                     {tool.tags.map(tagValue => {
@@ -3329,7 +3329,7 @@ const WikiCanvas = () => {
                                     })}
                                   </div>
                                 </div>
-                              )}
+                              )} */}
                               {tool.content2 && (
                                 <button
                                   className={`${styles.toolActionButton} ${styles.support}`}
