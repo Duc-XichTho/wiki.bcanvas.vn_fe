@@ -115,6 +115,19 @@
     transform: translateY(0);
 }
 
+.submitButton:disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.submitButton:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 .successContent {
     text-align: center;
     padding: 20px 0;
@@ -200,6 +213,142 @@
     }
 }
 
+/* No Versions Message */
+.noVersionsMessage {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.noVersionsIcon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.noVersionsText {
+    color: #856404;
+    line-height: 1.4;
+}
+
+/* Version Cards Styles */
+.versionCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.versionCard {
+    border: 2px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.versionCard:hover {
+    border-color: #1A75DB;
+    box-shadow: 0 8px 25px rgba(26, 117, 219, 0.15);
+    transform: translateY(-2px);
+}
+
+.versionCard.selected {
+    border-color: #1A75DB;
+    background: linear-gradient(135deg, #f8fbff 0%, #e3f2fd 100%);
+    box-shadow: 0 8px 25px rgba(26, 117, 219, 0.2);
+}
+
+.versionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.versionName {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.versionBadge {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #1A75DB;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.versionCard:not(.selected) .versionBadge {
+    background: #e1e5e9;
+    color: transparent;
+}
+
+.versionDetails {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.versionFeature {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.featureIcon {
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.versionDescription {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(26, 117, 219, 0.05);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+.descriptionIcon {
+    font-size: 1rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .versionCards {
+        grid-template-columns: 1fr;
+    }
+    
+    .versionDetails {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}
+
 @media (max-width: 480px) {
     .title {
         font-size: 1.6rem;
@@ -211,5 +360,13 @@
     
     .logo {
         font-size: 1.2rem;
+    }
+    
+    .versionCard {
+        padding: 16px;
+    }
+    
+    .versionName {
+        font-size: 1.1rem;
     }
 }

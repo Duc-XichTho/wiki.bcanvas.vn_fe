@@ -2649,7 +2649,26 @@ const WikiCanvas = () => {
 
   // Menu items cho Settings dropdown
   const settingsMenuItems = [
-
+    ( currentUser?.isSuperAdmin) && {
+      key: 'tool-reorder',
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <ArrowUpDown size={16} />
+          <span>Sắp xếp công cụ</span>
+        </div>
+      ),
+      onClick: () => setShowToolReorderModal(true),
+    },
+    (currentUser?.isSuperAdmin) && {
+      key: 'task-checklist',
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <QuestionMark size={16} />
+          <span>Task Checklist</span>
+        </div>
+      ),
+      onClick: () => setShowTaskManagementModal(true),
+    },
     (currentUser?.isSuperAdmin) && {
 
       key: 'topbar-bg-image',
@@ -2771,7 +2790,23 @@ const WikiCanvas = () => {
                 <div className={styles.headerRow}>
                   <img src={topbarTheme.iconApp} alt="logo" width={30} height={30} />
                   <span style={{ fontSize: '18px', fontWeight: 'bold', color: topbarTextColor || (topbarTheme?.name === 'dark' ? topbarTheme?.superAdminColor : topbarTheme?.textColor) }}>WIKI CANVAS </span>
-
+                  {currentUser?.isSuperAdmin && (
+                        <span onClick={e => { navigate('/admin-path') }}
+                          style={{
+                            // backgroundColor: 'var(--bg-tertiary)',
+                            padding: '5px 10px',
+                            borderRadius: '10px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            cursor: 'pointer',
+                            fontWeight: 500,
+                            color:topbarTextColor ||   topbarTheme.superAdminColor,
+                          }}>
+                          Super Admin
+                          {/* <SettingOutlined style={{ fontSize: 18, cursor: 'pointer' }} /> */}
+                        </span>
+                      )}
                 </div>
               )}
 
@@ -6605,19 +6640,7 @@ const WikiCanvas = () => {
       </Modal>
 
       {/* Task Checklist Modal */}
-      {
-        showTaskChecklistModal && (
-          <TaskChecklistModal
-            showScrollButton={false}
-            isOpen={showTaskChecklistModal}
-            onClose={() => {
-              setShowTaskChecklistModal(false);
-              try { localStorage.setItem('taskChecklistModalOpen', 'false'); } catch (_) { }
-            }}
-            refreshTrigger={taskChecklistRefreshTrigger}
-          />
-        )
-      }
+    
 
       {/* Task Management Modal */}
       {
