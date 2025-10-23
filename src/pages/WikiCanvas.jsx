@@ -89,6 +89,7 @@ const WikiCanvas = () => {
     const allowedIds = ['data-manager', 'analysis-review', 'fdr', 'business-wikibook', 'metric-map', 'k9', 'ai-work-automation', 'khkd'];
     return dashboardApps.filter(app => allowedIds.includes(app.id));
   }, [dashboardApps]);
+  
   const [selectedColors, setSelectedColors] = useState([
     { id: 1, color: '#13C2C2' },
     { id: 2, color: '#3196D1' },
@@ -1163,11 +1164,31 @@ const WikiCanvas = () => {
     const activeTrialAppIds = getActiveTrialApps().map(trial => trial.id);
     const expiredTrialAppIds = getExpiredTrialApps().map(trial => trial.id);
 
-    return availableApps.filter(app =>
+    // Filter available apps
+    let apps = availableApps.filter(app =>
       !currentToolIds.includes(app.id) &&
       !activeTrialAppIds.includes(app.id) &&
       !expiredTrialAppIds.includes(app.id)
     );
+
+    // Add trial tools that are not yet activated but have visibility: 'trial'
+    const trialToolsNotActivated = tools.filter(tool => {
+      // Only show if tool is enabled
+      if (tool.enabled === false) return false;
+      
+      const visibility = tool.visibility || 'public';
+      if (visibility !== 'trial') return false;
+      
+      // Check if user has permission to see trial tools
+      if (!currentUser || !currentUser.email) return false;
+      if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0) return false;
+      
+      // Check if tool is not in active trial
+      const activeTrialApps = getActiveTrialApps();
+      return !activeTrialApps.some(trial => trial.id === tool.id);
+    });
+
+    return [...apps, ...trialToolsNotActivated];
   };
 
   // Get expired trial apps for display in bottom section
@@ -1200,11 +1221,17 @@ const WikiCanvas = () => {
       case 'login-required':
         return currentUser && currentUser.email; // Only visible if logged in
       case 'trial':
-        return currentUser && currentUser.email; // Only visible if logged in
+        // For trial tools, check if user is logged in AND has permission AND tool is in active trial
+        if (!currentUser || !currentUser.email) return false;
+        if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0) return false;
+        const activeTrialApps = getActiveTrialApps();
+        return activeTrialApps.some(trial => trial.id === tool.id);
       default:
         return true;
     }
   });
+
+  console.log('visibleTools', visibleTools);
 
   // Apply permission logic after tool settings
   visibleTools = visibleTools.filter(tool => {
@@ -1238,24 +1265,60 @@ const WikiCanvas = () => {
     // Check if tool is disabled
     if (tool.enabled === false) return false; // Don't show disabled tools in blocked list
 
-    // Check if tool requires login but user is not logged in
     const visibility = tool.visibility || 'public';
+    
+    // Check if tool requires login but user is not logged in
     if (visibility === 'login-required' && (!currentUser || !currentUser.email)) return true;
-    if (visibility === 'trial' && (!currentUser || !currentUser.email)) return true;
+    
+    // Check if tool is trial but not activated
+    if (visibility === 'trial') {
+      if (!currentUser || !currentUser.email) return true; // Not logged in
+      if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0) return true; // No permission
+      const activeTrialApps = getActiveTrialApps();
+      return !activeTrialApps.some(trial => trial.id === tool.id); // Not in active trial
+    }
 
     return false;
   });
 
   // Add active trial apps to visible tools (only for admin/superAdmin or users with permissions)
   const activeTrialApps = getActiveTrialApps();
+  
+  // Replace tools with trial versions if they exist in active trials AND tool is enabled
+  visibleTools = visibleTools.map(tool => {
+    const trialVersion = activeTrialApps.find(trial => trial.id === tool.id);
+     if (trialVersion && tool.enabled !== false) { // Only replace if tool is enabled
+      return {
+        ...trialVersion,
+        tag: "Trial",
+        isTrial: true,
+        trialEndDate: trialVersion.endDate
+      };
+    }
+    return tool;
+  });
+
+  // Add trial tools that are not in visibleTools yet (only if original tool is enabled)
   const trialTools = (currentUser?.isSuperAdmin || currentUser?.isAdmin || allowedAppIds.length > 0)
-    ? activeTrialApps.map(trial => ({
-      ...trial,
-      tag: "Trial",
-      isTrial: true,
-      trialEndDate: trial.endDate
-    }))
+    ? activeTrialApps
+        .filter(trial => {
+          // Check if trial is not already in visibleTools
+          if (visibleTools.some(tool => tool.id === trial.id)) return false;
+          
+          // Check if original tool is enabled
+          const originalTool = tools.find(tool => tool.id === trial.id);
+          if (!originalTool || originalTool.enabled === false) return false;
+          
+          return true;
+        })
+        .map(trial => ({
+          ...trial,
+          tag: "Trial",
+          isTrial: true,
+          trialEndDate: trial.endDate
+        }))
     : [];
+
 
   visibleTools = [...visibleTools, ...trialTools, {
     id: "process-guide",
@@ -2013,7 +2076,6 @@ const WikiCanvas = () => {
     try {
       const BASE_URL = import.meta.env.VITE_API_URL;
       const resp = await instance.post(`${BASE_URL}/api/path/reset-from-external-db`);
-      console.log('resp', resp);
       if (resp.data.data.success) {
         Modal.success({ title: 'Thành công', content: 'Đã reset dữ liệu thành công.' });
         navigate('/');
@@ -2040,7 +2102,6 @@ const WikiCanvas = () => {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
             setTools(combinedApps);
-            console.log(`Refreshed: using configured tools for schema ${selectedSchema.path}: ${combinedApps.length} apps`);
           } else {
             // Fallback: sử dụng logic lọc cũ
             let schemaSpecificApps;
@@ -2062,7 +2123,6 @@ const WikiCanvas = () => {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
             setTools(combinedApps);
-            console.log(`Refresh fallback: using filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
           }
         }
       } catch (error) {
@@ -2087,7 +2147,6 @@ const WikiCanvas = () => {
         // Kết hợp với thông tin từ schema master
         const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
         setTools(combinedApps);
-        console.log(`Refresh error fallback: using filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
       } finally {
         setIsSwitchingSchema(false);
       }
@@ -2381,9 +2440,7 @@ const WikiCanvas = () => {
   // Hàm xử lý mở modal context instruction settings
   const handleOpenContextInstructionModal = async () => {
     try {
-      console.log('Opening context instruction modal...');
       const existing = await getSettingByType('CONTEXT_INSTRUCTION_SETTING');
-      console.log('Existing context instruction setting:', existing);
 
       if (existing && existing.setting) {
         setContextInstruction(existing.setting.instruction || '');
@@ -2434,7 +2491,6 @@ const WikiCanvas = () => {
   // Hàm xử lý lưu topbar theme settings
   const handleSaveTopbarTheme = async (selectedTheme) => {
     try {
-      console.log('Saving topbar theme:', selectedTheme);
 
       const existing = await getSettingByType('TOPBAR_THEME');
 
@@ -2462,7 +2518,6 @@ const WikiCanvas = () => {
   // Hàm xử lý lưu status bar theme settings
   const handleSaveStatusBarTheme = async (selectedTheme) => {
     try {
-      console.log('Saving status bar theme:', selectedTheme);
 
       const existing = await getSettingByType('STATUS_BAR_THEME');
 
@@ -2491,38 +2546,27 @@ const WikiCanvas = () => {
   // Hàm xử lý lưu context instruction settings
   const handleSaveContextInstruction = async () => {
     try {
-      console.log('Saving context instruction settings...');
-      console.log('Current context instruction:', contextInstruction);
-
       const settingData = {
         type: 'CONTEXT_INSTRUCTION_SETTING',
         setting: {
           instruction: contextInstruction
         }
       };
-
-      console.log('Setting data to save:', settingData);
-
       const existing = await getSettingByType('CONTEXT_INSTRUCTION_SETTING');
-      console.log('Existing setting:', existing);
 
       let result;
       if (existing && existing.id) {
-        console.log('Updating existing setting...');
         result = await updateSetting({
           ...settingData,
           id: existing.id
         });
       } else {
-        console.log('Creating new setting...');
         result = await createSetting(settingData);
       }
 
-      console.log('Save result:', result);
       setShowContextInstructionModal(false);
 
       // Show success message
-      console.log('Context instruction settings saved successfully!');
     } catch (error) {
       console.error('Error saving context instruction settings:', error);
     }
@@ -3565,7 +3609,7 @@ const WikiCanvas = () => {
 
                     </div>
 
-                    {/* Blocked Tools Section (visible for non-logged-in users) */}
+                    {/* Blocked Tools Section (visible for non-logged-in users only) */}
                     {activeTab === 'app' && blockedTools.length > 0 && !currentUser?.email && (
                       <div className={styles.toolsList} style={{ marginTop: '20px' }}>
                         {blockedTools.map((tool) => (
@@ -3580,7 +3624,17 @@ const WikiCanvas = () => {
                             }}
                             onClick={(e) => {
                               e.preventDefault();
-                              message.warning('Vui lòng đăng nhập để truy cập tool này!');
+                              if (tool.visibility === 'trial') {
+                                if (!currentUser || !currentUser.email) {
+                                  message.warning('Vui lòng đăng nhập để truy cập tool này!');
+                                } else if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0) {
+                                  message.warning('Bạn không có quyền truy cập tool này!');
+                                } else {
+                                  message.warning('Vui lòng kích hoạt trial để truy cập tool này!');
+                                }
+                              } else {
+                                message.warning('Vui lòng đăng nhập để truy cập tool này!');
+                              }
                             }}
                           >
                             <div className={styles.toolCardItem}>
@@ -3614,7 +3668,10 @@ const WikiCanvas = () => {
                                 alignItems: 'center',
                                 gap: '4px'
                               }}>
-                                🔒 Yêu cầu đăng nhập
+                                {tool.visibility === 'trial' ? 
+                                  (!currentUser || !currentUser.email ? '🔒 Yêu cầu đăng nhập' : 
+                                   (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0 ? '🚫 Không có quyền' : '🧪 Cần kích hoạt trial')) : 
+                                  '🔒 Yêu cầu đăng nhập'}
                               </div>
 
                               {/* <div className={styles.box}> */}
@@ -3736,13 +3793,13 @@ const WikiCanvas = () => {
                                           }
                                         }}
                                         style={{
-                                          background: '#DEE0E5',
-                                          color: '#4363AA',
+                                          background: app.visibility === 'trial' ? '#DEE0E5' : '#E5F3FF',
+                                          color: app.visibility === 'trial' ? '#4363AA' : '#1890ff',
                                           border: 'none',
                                           width: '100%'
                                         }}
                                       >
-                                        Dùng thử 30 ngày
+                                        {app.visibility === 'trial' ? 'Kích hoạt trial' : 'Dùng thử 30 ngày'}
                                       </button>
                                     )}
                                   </div>
@@ -6774,7 +6831,7 @@ const WikiCanvas = () => {
                     options={[
                       { value: 'public', label: 'Công khai (Tất cả đều truy cập được)' },
                       { value: 'login-required', label: 'Yêu cầu đăng nhập (Chỉ user đăng nhập mới truy cập được)' },
-                      { value: 'trial', label: 'Dùng thử (Chỉ hiển thị khi đăng nhập)' }
+                      { value: 'trial', label: 'Dùng thử (Chỉ hiển thị cho Admin/Super Admin và cần kích hoạt trial)' }
                     ]}
                   />
                 </div>
