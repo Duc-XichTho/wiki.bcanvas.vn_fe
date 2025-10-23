@@ -107,11 +107,11 @@ export default function ProfileSelect({color = '#454545'}) {
                     marginLeft: "30px"
                 }}
             >
-                { (currentUser?.isSuperAdmin || (currentUser?.isAdmin && currentUser?.isRealAdmin)) && (
+                { (currentUser?.isSuperAdmin ) && (
                     <>
-                        <MenuItem style={{ fontSize: "14px" }} onClick={handleOpenCauHinh}>
+                        {/* <MenuItem style={{ fontSize: "14px" }} onClick={handleOpenCauHinh}>
                             Cấu hình
-                        </MenuItem>
+                        </MenuItem> */}
                         <MenuItem style={{ fontSize: "14px" }} onClick={navigateAdmin}>
                             Admin
                         </MenuItem>
