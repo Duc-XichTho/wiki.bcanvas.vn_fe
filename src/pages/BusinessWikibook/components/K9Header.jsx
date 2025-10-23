@@ -6,7 +6,7 @@ import { formatDateToDDMMYYYY } from '../../../generalFunction/format';
 import { MyContext } from '../../../MyContext';
 import styles from '../K9.module.css';
 import ProfileSelect from '../../Home/SelectComponent/ProfileSelect.jsx';
-import { BackCanvas,Program_Icon , ICON_CROSSROAD_LIST } from '../../../icon/svg/IconSvg.jsx';
+import { BackCanvas, Program_Icon, ICON_CROSSROAD_LIST } from '../../../icon/svg/IconSvg.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getSchemaTools, getSettingByType } from '../../../apis/settingService.jsx';
 // import confetti from 'canvas-confetti';
@@ -140,7 +140,7 @@ const K9Header = ({
 	// Check program selection on component mount and when tag4Options change
 	useEffect(() => {
 		checkAndSetProgramSelection();
-	}, [tag4Options ,]);
+	}, [tag4Options,]);
 
 	// Check program selection logic
 	const checkAndSetProgramSelection = () => {
@@ -509,7 +509,7 @@ const K9Header = ({
 	};
 
 	// Only show tag4 filter for specific tabs
-	const shouldShowTag4Filter = ['stream', 'longForm', 'caseTraining', 'home' , 'caseUser' , 'ai'].includes(activeTab);
+	const shouldShowTag4Filter = ['stream', 'longForm', 'caseTraining', 'home', 'caseUser', 'ai'].includes(activeTab);
 
 	const columns = [
 		{
@@ -578,7 +578,7 @@ const K9Header = ({
 		},
 	];
 	const handleBackToDashboard = () => {
-			navigate('/dashboard');
+		navigate('/dashboard');
 	};
 
 	const location = useLocation();
@@ -645,7 +645,7 @@ const K9Header = ({
 				<div className={styles.header_left}>
 					<div className={styles.header_left}>
 						<div className={styles.backCanvas}
-							 onClick={handleBackToDashboard}
+							onClick={handleBackToDashboard}
 						>
 							<BackCanvas height={20} width={20} />
 						</div>
@@ -668,60 +668,60 @@ const K9Header = ({
 						<div className={styles.headerLogo}>
 							{masterTool ? masterTool.name : nameTable}
 						</div>
-					<div className={styles.logo} style={{ padding: '0px 4px' }}>
-						{/*<img style={{ width : isMobile ? '80px' : '35px', height: isMobile ? '20px' : '32px' }} src="/LogoAiMBA.png" alt="" />*/}
-						{/*{*/}
-						{/*	!isMobile && (*/}
-						{/*		<div className={styles.desc}>*/}
-						{/*			<p>Expert-Grade Knowledge</p>*/}
-						{/*			<p>& Situation Training</p>*/}
-						{/*		</div>*/}
-						{/*	)*/}
-						{/*}*/}
-						{shouldShowTag4Filter && (
-							<>
-								<Button
-									icon={<Program_Icon width={22} height={24} />}
-									type="text"
-									onClick={() => setIsProgramModalOpen(true)}
-									style={{
-										fontWeight: 'bold',
-										width: isMobile ? 'auto' : 'auto',
-										minWidth: isMobile ? '100px' : '150px',
-										maxWidth: isMobile ? '120px' : '500px',
-										marginRight: isMobile ? 8 : 12,
-										height: isMobile ? '28px' : '36px',
-										backgroundColor: '#F7F7F7',
-										border: '1px solid #e0e0e0',
-										borderRadius: '8px',
-										boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)',
-										transition: 'all 0.2s ease',
-									}}
-									onMouseEnter={(e) => {
-										e.currentTarget.style.backgroundColor = '#e8e8e8';
-										e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15)';
-										e.currentTarget.style.transform = 'translateY(-2px)';
-									}}
-									onMouseLeave={(e) => {
-										e.currentTarget.style.backgroundColor = '#F7F7F7';
-										e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)';
-										e.currentTarget.style.transform = 'translateY(0)';
-									}}
-								>
-									<span style={{
-										overflow: 'hidden',
-										textOverflow: 'ellipsis',
-										whiteSpace: 'nowrap',
-										fontSize: isMobile ? '14px' : '17px',
-										color: '#454545',
-										display: 'block'
-									}}>
-										{isMobile ? (selectedProgram ? getCurrentProgramName() : 'Chọn') : getCurrentProgramName()}
-									</span>
-								</Button>
-							</>
-						)}
-					</div>
+						<div className={styles.logo} style={{ padding: '0px 4px' }}>
+							{/*<img style={{ width : isMobile ? '80px' : '35px', height: isMobile ? '20px' : '32px' }} src="/LogoAiMBA.png" alt="" />*/}
+							{/*{*/}
+							{/*	!isMobile && (*/}
+							{/*		<div className={styles.desc}>*/}
+							{/*			<p>Expert-Grade Knowledge</p>*/}
+							{/*			<p>& Situation Training</p>*/}
+							{/*		</div>*/}
+							{/*	)*/}
+							{/*}*/}
+							{shouldShowTag4Filter && (
+								<>
+									<Button
+										icon={<Program_Icon width={22} height={24} />}
+										type="text"
+										onClick={() => setIsProgramModalOpen(true)}
+										style={{
+											fontWeight: 'bold',
+											width: isMobile ? 'auto' : 'auto',
+											minWidth: isMobile ? '100px' : '150px',
+											maxWidth: isMobile ? '120px' : '500px',
+											marginRight: isMobile ? 8 : 12,
+											height: isMobile ? '28px' : '36px',
+											backgroundColor: '#F7F7F7',
+											border: '1px solid #e0e0e0',
+											borderRadius: '8px',
+											boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)',
+											transition: 'all 0.2s ease',
+										}}
+										onMouseEnter={(e) => {
+											e.currentTarget.style.backgroundColor = '#e8e8e8';
+											e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15)';
+											e.currentTarget.style.transform = 'translateY(-2px)';
+										}}
+										onMouseLeave={(e) => {
+											e.currentTarget.style.backgroundColor = '#F7F7F7';
+											e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1)';
+											e.currentTarget.style.transform = 'translateY(0)';
+										}}
+									>
+										<span style={{
+											overflow: 'hidden',
+											textOverflow: 'ellipsis',
+											whiteSpace: 'nowrap',
+											fontSize: isMobile ? '14px' : '17px',
+											color: '#454545',
+											display: 'block'
+										}}>
+											{isMobile ? (selectedProgram ? getCurrentProgramName() : 'Chọn') : getCurrentProgramName()}
+										</span>
+									</Button>
+								</>
+							)}
+						</div>
 					</div>
 
 				</div>
@@ -749,7 +749,7 @@ const K9Header = ({
 								}}
 								title={showSearchSection ? 'Ẩn bộ lọc' : 'Hiện bộ lọc'}
 							>
-								{(showSearchSection ? 'Ẩn' : 'Hiện' ) + ' thanh chức năng'}
+								{(showSearchSection ? 'Ẩn' : 'Hiện') + ' thanh chức năng'}
 							</Button>
 						)}
 
@@ -863,9 +863,11 @@ const K9Header = ({
 				{/*		}} />*/}
 				{/*	</div>*/}
 				{/*</Dropdown>*/}
-				<div className={styles.username}>
-					<ProfileSelect />
-				</div>
+				{currentUser?.isAdmin && (
+					<div className={styles.username}>
+						<ProfileSelect />
+					</div>
+				)}
 			</div>
 
 			{/* Program Selection Modal */}
@@ -1318,189 +1320,189 @@ const K9Header = ({
 			</Modal>
 
 			{/* Celebration Modal */}
-			            <Modal
-            	title={null}
-            	open={showFireworks}
-            	onCancel={() => setShowFireworks(false)}
-            	footer={null}
-            	width={isMobile ? '95%' : '500px'}
-            	centered
-            	closable={false}
-            	maskClosable={false}
-            	style={{
-            		...(isMobile && { top: 10 }),
-            	}}
-            	bodyStyle={{
-            		padding: '0',
-            		background: 'linear-gradient(135deg, #91d5ff 0%, #69c0ff 100%)',
-            		borderRadius: '16px',
-            		overflow: 'hidden',
-            		position: 'relative'
-            	}}
-            	className={styles.modalComplete}
-            >
-            	<div style={{
-            		display: 'flex',
-            		flexDirection: 'column',
-            		alignItems: 'center',
-            		padding: '40px 30px',
-            	}}>
-            		{/* Main Celebration Icon */}
-            		<div style={{
-            			fontSize: '60px',
-            			marginBottom: '16px',
-            			animation: 'float 3s ease-in-out infinite'
-            		}}>
-            			🎓
-            		</div>
+			<Modal
+				title={null}
+				open={showFireworks}
+				onCancel={() => setShowFireworks(false)}
+				footer={null}
+				width={isMobile ? '95%' : '500px'}
+				centered
+				closable={false}
+				maskClosable={false}
+				style={{
+					...(isMobile && { top: 10 }),
+				}}
+				bodyStyle={{
+					padding: '0',
+					background: 'linear-gradient(135deg, #91d5ff 0%, #69c0ff 100%)',
+					borderRadius: '16px',
+					overflow: 'hidden',
+					position: 'relative'
+				}}
+				className={styles.modalComplete}
+			>
+				<div style={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					padding: '40px 30px',
+				}}>
+					{/* Main Celebration Icon */}
+					<div style={{
+						fontSize: '60px',
+						marginBottom: '16px',
+						animation: 'float 3s ease-in-out infinite'
+					}}>
+						🎓
+					</div>
 
-            		{/* Title */}
-            		<div style={{
-            			fontSize: '24px',
-            			fontWeight: '600',
-            			color: '#1f1f1f',
-            			marginBottom: '8px',
-            			textAlign: 'center'
-            		}}>
-            			Chúc mừng!
-            		</div>
+					{/* Title */}
+					<div style={{
+						fontSize: '24px',
+						fontWeight: '600',
+						color: '#1f1f1f',
+						marginBottom: '8px',
+						textAlign: 'center'
+					}}>
+						Chúc mừng!
+					</div>
 
-            		{/* Subtitle */}
-            		<div style={{
-            			fontSize: '16px',
-            			color: '#595959',
-            			marginBottom: '24px',
-            			textAlign: 'center',
-            			fontWeight: '400'
-            		}}>
-            			Bạn đã hoàn thành xuất sắc tất cả bài quiz
-            		</div>
+					{/* Subtitle */}
+					<div style={{
+						fontSize: '16px',
+						color: '#595959',
+						marginBottom: '24px',
+						textAlign: 'center',
+						fontWeight: '400'
+					}}>
+						Bạn đã hoàn thành xuất sắc tất cả bài quiz
+					</div>
 
-            		{/* Achievement Summary - Simplified */}
-            		<div style={{
-            			background: 'rgba(255,255,255,0.8)',
-            			borderRadius: '12px',
-            			padding: '20px',
-            			marginBottom: '24px',
-            			border: '1px solid rgba(24, 144, 255, 0.2)',
-            			width: '100%',
-            			maxWidth: '320px'
-            		}}>
-            			<div style={{
-            				fontSize: '14px',
-            				fontWeight: '500',
-            				color: '#1f1f1f',
-            				marginBottom: '12px',
-            				textAlign: 'center'
-            			}}>
-            				Thành tích
-            			</div>
+					{/* Achievement Summary - Simplified */}
+					<div style={{
+						background: 'rgba(255,255,255,0.8)',
+						borderRadius: '12px',
+						padding: '20px',
+						marginBottom: '24px',
+						border: '1px solid rgba(24, 144, 255, 0.2)',
+						width: '100%',
+						maxWidth: '320px'
+					}}>
+						<div style={{
+							fontSize: '14px',
+							fontWeight: '500',
+							color: '#1f1f1f',
+							marginBottom: '12px',
+							textAlign: 'center'
+						}}>
+							Thành tích
+						</div>
 
-            			<div style={{
-            				display: 'grid',
-            				gridTemplateColumns: '1fr 1fr',
-            				gap: '12px'
-            			}}>
-            				<div style={{
-            					textAlign: 'center',
-            					padding: '8px',
-            					background: 'rgba(24, 144, 255, 0.08)',
-            					borderRadius: '8px'
-            				}}>
-            					<div style={{ color: '#595959', fontSize: '12px', marginBottom: '4px' }}>
-            						Tổng bài
-            					</div>
-            					<div style={{ color: '#1f1f1f', fontWeight: '600', fontSize: '16px' }}>
-            						{headerStats.totalQuizzes}
-            					</div>
-            				</div>
+						<div style={{
+							display: 'grid',
+							gridTemplateColumns: '1fr 1fr',
+							gap: '12px'
+						}}>
+							<div style={{
+								textAlign: 'center',
+								padding: '8px',
+								background: 'rgba(24, 144, 255, 0.08)',
+								borderRadius: '8px'
+							}}>
+								<div style={{ color: '#595959', fontSize: '12px', marginBottom: '4px' }}>
+									Tổng bài
+								</div>
+								<div style={{ color: '#1f1f1f', fontWeight: '600', fontSize: '16px' }}>
+									{headerStats.totalQuizzes}
+								</div>
+							</div>
 
-            				<div style={{
-            					textAlign: 'center',
-            					padding: '8px',
-            					background: 'rgba(24, 144, 255, 0.08)',
-            					borderRadius: '8px'
-            				}}>
-            					<div style={{ color: '#595959', fontSize: '12px', marginBottom: '4px' }}>
-            						Đã làm
-            					</div>
-            					<div style={{ color: '#1f1f1f', fontWeight: '600', fontSize: '16px' }}>
-            						{headerStats.completedQuizzes}
-            					</div>
-            				</div>
+							<div style={{
+								textAlign: 'center',
+								padding: '8px',
+								background: 'rgba(24, 144, 255, 0.08)',
+								borderRadius: '8px'
+							}}>
+								<div style={{ color: '#595959', fontSize: '12px', marginBottom: '4px' }}>
+									Đã làm
+								</div>
+								<div style={{ color: '#1f1f1f', fontWeight: '600', fontSize: '16px' }}>
+									{headerStats.completedQuizzes}
+								</div>
+							</div>
 
-            				<div style={{
-            					textAlign: 'center',
-            					padding: '8px',
-            					background: 'rgba(24, 144, 255, 0.08)',
-            					borderRadius: '8px'
-            				}}>
-            					<div style={{ color: '#595959', fontSize: '12px', marginBottom: '4px' }}>
-            						Điểm TB
-            					</div>
-            					<div style={{ 
-            						color: '#1f1f1f', 
-            						fontWeight: '600', 
-            						fontSize: '16px',
-            						background: headerStats.averageScore >= 60 ? 'rgba(82, 196, 26, 0.15)' : 'rgba(255, 77, 79, 0.15)',
-            						borderRadius: '4px',
-            						padding: '2px 6px'
-            					}}>
-            						{headerStats.averageScore}%
-            					</div>
-            				</div>
+							<div style={{
+								textAlign: 'center',
+								padding: '8px',
+								background: 'rgba(24, 144, 255, 0.08)',
+								borderRadius: '8px'
+							}}>
+								<div style={{ color: '#595959', fontSize: '12px', marginBottom: '4px' }}>
+									Điểm TB
+								</div>
+								<div style={{
+									color: '#1f1f1f',
+									fontWeight: '600',
+									fontSize: '16px',
+									background: headerStats.averageScore >= 60 ? 'rgba(82, 196, 26, 0.15)' : 'rgba(255, 77, 79, 0.15)',
+									borderRadius: '4px',
+									padding: '2px 6px'
+								}}>
+									{headerStats.averageScore}%
+								</div>
+							</div>
 
-            				<div style={{
-            					textAlign: 'center',
-            					padding: '8px',
-            					background: 'rgba(24, 144, 255, 0.08)',
-            					borderRadius: '8px'
-            				}}>
-            					<div style={{ color: '#595959', fontSize: '12px', marginBottom: '4px' }}>
-            						Đạt ≥60%
-            					</div>
-            					<div style={{ 
-            						color: '#1f1f1f', 
-            						fontWeight: '600', 
-            						fontSize: '16px',
-            						background: 'rgba(82, 196, 26, 0.15)',
-            						borderRadius: '4px',
-            						padding: '2px 6px'
-            					}}>
-            						{headerStats.highScoreCount}
-            					</div>
-            				</div>
-            			</div>
-            		</div>
+							<div style={{
+								textAlign: 'center',
+								padding: '8px',
+								background: 'rgba(24, 144, 255, 0.08)',
+								borderRadius: '8px'
+							}}>
+								<div style={{ color: '#595959', fontSize: '12px', marginBottom: '4px' }}>
+									Đạt ≥60%
+								</div>
+								<div style={{
+									color: '#1f1f1f',
+									fontWeight: '600',
+									fontSize: '16px',
+									background: 'rgba(82, 196, 26, 0.15)',
+									borderRadius: '4px',
+									padding: '2px 6px'
+								}}>
+									{headerStats.highScoreCount}
+								</div>
+							</div>
+						</div>
+					</div>
 
-            		{/* Success Message - Simplified */}
-            		<div style={{
-            			textAlign: 'center',
-            			padding: '16px',
-            			borderRadius: '8px',
-            			background: 'rgba(255,255,255,0.6)',
-            			border: '1px solid rgba(24, 144, 255, 0.15)'
-            		}}>
-            			<div style={{
-            				fontSize: '16px',
-            				fontWeight: '500',
-            				color: '#1f1f1f',
-            				marginBottom: '6px'
-            			}}>
-            				Xuất sắc!
-            			</div>
-            			<div style={{
-            				fontSize: '13px',
-            				color: '#595959',
-            				lineHeight: '1.4'
-            			}}>
-            				Bạn đã chứng minh khả năng học tập tuyệt vời!
-            			</div>
-            		</div>
-            	</div>
+					{/* Success Message - Simplified */}
+					<div style={{
+						textAlign: 'center',
+						padding: '16px',
+						borderRadius: '8px',
+						background: 'rgba(255,255,255,0.6)',
+						border: '1px solid rgba(24, 144, 255, 0.15)'
+					}}>
+						<div style={{
+							fontSize: '16px',
+							fontWeight: '500',
+							color: '#1f1f1f',
+							marginBottom: '6px'
+						}}>
+							Xuất sắc!
+						</div>
+						<div style={{
+							fontSize: '13px',
+							color: '#595959',
+							lineHeight: '1.4'
+						}}>
+							Bạn đã chứng minh khả năng học tập tuyệt vời!
+						</div>
+					</div>
+				</div>
 
-            	{/* CSS Animations */}
-            	<style>{`
+				{/* CSS Animations */}
+				<style>{`
             		@keyframes float {
             			0%, 100% {
             				transform: translateY(0px);
@@ -1510,7 +1512,7 @@ const K9Header = ({
             			}
             		}
             	`}</style>
-            </Modal>
+			</Modal>
 		</div>
 	);
 };

@@ -80,6 +80,10 @@ const WikiCanvas = () => {
   const [showTrialModal, setShowTrialModal] = useState(false);
   const [selectedTrialApp, setSelectedTrialApp] = useState(null);
 
+  // Tool Settings states
+  const [showToolSettingsModal, setShowToolSettingsModal] = useState(false);
+  const [tempToolSettings, setTempToolSettings] = useState({});
+
   // Available apps that are not yet added - based on dashboardApps but only specific ones
   const availableApps = useMemo(() => {
     const allowedIds = ['data-manager', 'analysis-review', 'fdr', 'business-wikibook', 'metric-map', 'k9', 'ai-work-automation', 'khkd'];
@@ -681,6 +685,7 @@ const WikiCanvas = () => {
   useEffect(() => {
     loadTrialApps();
   }, []);
+
   const loadResourcesForSchema = async () => {
     try {
       const resourcesData = await getSchemaResources('master');
@@ -788,7 +793,7 @@ const WikiCanvas = () => {
       loadMasterSchemaTools();
     }
   }, [selectedSchema, activeTab]);
-  
+
 
   useEffect(() => {
     async function fetchUserClass() {
@@ -1182,23 +1187,64 @@ const WikiCanvas = () => {
       }));
   };
 
-  // Only show tools that are in allowedAppIds (if set), otherwise show nothing
-  // Also filter out data-factory for non-super admin users
-  let visibleTools = currentUser?.isSuperAdmin
-    ? tools.filter(tool => tool.id !== 'data-factory' && tool.id !== 'process-guide')
-    : currentUser?.isAdmin
-      ? tools.filter(tool => tool.id !== 'data-factory' && tool.id !== 'process-guide')
-      : allowedAppIds.length > 0
-        ? tools.filter(tool =>
-          allowedAppIds.includes(tool.id) &&
-          tool.id !== 'data-factory'
-          &&
-          tool.id !== 'process-guide'
-        )
-        : [];
+  // Apply tool settings visibility logic first, then apply permission logic
+  let visibleTools = tools.filter(tool => {
+    // Check if tool is enabled (default to true if not set)
+    if (tool.enabled === false) return false;
+
+    // Check visibility based on user authentication (default to 'public' if not set)
+    const visibility = tool.visibility || 'public';
+    switch (visibility) {
+      case 'public':
+        return true; // Always visible
+      case 'login-required':
+        return currentUser && currentUser.email; // Only visible if logged in
+      case 'trial':
+        return currentUser && currentUser.email; // Only visible if logged in
+      default:
+        return true;
+    }
+  });
+
+  // Apply permission logic after tool settings
+  visibleTools = visibleTools.filter(tool => {
+    // Super admin can see all tools (except data-factory and process-guide)
+    if (currentUser?.isSuperAdmin) {
+      return tool.id !== 'data-factory' && tool.id !== 'process-guide';
+    }
+
+    // Admin can see all tools (except data-factory and process-guide)
+    if (currentUser?.isAdmin) {
+      return tool.id !== 'data-factory' && tool.id !== 'process-guide';
+    }
+
+    // For regular users, check allowedAppIds
+    if (allowedAppIds.length > 0) {
+      return allowedAppIds.includes(tool.id) &&
+        tool.id !== 'data-factory' &&
+        tool.id !== 'process-guide';
+    }
+
+    // If no allowedAppIds and user is not logged in, only show public tools
+    // (this case is handled by the visibility logic above)
+    return true;
+  });
 
   // Sắp xếp visibleTools theo order field trong mỗi tool
   visibleTools = visibleTools.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  // Create blocked tools list for visual feedback
+  const blockedTools = tools.filter(tool => {
+    // Check if tool is disabled
+    if (tool.enabled === false) return false; // Don't show disabled tools in blocked list
+
+    // Check if tool requires login but user is not logged in
+    const visibility = tool.visibility || 'public';
+    if (visibility === 'login-required' && (!currentUser || !currentUser.email)) return true;
+    if (visibility === 'trial' && (!currentUser || !currentUser.email)) return true;
+
+    return false;
+  });
 
   // Add active trial apps to visible tools (only for admin/superAdmin or users with permissions)
   const activeTrialApps = getActiveTrialApps();
@@ -1635,7 +1681,9 @@ const WikiCanvas = () => {
             content1: masterApp.content1,
             shortcut: masterApp.shortcut,
             tags: masterApp.tags,
-            order: masterApp.order
+            order: masterApp.order,
+            visibility: masterApp.visibility,
+            enabled: masterApp.enabled,
           };
         }
 
@@ -2480,10 +2528,86 @@ const WikiCanvas = () => {
     }
   };
 
+  // Tool Settings functions
+  const handleOpenToolSettingsModal = async () => {
+    try {
+      // Initialize temp settings from current tools
+      const tempSettings = {};
+      tools.forEach(tool => {
+        tempSettings[tool.id] = {
+          visibility: tool.visibility || 'public',
+          enabled: tool.enabled !== false
+        };
+      });
+      setTempToolSettings(tempSettings);
+      setShowToolSettingsModal(true);
+    } catch (error) {
+      console.error('Error loading tool settings:', error);
+    }
+  };
+
+  const handleToolSettingChange = (toolId, field, value) => {
+    setTempToolSettings(prev => ({
+      ...prev,
+      [toolId]: {
+        ...prev[toolId],
+        [field]: value
+      }
+    }));
+  };
+
+  const handleSaveToolSettings = async () => {
+    try {
+      // Update tools with new settings
+      const updatedTools = tools.map(tool => {
+        const toolSetting = tempToolSettings[tool.id];
+        if (toolSetting) {
+          return {
+            ...tool,
+            visibility: toolSetting.visibility,
+            enabled: toolSetting.enabled
+          };
+        }
+        return tool;
+      });
+
+      // Update DASHBOARD_SETTING
+      const settingData = {
+        type: 'DASHBOARD_SETTING',
+        setting: updatedTools
+      };
+
+      const existing = await getSettingByType('DASHBOARD_SETTING');
+      let result;
+      if (existing && existing.id) {
+        result = await updateSetting({
+          ...settingData,
+          id: existing.id
+        });
+      } else {
+        result = await createSetting(settingData);
+      }
+
+      // Update local tools state
+      setTools(updatedTools);
+      setShowToolSettingsModal(false);
+      message.success('Cài đặt tool đã được lưu thành công!');
+    } catch (error) {
+      console.error('Error saving tool settings:', error);
+      message.error('Có lỗi khi lưu cài đặt tool!');
+    }
+  };
+
+  const handleCancelToolSettings = () => {
+    setTempToolSettings({});
+    setShowToolSettingsModal(false);
+  };
+
   // Menu items cho Settings dropdown
   const settingsMenuItems = [
 
-    {
+    (currentUser?.isSuperAdmin) && {
+
       key: 'topbar-bg-image',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2500,7 +2624,7 @@ const WikiCanvas = () => {
         setShowTopbarBgModal(true);
       },
     },
-    {
+    (currentUser?.isSuperAdmin) && {
       key: 'topbar-text-color',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2513,7 +2637,7 @@ const WikiCanvas = () => {
         setShowTopbarTextColorModal(true);
       },
     },
-    (currentUser?.isSuperAdmin || currentUser?.isAdmin) && {
+    (currentUser?.isSuperAdmin) && {
       key: 'statusbar-theme',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2523,7 +2647,7 @@ const WikiCanvas = () => {
       ),
       onClick: handleOpenStatusBarThemeModal,
     },
-    (currentUser?.isSuperAdmin || currentUser?.isAdmin) && {
+    (currentUser?.isSuperAdmin) && {
       key: 'tag-management-settings',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2532,6 +2656,16 @@ const WikiCanvas = () => {
         </div>
       ),
       onClick: () => setShowTagManagementModal(true),
+    },
+    (currentUser?.isSuperAdmin) && {
+      key: 'tool-settings',
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <SettingOutlined size={16} />
+          <span>Cài đặt Tool</span>
+        </div>
+      ),
+      onClick: handleOpenToolSettingsModal,
     },
   ];
 
@@ -2777,10 +2911,11 @@ const WikiCanvas = () => {
                 ) : (
                   <>
                     <div>
-                      <Button type="text" style={{ color: topbarTheme.textColor }} onClick={() => {
-                        navigate('/login');
+                      <Button type="text" style={{ color: topbarTextColor || topbarTheme.textColor }} onClick={() => {
+                        const currentPath = '/login-success';
+                        window.open(`${import.meta.env.VITE_API_URL}/login?redirect=${encodeURIComponent(currentPath)}`, '_self');
                       }}>Đăng nhập </Button>
-                      <Button type="text" style={{ color: topbarTheme.textColor }} onClick={() => {
+                      <Button type="text" style={{ color: topbarTextColor || topbarTheme.textColor }} onClick={() => {
                         navigate('/workspace-registration');
                       }}>Đăng ký Power User </Button>
                     </div>
@@ -3429,6 +3564,68 @@ const WikiCanvas = () => {
 
 
                     </div>
+
+                    {/* Blocked Tools Section (visible for non-logged-in users) */}
+                    {activeTab === 'app' && blockedTools.length > 0 && !currentUser?.email && (
+                      <div className={styles.toolsList} style={{ marginTop: '20px' }}>
+                        {blockedTools.map((tool) => (
+                          <div
+                            key={tool.id}
+                            className={styles.toolCard}
+                            style={{
+                              opacity: 0.5,
+                              filter: 'grayscale(100%)',
+                              cursor: 'not-allowed',
+                              position: 'relative'
+                            }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              message.warning('Vui lòng đăng nhập để truy cập tool này!');
+                            }}
+                          >
+                            <div className={styles.toolCardItem}>
+                              <div className={styles.toolIcon}>
+                                {tool.icon ? (
+                                  (() => {
+                                    const iconSrc = getIconSrcById(tool);
+                                    return iconSrc ? (
+                                      <img src={iconSrc} alt={tool.name} height={55} width={'auto'} />
+                                    ) : (
+                                      <span style={{ fontSize: '40px' }}>{tool.icon}</span>
+                                    );
+                                  })()
+                                ) : (
+                                  <span style={{ fontSize: '40px' }}>🛠️</span>
+                                )}
+                              </div>
+
+                              {/* Lock Badge */}
+                              <div style={{
+                                position: 'absolute',
+                                top: '8px',
+                                right: '8px',
+                                background: 'rgba(0,0,0,0.7)',
+                                color: 'white',
+                                padding: '4px 8px',
+                                borderRadius: '4px',
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '4px'
+                              }}>
+                                🔒 Yêu cầu đăng nhập
+                              </div>
+
+                              {/* <div className={styles.box}> */}
+                              <h3 className={styles.toolTitleItem} style={{ marginBottom: '15px' }}>{tool.name}</h3>
+                              <p className={styles.toolDescriptionItem}>{tool.description}</p>
+                              {/* </div> */}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     {/* Divider and Available Apps Section */}
                     {activeTab === 'app' &&
@@ -6532,6 +6729,72 @@ const WikiCanvas = () => {
         tools={tools}
         onSave={handleSaveToolReorder}
       />
+
+      {/* Tool Settings Modal */}
+      <Modal
+        title="Cài đặt Tool"
+        open={showToolSettingsModal}
+        onCancel={handleCancelToolSettings}
+        width={800}
+        footer={[
+          <Button key="cancel" onClick={handleCancelToolSettings}>
+            Hủy
+          </Button>,
+          <Button key="save" type="primary" onClick={handleSaveToolSettings}>
+            Lưu
+          </Button>
+        ]}
+      >
+        <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+          {tools.map((tool) => (
+            <div key={tool.id} style={{
+              marginBottom: '16px',
+              padding: '16px',
+              border: '1px solid #d9d9d9',
+              borderRadius: '8px',
+              backgroundColor: '#fafafa'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '12px' }}>
+
+                <div>
+                  <h4 style={{ margin: 0, fontSize: '16px' }}>{tool.name}</h4>
+                  <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>{tool.description}</p>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+                    Trạng thái hiển thị:
+                  </label>
+                  <Select
+                    value={tempToolSettings[tool.id]?.visibility || 'public'}
+                    onChange={(value) => handleToolSettingChange(tool.id, 'visibility', value)}
+                    style={{ width: '100%' }}
+                    options={[
+                      { value: 'public', label: 'Công khai (Tất cả đều truy cập được)' },
+                      { value: 'login-required', label: 'Yêu cầu đăng nhập (Chỉ user đăng nhập mới truy cập được)' },
+                      { value: 'trial', label: 'Dùng thử (Chỉ hiển thị khi đăng nhập)' }
+                    ]}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+                    Bật/Tắt:
+                  </label>
+                  <Checkbox
+                    checked={tempToolSettings[tool.id]?.enabled !== false}
+                    onChange={(e) => handleToolSettingChange(tool.id, 'enabled', e.target.checked)}
+                  >
+                    Kích hoạt
+                  </Checkbox>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Modal>
 
     </div>
   );

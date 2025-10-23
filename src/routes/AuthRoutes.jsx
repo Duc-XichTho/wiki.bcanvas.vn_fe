@@ -305,7 +305,7 @@ export const AuthRoutes = ({ listCompany, isMobile }) => (
 		<Route path='/process-guide' element={<DataRubikProcessGuide />} />
 		<Route path='/process-guide/:tabId/:processItemId?/:headingId?' element={<DataRubikProcessGuide />} />
 
-		<Route element={<AuthRoutesUser />} >
+		{/* <Route element={<AuthRoutesUser />} > */}
 			<Route path='/khkd' element={<KHKDLayout />}>
 				<Route path=':idKHKD' element={<ContentKHKD />} />
 			</Route>
@@ -663,7 +663,7 @@ export const AuthRoutes = ({ listCompany, isMobile }) => (
 					</Fragment>
 				))}
 			</Route>
-		</Route>
+		{/* </Route> */}
 
 		{/* KHKD with sidebar layout */}
 

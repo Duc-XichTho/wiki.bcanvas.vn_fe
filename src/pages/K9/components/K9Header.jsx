@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BackCanvas, ICON_CROSSROAD_LIST } from '../../../icon/svg/IconSvg.jsx';
 import { getSettingByType, getSchemaTools } from '../../../apis/settingService.jsx';
 import ProfileSelect from '../../Home/SelectComponent/ProfileSelect.jsx';
 import styles from '../K9.module.css';
+import { MyContext } from '../../../MyContext.jsx';
 
 const K9Header = ({ onBack, activeTab, onTabChange, tabOptions }) => {
 	const navigate = useNavigate();
@@ -12,7 +13,7 @@ const K9Header = ({ onBack, activeTab, onTabChange, tabOptions }) => {
 	const [tool, setTool] = useState(null);
 	const [masterTool, setMasterTool] = useState(null);
 	const [isMobile, setIsMobile] = useState(false);
-
+	const { currentUser } = useContext(MyContext);
 	// Hàm kết hợp với thông tin từ schema master
 	const combineWithMasterInfo = async (currentTool) => {
 		try {
@@ -154,7 +155,9 @@ const K9Header = ({ onBack, activeTab, onTabChange, tabOptions }) => {
 						</div>
 					)}
 					<div className={styles.username}>
-						<ProfileSelect />
+						{currentUser?.isAdmin && (
+							<ProfileSelect />
+						)}
 					</div>
 				</div>
 			</div>

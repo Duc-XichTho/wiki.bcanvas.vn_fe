@@ -1803,7 +1803,7 @@ Chỉ trả về nội dung theo đúng định dạng trên, không thêm phầ
 			{/* Main Content */}
 			<div className={styles.mainContent}>
 				{/* Header với nút tạo tổng quan (chỉ Tab 1) */}
-				{currentUser.isAdmin && !currentCompanySummary && hasSearched && (
+				{currentUser?.isAdmin && !currentCompanySummary && hasSearched && (
 					<div className={styles.mainHeader}>
 						<Button
 							type='default'
