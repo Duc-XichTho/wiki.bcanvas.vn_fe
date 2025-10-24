@@ -1098,23 +1098,23 @@ export const Template_Table_Type = {
 
 
 export const MODEL_AI = {
-    GPT:[
+    GPT: [
 
-        {name:'GPT-4.1', value:'gpt-4.1-2025-04-14'},
-        {name:'GPT-4o Search', value:'gpt-4o-search-preview-2025-03-11'},
-        {name:'GPT-4 Turbo', value:'gpt-4-turbo-2024-04-09'},
+        { name: 'GPT-4.1', value: 'gpt-4.1-2025-04-14' },
+        { name: 'GPT-4o Search', value: 'gpt-4o-search-preview-2025-03-11' },
+        { name: 'GPT-4 Turbo', value: 'gpt-4-turbo-2024-04-09' },
 
     ],
-    CLAUDE:[
-        {name:'Claude Sonnet 4', value:'claude-sonnet-4-20250514'},
-        {name:'Claude Opus 4', value:'claude-opus-4-20250514'},
-        {name:'Claude Sonnet 3.7', value:'claude-3-7-sonnet-20250219'},
-        {name:'Claude Haiku 3.5', value:'claude-3-5-haiku-20241022'},
+    CLAUDE: [
+        { name: 'Claude Sonnet 4', value: 'claude-sonnet-4-20250514' },
+        { name: 'Claude Opus 4', value: 'claude-opus-4-20250514' },
+        { name: 'Claude Sonnet 3.7', value: 'claude-3-7-sonnet-20250219' },
+        { name: 'Claude Haiku 3.5', value: 'claude-3-5-haiku-20241022' },
     ],
-    GEMINI:[
-        {name:'(OR) Gemini 2.5 Pro ', value:'gemini-2.5-pro-preview-06-05'},
-        {name:'(OR) Gemini 2.5 Flash', value:'google/gemini-2.5-flash'},
-        {name:'(OR) Gemini 2.5 Flash Lite', value:'google/gemini-2.5-flash-lite'}, 
+    GEMINI: [
+        { name: '(OR) Gemini 2.5 Pro ', value: 'gemini-2.5-pro-preview-06-05' },
+        { name: '(OR) Gemini 2.5 Flash', value: 'google/gemini-2.5-flash' },
+        { name: '(OR) Gemini 2.5 Flash Lite', value: 'google/gemini-2.5-flash-lite' },
     ]
 };
 export const MODEL_TEXT_GEN_AI_LIST = [
@@ -1152,7 +1152,7 @@ export const MODEL_AI_LIST_SEARCH = [
     { name: 'GPT-5 Nano', value: 'gpt-5-nano-2025-08-07' },
     { name: '(OR) Gemini 2.5 Flash ', value: 'google/gemini-2.5-flash' },
     { name: '(OR) Gemini 2.5 Flash Lite', value: 'google/gemini-2.5-flash-lite' },
-    { name: '(OR) Gemini 2.5 Pro', value: 'google/gemini-2.5-pro' }, 
+    { name: '(OR) Gemini 2.5 Pro', value: 'google/gemini-2.5-pro' },
 ];
 
 export const MODEL_AI_LIST_K9 = [
@@ -1171,168 +1171,176 @@ export const MODEL_AI_LIST_K9 = [
 
 export const FULL_DASHBOARD_APPS = [
     {
-      "id": "data-manager",
-      "tag": "Working",
-      "icon": "cloud-database_9517778",
-      "name": "Data Rubik",
-      "tags": [
-        "bi-reporting"
-      ],
-      "content1": "",
-      "shortcut": "SHIFT 1",
-      "description": "Tích hợp,làm sạch, chuẩn hóa dữ liệu ứng dụng AI và 25+ tác vụ  chuyên dụng cho đặc thù dữ liệu với ngôn ngữ Việt Nam"
+        "id": "data-manager",
+        "tag": "Working",
+        "icon": "cloud-database_9517778",
+        "name": "Data Rubik",
+        "tags": [
+            "bi-reporting"
+        ],
+        "content1": "",
+        "shortcut": "SHIFT 1",
+        "description": "Tích hợp,làm sạch, chuẩn hóa dữ liệu ứng dụng AI và 25+ tác vụ  chuyên dụng cho đặc thù dữ liệu với ngôn ngữ Việt Nam"
     },
     {
-      "id": "forecast",
-      "tag": "under-development",
-      "icon": "icon_60",
-      "name": "Mô hình dự báo kinh doanh",
-      "content1": "",
-      "description": "Dự báo số liệu kinh doanh 7-15 ngày tới. Giải pháp này đang trong quá trình xây dựng\n"
+        "id": "forecast",
+        "tag": "under-development",
+        "icon": "icon_60",
+        "name": "Mô hình dự báo kinh doanh",
+        "content1": "",
+        "description": "Dự báo số liệu kinh doanh 7-15 ngày tới. Giải pháp này đang trong quá trình xây dựng\n"
     },
     {
-      "id": "analysis-review",
-      "tag": "Working",
-      "icon": "icon_46",
-      "name": "Phân tích Kinh doanh",
-      "tags": [
-        "bi-reporting",
-        "data-consolidation"
-      ],
-      "content1": "",
-      "content2": "",
-      "shortcut": "SHIFT 2",
-      "description": "Đo chỉ số - phân tích kinh doanh thông minh, nắm vững thực trạng số liệu, ứng dụng AI chuyên biệt hóa"
+        "id": "ai-academic-assistant",
+        "tag": "under-development",
+        "icon": "icon_61",
+        "name": "Trợ lý học thuật (AI Academic Assistant)",
+        "content1": "",
+        "description": "Trợ lý học thuật (AI Academic Assistant) giúp bạn học tập, tìm kiếm thông tin,..."
     },
     {
-      "id": "fdr",
-      "tag": "On-demand",
-      "icon": "icon_58",
-      "name": "Hiệu quả Tài chính",
-      "tags": [
-        "bi-reporting"
-      ],
-      "content1": "",
-      "shortcut": "Shift 3",
-      "description": "Module chuyên dụng xử lý phân bổ, tính toán lãi lỗ theo các chiều nhìn khác nhau (Lãi lỗ đơn vị, sản phẩm, dự án...)\t"
+        "id": "analysis-review",
+        "tag": "Working",
+        "icon": "icon_46",
+        "name": "Phân tích Kinh doanh",
+        "tags": [
+            "bi-reporting",
+            "data-consolidation"
+        ],
+        "content1": "",
+        "content2": "",
+        "shortcut": "SHIFT 2",
+        "description": "Đo chỉ số - phân tích kinh doanh thông minh, nắm vững thực trạng số liệu, ứng dụng AI chuyên biệt hóa"
     },
     {
-      "id": "data-factory",
-      "tag": null,
-      "icon": "folder-network_9672259",
-      "name": "SDS - Thám báo Social Network",
-      "description": "Tổng hợp dữ liệu từ các FBGroup/Page thường xuyên"
+        "id": "fdr",
+        "tag": "On-demand",
+        "icon": "icon_58",
+        "name": "Hiệu quả Tài chính",
+        "tags": [
+            "bi-reporting"
+        ],
+        "content1": "",
+        "shortcut": "Shift 3",
+        "description": "Module chuyên dụng xử lý phân bổ, tính toán lãi lỗ theo các chiều nhìn khác nhau (Lãi lỗ đơn vị, sản phẩm, dự án...)\t"
     },
     {
-      "id": "business-wikibook",
-      "tag": "Working",
-      "icon": "icon_62",
-      "name": "1000 Case Study",
-      "tags": [
-        "knowledge"
-      ],
-      "content1": "",
-      "enterUrl": "",
-      "description": "Học tập kỹ năng , phản ứng tình huống thực chiến với 1000+ case study và 15 chuyên đề chuyên môn kinh doanh"
+        "id": "data-factory",
+        "tag": null,
+        "icon": "folder-network_9672259",
+        "name": "SDS - Thám báo Social Network",
+        "description": "Tổng hợp dữ liệu từ các FBGroup/Page thường xuyên"
     },
     {
-      "id": "k9",
-      "tag": "Working",
-      "icon": "case-file_10256079",
-      "name": "DLTC",
-      "tags": [
-        "data-service",
-        "knowledge"
-      ],
-      "title": "",
-      "content1": "",
-      "description": "Dữ liệu tài chính, chỉ số kinh doanh, báo cáo phân tích toàn diện của các doanh nghiệp niêm yết Việt Nam"
+        "id": "business-wikibook",
+        "tag": "Working",
+        "icon": "icon_62",
+        "name": "1000 Case Study",
+        "tags": [
+            "knowledge"
+        ],
+        "content1": "",
+        "enterUrl": "",
+        "description": "Học tập kỹ năng , phản ứng tình huống thực chiến với 1000+ case study và 15 chuyên đề chuyên môn kinh doanh"
     },
     {
-      "id": "x-app",
-      "tag": null,
-      "icon": "icon_63",
-      "name": "Trợ lý sự kiện (F&B)",
-      "content1": "",
-      "description": "Cập nhập các sự kiện về thời tiết, sự kiện kinh tế chính trị sắp diễn ra nhằm có sự chuẩn bị cho chuỗi cung ứng, bán hàn"
+        "id": "k9",
+        "tag": "Working",
+        "icon": "case-file_10256079",
+        "name": "DLTC",
+        "tags": [
+            "data-service",
+            "knowledge"
+        ],
+        "title": "",
+        "content1": "",
+        "description": "Dữ liệu tài chính, chỉ số kinh doanh, báo cáo phân tích toàn diện của các doanh nghiệp niêm yết Việt Nam"
     },
     {
-      "id": "scrape",
-      "tag": "Working",
-      "icon": "cubes_741101",
-      "name": "B-Crawler",
-      "content1": "",
-      "description": "Sử dụng để kéo dữ liệu từ các trang Facebook về nhằm phân tích, nắm bắt tình hình thị trường, khách hàng, đối thủ"
+        "id": "x-app",
+        "tag": null,
+        "icon": "icon_63",
+        "name": "Trợ lý sự kiện (F&B)",
+        "content1": "",
+        "description": "Cập nhập các sự kiện về thời tiết, sự kiện kinh tế chính trị sắp diễn ra nhằm có sự chuẩn bị cho chuỗi cung ứng, bán hàn"
     },
     {
-      "id": "metric-map",
-      "tag": "Working",
-      "icon": "icon_41",
-      "name": "KPI Map",
-      "tags": [
-        "bi-reporting",
-        "knowledge"
-      ],
-      "content1": "",
-      "shortcut": "Shift 4",
-      "description": "Tổng quan hóa bức tranh liên kết giữa năng lực cạnh tranh và các chỉ số đo lường, tùy biến theo từng ngành/ mô hình kinh"
+        "id": "scrape",
+        "tag": "Working",
+        "icon": "cubes_741101",
+        "name": "B-Crawler",
+        "content1": "",
+        "description": "Sử dụng để kéo dữ liệu từ các trang Facebook về nhằm phân tích, nắm bắt tình hình thị trường, khách hàng, đối thủ"
     },
     {
-      "id": "proposal-maker",
-      "tag": "Working",
-      "icon": "business-report_9461193",
-      "name": "Proposal Maker",
-      "description": "Hệ thống chỉ số theo mô hình kinh doanh"
+        "id": "metric-map",
+        "tag": "Working",
+        "icon": "icon_41",
+        "name": "KPI Map",
+        "tags": [
+            "bi-reporting",
+            "knowledge"
+        ],
+        "content1": "",
+        "shortcut": "Shift 4",
+        "description": "Tổng quan hóa bức tranh liên kết giữa năng lực cạnh tranh và các chỉ số đo lường, tùy biến theo từng ngành/ mô hình kinh"
     },
     {
-      "id": "adminApp",
-      "tag": "Working",
-      "icon": "cloud-protection_9545331",
-      "name": "Admin",
-      "tags": [
-        "other-tools"
-      ],
-      "title": "",
-      "content1": "",
-      "description": "Sử dụng để cài đặt thêm mới/ sửa xóa quyền hạn của User và setup công ty cho công cụ HQTC"
+        "id": "proposal-maker",
+        "tag": "Working",
+        "icon": "business-report_9461193",
+        "name": "Proposal Maker",
+        "description": "Hệ thống chỉ số theo mô hình kinh doanh"
     },
     {
-      "id": "survey-app",
-      "tag": "Working",
-      "icon": "icon_44",
-      "name": "Khảo sát & Thông tin bán hàng",
-      "description": "Tạo và quản lý khảo sát khách hàng với template tùy chỉnh"
+        "id": "adminApp",
+        "tag": "Working",
+        "icon": "cloud-protection_9545331",
+        "name": "Admin",
+        "tags": [
+            "other-tools"
+        ],
+        "title": "",
+        "content1": "",
+        "description": "Sử dụng để cài đặt thêm mới/ sửa xóa quyền hạn của User và setup công ty cho công cụ HQTC"
     },
     {
-      "id": "crm",
-      "tag": "Working",
-      "icon": "icon_52",
-      "name": "Mini CRM",
-      "description": "Phần mềm/ứng dụng để quản lý khách hàng, lưu trữ thông tin liên hệ, lịch sử mua hàng, chăm sóc khách hàng."
+        "id": "survey-app",
+        "tag": "Working",
+        "icon": "icon_44",
+        "name": "Khảo sát & Thông tin bán hàng",
+        "description": "Tạo và quản lý khảo sát khách hàng với template tùy chỉnh"
     },
     {
-      "id": "storage-tool",
-      "tag": "Working",
-      "icon": "folder-setting_15554314",
-      "name": "Storage",
-      "description": "Kho dữ liệu đơn giản, sử dụng để tải lên file nhằm lưu trữ chung hoặc lấy link file/ ảnh (URL online)"
+        "id": "crm",
+        "tag": "Working",
+        "icon": "icon_52",
+        "name": "Mini CRM",
+        "description": "Phần mềm/ứng dụng để quản lý khách hàng, lưu trữ thông tin liên hệ, lịch sử mua hàng, chăm sóc khách hàng."
     },
     {
-      "id": "ai-work-automation",
-      "tag": "Working",
-      "icon": "gear_15714810",
-      "name": "Data Bot",
-      "tags": [
-        "ai-automation"
-      ],
-      "content1": "",
-      "description": "Công cụ AI Agent Chat hub và quản lý chung các luồng tự động hóa (Robotic Process) thiết lập với Make/n8n"
+        "id": "storage-tool",
+        "tag": "Working",
+        "icon": "folder-setting_15554314",
+        "name": "Storage",
+        "description": "Kho dữ liệu đơn giản, sử dụng để tải lên file nhằm lưu trữ chung hoặc lấy link file/ ảnh (URL online)"
     },
     {
-      "id": "khkd",
-      "tag": "Working",
-      "icon": "icon_43",
-      "name": "KHKD"
+        "id": "ai-work-automation",
+        "tag": "Working",
+        "icon": "gear_15714810",
+        "name": "Data Bot",
+        "tags": [
+            "ai-automation"
+        ],
+        "content1": "",
+        "description": "Công cụ AI Agent Chat hub và quản lý chung các luồng tự động hóa (Robotic Process) thiết lập với Make/n8n"
+    },
+    {
+        "id": "khkd",
+        "tag": "Working",
+        "icon": "icon_43",
+        "name": "KHKD"
     },
     // {
     //   "id": "process-guide",
@@ -1342,4 +1350,4 @@ export const FULL_DASHBOARD_APPS = [
     //   "content1": "Giới thiệu chung về Bcanvas Giới thiệu về các công cụ Mô tả cách sử dụng các chức năng",
     //   "description": "Hướng dẫn quy trình và tài liệu chi tiết"
     // }
-  ];
+];
