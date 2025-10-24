@@ -248,10 +248,10 @@ const AiChatTab = () => {
 	const findOrCreateDailyThesis = async (targetDate = new Date()) => {
 		const dailyTitle = getDailyThesisTitle(targetDate);
 		const userEmail = currentUser?.email || currentUser?.id;
-		
+
 		// Tìm thesis theo ngày đã tồn tại
-		const existingThesis = thesisList.find(thesis => 
-			thesis.summary === dailyTitle && 
+		const existingThesis = thesisList.find(thesis =>
+			thesis.summary === dailyTitle &&
 			thesis.userCreated === userEmail
 		);
 
@@ -261,19 +261,19 @@ const AiChatTab = () => {
 		}
 
 		// Tạo thesis mới theo ngày
-						try {
-					const newDailyThesis = {
-						content: `Sổ cá nhân ngày ${targetDate.toLocaleDateString('vi-VN')}`,
-						summary: dailyTitle,
-						name: dailyTitle, // Sử dụng dailyTitle làm tên
-						userCreated: userEmail,
-						list_chat: [],
-						createAt: new Date().toISOString(),
-					};
-			
+		try {
+			const newDailyThesis = {
+				content: `Sổ cá nhân ngày ${targetDate.toLocaleDateString('vi-VN')}`,
+				summary: dailyTitle,
+				name: dailyTitle, // Sử dụng dailyTitle làm tên
+				userCreated: userEmail,
+				list_chat: [],
+				createAt: new Date().toISOString(),
+			};
+
 			console.log('📅 Creating new daily thesis:', newDailyThesis);
 			const result = await createThesis(newDailyThesis);
-			
+
 			if (result && result.data && result.data.id) {
 				// Reload thesis list để cập nhật
 				await loadThesisList();
@@ -284,23 +284,23 @@ const AiChatTab = () => {
 			console.error('❌ Error creating daily thesis:', error);
 			throw error;
 		}
-		
+
 		return null;
 	};
 
 	// Hàm loại bỏ markdown code block wrapper
 	const cleanMarkdownWrapper = (text) => {
 		if (!text) return text;
-		
+
 		// Loại bỏ ```markdown ... ``` hoặc ``` ... ```
 		const markdownBlockRegex = /^```(?:markdown)?\s*\n?([\s\S]*?)\n?```$/;
 		const match = text.trim().match(markdownBlockRegex);
-		
+
 		if (match) {
 			console.log('🧹 Cleaned markdown wrapper from AI response');
 			return match[1].trim();
 		}
-		
+
 		return text;
 	};
 
@@ -315,7 +315,7 @@ ${content}`,
 				'gpt-4.1-2025-04-14',
 				'text',
 			);
-			
+
 			if (response && response.result) {
 				const cleanedResult = cleanMarkdownWrapper(response.result.trim());
 				return cleanedResult;
@@ -341,7 +341,7 @@ ${content}`,
 		const tempSummary = messageContent.length > 100
 			? messageContent.substring(0, 100) + '...'
 			: messageContent;
-		
+
 		// Tạo tên thesis mặc định
 		const defaultName = getDefaultThesisName();
 
@@ -360,15 +360,15 @@ ${content}`,
 
 		// Mặc định chọn sổ theo ngày
 		setIsCreatingNewThesis(false);
-		
+
 		// Chỉ tìm thesis theo ngày (không tạo mới), sẽ tạo khi user bấm lưu
 		const dailyTitle = getDailyThesisTitle();
 		const userEmail = currentUser?.email || currentUser?.id;
-		const existingThesis = thesisList.find(thesis => 
-			thesis.summary === dailyTitle && 
+		const existingThesis = thesisList.find(thesis =>
+			thesis.summary === dailyTitle &&
 			thesis.userCreated === userEmail
 		);
-		
+
 		if (existingThesis) {
 			setSelectedThesisId(existingThesis.id);
 			console.log('📅 Found existing daily thesis:', existingThesis.id);
@@ -432,7 +432,7 @@ Tóm tắt:`;
 					hour: '2-digit',
 					minute: '2-digit'
 				});
-				
+
 				if (msg.type === 'user') {
 					return `**Người dùng** (${timestamp}):\n${msg.content}\n`;
 				} else if (msg.type === 'assistant') {
@@ -463,12 +463,12 @@ Tóm tắt:`;
 
 		// Chuyển đổi toàn bộ chat thành định dạng thesis
 		const chatContent = formatChatForThesis(messages);
-		
+
 		// Tạo summary tạm thời từ session title hoặc tin nhắn đầu tiên
 		const currentSession = chatSessions.find(s => s.id === currentSessionId);
 		const sessionTitle = currentSession?.title || 'Cuộc trò chuyện';
 		const tempSummary = `Cuộc trò chuyện: ${sessionTitle}`;
-		
+
 		// Tạo tên thesis mặc định
 		const defaultName = getDefaultThesisName();
 
@@ -487,15 +487,15 @@ Tóm tắt:`;
 
 		// Mặc định chọn sổ theo ngày
 		setIsCreatingNewThesis(false);
-		
+
 		// Chỉ tìm thesis theo ngày (không tạo mới), sẽ tạo khi user bấm lưu
 		const dailyTitle = getDailyThesisTitle();
 		const userEmail = currentUser?.email || currentUser?.id;
-		const existingThesis = thesisList.find(thesis => 
-			thesis.summary === dailyTitle && 
+		const existingThesis = thesisList.find(thesis =>
+			thesis.summary === dailyTitle &&
 			thesis.userCreated === userEmail
 		);
-		
+
 		if (existingThesis) {
 			setSelectedThesisId(existingThesis.id);
 			console.log('📅 Found existing daily thesis for chat:', existingThesis.id);
@@ -571,7 +571,7 @@ Tóm tắt cuộc trò chuyện:`;
 
 			// Xử lý nội dung dựa trên mode
 			let finalContent = values.content;
-			
+
 			// Nếu mode là rút gọn, sử dụng AI để rút gọn
 			if (thesisMode === 'summarized') {
 				finalContent = await summarizeContent(values.content);
@@ -602,7 +602,7 @@ Tóm tắt cuộc trò chuyện:`;
 			} else {
 				// Thêm vào thesis sẵn có hoặc tạo mới thesis theo ngày
 				let targetThesisId = selectedThesisId;
-				
+
 				// Nếu không có selectedThesisId, tạo thesis theo ngày mới
 				if (!targetThesisId) {
 					console.log('📅 Creating new daily thesis...');
@@ -615,7 +615,7 @@ Tóm tắt cuộc trò chuyện:`;
 						return;
 					}
 				}
-				
+
 				const selectedThesis = thesisList.find(t => t.id === targetThesisId);
 				if (!selectedThesis) {
 					// Reload thesis list và thử lại
@@ -851,13 +851,13 @@ Tóm tắt:`;
 			try {
 				const setting = await getSettingByTypeExternal('TEMPLATE_AI_SETTING');
 				const allTemplates = setting?.setting && Array.isArray(setting.setting) && setting.setting.length > 0 ? setting.setting : jobTemplates;
-				
+
 				// Lọc template theo user hiện tại: hiển thị template của user hoặc template chung (không có userEmail)
 				const userEmail = currentUser?.email || currentUser?.id;
-				const filteredTemplates = allTemplates.filter(template => 
+				const filteredTemplates = allTemplates.filter(template =>
 					!template.userEmail || template.userEmail === userEmail
 				);
-				
+
 				setTemplateList(filteredTemplates);
 			} catch {
 				setTemplateList(jobTemplates);
@@ -1107,7 +1107,7 @@ Tóm tắt:`;
 				// Kiểm tra xem advisor có tồn tại trong danh sách không
 				const allAdvisors = [...advisorList, ...pipelineList];
 				const advisorExists = allAdvisors.some(a => a.key === job.defaultAdvisor);
-				
+
 				if (advisorExists) {
 					setSelectedAdvisor(job.defaultAdvisor);
 					// Lưu ngay lập tức khi thay đổi advisor
@@ -1173,13 +1173,13 @@ Tóm tắt:`;
 
 	const handleTemplateSuggestionClick = (template) => {
 		setShowTemplateSuggestions(false);
-		
+
 		// Tự động chọn advisor mặc định nếu có
 		if (template.defaultAdvisor) {
 			// Kiểm tra xem advisor có tồn tại trong danh sách không
 			const allAdvisors = [...advisorList, ...pipelineList];
 			const advisorExists = allAdvisors.some(a => a.key === template.defaultAdvisor);
-			
+
 			if (advisorExists) {
 				setSelectedAdvisor(template.defaultAdvisor);
 				// Lưu ngay lập tức khi thay đổi advisor
@@ -1187,7 +1187,7 @@ Tóm tắt:`;
 				console.log(`🎯 Auto-selected advisor: ${template.defaultAdvisor} for template suggestion: ${template.label}`);
 			}
 		}
-		
+
 		// Kiểm tra xem template có chứa &&& không
 		if (template.template.includes('&&&')) {
 			// Mở modal để edit template
@@ -1224,7 +1224,7 @@ Tóm tắt:`;
 			// Kiểm tra xem advisor có tồn tại trong danh sách không
 			const allAdvisors = [...advisorList, ...pipelineList];
 			const advisorExists = allAdvisors.some(a => a.key === selectedTemplate.defaultAdvisor);
-			
+
 			if (advisorExists) {
 				setSelectedAdvisor(selectedTemplate.defaultAdvisor);
 				// Lưu ngay lập tức khi thay đổi advisor
@@ -1340,13 +1340,13 @@ Tóm tắt:`;
 					let stepResponse;
 					if (step.enableWebsearch) {
 						// Sử dụng webSearchChat nếu step có bật websearch
-                        try {
+						try {
 							const webSearchResponse = await webSearchChat({
 								prompt: currentInput,
 								model: step.model,
 								chat_history: chatHistory,
 							});
-                            console.log('🌐 WebSearch (pipeline) raw response:', webSearchResponse);
+							console.log('🌐 WebSearch (pipeline) raw response:', webSearchResponse);
 							stepResponse = {
 								response: webSearchResponse.ai_response || webSearchResponse.message || 'Không có phản hồi từ websearch',
 								success: webSearchResponse.success,
@@ -1361,8 +1361,8 @@ Tóm tắt:`;
 								systemMessage: step.systemMessage,
 								enableWebsearch: step.enableWebsearch,
 							};
-                            stepResponse = await aiChat(chatHistory, currentInput, step.model, stepInfo);
-                            console.log('🧠 aiChat (pipeline) raw response:', stepResponse);
+							stepResponse = await aiChat(chatHistory, currentInput, step.model, stepInfo);
+							console.log('🧠 aiChat (pipeline) raw response:', stepResponse);
 						}
 					} else {
 						// Sử dụng aiChat bình thường
@@ -1373,8 +1373,8 @@ Tóm tắt:`;
 							systemMessage: step.systemMessage,
 							enableWebsearch: step.enableWebsearch,
 						};
-                        stepResponse = await aiChat(chatHistory, currentInput, step.model, stepInfo);
-                        console.log('🧠 aiChat (pipeline) raw response:', stepResponse);
+						stepResponse = await aiChat(chatHistory, currentInput, step.model, stepInfo);
+						console.log('🧠 aiChat (pipeline) raw response:', stepResponse);
 					}
 
 					const stepResult = {
@@ -1479,13 +1479,13 @@ Tóm tắt:`;
 
 				if (currentAdvisorInfo?.enableWebsearch) {
 					// Sử dụng webSearchChat với chat history nếu advisor có bật websearch
-                    try {
+					try {
 						const webSearchResponse = await webSearchChat({
 							prompt: userMessage.content,
 							model: model,
 							chat_history: chatHistory,
 						});
-                        console.log('🌐 WebSearch raw response:', webSearchResponse);
+						console.log('🌐 WebSearch raw response:', webSearchResponse);
 						// Websearch trả về cấu trúc khác với aiChat
 						response = {
 							response: webSearchResponse.ai_response || webSearchResponse.message || 'Không có phản hồi từ websearch',
@@ -1502,8 +1502,8 @@ Tóm tắt:`;
 							systemMessage: currentAdvisorInfo?.systemMessage,
 							enableWebsearch: currentAdvisorInfo?.enableWebsearch,
 						};
-                        response = await aiChat(chatHistory, userMessage.content, model, advisorInfo);
-                        console.log('🧠 aiChat (fallback) raw response:', response);
+						response = await aiChat(chatHistory, userMessage.content, model, advisorInfo);
+						console.log('🧠 aiChat (fallback) raw response:', response);
 					}
 				} else {
 					// Sử dụng aiChat bình thường
@@ -1514,8 +1514,8 @@ Tóm tắt:`;
 						systemMessage: currentAdvisorInfo?.systemMessage,
 						enableWebsearch: currentAdvisorInfo?.enableWebsearch,
 					};
-                    response = await aiChat(chatHistory, userMessage.content, model, advisorInfo);
-                    console.log('🧠 aiChat raw response:', response);
+					response = await aiChat(chatHistory, userMessage.content, model, advisorInfo);
+					console.log('🧠 aiChat raw response:', response);
 				}
 
 				finalResponse = response.response || response.message || 'Xin lỗi, tôi không thể trả lời câu hỏi này.';
@@ -1550,7 +1550,7 @@ Tóm tắt:`;
 				}
 			}
 
-            const assistantMessage = {
+			const assistantMessage = {
 				id: Date.now() + 1,
 				type: 'assistant',
 				content: finalResponse,
@@ -1560,21 +1560,21 @@ Tóm tắt:`;
 				citations: finalCitations,
 				embeddingResults: finalEmbeddingResults,
 			};
-            console.log('✅ Final assistantMessage:', assistantMessage);
-            if (finalCitations) {
-                console.log('📎 Citations:', finalCitations);
-            }
-            if (finalEmbeddingResults) {
-                console.log('📚 Embedding results summary:', {
-                    totalFound: finalEmbeddingResults.totalFound,
-                    method: finalEmbeddingResults.searchMethod,
-                    chunks: (finalEmbeddingResults.results || []).length,
-                });
-            }
+			console.log('✅ Final assistantMessage:', assistantMessage);
+			if (finalCitations) {
+				console.log('📎 Citations:', finalCitations);
+			}
+			if (finalEmbeddingResults) {
+				console.log('📚 Embedding results summary:', {
+					totalFound: finalEmbeddingResults.totalFound,
+					method: finalEmbeddingResults.searchMethod,
+					chunks: (finalEmbeddingResults.results || []).length,
+				});
+			}
 
 			// Tạo tin nhắn cho nguồn dữ liệu nếu có
 			let dataSourcesMessage = null;
-            if (finalEmbeddingResults && finalEmbeddingResults.results && finalEmbeddingResults.results.length > 0) {
+			if (finalEmbeddingResults && finalEmbeddingResults.results && finalEmbeddingResults.results.length > 0) {
 				console.log('📋 Creating data sources message with:', finalEmbeddingResults.results.length, 'results');
 				dataSourcesMessage = {
 					id: Date.now() + 2,
@@ -1585,7 +1585,7 @@ Tóm tắt:`;
 					advisor: advisorInfo,
 					embeddingResults: finalEmbeddingResults,
 				};
-                console.log('📝 Data sources message:', dataSourcesMessage);
+				console.log('📝 Data sources message:', dataSourcesMessage);
 			} else {
 				console.log('📋 No data sources message created. finalEmbeddingResults:', finalEmbeddingResults);
 			}
@@ -1759,7 +1759,7 @@ Tóm tắt:`;
 		if (newTemplateList && Array.isArray(newTemplateList) && newTemplateList.length > 0) {
 			// Lọc template theo user hiện tại khi có cập nhật từ modal
 			const userEmail = currentUser?.email || currentUser?.id;
-			const filteredTemplates = newTemplateList.filter(template => 
+			const filteredTemplates = newTemplateList.filter(template =>
 				!template.userEmail || template.userEmail === userEmail
 			);
 			setTemplateList(filteredTemplates);
@@ -2079,18 +2079,18 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 	return (
 		<>
 			{/* Toggle button and Current Session Info - moved above playgroundContainer */}
-			<div className={styles.controlsContainer} style={{ 
-				
-				display: 'flex', 
-				alignItems: 'center', 
+			<div className={styles.controlsContainer} style={{
+
+				display: 'flex',
+				alignItems: 'center',
 				padding: '0 16px',
 				// gap: '16px',
 				justifyContent: 'space-between'
 			}}>
 				{/* Left side - Toggle buttons and session controls */}
-				<div style={{ 
-					display: 'flex', 
-					alignItems: 'center', 
+				<div style={{
+					display: 'flex',
+					alignItems: 'center',
 					gap: '8px'
 				}}>
 					{/* Toggle button for template sidebar - only show on mobile */}
@@ -2104,7 +2104,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 							<BookOutlined />
 						</button>
 					)}
-					
+
 					{/* Toggle button for chat sessions sidebar - only show on mobile */}
 					{isMobile && (
 						<button
@@ -2116,27 +2116,9 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 							<MenuOutlined />
 						</button>
 					)}
-					
-					{/* Current Session Info */}
-					{currentSessionId && (
-						<div className={styles.currentSessionInfo} style={{ 
-							display: 'flex', 
-							alignItems: 'center', 
-							gap: '12px',
-							marginTop: -10
-						}}>
-							<Button
-								type='primary'
-								icon={<PlusOutlined />}
-								onClick={createNewSessionQuick}
-								className={styles.createChatSmall}
-							>
-								Chat mới
-							</Button>
 
-							{/* Template selector removed - now in left sidebar */}
-						</div>
-					)}
+					{/* Current Session Info */}
+
 				</div>
 
 				{/* Right side - Embedding Search Switch */}
@@ -2165,7 +2147,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 				/>
 				<div
 					className={`${styles.playgroundContent} ${sidebarCollapsed && templateSidebarCollapsed && !isMobile ? styles.sidebarCollapsed : ''} ${(!sidebarCollapsed || !templateSidebarCollapsed) && isMobile ? styles.mobileSidebarOpen : ''}`}>
-					
+
 					{/* Template Sidebar - Left */}
 					<div
 						className={`${styles.templateSidebar} ${templateSidebarCollapsed ? styles.collapsed : ''} ${!templateSidebarCollapsed && isMobile ? styles.mobileOpen : ''}`}>
@@ -2277,8 +2259,8 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 												cancelText="Hủy"
 											>
 												<Button type='text' icon={<DeleteOutlined />} size='small'
-														className={styles.deleteButton}
-														onClick={e => e.stopPropagation()} />
+													className={styles.deleteButton}
+													onClick={e => e.stopPropagation()} />
 											</Popconfirm>
 										</List.Item>
 									)}
@@ -2287,7 +2269,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 						</div>
 
 
-						{currentUser?.isAdmin && (
+						{(currentUser?.isAdmin || currentUser?.isSuperAdmin) && (
 							<div style={{ padding: '16px 16px 8px 16px', width: '100%' }}>
 								<Button
 									icon={<SettingOutlined />}
@@ -2317,15 +2299,36 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 					<div className={`${styles.chatMainArea} ${sidebarCollapsed ? styles.expanded : ''}`}>
 						{/* Chat Interface */}
 						<div className={styles.chatContainer}>
+							{currentSessionId && (
+								<div className={styles.currentSessionInfo} style={{
+									display: 'flex',
+									alignItems: 'center',
+									gap: '12px',
+									marginTop: -10,
+									position: 'absolute',
+									top: '10px',
+									left: '0',
+								}}>
+									<Button
+										type='primary'
+										icon={<PlusOutlined />}
+										onClick={createNewSessionQuick}
+										className={styles.createChatSmall}
+									>
+										Chat mới
+									</Button>
+
+									{/* Template selector removed - now in left sidebar */}
+								</div>
+							)}
 							<div className={styles.messagesArea}>
 								{messages.map((message) => (
 									<div
 										key={message.id}
-										className={`${styles.messageWrapper} ${
-											message.type === 'user' ? styles.userMessage :
+										className={`${styles.messageWrapper} ${message.type === 'user' ? styles.userMessage :
 												message.type === 'data-sources' ? styles.dataSourcesMessage :
 													styles.assistantMessage
-										}`}
+											}`}
 									>
 										<div className={styles.messageContent}>
 											{message.type === 'assistant' && (
@@ -2475,7 +2478,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 																>
 																	{(() => {
 																		const text = chunk.web?.uri || `Nguồn ${index + 1}`;
-																		return chunk.web?.title + ' ( '+text.substring(0, 70) + '...)';
+																		return chunk.web?.title + ' ( ' + text.substring(0, 70) + '...)';
 																	})()}
 																</a>
 															</div>
@@ -2613,7 +2616,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 								{isTyping && (
 									<div className={`${styles.messageWrapper} ${styles.assistantMessage}`}>
 										<Avatar size={32} icon={<RobotOutlined />} className={styles.messageAvatar}
-												style={{ background: '#667eea' }} />
+											style={{ background: '#667eea' }} />
 										<div className={styles.messageContent}>
 											<div className={styles.typingIndicator}><span></span><span></span><span></span>
 											</div>
@@ -2639,7 +2642,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 														marginLeft: 4,
 														fontWeight: selectedAdvisor == advisor.key ? '600' : '500',
 													}}>
-												{advisor.name}
+													{advisor.name}
 													{advisor.enableWebsearch && (
 														<GlobalOutlined
 															title='Sử dụng Websearch'
@@ -2670,21 +2673,21 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 														marginLeft: 4,
 														fontWeight: selectedAdvisor == pipeline.key ? '600' : '500',
 													}}>
-												{pipeline.name}
-												{pipeline.isPipeline && (
-													<svg width="10" height="10" viewBox="0 0 41 45" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '4px' }}>
-														<path d="M8.0971 14.1239C9.71415 14.1239 11.265 13.4815 12.4084 12.3381C13.5518 11.1947 14.1942 9.64384 14.1942 8.02678C14.1942 6.40973 13.5518 4.85891 12.4084 3.71549C11.265 2.57206 9.71415 1.92969 8.0971 1.92969C6.48005 1.92969 4.92923 2.57206 3.7858 3.71549C2.64237 4.85891 2 6.40973 2 8.02678C2 9.64384 2.64237 11.1947 3.7858 12.3381C4.92923 13.4815 6.48005 14.1239 8.0971 14.1239ZM8.0971 14.1239V30.3828M8.0971 30.3828C6.48005 30.3828 4.92923 31.0252 3.7858 32.1686C2.64237 33.312 2 34.8629 2 36.4799C2 38.097 2.64237 39.6478 3.7858 40.7912C4.92923 41.9346 6.48005 42.577 8.0971 42.577C9.71415 42.577 11.265 41.9346 12.4084 40.7912C13.5518 39.6478 14.1942 38.097 14.1942 36.4799C14.1942 34.8629 13.5518 33.312 12.4084 32.1686C11.265 31.0252 9.71415 30.3828 8.0971 30.3828ZM38.5826 26.3181C38.5826 27.9351 37.9402 29.4859 36.7968 30.6294C35.6534 31.7728 34.1025 32.4152 32.4855 32.4152C30.8684 32.4152 29.3176 31.7728 28.1742 30.6294C27.0308 29.4859 26.3884 27.9351 26.3884 26.3181C26.3884 24.701 27.0308 23.1502 28.1742 22.0068C29.3176 20.8633 30.8684 20.221 32.4855 20.221C34.1025 20.221 35.6534 20.8633 36.7968 22.0068C37.9402 23.1502 38.5826 24.701 38.5826 26.3181Z" stroke="#7D7D7D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-														<path d="M26.3889 26.3192H20.2919C17.0577 26.3192 13.9561 25.0345 11.6693 22.7476C9.3824 20.4607 8.09766 17.3591 8.09766 14.125" stroke="#7D7D7D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-													</svg>
-												)}
-												{pipeline.description && (
-													<Tooltip title={pipeline.description} placement="top">
-														<QuestionCircleOutlined
-															style={{ marginLeft: 4, fontSize: '12px', color: '#8c8c8c' }}
-														/>
-													</Tooltip>
-												)}
-											</span>
+													{pipeline.name}
+													{pipeline.isPipeline && (
+														<svg width="10" height="10" viewBox="0 0 41 45" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '4px' }}>
+															<path d="M8.0971 14.1239C9.71415 14.1239 11.265 13.4815 12.4084 12.3381C13.5518 11.1947 14.1942 9.64384 14.1942 8.02678C14.1942 6.40973 13.5518 4.85891 12.4084 3.71549C11.265 2.57206 9.71415 1.92969 8.0971 1.92969C6.48005 1.92969 4.92923 2.57206 3.7858 3.71549C2.64237 4.85891 2 6.40973 2 8.02678C2 9.64384 2.64237 11.1947 3.7858 12.3381C4.92923 13.4815 6.48005 14.1239 8.0971 14.1239ZM8.0971 14.1239V30.3828M8.0971 30.3828C6.48005 30.3828 4.92923 31.0252 3.7858 32.1686C2.64237 33.312 2 34.8629 2 36.4799C2 38.097 2.64237 39.6478 3.7858 40.7912C4.92923 41.9346 6.48005 42.577 8.0971 42.577C9.71415 42.577 11.265 41.9346 12.4084 40.7912C13.5518 39.6478 14.1942 38.097 14.1942 36.4799C14.1942 34.8629 13.5518 33.312 12.4084 32.1686C11.265 31.0252 9.71415 30.3828 8.0971 30.3828ZM38.5826 26.3181C38.5826 27.9351 37.9402 29.4859 36.7968 30.6294C35.6534 31.7728 34.1025 32.4152 32.4855 32.4152C30.8684 32.4152 29.3176 31.7728 28.1742 30.6294C27.0308 29.4859 26.3884 27.9351 26.3884 26.3181C26.3884 24.701 27.0308 23.1502 28.1742 22.0068C29.3176 20.8633 30.8684 20.221 32.4855 20.221C34.1025 20.221 35.6534 20.8633 36.7968 22.0068C37.9402 23.1502 38.5826 24.701 38.5826 26.3181Z" stroke="#7D7D7D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+															<path d="M26.3889 26.3192H20.2919C17.0577 26.3192 13.9561 25.0345 11.6693 22.7476C9.3824 20.4607 8.09766 17.3591 8.09766 14.125" stroke="#7D7D7D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+														</svg>
+													)}
+													{pipeline.description && (
+														<Tooltip title={pipeline.description} placement="top">
+															<QuestionCircleOutlined
+																style={{ marginLeft: 4, fontSize: '12px', color: '#8c8c8c' }}
+															/>
+														</Tooltip>
+													)}
+												</span>
 											</Button>
 										))}
 									</div>
@@ -2827,7 +2830,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 						message='Thông tin'
 						description={generatingSummary
 							? 'Đang tạo tóm tắt tự động bằng AI...'
-							: isChatThesis 
+							: isChatThesis
 								? 'Đang lưu toàn bộ cuộc trò chuyện với chế độ rút gọn mặc định.'
 								: 'Nội dung và tóm tắt đã được tạo tự động từ câu trả lời của AI. Bạn có thể chỉnh sửa trước khi lưu.'
 						}
@@ -2842,14 +2845,14 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 					<div style={{ marginBottom: 16 }}>
 						<div style={{ fontWeight: 500, marginBottom: 8 }}>Chế độ lưu:</div>
 						<Space>
-							<Button 
+							<Button
 								type={thesisMode === 'original' ? 'primary' : 'default'}
 								onClick={() => setThesisMode('original')}
 								size='small'
 							>
 								📝 Nguyên văn
 							</Button>
-							<Button 
+							<Button
 								type={thesisMode === 'summarized' ? 'primary' : 'default'}
 								onClick={() => setThesisMode('summarized')}
 								size='small'
@@ -2858,7 +2861,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 							</Button>
 						</Space>
 						<div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>
-							{thesisMode === 'original' 
+							{thesisMode === 'original'
 								? 'Lưu nội dung nguyên văn không thay đổi'
 								: 'Sử dụng AI để rút gọn nội dung trước khi lưu'
 							}
@@ -3044,29 +3047,29 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 
 								</div>
 								<div className={styles.embeddingDetailMeta}>
-								<span className={styles.embeddingDetailType}>
-									Loại: {embeddingDetailModal.data.type}
-								</span>
+									<span className={styles.embeddingDetailType}>
+										Loại: {embeddingDetailModal.data.type}
+									</span>
 									<span className={styles.embeddingDetailCategory}>
-									Danh mục: {embeddingDetailModal.data.category}
-								</span>
+										Danh mục: {embeddingDetailModal.data.category}
+									</span>
 									<span className={styles.embeddingDetailSimilarity}>
-									Độ tương đồng: {(embeddingDetailModal.data.chunks[0].bestSimilarity * 100).toFixed(1)}%
-								</span>
+										Độ tương đồng: {(embeddingDetailModal.data.chunks[0].bestSimilarity * 100).toFixed(1)}%
+									</span>
 									{embeddingDetailModal.data.createdAt && (
 										<span className={styles.embeddingDetailDate}>
-										Ngày tạo: {new Date(embeddingDetailModal.data.createdAt).toLocaleDateString('vi-VN')}
-									</span>
+											Ngày tạo: {new Date(embeddingDetailModal.data.createdAt).toLocaleDateString('vi-VN')}
+										</span>
 									)}
 									{embeddingDetailModal.data.source && (
 										<span className={styles.embeddingDetailSource}>
-										Nguồn: {embeddingDetailModal.data.source}
-									</span>
+											Nguồn: {embeddingDetailModal.data.source}
+										</span>
 									)}
 									{embeddingDetailModal.data.emoji && (
 										<span className={styles.embeddingDetailEmoji}>
-										Emoji: {embeddingDetailModal.data.emoji}
-									</span>
+											Emoji: {embeddingDetailModal.data.emoji}
+										</span>
 									)}
 								</div>
 							</div>
@@ -3088,7 +3091,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 											try {
 												const info = typeof embeddingDetailModal.data.info === 'string' ? JSON.parse(embeddingDetailModal.data.info) : embeddingDetailModal.data.info;
 												return info?.URLReport ? <a href={info.URLReport} target='_blank'
-																			rel='noopener noreferrer'>{info.URLReport}</a> : '-';
+													rel='noopener noreferrer'>{info.URLReport}</a> : '-';
 											} catch {
 												return '-';
 											}
@@ -3143,10 +3146,10 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 																				fontSize: '12px',
 																				color: '#1890ff',
 																			}}>
-																		{table.type === 'quarterly' ? 'Theo quý' :
-																			table.type === 'monthly' ? 'Theo tháng' :
-																				'Theo năm'}
-																	</span>
+																				{table.type === 'quarterly' ? 'Theo quý' :
+																					table.type === 'monthly' ? 'Theo tháng' :
+																						'Theo năm'}
+																			</span>
 																		</div>
 
 																		{table.data && Object.keys(table.data).length > 0 ? (

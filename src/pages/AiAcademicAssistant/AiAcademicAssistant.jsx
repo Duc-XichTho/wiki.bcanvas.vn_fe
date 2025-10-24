@@ -133,7 +133,7 @@ const AiAcademicAssistant = () => {
 
             </div>
             <div className={styles.mainContainer}>
-           
+                        
                 <AiChatTab />
           
        

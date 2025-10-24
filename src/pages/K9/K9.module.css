@@ -1574,8 +1574,8 @@ html {
 .playgroundContainer {
     display: flex;
     flex-direction: column;
-    height: 80%;
-    width: 80%;
+    height: 100%;
+    width: 100%;
     font-family: 'Reddit Sans', 'Roboto', Arial, sans-serif;
     background: #f7f9fb;
 }
@@ -4465,7 +4465,7 @@ html {
 	flex-direction: column;
 	border-radius: 18px 0 0 18px;
 	box-shadow: 2px 0 8px 0 rgba(34, 41, 47, 0.04);
-	height: 70vh;
+	height: 100%;
 	order: 1;
 }
 
@@ -4527,7 +4527,7 @@ html {
 	flex-direction: column;
 	border-radius: 0 18px 18px 0;
 	box-shadow: -2px 0 8px 0 rgba(34, 41, 47, 0.04);
-	height: 70vh;
+	height: 100%;
 	order: 3;
 }
 
