@@ -3,7 +3,7 @@ import { RotateCcw, Plus, Edit2, X, Check, MoreHorizontal, Palette, HelpCircle, 
 import styles from './Dashboard.module.css';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AI_Meter, ICON_CROSSROAD_LIST } from '../icon/svg/IconSvg.jsx';
-import { createSetting, getSettingByType, updateSetting, getSchemaResources, getSchemaBackground, updateSchemaTools } from '../apis/settingService.jsx';
+import { createSetting, getSettingByType, updateSetting, getSchemaResources, getSchemaBackground, updateSchemaTools, getTypeSchema } from '../apis/settingService.jsx';
 import { sendRegistrationEmail } from '../apis/gateway/emailService.jsx';
 import { Modal, Input, Button, Dropdown, ColorPicker, Select, Upload, Checkbox, Popconfirm, message, Divider } from 'antd';
 import { getUserClassByEmail } from '../apis/userClassService.jsx';
@@ -1231,8 +1231,6 @@ const WikiCanvas = () => {
     }
   });
 
-  console.log('visibleTools', visibleTools);
-
   // Apply permission logic after tool settings
   visibleTools = visibleTools.filter(tool => {
     // Super admin can see all tools (except data-factory and process-guide)
@@ -1356,22 +1354,37 @@ const WikiCanvas = () => {
     setTools(updatedTools);
     setEditingTool(null);
 
-    // Lưu lên backend
-    let existing;
-    if (activeTab === 'app') {
-      existing = await getSettingByType('DASHBOARD_SETTING');
-    } else if (activeTab === 'research-bpo') {
-      existing = await getSettingByType('RESEARCH_BPO_SETTING');
-    } else if (activeTab === 'training-productivity') {
-      existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
-    } else {
-      existing = await getSettingByType('DASHBOARD_SETTING');
-    }
+    // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
     try {
-      await updateSetting({
-        ...existing,
-        setting: updatedTools
-      });
+      // if (selectedSchema && selectedSchema !== 'master') {
+        // Sử dụng updateSchemaTools cho schema cụ thể
+        const existing = await getTypeSchema( 'master', 'DASHBOARD_SETTING');
+        console.log('existing', existing);
+        console.log('updatedTools', {
+          ...existing,
+          setting: updatedTools
+        });
+        const response = await updateSchemaTools('master', updatedTools, existing.id);
+        console.log('response', response);
+        console.log(`Đã lưu tools vào schema: master`);
+      // } else {
+      //   // Sử dụng updateSetting cho master schema
+      //   let existing;
+      //   if (activeTab === 'app') {
+      //     existing = await getSettingByType('DASHBOARD_SETTING');
+      //   } else if (activeTab === 'research-bpo') {
+      //     existing = await getSettingByType('RESEARCH_BPO_SETTING');
+      //   } else if (activeTab === 'training-productivity') {
+      //     existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
+      //   } else {
+      //     existing = await getSettingByType('DASHBOARD_SETTING');
+      //   }
+      //   await updateSetting({
+      //     ...existing,
+      //     setting: updatedTools
+      //   });
+      //   console.log('Đã lưu tools vào master schema');
+      // }
     } catch (error) {
       console.error('Lỗi khi cập nhật setting:', error);
     }
@@ -1380,18 +1393,7 @@ const WikiCanvas = () => {
   const handleSaveToolReorder = async (reorderedTools) => {
     setTools(reorderedTools);
 
-    // Lưu lên backend
-    let existing;
-    if (activeTab === 'app') {
-      existing = await getSettingByType('DASHBOARD_SETTING');
-    } else if (activeTab === 'research-bpo') {
-      existing = await getSettingByType('RESEARCH_BPO_SETTING');
-    } else if (activeTab === 'training-productivity') {
-      existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
-    } else {
-      existing = await getSettingByType('DASHBOARD_SETTING');
-    }
-
+    // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
     try {
       // Tạo array mới với thứ tự đã sắp xếp và cập nhật order field
       const toolsWithOrder = reorderedTools.map((tool, index) => ({
@@ -1399,13 +1401,32 @@ const WikiCanvas = () => {
         order: index
       }));
 
-      // Cập nhật setting với array format
-      const updatedSetting = {
-        ...existing,
-        setting: toolsWithOrder
-      };
+      if (selectedSchema && selectedSchema !== 'master') {
+        // Sử dụng updateSchemaTools cho schema cụ thể
+        await updateSchemaTools(selectedSchema, toolsWithOrder);
+        console.log(`Đã lưu thứ tự tools vào schema: ${selectedSchema}`);
+      } else {
+        // Sử dụng updateSetting cho master schema
+        let existing;
+        if (activeTab === 'app') {
+          existing = await getSettingByType('DASHBOARD_SETTING');
+        } else if (activeTab === 'research-bpo') {
+          existing = await getSettingByType('RESEARCH_BPO_SETTING');
+        } else if (activeTab === 'training-productivity') {
+          existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
+        } else {
+          existing = await getSettingByType('DASHBOARD_SETTING');
+        }
 
-      await updateSetting(updatedSetting);
+        // Cập nhật setting với array format
+        const updatedSetting = {
+          ...existing,
+          setting: toolsWithOrder
+        };
+
+        await updateSetting(updatedSetting);
+        console.log('Đã lưu thứ tự tools vào master schema');
+      }
     } catch (error) {
       console.error('Lỗi khi cập nhật thứ tự tools:', error);
       throw error;
@@ -1417,24 +1438,31 @@ const WikiCanvas = () => {
     console.log('Deleting tool:', tool.name, 'Remaining tools:', updatedTools.length);
     setTools(updatedTools);
 
-    // Lưu lên backend
-    let existing;
-    if (activeTab === 'app') {
-      existing = await getSettingByType('DASHBOARD_SETTING');
-    } else if (activeTab === 'research-bpo') {
-      existing = await getSettingByType('RESEARCH_BPO_SETTING');
-    } else if (activeTab === 'training-productivity') {
-      existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
-    } else {
-      existing = await getSettingByType('DASHBOARD_SETTING');
-    }
-
+    // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
     try {
-      await updateSetting({
-        ...existing,
-        setting: updatedTools
-      });
-      console.log('Tool deleted successfully from backend');
+      if (selectedSchema && selectedSchema !== 'master') {
+        // Sử dụng updateSchemaTools cho schema cụ thể
+        await updateSchemaTools(selectedSchema, updatedTools);
+        console.log(`Đã xóa tool khỏi schema: ${selectedSchema}`);
+      } else {
+        // Sử dụng updateSetting cho master schema
+        let existing;
+        if (activeTab === 'app') {
+          existing = await getSettingByType('DASHBOARD_SETTING');
+        } else if (activeTab === 'research-bpo') {
+          existing = await getSettingByType('RESEARCH_BPO_SETTING');
+        } else if (activeTab === 'training-productivity') {
+          existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
+        } else {
+          existing = await getSettingByType('DASHBOARD_SETTING');
+        }
+
+        await updateSetting({
+          ...existing,
+          setting: updatedTools
+        });
+        console.log('Tool deleted successfully from master schema');
+      }
     } catch (error) {
       console.error('Lỗi khi xóa tool:', error);
       // Rollback nếu có lỗi
@@ -2236,13 +2264,21 @@ const WikiCanvas = () => {
       setNewToolResearchBpo({ name: '', description: '', icon: '🛠️', tags: [], enterUrl: '', content1: '', content2: '', showSupport: false, showInfo: false });
       setShowAddFormResearchBpo(false);
 
-      // Lưu lên backend với type khác
-      const existing = await getSettingByType('RESEARCH_BPO_SETTING');
+      // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
       try {
-        await updateSetting({
-          ...existing,
-          setting: updatedTools
-        });
+        if (selectedSchema && selectedSchema !== 'master') {
+          // Sử dụng updateSchemaTools cho schema cụ thể
+          await updateSchemaTools(selectedSchema, updatedTools);
+          console.log(`Đã thêm tool vào schema: ${selectedSchema}`);
+        } else {
+          // Sử dụng updateSetting cho master schema
+          const existing = await getSettingByType('RESEARCH_BPO_SETTING');
+          await updateSetting({
+            ...existing,
+            setting: updatedTools
+          });
+          console.log('Đã thêm tool vào master schema');
+        }
       } catch (error) {
         console.error('Lỗi khi lưu RESEARCH_BPO_SETTING:', error);
       }
@@ -2267,13 +2303,21 @@ const WikiCanvas = () => {
       setNewToolTrainingProductivity({ name: '', description: '', icon: '🛠️', tags: [], enterUrl: '', content1: '', content2: '', showSupport: false, showInfo: false });
       setShowAddFormTrainingProductivity(false);
 
-      // Lưu lên backend với type khác
-      const existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
+      // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
       try {
-        await updateSetting({
-          ...existing,
-          setting: updatedTools
-        });
+        if (selectedSchema && selectedSchema !== 'master') {
+          // Sử dụng updateSchemaTools cho schema cụ thể
+          await updateSchemaTools(selectedSchema, updatedTools);
+          console.log(`Đã thêm tool vào schema: ${selectedSchema}`);
+        } else {
+          // Sử dụng updateSetting cho master schema
+          const existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
+          await updateSetting({
+            ...existing,
+            setting: updatedTools
+          });
+          console.log('Đã thêm tool vào master schema');
+        }
       } catch (error) {
         console.error('Lỗi khi lưu TRAINING_PRODUCTIVITY_SETTING:', error);
       }
