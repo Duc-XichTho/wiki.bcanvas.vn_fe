@@ -1112,9 +1112,10 @@ export const MODEL_AI = {
         { name: 'Claude Haiku 3.5', value: 'claude-3-5-haiku-20241022' },
     ],
     GEMINI: [
-        { name: '(OR) Gemini 2.5 Pro ', value: 'gemini-2.5-pro-preview-06-05' },
-        { name: '(OR) Gemini 2.5 Flash', value: 'google/gemini-2.5-flash' },
-        { name: '(OR) Gemini 2.5 Flash Lite', value: 'google/gemini-2.5-flash-lite' },
+        { name: '(Google) Gemini 2.5 Pro ', value: 'gemini-2.5-pro-preview-06-05' },
+        { name: '(OpenRouter) Gemini 2.5 Pro ', value: 'google/gemini-2.5-pro' },
+        { name: '(OpenRouter) Gemini 2.5 Flash', value: 'google/gemini-2.5-flash' },
+        { name: '(OpenRouter) Gemini 2.5 Flash Lite', value: 'google/gemini-2.5-flash-lite' },
     ]
 };
 export const MODEL_TEXT_GEN_AI_LIST = [
@@ -1137,8 +1138,8 @@ export const MODEL_AI_LIST = [
     { name: 'GPT-5', value: 'gpt-5-2025-08-07' },
     { name: 'GPT-5 Mini', value: 'gpt-5-mini-2025-08-07' },
     { name: 'GPT-5 Nano', value: 'gpt-5-nano-2025-08-07' },
-    { name: '(OR) Gemini 2.5 Pro ', value: 'google/gemini-2.5-pro' },
-    { name: '(OR) Gemini 2.5 Flash ', value: 'google/gemini-2.5-flash' },
+    { name: '(OpenRouter) Gemini 2.5 Pro ', value: 'google/gemini-2.5-pro' },
+    { name: '(OpenRouter) Gemini 2.5 Flash ', value: 'google/gemini-2.5-flash' },
     { name: 'imagen-3.0-generate-002', value: 'imagen-3.0-generate-002' },
     { name: 'gemini-tts', value: 'gemini-tts' },
 ];
@@ -1150,9 +1151,9 @@ export const MODEL_AI_LIST_SEARCH = [
     { name: 'GPT-5', value: 'gpt-5-2025-08-07' },
     { name: 'GPT-5 Mini', value: 'gpt-5-mini-2025-08-07' },
     { name: 'GPT-5 Nano', value: 'gpt-5-nano-2025-08-07' },
-    { name: '(OR) Gemini 2.5 Flash ', value: 'google/gemini-2.5-flash' },
-    { name: '(OR) Gemini 2.5 Flash Lite', value: 'google/gemini-2.5-flash-lite' },
-    { name: '(OR) Gemini 2.5 Pro', value: 'google/gemini-2.5-pro' },
+    { name: '(OpenRouter) Gemini 2.5 Flash ', value: 'google/gemini-2.5-flash' },
+    { name: '(OpenRouter) Gemini 2.5 Flash Lite', value: 'google/gemini-2.5-flash-lite' },
+    { name: '(OpenRouter) Gemini 2.5 Pro', value: 'google/gemini-2.5-pro' },
 ];
 
 export const MODEL_AI_LIST_K9 = [
@@ -1164,9 +1165,9 @@ export const MODEL_AI_LIST_K9 = [
     { name: 'GPT-5 Mini', value: 'gpt-5-mini-2025-08-07' },
     { name: 'GPT-5 Mini High', value: 'gpt-5-mini-high-2025-08-07' },
     { name: 'GPT-5 Nano', value: 'gpt-5-nano-2025-08-07' },
-    { name: '(OR) Gemini 2.5 Pro', value: 'google/gemini-2.5-pro' },
-    { name: '(OR) Gemini 2.5 Flash', value: 'google/gemini-2.5-flash' },
-    { name: '(OR) Gemini 2.5 Flash Lite', value: 'google/gemini-2.5-flash-lite' },
+    { name: '(OpenRouter) Gemini 2.5 Pro', value: 'google/gemini-2.5-pro' },
+    { name: '(OpenRouter) Gemini 2.5 Flash', value: 'google/gemini-2.5-flash' },
+    { name: '(OpenRouter) Gemini 2.5 Flash Lite', value: 'google/gemini-2.5-flash-lite' },
 ];
 
 export const FULL_DASHBOARD_APPS = [
@@ -1192,7 +1193,7 @@ export const FULL_DASHBOARD_APPS = [
     },
     {
         "id": "ai-academic-assistant",
-        "tag": "under-development",
+        "tag": "Working",
         "icon": "icon_61",
         "name": "Trợ lý học thuật (AI Academic Assistant)",
         "content1": "",

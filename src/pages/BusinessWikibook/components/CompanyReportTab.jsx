@@ -340,7 +340,7 @@ Hãy đọc và trả về kết quả theo định dạng sau:
 
 Chỉ trả về nội dung theo đúng định dạng trên, không thêm phần thừa. Đảm bảo giữ nguyên nhãn [SUMMARY_SHORT] và [SUMMARY_DETAILED].
 `;
-			const model = "gemini-2.5-pro-preview-06-05";
+			const model = "google/gemini-2.5-pro";
 			const response = await aiGen(prompt, systemMessage, model, 'text');
 			console.log('AI Response:', response);
 

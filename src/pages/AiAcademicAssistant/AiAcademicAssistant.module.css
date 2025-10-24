@@ -1,0 +1,113 @@
+.container {
+    height: 100vh;
+    width: 100vw;
+    background-color: #fafafa;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    height: 60px;
+    width: 100%;
+    overflow: hidden;
+    min-height: inherit;
+}
+
+.header_left {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.backCanvas {
+    width: 40px;
+    height: 38px;
+    background-color: rgba(250, 250, 250, 1);
+    border-radius: 12px;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.backCanvas:hover {
+    background-color: rgba(240, 240, 240, 1);
+    transform: translateY(-1px);
+    box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, 0.3);
+}
+
+.headerLogo {
+    line-height: 20px;
+    font-weight: 500;
+    font-size: 20px;
+    color: #262626;
+}
+
+.header_right {
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0 10px;
+    align-items: center;
+    font-size: 14px;
+    color: #454545;
+    padding: 15px 20px;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.username {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+/* Legacy logo styles for backward compatibility */
+.logo {
+    font-size: 32px;
+    /*color: #262626;*/
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 4px;
+}
+
+.logo>span {
+    font-size: 35px;
+    color: #262626;
+    font-weight: 500;
+}
+
+
+
+.mainContainer {
+    height: calc(100vh - 60px);
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.aiChatTabContainer {
+    width: 100%;
+    height: 100%;
+}

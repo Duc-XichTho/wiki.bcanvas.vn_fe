@@ -53,6 +53,7 @@ const HoaDonDauRaChiTiet = lazy(() => import('../pages/Home/AgridTable/HoaDon/Qu
 const HoaDonDauVaoChiTiet = lazy(() => import('../pages/Home/AgridTable/HoaDon/QuanLyHoaDonDauVao/HoaDonDauVaoChiTiet.jsx')); const KTQTImport = lazy(() => import('../pages/KeToanQuanTri/VanHanh/KTQTImport.jsx'));
 const KTQTMapping = lazy(() => import('../pages/KeToanQuanTri/VanHanh/KTQTMapping.jsx'));
 const Home = lazy(() => import('../pages/Home/Home.jsx'));
+const AiAcademicAssistant = lazy(() => import('../pages/AiAcademicAssistant/AiAcademicAssistant.jsx'));
 const ChainDetail = lazy(() =>
 	import('../pages/Home/Chain/ChainDetail/ChainDetail.jsx'),
 );
@@ -345,6 +346,7 @@ export const AuthRoutes = ({ listCompany, isMobile }) => (
 			</Route>
 			<Route path='/k9' element={<K9Service />}></Route>
 			<Route path='/x-app' element={<XApp />} />
+			<Route path='/ai-academic-assistant' element={<AiAcademicAssistant />} />
 			<Route path='/fdr' element={<KeToanQuanTri />}>
 				<Route path={ROUTES.KTQT_CHAY_DU_LIEU}
 					element={<Suspense fallback={fallback}> <InstallPopup /> </Suspense>} />

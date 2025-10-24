@@ -2080,6 +2080,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 		<>
 			{/* Toggle button and Current Session Info - moved above playgroundContainer */}
 			<div className={styles.controlsContainer} style={{ 
+				
 				display: 'flex', 
 				alignItems: 'center', 
 				padding: '0 16px',
@@ -2139,7 +2140,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 				</div>
 
 				{/* Right side - Embedding Search Switch */}
-				{currentSessionId && (
+				{/* {currentSessionId && (
 					<div className={styles.embeddingSwitchContainer}>
 						<Space>
 							<Switch
@@ -2153,7 +2154,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 							</span>
 						</Space>
 					</div>
-				)}
+				)} */}
 			</div>
 
 			<div className={styles.playgroundContainer}>
@@ -2586,7 +2587,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 											)}
 											<div className={styles.messageTime}>
 												{/*Nút tạo thesis chỉ hiển thị cho tin nhắn assistant*/}
-												{message.type === 'assistant' && (
+												{/* {message.type === 'assistant' && (
 													<Button
 														type='text'
 														size='small'
@@ -2600,7 +2601,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 													>
 														Lưu vào sổ cá nhân
 													</Button>
-												)}
+												)} */}
 												{message.timestamp.toLocaleTimeString('vi-VN', {
 													hour: '2-digit',
 													minute: '2-digit',

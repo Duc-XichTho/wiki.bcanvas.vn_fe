@@ -1574,7 +1574,8 @@ html {
 .playgroundContainer {
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    height: 80%;
+    width: 80%;
     font-family: 'Reddit Sans', 'Roboto', Arial, sans-serif;
     background: #f7f9fb;
 }

@@ -86,7 +86,7 @@ const WikiCanvas = () => {
 
   // Available apps that are not yet added - based on dashboardApps but only specific ones
   const availableApps = useMemo(() => {
-    const allowedIds = ['data-manager', 'analysis-review', 'fdr', 'business-wikibook', 'metric-map', 'k9', 'ai-work-automation', 'khkd'];
+    const allowedIds = ['data-manager', 'analysis-review', 'fdr', 'business-wikibook', 'metric-map', 'k9', 'ai-work-automation', 'khkd', 'ai-academic-assistant'];
     return dashboardApps.filter(app => allowedIds.includes(app.id));
   }, [dashboardApps]);
   

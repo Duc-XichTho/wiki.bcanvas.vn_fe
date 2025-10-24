@@ -690,7 +690,7 @@ export default function SettingCombine({ showSettingsChartPopup, setShowSettings
                                 onChange={(value) => handleUpdateFilterCondition(index, 'logicalOperator', value)}
                             >
                                 <Select.Option value="AND">VÀ (AND)</Select.Option>
-                                <Select.Option value="OR">HOẶC (OR)</Select.Option>
+                                <Select.Option value="OR">HOẶC (OpenRouter)</Select.Option>
                             </Select>
                         </Col>
                     )}

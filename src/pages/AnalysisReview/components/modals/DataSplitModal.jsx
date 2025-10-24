@@ -416,7 +416,7 @@ const DataSplitModal = ({
 													onChange={(value) => updateFilterCondition(index, 'operator', value)}
 												>
 													<Option value="and">VÀ (AND)</Option>
-													<Option value="or">HOẶC (OR)</Option>
+													<Option value="or">HOẶC (OpenRouter)</Option>
 												</Select>
 											</Col>
 										</Row>
@@ -553,7 +553,7 @@ const DataSplitModal = ({
 												fontStyle: 'italic',
 												color: '#666',
 											}}>
-												Logic: {condition.operator === 'and' ? 'VÀ (AND)' : 'HOẶC (OR)'}
+												Logic: {condition.operator === 'and' ? 'VÀ (AND)' : 'HOẶC (OpenRouter)'}
 											</div>
 										)}
 									</div>
