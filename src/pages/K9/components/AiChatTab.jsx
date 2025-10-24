@@ -30,7 +30,7 @@ import {
 import DOMPurify from 'dompurify';
 import { Sparkles } from 'lucide-react';
 import { marked } from 'marked';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { aiChat, aiGen, webSearchChat } from '../../../apis/botService.jsx';
 import {
 	addMessageToChat,
@@ -181,7 +181,9 @@ const AiChatTab = () => {
 	const [templateList, setTemplateList] = useState(jobTemplates);
 	const [showTemplateSuggestions, setShowTemplateSuggestions] = useState(false);
 	const [templateSuggestions, setTemplateSuggestions] = useState([]);
+	const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
 	const [cursorPosition, setCursorPosition] = useState(0);
+	const suggestionsRef = useRef(null);
 	const [editingKey, setEditingKey] = useState('');
 	const [form] = Form.useForm();
 	const [advisorEditModal, setAdvisorEditModal] = useState({ visible: false, editing: null });
@@ -872,6 +874,7 @@ Tóm tắt:`;
 				const inputWrapper = document.querySelector(`.${styles.inputWrapper}`);
 				if (inputWrapper && !inputWrapper.contains(event.target)) {
 					setShowTemplateSuggestions(false);
+					setSelectedSuggestionIndex(-1);
 				}
 			}
 		};
@@ -881,6 +884,19 @@ Tóm tắt:`;
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, [showTemplateSuggestions]);
+
+	// Auto-scroll khi selectedSuggestionIndex thay đổi
+	useEffect(() => {
+		if (showTemplateSuggestions && selectedSuggestionIndex >= 0 && suggestionsRef.current) {
+			const selectedElement = suggestionsRef.current.children[selectedSuggestionIndex];
+			if (selectedElement) {
+				selectedElement.scrollIntoView({
+					behavior: 'smooth',
+					block: 'nearest'
+				});
+			}
+		}
+	}, [selectedSuggestionIndex, showTemplateSuggestions]);
 
 	// Scroll đến session active khi currentSessionId thay đổi
 	useEffect(() => {
@@ -1163,16 +1179,20 @@ Tóm tắt:`;
 			if (suggestions.length > 0) {
 				setTemplateSuggestions(suggestions);
 				setShowTemplateSuggestions(true);
+				setSelectedSuggestionIndex(0); // Reset về item đầu tiên
 			} else {
 				setShowTemplateSuggestions(false);
+				setSelectedSuggestionIndex(-1);
 			}
 		} else {
 			setShowTemplateSuggestions(false);
+			setSelectedSuggestionIndex(-1);
 		}
 	};
 
 	const handleTemplateSuggestionClick = (template) => {
 		setShowTemplateSuggestions(false);
+		setSelectedSuggestionIndex(-1);
 
 		// Tự động chọn advisor mặc định nếu có
 		if (template.defaultAdvisor) {
@@ -1210,6 +1230,7 @@ Tóm tắt:`;
 
 	const handleClickOutside = () => {
 		setShowTemplateSuggestions(false);
+		setSelectedSuggestionIndex(-1);
 	};
 
 	// Template Edit Modal handlers
@@ -1651,9 +1672,47 @@ Tóm tắt:`;
 	};
 
 	const handleKeyPress = (e) => {
-		if (e.key === 'Enter' && !e.shiftKey) {
-			e.preventDefault();
-			sendMessage();
+		// Nếu đang hiển thị gợi ý template
+		if (showTemplateSuggestions && templateSuggestions.length > 0) {
+			switch (e.key) {
+				case 'ArrowDown':
+					e.preventDefault();
+					setSelectedSuggestionIndex(prev => 
+						prev < templateSuggestions.length - 1 ? prev + 1 : 0
+					);
+					break;
+				case 'ArrowUp':
+					e.preventDefault();
+					setSelectedSuggestionIndex(prev => 
+						prev > 0 ? prev - 1 : templateSuggestions.length - 1
+					);
+					break;
+				case 'Enter':
+				case 'Tab':
+					e.preventDefault();
+					if (selectedSuggestionIndex >= 0 && selectedSuggestionIndex < templateSuggestions.length) {
+						handleTemplateSuggestionClick(templateSuggestions[selectedSuggestionIndex]);
+					}
+					break;
+				case 'Escape':
+					e.preventDefault();
+					setShowTemplateSuggestions(false);
+					setSelectedSuggestionIndex(-1);
+					break;
+				default:
+					// Nếu không phải Enter thông thường, cho phép xử lý bình thường
+					if (e.key === 'Enter' && !e.shiftKey) {
+						e.preventDefault();
+						sendMessage();
+					}
+					break;
+			}
+		} else {
+			// Xử lý bình thường khi không có gợi ý
+			if (e.key === 'Enter' && !e.shiftKey) {
+				e.preventDefault();
+				sendMessage();
+			}
 		}
 	};
 
@@ -2698,18 +2757,20 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 									<TextArea
 										value={inputMessage}
 										onChange={handleInputChange}
-										onKeyPress={handleKeyPress}
+										onKeyDown={handleKeyPress}
 										placeholder={currentSessionId ? 'Nhập câu hỏi... (Gõ @ để chọn template)' : 'Tạo chat để bắt đầu...'}
 										autoSize={{ minRows: 1, maxRows: 4, minWidth: 120 }}
 										className={`${styles.messageInput} ${templateError ? styles.templateError : ''}`}
 										disabled={!currentSessionId}
 									/>
 									{showTemplateSuggestions && (
-										<div className={styles.templateSuggestions}>
+										<div className={styles.templateSuggestions} ref={suggestionsRef}>
 											{templateSuggestions.map((template, index) => (
 												<div
 													key={template.key}
-													className={styles.suggestionItem}
+													className={`${styles.suggestionItem} ${
+														index === selectedSuggestionIndex ? styles.suggestionItemSelected : ''
+													}`}
 													onClick={() => handleTemplateSuggestionClick(template)}
 												>
 													<div className={styles.suggestionLabel}>{template.label}</div>

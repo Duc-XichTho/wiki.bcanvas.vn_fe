@@ -1804,10 +1804,10 @@ html {
     background: #f7f9fb;
     border-radius: 14px;
     box-shadow: 0 2px 12px 0 rgba(34, 41, 47, 0.06);
-    min-height: 340px;
-    max-height: 80vh;
+    height: 100%;
     overflow-y: auto;
     position: relative;
+    
 }
 
 .messagesArea {
@@ -2678,6 +2678,11 @@ html {
 
 .suggestionItem:hover {
     background-color: #f5f5f5;
+}
+
+.suggestionItemSelected {
+    background-color: #e6f7ff !important;
+    border-left: 3px solid #1890ff;
 }
 
 .suggestionItem:last-child {
