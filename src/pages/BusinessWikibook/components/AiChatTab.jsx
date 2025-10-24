@@ -2756,7 +2756,7 @@ Nội dung: ${bestChunk ? bestChunk.chunkText : 'Không có nội dung chi tiế
 						</div>
 
 
-						{currentUser?.isAdmin && (
+						{ (currentUser?.isAdmin || currentUser?.isSuperAdmin) && (
 							<div style={{ padding: '16px 16px 16px 16px', width: '100%' }}>
 								<Button
 									icon={<SettingOutlined />}
