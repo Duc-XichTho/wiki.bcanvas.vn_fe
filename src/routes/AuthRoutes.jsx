@@ -19,7 +19,6 @@ import K9 from '../pages/BusinessWikibook/K9.jsx';
 import CRM from '../pages/CRM/CRM.jsx';
 import Detail from '../pages/CRM/components/Detail/Detail.jsx';
 import DefaultView from '../pages/CRM/components/DefaultView/DefaultView.jsx';
-import Dashboard from '../pages/Dashboard.jsx';
 import DataManager from '../pages/DataManager/DataManager.jsx';
 import DataRubikProcessGuide from '../pages/DataRubikProcessGuide/DataRubikProcessGuide.jsx';
 import DiagramFactoryDetail from '../pages/DiagramFactory/DiagramFactoryDetail.jsx';

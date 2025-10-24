@@ -42,6 +42,11 @@ const WikiCanvas = () => {
   const [activeTab, setActiveTab] = useState('app');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [tools, setTools] = useState([]);
+  const [isLoadingTools, setIsLoadingTools] = useState(false);
+  
+  // Debug: Log tools state changes (can be removed in production)
+  useEffect(() => {
+  }, [tools]);
   const [editingTool, setEditingTool] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [newTool, setNewTool] = useState({ title: '', description: '', icon: '🛠️', tags: [], enterUrl: '', content1: '', content2: '', showSupport: false, showInfo: false, shortcut: '' });
@@ -133,7 +138,7 @@ const WikiCanvas = () => {
   const [showKpiBenchmarkFormModal, setShowKpiBenchmarkFormModal] = useState(false);
   const [kpiBenchmarks, setKpiBenchmarks] = useState([]);
   const [editingKpiBenchmark, setEditingKpiBenchmark] = useState(null);
-
+const [masterAppsList, setMasterAppsList] = useState([]);
   // Topbar Theme states
   const [showTopbarThemeModal, setShowTopbarThemeModal] = useState(false);
   const [topbarTheme, setTopbarTheme] = useState({
@@ -212,7 +217,9 @@ const WikiCanvas = () => {
   const [showEditCountdownModal, setShowEditCountdownModal] = useState(false);
   const [editingCountdown, setEditingCountdown] = useState(null);
   const [newCountdown, setNewCountdown] = useState({ description: '', target: '', unit: 'days' });
-
+ const [visibleTools, setVisibleTools] = useState([]);
+ const [blockedTools, setBlockedTools] = useState([]);
+ const [trialTools, setTrialTools] = useState([]);
   // Load màu text từ Setting API khi component mount
   useEffect(() => {
     const loadDaysCountdownColors = async () => {
@@ -568,7 +575,12 @@ const WikiCanvas = () => {
 
   // Xóa useEffect gây infinite loop - thay vào đó xử lý trực tiếp trong onChange
   const fetchDashboardSetting = async () => {
+    if (isLoadingTools) {
+      return;
+    }
+    
     try {
+      setIsLoadingTools(true);
       let existing;
       if (activeTab === 'app') {
         existing = await getSettingByType('DASHBOARD_SETTING');
@@ -579,7 +591,7 @@ const WikiCanvas = () => {
       } else {
         existing = await getSettingByType('DASHBOARD_SETTING');
       }
-      console.log('existing', existing);
+
       // Load resources from backend using getSchemaResources
       try {
         const resourcesData = await getSchemaResources('master');
@@ -622,7 +634,6 @@ const WikiCanvas = () => {
             }
           });
           setResourcesSettingId(newSetting.id); // Store the new setting ID
-          console.log('✅ [DEBUG] Created new resources setting after error with ID:', newSetting.id);
         } catch (createError) {
           console.error('❌ [DEBUG] Error creating DASHBOARD_RESOURCES setting:', createError);
         }
@@ -643,8 +654,11 @@ const WikiCanvas = () => {
         // Sắp xếp theo order field
         toolsToProcess.sort((a, b) => (a.order || 0) - (b.order || 0));
 
-        // Kết hợp với thông tin từ schema master cho user thường
+
+       
+
         const combinedTools = await combineAppsWithMasterInfo(toolsToProcess);
+        console.log('combinedTools', combinedTools);
         setTools(combinedTools);
       } else {
         console.log('Creating new dashboard setting');
@@ -660,13 +674,16 @@ const WikiCanvas = () => {
         }).then(res => {
           console.log('Updated:', res);
         });
-        // Kết hợp với thông tin từ schema master cho user thường
+        
+ 
         const combinedTools = await combineAppsWithMasterInfo(toolsWithOrder);
         setTools(combinedTools);
       }
     } catch (error) {
       console.error('Lỗi khi lấy/tạo data', error);
       setTools(dashboardApps);
+    } finally {
+      setIsLoadingTools(false);
     }
   };
   useEffect(() => {
@@ -685,7 +702,7 @@ const WikiCanvas = () => {
 
   useEffect(() => {
     loadTrialApps();
-  }, []);
+  }, [selectedSchema, activeTab]);
 
   const loadResourcesForSchema = async () => {
     try {
@@ -1137,17 +1154,14 @@ const WikiCanvas = () => {
   }, []);
 
   // Helper functions for trial apps
-  // Check if trial is expired
-  const isTrialExpired = (trialApp) => {
-    return new Date() > new Date(trialApp.endDate);
-  };
 
   // Get trial apps that should be displayed
   const getActiveTrialApps = () => {
-    return trialApps.filter(trial => {
+    const activeTrials = trialApps.filter(trial => {
       if (!trial.isActive) return false;
       return !isTrialExpired(trial);
     });
+    return activeTrials;
   };
 
   // Get expired trial apps
@@ -1195,7 +1209,6 @@ const WikiCanvas = () => {
   const getExpiredAppsForDisplay = () => {
     const expiredTrialApps = getExpiredTrialApps();
     const currentToolIds = tools.map(tool => tool.id);
-
     // Only show expired apps that are NOT already in the current schema tools
     return expiredTrialApps
       .filter(expired => !currentToolIds.includes(expired.id))
@@ -1209,130 +1222,139 @@ const WikiCanvas = () => {
   };
 
   // Apply tool settings visibility logic first, then apply permission logic
-  let visibleTools = tools.filter(tool => {
-    // Check if tool is enabled (default to true if not set)
-    if (tool.enabled === false) return false;
+  useEffect(() => {
+    if (!tools || tools.length === 0) {
+      setVisibleTools([]);
+      setBlockedTools([]);
+      setTrialTools([]);
+      return;
+    }
 
-    // Check visibility based on user authentication (default to 'public' if not set)
-    const visibility = tool.visibility || 'public';
-    switch (visibility) {
-      case 'public':
-        return true; // Always visible
-      case 'login-required':
-        return currentUser && currentUser.email; // Only visible if logged in
-      case 'trial':
-        // For trial tools, check if user is logged in AND has permission AND tool is in active trial
-        if (!currentUser || !currentUser.email) return false;
-        if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0) return false;
+    // Apply tool settings visibility logic first, then apply permission logic
+    let newVisibleTools = tools.filter(tool => {
+      // Check if tool is enabled (default to true if not set)
+      if (tool.enabled === false) return false;
+
+      // Check visibility based on user authentication (default to 'public' if not set)
+      const visibility = tool.visibility || 'public';
+      switch (visibility) {
+        case 'public':
+          return true; // Always visible
+        case 'login-required':
+          return currentUser && currentUser.email; // Only visible if logged in
+        case 'trial':
+          // For trial tools, check if user is logged in AND has permission AND tool is in active trial
+          if (!currentUser || !currentUser.email) return false;
+          if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0) return false;
+          const activeTrialApps = getActiveTrialApps();
+          return activeTrialApps.some(trial => trial.id === tool.id);
+        default:
+          return true;
+      }
+    });
+    
+    // Apply permission logic after tool settings
+    newVisibleTools = newVisibleTools.filter(tool => {
+      // Super admin can see all tools (except data-factory and process-guide)
+      if (currentUser?.isSuperAdmin) {
+        return tool.id !== 'data-factory' && tool.id !== 'process-guide';
+      }
+
+      // Admin can see all tools (except data-factory and process-guide)
+      if (currentUser?.isAdmin) {
+        return tool.id !== 'data-factory' && tool.id !== 'process-guide';
+      }
+
+      // For regular users, check allowedAppIds
+      if (allowedAppIds.length > 0) {
+        return allowedAppIds.includes(tool.id) &&
+          tool.id !== 'data-factory' &&
+          tool.id !== 'process-guide';
+      }
+
+      // If no allowedAppIds and user is not logged in, only show public tools
+      // (this case is handled by the visibility logic above)
+      return true;
+    });
+    // Create blocked tools list for visual feedback
+    const newBlockedTools = tools.filter(tool => {
+      // Check if tool is disabled
+      if (tool.enabled === false) return false; // Don't show disabled tools in blocked list
+
+      const visibility = tool.visibility || 'public';
+      
+      // Check if tool requires login but user is not logged in
+      if (visibility === 'login-required' && (!currentUser || !currentUser.email)) return true;
+      
+      // Check if tool is trial but not activated
+      if (visibility === 'trial') {
+        if (!currentUser || !currentUser.email) return true; // Not logged in
+        if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0) return true; // No permission
         const activeTrialApps = getActiveTrialApps();
-        return activeTrialApps.some(trial => trial.id === tool.id);
-      default:
-        return true;
-    }
-  });
+        return !activeTrialApps.some(trial => trial.id === tool.id); // Not in active trial
+      }
 
-  // Apply permission logic after tool settings
-  visibleTools = visibleTools.filter(tool => {
-    // Super admin can see all tools (except data-factory and process-guide)
-    if (currentUser?.isSuperAdmin) {
-      return tool.id !== 'data-factory' && tool.id !== 'process-guide';
-    }
+      return false;
+    });
 
-    // Admin can see all tools (except data-factory and process-guide)
-    if (currentUser?.isAdmin) {
-      return tool.id !== 'data-factory' && tool.id !== 'process-guide';
-    }
-
-    // For regular users, check allowedAppIds
-    if (allowedAppIds.length > 0) {
-      return allowedAppIds.includes(tool.id) &&
-        tool.id !== 'data-factory' &&
-        tool.id !== 'process-guide';
-    }
-
-    // If no allowedAppIds and user is not logged in, only show public tools
-    // (this case is handled by the visibility logic above)
-    return true;
-  });
-
-  // Sắp xếp visibleTools theo order field trong mỗi tool
-  visibleTools = visibleTools.sort((a, b) => (a.order || 0) - (b.order || 0));
-
-  // Create blocked tools list for visual feedback
-  const blockedTools = tools.filter(tool => {
-    // Check if tool is disabled
-    if (tool.enabled === false) return false; // Don't show disabled tools in blocked list
-
-    const visibility = tool.visibility || 'public';
-    
-    // Check if tool requires login but user is not logged in
-    if (visibility === 'login-required' && (!currentUser || !currentUser.email)) return true;
-    
-    // Check if tool is trial but not activated
-    if (visibility === 'trial') {
-      if (!currentUser || !currentUser.email) return true; // Not logged in
-      if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0) return true; // No permission
+    // Only apply trial logic if NOT in master schema
+    let newTrialTools = [];
+    if (selectedSchema !== 'master') {
+      // Add active trial apps to visible tools (only for admin/superAdmin or users with permissions)
       const activeTrialApps = getActiveTrialApps();
-      return !activeTrialApps.some(trial => trial.id === tool.id); // Not in active trial
+      
+      // Replace tools with trial versions if they exist in active trials AND tool is enabled
+      newVisibleTools = newVisibleTools.map(tool => {
+        const trialVersion = activeTrialApps.find(trial => trial.id === tool.id);
+        if (trialVersion && tool.enabled !== false) { // Only replace if tool is enabled
+          return {
+            ...trialVersion,
+            tag: "Trial",
+            isTrial: true,
+            trialEndDate: trialVersion.endDate
+          };
+        }
+        return tool;
+      });
+
+      // Add trial tools that are not in visibleTools yet (only if original tool is enabled)
     }
-
-    return false;
-  });
-
-  // Add active trial apps to visible tools (only for admin/superAdmin or users with permissions)
-  const activeTrialApps = getActiveTrialApps();
-  
-  // Replace tools with trial versions if they exist in active trials AND tool is enabled
-  visibleTools = visibleTools.map(tool => {
-    const trialVersion = activeTrialApps.find(trial => trial.id === tool.id);
-     if (trialVersion && tool.enabled !== false) { // Only replace if tool is enabled
-      return {
-        ...trialVersion,
+    // Chỉ hiển thị trial apps chưa hết hạn
+    newTrialTools = trialApps
+      .filter(trial => {
+        // Kiểm tra trial còn active và chưa hết hạn
+        if (!trial.isActive) return false;
+        return !isTrialExpired(trial);
+      })
+      .map(trial => ({
+        ...trial,
         tag: "Trial",
         isTrial: true,
-        trialEndDate: trialVersion.endDate
-      };
+        trialEndDate: trial.endDate
+      }));
+    // Add process-guide tool
+    newVisibleTools = [...newVisibleTools, ...newTrialTools, {
+      id: "process-guide",
+      tag: "Working",
+      icon: "case-file_10256079",
+      name: "TLSD BCanvas",
+      description: "Hướng dẫn quy trình và các tài liệu sử dụng platform BCanvas",
+    }];
+
+    // Filter by selected tags if any
+    if (selectedTagFilters.length > 0) {
+      newVisibleTools = newVisibleTools.filter(t => Array.isArray(t.tags) && t.tags.some(tag => selectedTagFilters.includes(tag)));
     }
-    return tool;
-  });
 
-  // Add trial tools that are not in visibleTools yet (only if original tool is enabled)
-  const trialTools = (currentUser?.isSuperAdmin || currentUser?.isAdmin || allowedAppIds.length > 0)
-    ? activeTrialApps
-        .filter(trial => {
-          // Check if trial is not already in visibleTools
-          if (visibleTools.some(tool => tool.id === trial.id)) return false;
-          
-          // Check if original tool is enabled
-          const originalTool = tools.find(tool => tool.id === trial.id);
-          if (!originalTool || originalTool.enabled === false) return false;
-          
-          return true;
-        })
-        .map(trial => ({
-          ...trial,
-          tag: "Trial",
-          isTrial: true,
-          trialEndDate: trial.endDate
-        }))
-    : [];
+    // Sort visibleTools by order field
+    newVisibleTools = newVisibleTools.sort((a, b) => (a.order || 0) - (b.order || 0));
 
-
-  visibleTools = [...visibleTools, ...trialTools, {
-    id: "process-guide",
-    tag: "Working",
-    icon: "case-file_10256079",
-    name: "TLSD BCanvas",
-    description: "Hướng dẫn quy trình và các tài liệu sử dụng platform BCanvas",
-    // content1: `Giới thiệu chung về Bcanvas  
-    // Giới thiệu về các công cụ  
-    // Mô tả cách sử dụng các chức năng`
-  }];
-
-  // filter by selected tags if any
-  if (selectedTagFilters.length > 0) {
-    visibleTools = visibleTools.filter(t => Array.isArray(t.tags) && t.tags.some(tag => selectedTagFilters.includes(tag)));
-  }
+    // Update states
+    console.log('newVisibleTools', newVisibleTools);
+    setVisibleTools(newVisibleTools);
+    setBlockedTools(newBlockedTools);
+    setTrialTools(newTrialTools);
+  }, [tools, currentUser, allowedAppIds, selectedTagFilters, selectedSchema]);
 
   const handleToolNavigation = (toolId) => {
     const tool = tools.find(app => app.id === toolId);
@@ -1354,49 +1376,82 @@ const WikiCanvas = () => {
     setTools(updatedTools);
     setEditingTool(null);
 
-    // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
+    // Tách trial data ra khỏi tools data
+    const toolsWithoutTrialData = updatedTools.map(tool => {
+      const { isTrial, startDate, endDate, trialEndDate, ...toolWithoutTrial } = tool;
+      return toolWithoutTrial;
+    });
+
+    // Lưu tools data (không có trial data) lên backend
     try {
-      // if (selectedSchema && selectedSchema !== 'master') {
-        // Sử dụng updateSchemaTools cho schema cụ thể
-        const existing = await getTypeSchema( 'master', 'DASHBOARD_SETTING');
-        console.log('existing', existing);
-        console.log('updatedTools', {
-          ...existing,
-          setting: updatedTools
-        });
-        const response = await updateSchemaTools('master', updatedTools, existing.id);
-        console.log('response', response);
-        console.log(`Đã lưu tools vào schema: master`);
-      // } else {
-      //   // Sử dụng updateSetting cho master schema
-      //   let existing;
-      //   if (activeTab === 'app') {
-      //     existing = await getSettingByType('DASHBOARD_SETTING');
-      //   } else if (activeTab === 'research-bpo') {
-      //     existing = await getSettingByType('RESEARCH_BPO_SETTING');
-      //   } else if (activeTab === 'training-productivity') {
-      //     existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
-      //   } else {
-      //     existing = await getSettingByType('DASHBOARD_SETTING');
-      //   }
-      //   await updateSetting({
-      //     ...existing,
-      //     setting: updatedTools
-      //   });
-      //   console.log('Đã lưu tools vào master schema');
-      // }
+      const existing = await getTypeSchema('master', 'DASHBOARD_SETTING');
+      console.log('existing', existing);
+      console.log('updatedTools without trial data', toolsWithoutTrialData);
+      const response = await updateSchemaTools('master', toolsWithoutTrialData, existing.id);
+      console.log('response', response);
+      console.log(`Đã lưu tools vào schema: master`);
     } catch (error) {
       console.error('Lỗi khi cập nhật setting:', error);
+    }
+
+    // Lưu trial data riêng biệt vào DASHBOARD_TRIAL_APPS (chỉ cho schema hiện tại, không phải master)
+    if (selectedSchema && selectedSchema !== 'master') {
+      try {
+        const trialData = updatedTools
+          .filter(tool => tool.isTrial)
+          .map(tool => ({
+            id: tool.id,
+            name: tool.name,
+            description: tool.description,
+            icon: tool.icon,
+            startDate: tool.startDate,
+            endDate: tool.endDate || tool.trialEndDate,
+            isActive: true
+          }));
+
+        // Lưu trial data vào DASHBOARD_TRIAL_APPS cho schema hiện tại
+        let existingTrial;
+        try {
+          existingTrial = await getSettingByType('DASHBOARD_TRIAL_APPS');
+        } catch (error) {
+          // Nếu chưa có setting, tạo mới
+          existingTrial = { setting: [] };
+        }
+
+        const updatedTrialSettings = {
+          ...existingTrial,
+          type: 'DASHBOARD_TRIAL_APPS',
+          setting: trialData
+        };
+
+        if (existingTrial?.id) {
+          await updateSetting(updatedTrialSettings);
+        } else {
+          await createSetting(updatedTrialSettings);
+        }
+        
+        console.log(`Đã lưu trial data vào DASHBOARD_TRIAL_APPS cho schema: ${selectedSchema}`, trialData);
+      } catch (error) {
+        console.error('Lỗi khi cập nhật trial data:', error);
+      }
+    } else {
+      console.log('Master schema - không lưu trial data');
     }
   };
 
   const handleSaveToolReorder = async (reorderedTools) => {
     setTools(reorderedTools);
 
+    // Tách trial data ra khỏi tools data
+    const toolsWithoutTrialData = reorderedTools.map(tool => {
+      const { isTrial, startDate, endDate, trialEndDate, ...toolWithoutTrial } = tool;
+      return toolWithoutTrial;
+    });
+
     // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
     try {
       // Tạo array mới với thứ tự đã sắp xếp và cập nhật order field
-      const toolsWithOrder = reorderedTools.map((tool, index) => ({
+      const toolsWithOrder = toolsWithoutTrialData.map((tool, index) => ({
         ...tool,
         order: index
       }));
@@ -1551,13 +1606,8 @@ const WikiCanvas = () => {
   };
 
   const handleUpdatePinnedResource = async (newPinnedResourceId) => {
-    console.log('🔍 [DEBUG] handleUpdatePinnedResource called with:', newPinnedResourceId);
-    console.log('🔍 [DEBUG] Current pinnedResourceId state:', pinnedResourceId);
-    console.log('🔍 [DEBUG] Current resources count:', resources.length);
-    console.log('🔍 [DEBUG] Resources setting ID:', resourcesSettingId);
 
     setPinnedResourceId(newPinnedResourceId);
-    console.log('🔍 [DEBUG] Updated pinnedResourceId state to:', newPinnedResourceId);
 
     // Save pinned resource info to settings
     try {
@@ -1566,11 +1616,6 @@ const WikiCanvas = () => {
         pinnedResourceId: newPinnedResourceId
       };
 
-      console.log('🔍 [DEBUG] Saving resource data to settings:', {
-        settingId: resourcesSettingId,
-        type: 'DASHBOARD_RESOURCES',
-        data: resourceData
-      });
 
       const result = await updateSetting({
         id: resourcesSettingId,
@@ -1578,16 +1623,8 @@ const WikiCanvas = () => {
         setting: resourceData
       });
 
-      console.log('✅ [DEBUG] Pinned resource saved successfully:', result);
-      console.log('✅ [DEBUG] Final resource data saved:', resourceData);
     } catch (error) {
-      console.error('❌ [DEBUG] Error saving pinned resource:', error);
-      console.error('❌ [DEBUG] Error details:', {
-        message: error.message,
-        stack: error.stack,
-        settingId: resourcesSettingId,
-        newPinnedResourceId: newPinnedResourceId
-      });
+     
     }
   };
   const handleCancel = () => {
@@ -1651,8 +1688,11 @@ const WikiCanvas = () => {
   const loadTrialApps = async () => {
     try {
       const response = await getSettingByType('DASHBOARD_TRIAL_APPS');
-      if (response?.setting) {
+      console.log('response', response);
+      if (response?.setting && response.setting.length > 0) {
         setTrialApps(response.setting);
+      } else {
+        setTrialApps([]);
       }
     } catch (error) {
       console.error('Error loading trial apps:', error);
@@ -1742,28 +1782,90 @@ const WikiCanvas = () => {
     return found ? found.icon : undefined;
   };
 
+  // Helper: kiểm tra trial app có hết hạn không
+  const isTrialExpired = (trialApp) => {
+    return new Date() > new Date(trialApp.endDate);
+  };
+
   // Helper: kết hợp danh sách app từ schema hiện tại với tên/icon từ schema master
   const combineAppsWithMasterInfo = async (currentSchemaApps) => {
     try {
-      console.log('combineAppsWithMasterInfo called with:', currentSchemaApps.length, 'apps');
+      
+      // Lấy trial data từ DASHBOARD_TRIAL_APPS (chỉ từ schema hiện tại, không phải master)
+      let trialData = [];
+      if (selectedSchema && selectedSchema !== 'master') {
+        try {
+          const trialResponse = await getSettingByType('DASHBOARD_TRIAL_APPS');
+          trialData = trialResponse?.setting || [];
+          
+          // Filter active trials (theo logic của Dashboard.jsx)
+          const activeTrials = trialData.filter(trial => {
+            if (!trial.isActive) return false;
+            return !isTrialExpired(trial);
+          });
+          trialData = activeTrials;
+        } catch (error) {
+        }
+      }
+      
+      // Nếu đang ở schema master, chỉ đảm bảo có đầy đủ thông tin (không có trial data)
+      if (selectedSchema === 'master') {
+        // Khi ở master schema, currentSchemaApps đã là dữ liệu từ master
+        // Chỉ cần đảm bảo có đầy đủ các field cần thiết
+        const enhancedApps = currentSchemaApps.map(app => ({
+          ...app,
+          // Đảm bảo có đầy đủ các field cần thiết
+          name: app.name || app.title || 'Unnamed App',
+          description: app.description || '',
+          icon: app.icon || '🛠️',
+          content1: app.content1 || '',
+          shortcut: app.shortcut || '',
+          tags: app.tags || [],
+          order: app.order || 0,
+          visibility: app.visibility !== undefined ? app.visibility : true,
+          enabled: app.enabled !== undefined ? app.enabled : true,
+        }));
+        return enhancedApps;
+      }
+      
       // Gọi API lấy danh sách app từ schema master
       const masterResponse = await getSchemaTools('master');
       const masterAppsList = masterResponse?.setting || [];
-      console.log('Master apps loaded:', masterAppsList.length, 'apps');
+ setMasterAppsList(masterAppsList);
 
       if (!masterAppsList || masterAppsList.length === 0) {
-        console.log('No master apps found, returning current apps');
+
         return currentSchemaApps;
       }
 
+      // Kết hợp current apps với master data và trial data
       const combinedApps = currentSchemaApps.map(currentApp => {
         // Tìm app tương ứng trong master apps
         const masterApp = masterAppsList.find(masterApp => masterApp.id === currentApp.id);
+        
+        // Tìm trial data cho app này (chỉ từ schema hiện tại)
+        const trialInfo = trialData.find(trial => trial.id === currentApp.id);
 
         if (masterApp) {
-          // Kết hợp: giữ id, tag, enterUrl, content2, showSupport, showInfo từ current
-          // Lấy name, description, icon, content1 từ master
-          console.log(`Combining app ${currentApp.id}: ${currentApp.name} -> ${masterApp.name}`);
+          // Nếu có trial version, thay thế bằng trial version
+          if (trialInfo) {
+            return {
+              ...trialInfo,
+              // Giữ lại các field từ current app
+              tag: "Trial",
+              isTrial: true,
+              trialEndDate: trialInfo.endDate,
+              // Lấy các field từ master
+              content1: masterApp.content1,
+              shortcut: masterApp.shortcut,
+              tags: masterApp.tags,
+              order: masterApp.order,
+              visibility: masterApp.visibility,
+              enabled: masterApp.enabled,
+            };
+          }
+          
+          // Nếu không có trial, kết hợp với master data
           return {
             ...currentApp,
             name: masterApp.name,
@@ -1778,15 +1880,56 @@ const WikiCanvas = () => {
           };
         }
 
-        // Nếu không tìm thấy trong master, giữ nguyên
-        console.log(`App ${currentApp.id} not found in master, keeping original`);
+        // Nếu không tìm thấy trong master, nhưng có trial data
+        if (trialInfo) {
+          return {
+            ...trialInfo,
+            // Giữ lại các field từ current app
+            tag: "Trial",
+            isTrial: true,
+            trialEndDate: trialInfo.endDate,
+          };
+        }
+
+        // Nếu không có master data và không có trial data, giữ nguyên
         return currentApp;
       });
 
-      console.log('Combined apps result:', combinedApps.length, 'apps');
-      return combinedApps;
+      // Thêm trial apps chưa có trong currentSchemaApps (chỉ nếu chưa có trong DASHBOARD_SETTING)
+      const currentAppIds = currentSchemaApps.map(app => app.id);
+      const newTrialApps = trialData
+        .filter(trial => {
+          // Chỉ thêm nếu:
+          // 1. Chưa có trong currentSchemaApps
+          // 2. Chưa có trong masterAppsList (chưa có trong DASHBOARD_SETTING)
+          return !currentAppIds.includes(trial.id) && 
+                 !masterAppsList.some(masterApp => masterApp.id === trial.id);
+        })
+        .map(trial => {
+          const masterApp = masterAppsList.find(masterApp => masterApp.id === trial.id);
+          return {
+            ...trial,
+            tag: "Trial",
+            isTrial: true,
+            trialEndDate: trial.endDate,
+            // Lấy các field từ master nếu có
+            ...(masterApp && {
+              content1: masterApp.content1,
+              shortcut: masterApp.shortcut,
+              tags: masterApp.tags,
+              order: masterApp.order,
+              visibility: masterApp.visibility,
+              enabled: masterApp.enabled,
+            })
+          };
+        });
+
+      // Kết hợp tất cả apps
+      const finalApps = [...combinedApps, ...newTrialApps];
+
+      return finalApps;
     } catch (error) {
-      console.error('Error getting master apps:', error);
+      console.error('❌ [DEBUG] Error in combineAppsWithMasterInfo:', error);
       // Nếu có lỗi, trả về danh sách gốc
       return currentSchemaApps;
     }
@@ -2693,7 +2836,7 @@ const WikiCanvas = () => {
 
   // Menu items cho Settings dropdown
   const settingsMenuItems = [
-    ( currentUser?.isSuperAdmin) && {
+    ...(currentUser?.isSuperAdmin ? [{
       key: 'tool-reorder',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2702,8 +2845,8 @@ const WikiCanvas = () => {
         </div>
       ),
       onClick: () => setShowToolReorderModal(true),
-    },
-    (currentUser?.isSuperAdmin) && {
+    }] : []),
+    ...(currentUser?.isSuperAdmin ? [{
       key: 'task-checklist',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2712,9 +2855,8 @@ const WikiCanvas = () => {
         </div>
       ),
       onClick: () => setShowTaskManagementModal(true),
-    },
-    (currentUser?.isSuperAdmin) && {
-
+    }] : []),
+    ...(currentUser?.isSuperAdmin ? [{
       key: 'topbar-bg-image',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2730,8 +2872,8 @@ const WikiCanvas = () => {
         setTopbarBgPendingFile(null);
         setShowTopbarBgModal(true);
       },
-    },
-    (currentUser?.isSuperAdmin) && {
+    }] : []),
+    ...(currentUser?.isSuperAdmin ? [{
       key: 'topbar-text-color',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2743,8 +2885,8 @@ const WikiCanvas = () => {
         setTempTopbarTextColor(topbarTextColor || '');
         setShowTopbarTextColorModal(true);
       },
-    },
-    (currentUser?.isSuperAdmin) && {
+    }] : []),
+    ...(currentUser?.isSuperAdmin ? [{
       key: 'statusbar-theme',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2753,8 +2895,8 @@ const WikiCanvas = () => {
         </div>
       ),
       onClick: handleOpenStatusBarThemeModal,
-    },
-    (currentUser?.isSuperAdmin) && {
+    }] : []),
+    ...(currentUser?.isSuperAdmin ? [{
       key: 'tag-management-settings',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2763,8 +2905,8 @@ const WikiCanvas = () => {
         </div>
       ),
       onClick: () => setShowTagManagementModal(true),
-    },
-    (currentUser?.isSuperAdmin) && {
+    }] : []),
+    ...(currentUser?.isSuperAdmin ? [{
       key: 'tool-settings',
       label: (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -2773,7 +2915,7 @@ const WikiCanvas = () => {
         </div>
       ),
       onClick: handleOpenToolSettingsModal,
-    },
+    }] : []),
   ];
 
   return (
@@ -3766,7 +3908,11 @@ const WikiCanvas = () => {
                     {/* Divider and Available Apps Section */}
                     {activeTab === 'app' &&
                       (currentUser?.isSuperAdmin || currentUser?.isAdmin || allowedAppIds.length > 0) &&
-                      (getAvailableApps().length > 0 || getExpiredAppsForDisplay().length > 0) && (
+                      (() => {
+                        const availableApps = getAvailableApps();
+                        const expiredApps = getExpiredAppsForDisplay();
+                        return availableApps.length > 0 || expiredApps.length > 0;
+                      })() && (
                         <>
                           <div style={{
                             width: '100%',
@@ -3806,45 +3952,60 @@ const WikiCanvas = () => {
                           <div className={styles.toolsWrapper}>
                             <div className={styles.toolsList}>
                               {/* Available apps (not in trial) */}
-                              {getAvailableApps().map((app) => (
-                                <div
-                                  key={app.id}
-                                  className={styles.toolCard + ' ' + styles.toolCardHover}
-                                  onClick={() => {
-                                    if (currentUser.isSuperAdmin || currentUser.isAdmin) {
-                                      handleAppClick(app);
-                                    } else {
-                                      message.error('Bạn cần có quyền admin để kích hoạt');
-                                    }
-                                  }}
-                                  style={{
-                                    cursor: 'pointer',
-                                    opacity: 0.8,
-                                    border: '2px dashed #A3A3A3'
-                                  }}
-                                >
-                                  <div className={styles.toolCardItem}>
-                                    <div className={styles.toolIcon}>
-                                      {app.icon ? (
-                                        (() => {
-                                          const iconSrc = getIconSrcById(app);
-                                          return iconSrc ? (
-                                            <img src={iconSrc} alt={app.name} height={55} width={'auto'} />
-                                          ) : (
-                                            <span style={{ fontSize: '40px' }}>{app.icon}</span>
-                                          );
-                                        })()
-                                      ) : (
-                                        <span style={{ fontSize: '40px' }}>🛠️</span>
-                                      )}
+                              {(  () => {
+                                const availableApps = getAvailableApps();
+                                console.log('availableApps', availableApps);
+                                return availableApps.map((app) => {
+                                // Tìm thông tin từ master schema để hiển thị đúng icon và nội dung
+                                const masterApp = masterAppsList.find(tool => tool.id === app.id);
+                                const displayApp = masterApp ? {
+                                  ...app,
+                                  name: masterApp.name,
+                                  description: masterApp.description,
+                                  icon: masterApp.icon,
+                                  content1: masterApp.content1,
+                                  content2: masterApp.content2
+                                } : app;
+
+                                return (
+                                  <div
+                                    key={app.id}
+                                    className={styles.toolCard + ' ' + styles.toolCardHover}
+                                    onClick={() => {
+                                      if (currentUser.isSuperAdmin || currentUser.isAdmin) {
+                                        handleAppClick(app);
+                                      } else {
+                                        message.error('Bạn cần có quyền admin để kích hoạt');
+                                      }
+                                    }}
+                                    style={{
+                                      cursor: 'pointer',
+                                      opacity: 0.8,
+                                      border: '2px dashed #A3A3A3'
+                                    }}
+                                  >
+                                    <div className={styles.toolCardItem}>
+                                      <div className={styles.toolIcon}>
+                                        {displayApp.icon ? (
+                                          (() => {
+                                            const iconSrc = getIconSrcById(displayApp);
+                                            return iconSrc ? (
+                                              <img src={iconSrc} alt={displayApp.name} height={55} width={'auto'} />
+                                            ) : (
+                                              <span style={{ fontSize: '40px' }}>{displayApp.icon}</span>
+                                            );
+                                          })()
+                                        ) : (
+                                          <span style={{ fontSize: '40px' }}>🛠️</span>
+                                        )}
+                                      </div>
+                                      <div className={styles.box}>
+                                        <h3 className={styles.toolTitleItem}>{displayApp.name}</h3>
+                                      </div>
+                                      <div className={styles.toolCardDesc}>
+                                        <p className={styles.toolDescItem}>{displayApp.description}</p>
+                                      </div>
                                     </div>
-                                    <div className={styles.box}>
-                                      <h3 className={styles.toolTitleItem}>{app.name}</h3>
-                                    </div>
-                                    <div className={styles.toolCardDesc}>
-                                      <p className={styles.toolDescItem}>{app.description}</p>
-                                    </div>
-                                  </div>
 
                                   <div className={styles.toolActionButtons} onClick={(e) => e.stopPropagation()}>
                                     {app.isExpired ? (
@@ -3883,43 +4044,59 @@ const WikiCanvas = () => {
                                     )}
                                   </div>
                                 </div>
-                              ))}
+                                );
+                                });
+                              })()}
 
                               {/* Expired trial apps */}
-                              {getExpiredAppsForDisplay().map((app) => (
-                                <div
-                                  key={app.id}
-                                  className={styles.toolCard + ' ' + styles.toolCardHover}
-                                  onClick={() => {
-                                    handleAppClick(app);
-                                  }}
-                                  style={{
-                                    cursor: 'pointer',
-                                    border: '2px dashed #ef4444'
-                                  }}
-                                >
-                                  <div className={styles.toolCardItem}>
-                                    <div className={styles.toolIcon}>
-                                      {app.icon ? (
-                                        (() => {
-                                          const iconSrc = getIconSrcById(app);
-                                          return iconSrc ? (
-                                            <img src={iconSrc} alt={app.name} height={55} width={'auto'} />
-                                          ) : (
-                                            <span style={{ fontSize: '40px' }}>{app.icon}</span>
-                                          );
-                                        })()
-                                      ) : (
-                                        <span style={{ fontSize: '40px' }}>🛠️</span>
-                                      )}
+                              {getExpiredAppsForDisplay().map((app) => {
+                                // Tìm thông tin từ master schema để hiển thị đúng icon và nội dung
+                      
+                                const masterApp = masterAppsList.find(tool => tool.id === app.id);
+                                console.log('masterApp', masterApp);
+                                const displayApp = masterApp ? {
+                                  ...app,
+                                  name: masterApp.name,
+                                  description: masterApp.description,
+                                  icon: masterApp.icon,
+                                  content1: masterApp.content1,
+                                  content2: masterApp.content2
+                                } : app;
+
+                                return (
+                                  <div
+                                    key={app.id}
+                                    className={styles.toolCard + ' ' + styles.toolCardHover}
+                                    onClick={() => {
+                                      handleAppClick(app);
+                                    }}
+                                    style={{
+                                      cursor: 'pointer',
+                                      border: '2px dashed #ef4444'
+                                    }}
+                                  >
+                                    <div className={styles.toolCardItem}>
+                                      <div className={styles.toolIcon}>
+                                        {displayApp.icon ? (
+                                          (() => {
+                                            const iconSrc = getIconSrcById(displayApp);
+                                            return iconSrc ? (
+                                              <img src={iconSrc} alt={displayApp.name} height={55} width={'auto'} />
+                                            ) : (
+                                              <span style={{ fontSize: '40px' }}>{displayApp.icon}</span>
+                                            );
+                                          })()
+                                        ) : (
+                                          <span style={{ fontSize: '40px' }}>🛠️</span>
+                                        )}
+                                      </div>
+                                      <div className={styles.box}>
+                                        <h3 className={styles.toolTitleItem}>{displayApp.name}</h3>
+                                      </div>
+                                      <div className={styles.toolCardDesc}>
+                                        <p className={styles.toolDescItem}>{displayApp.description}</p>
+                                      </div>
                                     </div>
-                                    <div className={styles.box}>
-                                      <h3 className={styles.toolTitleItem}>{app.name}</h3>
-                                    </div>
-                                    <div className={styles.toolCardDesc}>
-                                      <p className={styles.toolDescItem}>{app.description}</p>
-                                    </div>
-                                  </div>
 
                                   <div className={styles.toolActionButtons} onClick={(e) => e.stopPropagation()}>
                                     <button
@@ -3940,7 +4117,8 @@ const WikiCanvas = () => {
                                     </button>
                                   </div>
                                 </div>
-                              ))}
+                                );
+                              })}
                             </div>
                           </div>
                         </>
@@ -6721,7 +6899,16 @@ const WikiCanvas = () => {
               <div style={{ fontSize: '48px', marginBottom: '10px' }}>
                 {selectedTrialApp.icon ? (
                   (() => {
-                    const iconSrc = getIconSrcById(selectedTrialApp);
+                      const masterApp = masterAppsList.find(tool => tool.id === selectedTrialApp.id);
+                      const displayApp = masterApp ? {
+                        ...selectedTrialApp,
+                        name: masterApp.name,
+                        description: masterApp.description,
+                        icon: masterApp.icon,
+                        content1: masterApp.content1,
+                        content2: masterApp.content2
+                      } : selectedTrialApp;
+                    const iconSrc = getIconSrcById(displayApp);
                     return iconSrc ? (
                       <img src={iconSrc} alt={selectedTrialApp.name} height={55} width={'auto'} />
                     ) : (

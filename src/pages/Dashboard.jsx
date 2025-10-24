@@ -32,6 +32,7 @@ import TaskManagementModal from '../components/TaskManagementModal/TaskManagemen
 import ToolReorderModal from '../components/ToolReorderModal/ToolReorderModal';
 const { Text } = Typography;
 import { FULL_DASHBOARD_APPS } from '../CONST.js';
+import CheckUserInfo from '../checkInfo/CheckUserInfo.jsx';
 
 const Dashboard = () => {
   const location = useLocation();
@@ -552,7 +553,6 @@ const Dashboard = () => {
   // Xóa useEffect gây infinite loop - thay vào đó xử lý trực tiếp trong onChange
   const fetchDashboardSetting = async () => {
     try {
-      console.log('fetchDashboardSetting called - selectedSchema:', selectedSchema, 'isSuperAdmin:', currentUser?.isSuperAdmin);
       let existing;
       if (activeTab === 'app') {
         existing = await getSettingByType('DASHBOARD_SETTING');
@@ -566,54 +566,28 @@ const Dashboard = () => {
 
       // Load resources from backend using getSchemaResources
       try {
-        console.log('🔍 [DEBUG] Fetching resources from master schema...');
+    
         const resourcesData = await getSchemaResources('master');
-        console.log('🔍 [DEBUG] Raw resources data from API:', resourcesData);
 
         if (resourcesData && resourcesData.setting) {
-          console.log('🔍 [DEBUG] Setting exists, checking format...');
-          console.log('🔍 [DEBUG] Setting type:', typeof resourcesData.setting);
-          console.log('🔍 [DEBUG] Is array?', Array.isArray(resourcesData.setting));
-          console.log('🔍 [DEBUG] Has resources property?', resourcesData.setting.resources !== undefined);
-          console.log('🔍 [DEBUG] Has pinnedResourceId property?', resourcesData.setting.pinnedResourceId !== undefined);
 
           // Check if the setting is the new format (with pinnedResourceId) or old format (just resources array)
           if (resourcesData.setting.resources && resourcesData.setting.pinnedResourceId !== undefined) {
-            // New format: { resources: [...], pinnedResourceId: "..." }
-            console.log('🔍 [DEBUG] Using NEW format - loading resources with pinned info');
-            console.log('🔍 [DEBUG] Resources count:', resourcesData.setting.resources.length);
-            console.log('🔍 [DEBUG] Pinned resource ID:', resourcesData.setting.pinnedResourceId);
 
             setResources(resourcesData.setting.resources);
             setPinnedResourceId(resourcesData.setting.pinnedResourceId);
 
-            console.log('✅ [DEBUG] Successfully loaded resources with pinned info:', {
-              resourcesCount: resourcesData.setting.resources.length,
-              pinnedResourceId: resourcesData.setting.pinnedResourceId,
-              resourceIds: resourcesData.setting.resources.map(r => r.id)
-            });
           } else if (Array.isArray(resourcesData.setting)) {
             // Old format: just resources array
-            console.log('🔍 [DEBUG] Using OLD format - loading resources array only');
-            console.log('🔍 [DEBUG] Resources count:', resourcesData.setting.length);
 
             setResources(resourcesData.setting);
             setPinnedResourceId(null);
-
-            console.log('✅ [DEBUG] Successfully loaded resources (old format):', {
-              resourcesCount: resourcesData.setting.length,
-              pinnedResourceId: null,
-              resourceIds: resourcesData.setting.map(r => r.id)
-            });
           } else {
-            console.log('⚠️ [DEBUG] Unknown format detected, treating as old format');
             setResources(resourcesData.setting);
             setPinnedResourceId(null);
           }
           setResourcesSettingId(resourcesData.id); // Store the setting ID
-          console.log('🔍 [DEBUG] Resources setting ID:', resourcesData.id);
         } else {
-          console.log('🔍 [DEBUG] No setting found, creating new one...');
           // Create DASHBOARD_RESOURCES setting if it doesn't exist
           const newSetting = await createSetting({
             type: 'DASHBOARD_RESOURCES',
@@ -623,12 +597,9 @@ const Dashboard = () => {
             }
           });
           setResourcesSettingId(newSetting.id); // Store the new setting ID
-          console.log('✅ [DEBUG] Created new resources setting with ID:', newSetting.id);
         }
       } catch (error) {
-        console.error('❌ [DEBUG] Error loading resources:', error);
         try {
-          console.log('🔍 [DEBUG] Attempting to create new setting after error...');
           // Create DASHBOARD_RESOURCES setting if it doesn't exist
           const newSetting = await createSetting({
             type: 'DASHBOARD_RESOURCES',
@@ -638,14 +609,11 @@ const Dashboard = () => {
             }
           });
           setResourcesSettingId(newSetting.id); // Store the new setting ID
-          console.log('✅ [DEBUG] Created new resources setting after error with ID:', newSetting.id);
-        } catch (createError) {
-          console.error('❌ [DEBUG] Error creating DASHBOARD_RESOURCES setting:', createError);
+        } catch (createError) { 
         }
       }
 
       if (existing.setting) {
-        console.log('Setting tools from existing setting:', existing.setting);
         
         // Luôn sử dụng array format, thêm order field nếu chưa có
         let toolsToProcess = Array.isArray(existing.setting) ? existing.setting : Object.values(existing.setting).filter(tool => tool && tool.id);
@@ -663,7 +631,6 @@ const Dashboard = () => {
         const combinedTools = await combineAppsWithMasterInfo(toolsToProcess);
         setTools(combinedTools);
       } else {
-        console.log('Creating new dashboard setting');
         // Tạo array format với order field
         const toolsWithOrder = dashboardApps.map((tool, index) => ({
           ...tool,
@@ -674,7 +641,6 @@ const Dashboard = () => {
           ...existing,
           setting: toolsWithOrder
         }).then(res => {
-          console.log('Updated:', res);
         });
         // Kết hợp với thông tin từ schema master cho user thường
         const combinedTools = await combineAppsWithMasterInfo(toolsWithOrder);
@@ -711,25 +677,22 @@ const Dashboard = () => {
         setResourcesSettingId(resourcesData.id);
       }
     } catch (error) {
-      console.log('Error loading master schema resources:', error);
+      console.error('Error loading master schema resources:', error);
     }
   };
   // Khởi tạo tools theo schema hiện tại khi component mount
   useEffect(() => {
     if (currentUser?.isSuperAdmin && selectedSchema && selectedSchema !== 'master' && activeTab === 'app') {
-      console.log('Initializing tools for schema:', selectedSchema.path);
       // Lấy tools thực tế được cấu hình cho schema này
       const initializeToolsForSchema = async () => {
         setIsSwitchingSchema(true);
         try {
           const schemaToolsResponse = await getSchemaTools(selectedSchema.path);
-          console.log('Initial schema tools response:', schemaToolsResponse);
 
           if (schemaToolsResponse && schemaToolsResponse.setting && schemaToolsResponse.setting.length > 0) {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
             setTools(combinedApps);
-            console.log(`Initialized with configured tools for schema ${selectedSchema.path}: ${combinedApps.length} apps`);
           } else {
             // Fallback: sử dụng logic lọc cũ nếu chưa có cấu hình
             let schemaSpecificApps;
@@ -751,7 +714,6 @@ const Dashboard = () => {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
             setTools(combinedApps);
-            console.log(`Initialized with fallback filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
           }
         } catch (error) {
           console.error('Lỗi khi khởi tạo tools cho schema:', error);
@@ -775,7 +737,6 @@ const Dashboard = () => {
           // Kết hợp với thông tin từ schema master
           const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
           setTools(combinedApps);
-          console.log(`Error fallback initialization: using filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
         } finally {
           setIsSwitchingSchema(false);
         }
@@ -794,7 +755,6 @@ const Dashboard = () => {
     try {
       // Load tools từ setting của schema master
       await fetchDashboardSetting();
-      console.log('Loaded master schema tools from settings');
     } catch (error) {
       console.error('Error loading master schema tools:', error);
     } finally {
@@ -878,18 +838,12 @@ const Dashboard = () => {
     const loadDashboardColorSettings = async () => {
       try {
         const existing = await getSettingByType('DASHBOARD_COLORS');
-        console.log('Loading dashboard colors:', existing);
 
         if (existing && existing.setting && typeof existing.setting === 'object') {
           const { background } = existing.setting;
           if (background && background.gradient && background.gridColor !== undefined && background.gridOpacity !== undefined) {
-            console.log('Setting dashboard colors:', existing.setting);
             setDashboardColors({ background });
-          } else {
-            console.log('Invalid dashboard colors structure, using defaults');
-          }
-        } else {
-          console.log('No existing dashboard colors found, using defaults');
+          } 
         }
       } catch (error) {
         console.error('Error loading initial dashboard color settings:', error);
@@ -904,13 +858,10 @@ const Dashboard = () => {
     const loadBackgroundSettings = async () => {
       try {
         const existing = await getSchemaBackground('master');
-        console.log('Loading dashboard background from master schema:', existing);
 
         if (existing && existing.setting && typeof existing.setting === 'string') {
-          console.log('Setting dashboard background:', existing.setting);
           setBackgroundImageUrl(existing.setting);
         } else {
-          console.log('No existing dashboard background found, using default');
           setBackgroundImageUrl('/simple_background.png');
         }
       } catch (error) {
@@ -927,7 +878,6 @@ const Dashboard = () => {
     const loadTopbarTheme = async () => {
       try {
         const existing = await getSettingByType('TOPBAR_THEME');
-        console.log('Loading topbar theme:', existing);
 
         if (existing && existing.setting) {
           setTopbarTheme(existing.setting);
@@ -940,7 +890,6 @@ const Dashboard = () => {
     const loadStatusBarTheme = async () => {
       try {
         const existing = await getSettingByType('STATUS_BAR_THEME');
-        console.log('Loading status bar theme:', existing);
 
         if (existing && existing.setting) {
           setStatusBarTheme(existing.setting);
@@ -1003,7 +952,6 @@ const Dashboard = () => {
           setSchemaError(null);
           const data = await getAllPath();
           const schemas = data?.data || [];
-          console.log('Schemas:', schemas);
           if (schemas && Array.isArray(schemas)) {
             // Lọc chỉ những schema có status = "true" và show = true
             const activeSchemas = schemas.filter(schema =>
@@ -1090,7 +1038,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (settingsLoaded) {
       const hasVisitedDashboard = localStorage.getItem('firstTimeDashboardPopup');
-      console.log("hasVisitedDashboard", hasVisitedDashboard);
       if (!hasVisitedDashboard) {
         setShowFirstTimePopup(true);
       }
@@ -1242,7 +1189,6 @@ const Dashboard = () => {
     const updatedTools = tools.map(tool =>
       tool.id === editingTool.id ? { ...editingTool, tag: editingTool.tag ?? null } : tool
     );
-    console.log('Saving tools:', updatedTools);
     setTools(updatedTools);
     setEditingTool(null);
 
@@ -1304,7 +1250,6 @@ const Dashboard = () => {
   const handleDeleteTool = async (tool) => {
     // Xóa tool khỏi danh sách
     const updatedTools = tools.filter(t => t.id !== tool.id);
-    console.log('Deleting tool:', tool.name, 'Remaining tools:', updatedTools.length);
     setTools(updatedTools);
 
     // Lưu lên backend
@@ -1324,7 +1269,6 @@ const Dashboard = () => {
         ...existing,
         setting: updatedTools
       });
-      console.log('Tool deleted successfully from backend');
     } catch (error) {
       console.error('Lỗi khi xóa tool:', error);
       // Rollback nếu có lỗi
@@ -1413,13 +1357,7 @@ const Dashboard = () => {
   };
 
   const handleUpdatePinnedResource = async (newPinnedResourceId) => {
-    console.log('🔍 [DEBUG] handleUpdatePinnedResource called with:', newPinnedResourceId);
-    console.log('🔍 [DEBUG] Current pinnedResourceId state:', pinnedResourceId);
-    console.log('🔍 [DEBUG] Current resources count:', resources.length);
-    console.log('🔍 [DEBUG] Resources setting ID:', resourcesSettingId);
-
     setPinnedResourceId(newPinnedResourceId);
-    console.log('🔍 [DEBUG] Updated pinnedResourceId state to:', newPinnedResourceId);
 
     // Save pinned resource info to settings
     try {
@@ -1428,28 +1366,14 @@ const Dashboard = () => {
         pinnedResourceId: newPinnedResourceId
       };
 
-      console.log('🔍 [DEBUG] Saving resource data to settings:', {
-        settingId: resourcesSettingId,
-        type: 'DASHBOARD_RESOURCES',
-        data: resourceData
-      });
-
       const result = await updateSetting({
         id: resourcesSettingId,
         type: 'DASHBOARD_RESOURCES',
         setting: resourceData
       });
 
-      console.log('✅ [DEBUG] Pinned resource saved successfully:', result);
-      console.log('✅ [DEBUG] Final resource data saved:', resourceData);
     } catch (error) {
-      console.error('❌ [DEBUG] Error saving pinned resource:', error);
-      console.error('❌ [DEBUG] Error details:', {
-        message: error.message,
-        stack: error.stack,
-        settingId: resourcesSettingId,
-        newPinnedResourceId: newPinnedResourceId
-      });
+      console.error('Error saving pinned resource:', error);
     }
   };
   const handleCancel = () => {
@@ -1476,7 +1400,6 @@ const Dashboard = () => {
 
   // Handle tag selection for multiple tags
   const handleTagToggle = (tagValue, isEditing = false) => {
-    console.log('handleTagToggle called with:', tagValue, isEditing);
     if (isEditing) {
       setEditingTool(prev => {
         const currentTags = prev.tags || [];
@@ -1607,14 +1530,11 @@ const Dashboard = () => {
   // Helper: kết hợp danh sách app từ schema hiện tại với tên/icon từ schema master
   const combineAppsWithMasterInfo = async (currentSchemaApps) => {
     try {
-      console.log('combineAppsWithMasterInfo called with:', currentSchemaApps.length, 'apps');
       // Gọi API lấy danh sách app từ schema master
       const masterResponse = await getSchemaTools('master');
       const masterAppsList = masterResponse?.setting || [];
-      console.log('Master apps loaded:', masterAppsList.length, 'apps');
 
       if (!masterAppsList || masterAppsList.length === 0) {
-        console.log('No master apps found, returning current apps');
         return currentSchemaApps;
       }
 
@@ -1625,7 +1545,6 @@ const Dashboard = () => {
         if (masterApp) {
           // Kết hợp: giữ id, tag, enterUrl, content2, showSupport, showInfo từ current
           // Lấy name, description, icon, content1 từ master
-          console.log(`Combining app ${currentApp.id}: ${currentApp.name} -> ${masterApp.name}`);
           return {
             ...currentApp,
             name: masterApp.name,
@@ -1639,11 +1558,9 @@ const Dashboard = () => {
         }
 
         // Nếu không tìm thấy trong master, giữ nguyên
-        console.log(`App ${currentApp.id} not found in master, keeping original`);
         return currentApp;
       });
 
-      console.log('Combined apps result:', combinedApps.length, 'apps');
       return combinedApps;
     } catch (error) {
       console.error('Error getting master apps:', error);
@@ -1678,7 +1595,6 @@ const Dashboard = () => {
   const handleOpenColorModal = async () => {
     try {
       const existing = await getSettingByType('SettingColor');
-      console.log('Fetched color setting:', existing);
 
       if (existing && existing.setting && Array.isArray(existing.setting)) {
         // Validate that each item has id and color properties
@@ -1690,13 +1606,8 @@ const Dashboard = () => {
 
         if (isValidColorArray) {
           setSelectedColors(existing.setting);
-          console.log('Setting colors:', existing.setting);
-        } else {
-          console.log('Invalid color array structure, using defaults');
-        }
-      } else {
-        console.log('No existing color setting found or invalid format');
-      }
+        } 
+      } 
     } catch (error) {
       console.error('Lỗi khi lấy cài đặt màu:', error);
     }
@@ -1706,17 +1617,13 @@ const Dashboard = () => {
   // Hàm xử lý lưu màu
   const handleSaveColors = async () => {
     try {
-      console.log('Saving colors:', selectedColors);
       const existing = await getSettingByType('SettingColor');
-      console.log('Existing setting:', existing);
 
       if (existing && existing.id) {
         const updatedSetting = { ...existing, setting: selectedColors };
-        console.log('Updating setting:', updatedSetting);
         await updateSetting(updatedSetting);
       } else {
         const newSetting = { type: 'SettingColor', setting: selectedColors };
-        console.log('Creating new setting:', newSetting);
         await createSetting(newSetting);
       }
       setShowColorModal(false);
@@ -1729,19 +1636,13 @@ const Dashboard = () => {
   const handleOpenBackgroundModal = async () => {
     try {
       const existing = await getSettingByType('DASHBOARD_COLORS');
-      console.log('Fetched dashboard color setting:', existing);
 
       if (existing && existing.setting && typeof existing.setting === 'object') {
         const { background } = existing.setting;
         if (background && background.gradient && background.gridColor !== undefined && background.gridOpacity !== undefined) {
           setDashboardColors({ background });
-          console.log('Setting dashboard colors:', existing.setting);
-        } else {
-          console.log('Invalid dashboard colors structure, using current state');
-        }
-      } else {
-        console.log('No existing dashboard color setting found, using current state');
-      }
+        } 
+      } 
     } catch (error) {
       console.error('Lỗi khi lấy cài đặt màu dashboard:', error);
     }
@@ -1751,17 +1652,13 @@ const Dashboard = () => {
   // Hàm xử lý lưu dashboard colors
   const handleSaveBackgroundColors = async () => {
     try {
-      console.log('Saving dashboard colors:', dashboardColors);
       const existing = await getSettingByType('DASHBOARD_COLORS');
-      console.log('Existing dashboard setting:', existing);
 
       if (existing && existing.id) {
         const updatedSetting = { ...existing, setting: dashboardColors };
-        console.log('Updating dashboard setting:', updatedSetting);
         await updateSetting(updatedSetting);
       } else {
         const newSetting = { type: 'DASHBOARD_COLORS', setting: dashboardColors };
-        console.log('Creating new dashboard setting:', newSetting);
         await createSetting(newSetting);
       }
       setShowBackgroundModal(false);
@@ -1783,17 +1680,13 @@ const Dashboard = () => {
   // Hàm xử lý mở modal guideline settings
   const handleOpenGuidelineModal = async () => {
     try {
-      console.log('Opening guideline modal...');
       const existing = await getSettingByType('GUIDELINE_SETTING');
-      console.log('Existing guideline setting:', existing);
 
       if (existing && existing.setting) {
         const { imageUrl, markdownText } = existing.setting;
-        console.log('Loading existing guideline data:', { imageUrl, markdownText });
         setGuidelineImageUrl(imageUrl || '');
         setGuidelineMarkdown(markdownText || '');
       } else {
-        console.log('No existing guideline setting found, using defaults');
         setGuidelineImageUrl('');
         setGuidelineMarkdown('');
       }
@@ -1807,20 +1700,16 @@ const Dashboard = () => {
 
   // Hàm xử lý upload image
   const handleImageUpload = (file) => {
-    console.log('Image upload triggered:', file);
     if (file && file.type.startsWith('image/')) {
-      console.log('Valid image file detected:', file.name, file.type, file.size);
       setGuidelineImage(file);
 
       // Create a preview URL
       const reader = new FileReader();
       reader.onload = (e) => {
-        console.log('Image preview URL created');
         setGuidelineImageUrl(e.target.result);
       };
       reader.readAsDataURL(file);
     } else {
-      console.log('Invalid file type:', file?.type);
       Modal.error({ title: 'Lỗi', content: 'Vui lòng chọn file hình ảnh!' });
     }
     return false; // Prevent default upload behavior
@@ -1829,13 +1718,6 @@ const Dashboard = () => {
   // Hàm xử lý lưu guideline settings
   const handleSaveGuideline = async () => {
     try {
-      console.log('Saving guideline settings...');
-      console.log('Current state:', {
-        guidelineImage,
-        guidelineMarkdown,
-        guidelineImageUrl
-      });
-
       // For now, we'll use the preview URL as the image URL
       // In a real implementation, you'd upload the file to a server
       const imageUrl = guidelineImageUrl;
@@ -1845,21 +1727,14 @@ const Dashboard = () => {
         markdownText: guidelineMarkdown
       };
 
-      console.log('Guideline data to save:', guidelineData);
-
       const existing = await getSettingByType('GUIDELINE_SETTING');
-      console.log('Existing setting for update:', existing);
 
       if (existing && existing.id) {
         const updatedSetting = { ...existing, setting: guidelineData };
-        console.log('Updating existing setting:', updatedSetting);
         await updateSetting(updatedSetting);
-        console.log('Guideline setting updated successfully');
       } else {
         const newSetting = { type: 'GUIDELINE_SETTING', setting: guidelineData };
-        console.log('Creating new setting:', newSetting);
         await createSetting(newSetting);
-        console.log('Guideline setting created successfully');
       }
 
       setShowGuidelineModal(false);
@@ -1874,14 +1749,11 @@ const Dashboard = () => {
   const handleOpenBackgroundSettingsModal = async () => {
     try {
       const existing = await getSchemaBackground('master');
-      console.log('Fetched dashboard background setting from master schema:', existing);
 
       if (existing && existing.setting && typeof existing.setting === 'string') {
         setBackgroundImageUrl(existing.setting);
-        console.log('Setting background URL:', existing.setting);
       } else {
         setBackgroundImageUrl('/simple_background.png');
-        console.log('No existing background found, using default');
       }
     } catch (error) {
       console.error('Lỗi khi lấy cài đặt background dashboard:', error);
@@ -1893,20 +1765,17 @@ const Dashboard = () => {
   // Hàm xử lý lưu background settings
   const handleSaveBackgroundSettings = async () => {
     try {
-      console.log('Saving dashboard background:', backgroundImageUrl);
 
       // Check if setting already exists using regular getSettingByType
       const existing = await getSettingByType('DASHBOARD_BACKGROUND');
 
       if (existing && existing.id) {
-        console.log('Updating existing background setting...');
         await updateSetting({
           id: existing.id,
           type: 'DASHBOARD_BACKGROUND',
           setting: backgroundImageUrl
         });
       } else {
-        console.log('Creating new background setting...');
         await createSetting({
           type: 'DASHBOARD_BACKGROUND',
           setting: backgroundImageUrl
@@ -1950,7 +1819,6 @@ const Dashboard = () => {
     try {
       const BASE_URL = import.meta.env.VITE_API_URL;
       const resp = await instance.post(`${BASE_URL}/api/path/reset-from-external-db`);
-      console.log('resp', resp);
       if (resp.data.data.success) {
         Modal.success({ title: 'Thành công', content: 'Đã reset dữ liệu thành công.' });
         navigate('/');
@@ -1977,7 +1845,6 @@ const Dashboard = () => {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
             setTools(combinedApps);
-            console.log(`Refreshed: using configured tools for schema ${selectedSchema.path}: ${combinedApps.length} apps`);
           } else {
             // Fallback: sử dụng logic lọc cũ
             let schemaSpecificApps;
@@ -1999,7 +1866,6 @@ const Dashboard = () => {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
             setTools(combinedApps);
-            console.log(`Refresh fallback: using filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
           }
         }
       } catch (error) {
@@ -2024,7 +1890,6 @@ const Dashboard = () => {
         // Kết hợp với thông tin từ schema master
         const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
         setTools(combinedApps);
-        console.log(`Refresh error fallback: using filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
       } finally {
         setIsSwitchingSchema(false);
       }
@@ -2318,9 +2183,7 @@ const Dashboard = () => {
   // Hàm xử lý mở modal context instruction settings
   const handleOpenContextInstructionModal = async () => {
     try {
-      console.log('Opening context instruction modal...');
       const existing = await getSettingByType('CONTEXT_INSTRUCTION_SETTING');
-      console.log('Existing context instruction setting:', existing);
 
       if (existing && existing.setting) {
         setContextInstruction(existing.setting.instruction || '');
@@ -2371,7 +2234,6 @@ const Dashboard = () => {
   // Hàm xử lý lưu topbar theme settings
   const handleSaveTopbarTheme = async (selectedTheme) => {
     try {
-      console.log('Saving topbar theme:', selectedTheme);
 
       const existing = await getSettingByType('TOPBAR_THEME');
 
@@ -2399,7 +2261,6 @@ const Dashboard = () => {
   // Hàm xử lý lưu status bar theme settings
   const handleSaveStatusBarTheme = async (selectedTheme) => {
     try {
-      console.log('Saving status bar theme:', selectedTheme);
 
       const existing = await getSettingByType('STATUS_BAR_THEME');
 
@@ -2428,8 +2289,6 @@ const Dashboard = () => {
   // Hàm xử lý lưu context instruction settings
   const handleSaveContextInstruction = async () => {
     try {
-      console.log('Saving context instruction settings...');
-      console.log('Current context instruction:', contextInstruction);
 
       const settingData = {
         type: 'CONTEXT_INSTRUCTION_SETTING',
@@ -2438,28 +2297,22 @@ const Dashboard = () => {
         }
       };
 
-      console.log('Setting data to save:', settingData);
-
       const existing = await getSettingByType('CONTEXT_INSTRUCTION_SETTING');
-      console.log('Existing setting:', existing);
 
       let result;
       if (existing && existing.id) {
-        console.log('Updating existing setting...');
         result = await updateSetting({
           ...settingData,
           id: existing.id
         });
       } else {
-        console.log('Creating new setting...');
         result = await createSetting(settingData);
       }
 
-      console.log('Save result:', result);
       setShowContextInstructionModal(false);
 
       // Show success message
-      console.log('Context instruction settings saved successfully!');
+
     } catch (error) {
       console.error('Error saving context instruction settings:', error);
     }
@@ -2606,22 +2459,7 @@ const Dashboard = () => {
     //   ),
     //   onClick: handleOpenBackgroundModal,
     // },
-    ((import.meta.env.VITE_DOMAIN_URL == 'https://demo.bcanvas.vn' || import.meta.env.VITE_DOMAIN_URL == 'http://localhost:5173') &&
-    {
-      key: 'reset-du-lieu-demo',
-      label: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Palette size={16} />
-          <span>Reset dữ liệu demo</span>
-        </div>
-      ),
-      popConfirm: {
-        title: 'Bạn có chắc chắn muốn reset dữ liệu demo không?',
-        onConfirm: () => {
-          resetDuLieuDemo();
-        }
-      }
-    }),
+
     {
       key: 'guide',
       label: (
@@ -2698,6 +2536,7 @@ const Dashboard = () => {
         // '--dashboard-grid-opacity': dashboardColors.background.gridOpacity
       }}
     >
+      <CheckUserInfo />
       {/* Header - ẩn khi activeTab === 'n8n' */}
       {activeTab !== 'n8n' && (
         <div style={{
@@ -2801,7 +2640,6 @@ const Dashboard = () => {
                                 updateSchemaHeader(null);
                                 // Load tools từ setting đã lưu cho schema master
                                 await fetchDashboardSetting();
-                                console.log('Switched to master schema, loaded from settings');
 
                                 // Load resources for master schema
                                 try {
@@ -2812,7 +2650,7 @@ const Dashboard = () => {
                                     setResourcesSettingId(resourcesData.id);
                                   }
                                 } catch (error) {
-                                  console.log('Error loading master schema resources:', error);
+                                  console.error('Error loading master schema resources:', error);
                                 }
                               } else {
                                 // Chọn schema khác
@@ -2833,13 +2671,11 @@ const Dashboard = () => {
                                   try {
                                     // Lấy tools thực tế được cấu hình cho schema này
                                     const schemaToolsResponse = await getSchemaTools(schema.path);
-                                    console.log('Schema tools response:', schemaToolsResponse);
 
                                     if (schemaToolsResponse && schemaToolsResponse.setting && schemaToolsResponse.setting.length > 0) {
                                       // Kết hợp với thông tin từ schema master
                                       const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
                                       setTools(combinedApps);
-                                      console.log(`Using configured tools for schema ${schema.path}: ${combinedApps.length} apps`);
                                     } else {
                                       // Fallback: sử dụng logic lọc cũ nếu chưa có cấu hình
                                       let schemaSpecificApps;
@@ -2862,7 +2698,6 @@ const Dashboard = () => {
                                       // Kết hợp với thông tin từ schema master
                                       const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
                                       setTools(combinedApps);
-                                      console.log(`Fallback: using filtered tools for schema ${schema.path}, showing ${combinedApps.length} apps`);
                                     }
                                   } catch (error) {
                                     console.error('Lỗi khi lấy tools cho schema:', error);
@@ -2887,7 +2722,6 @@ const Dashboard = () => {
                                     // Kết hợp với thông tin từ schema master
                                     const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
                                     setTools(combinedApps);
-                                    console.log(`Error fallback: using filtered tools for schema ${schema.path}, showing ${combinedApps.length} apps`);
                                   }
 
                                   // Load resources from master schema (always use master for resources)
@@ -2899,7 +2733,7 @@ const Dashboard = () => {
                                       setResourcesSettingId(resourcesData.id);
                                     }
                                   } catch (error) {
-                                    console.log('Error loading master schema resources:', error);
+                                    console.error('Error loading master schema resources:', error);
                                   }
                                 }
                               }
@@ -3174,10 +3008,10 @@ const Dashboard = () => {
                 {/*</div>*/}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                   {(() => {
-                    const filtered = tagOptions?.length > 0 ? tagOptions.filter(opt => (opt.label || '').toLowerCase().includes(tagSearch.toLowerCase())) : [];
+                    const filtered = tagOptions.filter(opt => (opt.label || '').toLowerCase().includes(tagSearch.toLowerCase()));
                     const maxInline = 6;
-                    const inline = filtered?.slice(0, maxInline);
-                    const overflow = filtered?.slice(maxInline);
+                    const inline = filtered.slice(0, maxInline);
+                    const overflow = filtered.slice(maxInline);
 
                     return (
                       <>
@@ -3556,7 +3390,7 @@ const Dashboard = () => {
                                 <div style={{ width: '100%', marginTop: 'auto', paddingTop: '12px', display: 'flex', justifyContent: 'start' }}>
                                   <div className={styles.toolTags}>
                                     {tool.tags.map(tagValue => {
-                                      const tagOption = tagOptions?.find(option => option.value === tagValue);
+                                      const tagOption = tagOptions.find(option => option.value === tagValue);
                                       return tagOption ? (
                                         <span
                                           key={tagValue}
@@ -3711,7 +3545,7 @@ const Dashboard = () => {
                             <div className={styles.tagSelectorWrapper}>
                               <label className={styles.tagLabel}>Tags:</label>
                               <div className={styles.tagOptions}>
-                                {tagOptions?.length > 0 && tagOptions.map(tag => (
+                                {tagOptions.map(tag => (
                                   <label key={tag.value} className={styles.tagOption}>
                                     <input
                                       type="checkbox"
@@ -3910,7 +3744,7 @@ const Dashboard = () => {
                             }}>
                               <div style={{
                                 flex: 1,
-                                height: '3px',
+                                height: '2px',
                                 background: '#64748b'
                               }}></div>
                               <span style={{
@@ -4102,7 +3936,7 @@ const Dashboard = () => {
         title="Edit Tool"
         onCancel={handleCancel}
         footer={null}
-        destroyOnClose
+        destroyOnHidden
         className={styles.dashboardModal}
         style={{ top: 20 }}
       >
@@ -4168,7 +4002,7 @@ const Dashboard = () => {
             <div className={styles.tagSelectorWrapper}>
               <label className={styles.tagLabel}>Tags Module:</label>
               <div className={styles.tagOptions}>
-                {tagOptions?.length > 0 && tagOptions.map(tag => (
+                {tagOptions.map(tag => (
                   <label key={tag.value} className={styles.tagOption}>
                     <input
                       type="checkbox"
@@ -4851,8 +4685,10 @@ const Dashboard = () => {
           </Button>
         ]}
         width={600}
-        bodyStyle={{ maxHeight: '70vh', overflowY: 'auto' }}
-        destroyOnClose
+        styles={{
+          body: { maxHeight: '70vh', overflowY: 'auto' }
+        }}
+        destroyOnHidden
       >
         <div style={{ color: 'var(--text-primary)' }}>
           <div style={{ marginBottom: '20px' }}>
@@ -4939,8 +4775,10 @@ const Dashboard = () => {
           </Button>
         ]}
         width={600}
-        bodyStyle={{ maxHeight: '70vh', overflowY: 'auto' }}
-        destroyOnClose
+        styles={{
+          body: { maxHeight: '70vh', overflowY: 'auto' }
+        }}
+        destroyOnHidden
       >
         <div style={{ color: 'var(--text-primary)' }}>
           <div style={{ marginBottom: '20px' }}>
@@ -5002,7 +4840,7 @@ const Dashboard = () => {
           </Button>
         ]}
         width={500}
-        destroyOnClose
+        destroyOnHidden
       >
         <div style={{ color: 'var(--text-primary)' }}>
           <div style={{ marginBottom: '20px' }}>
@@ -5068,7 +4906,7 @@ const Dashboard = () => {
         title="Thêm mới tool - DV Nghiên cứu & BPO"
         onCancel={handleCancelAddResearchBpo}
         footer={null}
-        destroyOnClose
+        destroyOnHidden
         className={styles.dashboardModal}
         style={{ top: 20 }}
         width={600}
@@ -5095,7 +4933,7 @@ const Dashboard = () => {
           <div className={styles.tagSelectorWrapper}>
             <label className={styles.tagLabel}>Tags:</label>
             <div className={styles.tagOptions}>
-              {tagOptions?.length > 0 && tagOptions.map(tag => (
+              {tagOptions.map(tag => (
                 <label key={tag.value} className={styles.tagOption}>
                   <input
                     type="checkbox"
@@ -5220,7 +5058,7 @@ const Dashboard = () => {
         title="Thêm mới tool - Đào tạo & Năng suất"
         onCancel={handleCancelAddTrainingProductivity}
         footer={null}
-        destroyOnClose
+        destroyOnHidden
         className={styles.dashboardModal}
         style={{ top: 20 }}
         width={600}
@@ -5247,7 +5085,7 @@ const Dashboard = () => {
           <div className={styles.tagSelectorWrapper}>
             <label className={styles.tagLabel}>Tags:</label>
             <div className={styles.tagOptions}>
-              {tagOptions?.length > 0 && tagOptions.map(tag => (
+              {tagOptions.map(tag => (
                 <label key={tag.value} className={styles.tagOption}>
                   <input
                     type="checkbox"

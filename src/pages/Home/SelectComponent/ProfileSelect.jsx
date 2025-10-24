@@ -108,14 +108,9 @@ export default function ProfileSelect({color = '#454545'}) {
                 }}
             >
                 { (currentUser?.isSuperAdmin ) && (
-                    <>
-                        {/* <MenuItem style={{ fontSize: "14px" }} onClick={handleOpenCauHinh}>
-                            Cấu hình
-                        </MenuItem> */}
                         <MenuItem style={{ fontSize: "14px" }} onClick={navigateAdmin}>
                             Admin
                         </MenuItem>
-                    </>
                 )}
                 <MenuItem style={{ fontSize: "14px" }} onClick={handleLogout}>
                     Đăng xuất
