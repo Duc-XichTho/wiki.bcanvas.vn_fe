@@ -3129,7 +3129,7 @@ const Dashboard = () => {
                     );
                   })()}
                 </div>
-                <div className={styles.tabStatusRight} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, minWidth: '20%', maxWidth: '20%', color: statusBarTheme.textColor }}>
+                <div className={styles.tabStatusRight} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, minWidth: '25%', maxWidth: '25%', color: statusBarTheme.textColor }}>
                   <div style={{ 
                     position: 'relative', 
                     flex: 1, 

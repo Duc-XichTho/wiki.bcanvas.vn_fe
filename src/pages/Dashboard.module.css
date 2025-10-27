@@ -1262,3 +1262,16 @@
   border-color: transparent;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
+
+/* WikiCanvas search input placeholder styling */
+.wiki-canvas-search-input input::placeholder {
+  color: #66666C !important;
+}
+
+.wiki-canvas-search-input input {
+  color: #66666C !important;
+}
+
+.wiki-canvas-search-input input::placeholder {
+  color: #66666C !important;
+}

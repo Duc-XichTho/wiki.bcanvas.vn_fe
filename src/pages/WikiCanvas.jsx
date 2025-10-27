@@ -3344,7 +3344,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                     );
                   })()}
                 </div>
-                <div className={styles.tabStatusRight} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, minWidth: '20%', maxWidth: '20%', color: statusBarTheme.textColor }}>
+                <div className={styles.tabStatusRight} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, minWidth: '25%', maxWidth: '25%', color: statusBarTheme.textColor }}>
                   <div style={{ 
                     position: 'relative', 
                     flex: 1, 
@@ -3356,17 +3356,29 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                       position: 'relative',
                       width: '100%'
                     }}>
-                      <Search 
-                        size={18} 
+                      <svg 
+                        width="18" 
+                        height="21.6" 
+                        viewBox="0 0 25 30" 
+                        fill="none" 
+                        xmlns="http://www.w3.org/2000/svg"
                         style={{ 
                           position: 'absolute', 
                           left: '10px', 
                           top: '50%', 
                           transform: 'translateY(-50%)',
-                          color: '#66666C',
                           zIndex: 1
-                        }} 
-                      />
+                        }}
+                      >
+                        <mask id="mask0_8834_115" style={{maskType:'luminance'}} maskUnits="userSpaceOnUse" x="0" y="0" width="25" height="30">
+                          <path d="M21.874 1H2.3916C2.02253 1 1.66857 1.14661 1.40759 1.40759C1.14662 1.66857 1 2.02253 1 2.3916V27.4404C1 27.8095 1.14662 28.1635 1.40759 28.4244C1.66857 28.6854 2.02253 28.832 2.3916 28.832H21.874C22.2431 28.832 22.5971 28.6854 22.858 28.4244C23.119 28.1635 23.2656 27.8095 23.2656 27.4404V2.3916C23.2656 2.02253 23.119 1.66857 22.858 1.40759C22.5971 1.14661 22.2431 1 21.874 1Z" fill="white" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M14.915 9.34694C14.915 10.3071 14.5254 11.1769 13.8957 11.8066C13.3265 12.3757 12.5775 12.7297 11.7765 12.8085C10.9755 12.8873 10.1719 12.6858 9.50272 12.2386C8.83355 11.7913 8.34018 11.1258 8.10666 10.3555C7.87315 9.58524 7.91394 8.75782 8.2221 8.01425C8.53025 7.27068 9.0867 6.65697 9.79663 6.27768C10.5066 5.89839 11.326 5.77699 12.1154 5.93418C12.9048 6.09136 13.6153 6.5174 14.1258 7.13969C14.6363 7.76199 14.9152 8.54205 14.915 9.34694Z" fill="white"/>
+                          <path d="M16.3071 14.2206L13.8962 11.8097M13.8962 11.8097C14.2259 11.4881 14.4886 11.1043 14.6688 10.6805C14.8491 10.2566 14.9434 9.80122 14.9463 9.34065C14.9492 8.88008 14.8606 8.42352 14.6856 7.99745C14.5107 7.57139 14.2529 7.1843 13.9272 6.85865C13.6015 6.53299 13.2144 6.27525 12.7883 6.10037C12.3622 5.9255 11.9056 5.83696 11.4451 5.83992C10.9845 5.84287 10.5291 5.93724 10.1053 6.11756C9.68146 6.29788 9.29767 6.56057 8.97617 6.89037C8.32854 7.54388 7.96615 8.42731 7.9683 9.34736C7.97044 10.2674 8.33694 11.1491 8.98761 11.7996C9.63828 12.4501 10.5201 12.8164 11.4402 12.8183C12.3602 12.8201 13.2429 12.4575 13.8962 11.8097ZM7.26172 19.0912H17.0029M7.26172 23.266H12.1323" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </mask>
+                        <g mask="url(#mask0_8834_115)">
+                          <path d="M-4.56641 -1.78516H28.832V31.6133H-4.56641V-1.78516Z" fill="#AAAAAA"/>
+                        </g>
+                      </svg>
                       <Input
                         placeholder="Tìm kiếm"
                         value={tagSearch}
@@ -3378,6 +3390,12 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                           background: '#F5F5F5',
                           height: '36px'
                         }}
+                        styles={{
+                          input: {
+                            color: '#66666C',
+                          }
+                        }}
+                        className="wiki-canvas-search-input"
                       />
                     </div>
                   </div>
