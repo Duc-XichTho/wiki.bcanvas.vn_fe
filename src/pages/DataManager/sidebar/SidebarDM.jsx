@@ -984,7 +984,14 @@ const fetchUploadLimitConfig = async () => {
 			]);
 			
 			if (existingSetting && existingSetting.setting) {
-				setUploadLimitConfig(existingSetting.setting);
+				// Merge with default values to ensure all properties exist
+				setUploadLimitConfig({
+					max_record: 50000,
+					max_column: 25,
+					max_total_record: 1500000,
+					max_record_per_file: 100000,
+					...existingSetting.setting
+				});
 				setExistingUploadLimitSetting(existingSetting);
 			} else {
 				setExistingUploadLimitSetting(null);
@@ -2287,7 +2294,7 @@ const fetchUploadLimitConfig = async () => {
 							<div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
 								Giới hạn tổng số dòng đã được tải lên. Áp dụng cho toàn hệ thống (Data rubik)
 							</div>
-							{currentTotalRows !== null && (
+							{currentTotalRows !== null && uploadLimitConfig.max_total_record && (
 								<div style={{ fontSize: '12px', color: '#1890ff', marginTop: '8px', fontWeight: '500' }}>
 									Tổng số bản ghi hiện tại: {currentTotalRows.toLocaleString()} / {uploadLimitConfig.max_total_record.toLocaleString()}
 								</div>
