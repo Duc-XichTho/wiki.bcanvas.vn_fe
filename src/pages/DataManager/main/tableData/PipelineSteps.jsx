@@ -54,6 +54,7 @@ import {
     getTemplateInfoByTableId,
     processStepData,
     updateTemplateTable,
+    getTotalRows
 } from '../../../../apis/templateSettingService.jsx';
 import {
     exportTableToGoogleSheets,
@@ -82,7 +83,7 @@ import {
     getFrequencyConfigByTableId,
     updateFrequencyConfig,
 } from '../../../../apis/frequencyConfigService.jsx';
-
+import { getSettingByType } from '../../../../apis/settingService.jsx';
 const PipelineSteps = ({
     steps = [],
     onChange,
@@ -142,7 +143,7 @@ const PipelineSteps = ({
     // State cho modal xuất bản
     const [publishModal, setPublishModal] = useState({ visible: false, stepId: null, name: '' });
     const [showImportMoreDataModal, setShowImportMoreDataModal] = useState(false);
-    
+
     // AI Transformer run options modal state
     const [aiTransformerRunModal, setAiTransformerRunModal] = useState({
         visible: false,
@@ -1478,8 +1479,8 @@ const PipelineSteps = ({
                 if (step.type === 21 && step._runOptions && step._runOptions.runMode === 'empty_only') {
                     inputStepId = step.id; // Lấy dữ liệu từ bước hiện tại
                     console.log(`🤖 AI Transformer Empty Only: Lấy dữ liệu từ bước hiện tại (step ${step.id}) thay vì bước trước`);
-            } else {
-                inputStepId = stepIndex === 0 ? 0 : normalizedSteps[stepIndex - 1].id;
+                } else {
+                    inputStepId = stepIndex === 0 ? 0 : normalizedSteps[stepIndex - 1].id;
                 }
             }
 
@@ -1519,7 +1520,7 @@ const PipelineSteps = ({
             let finalConfig = step.config;
             if (step.type === 21 && step._runOptions) {
                 const { runMode, filterConditions, filterMode, emptyEnableFilter, emptyFilterConditions, emptyFilterMode, includeChangesInEmptyMode } = step._runOptions;
-                
+
                 // Cập nhật config với runOptions
                 finalConfig = {
                     ...step.config,
@@ -1533,7 +1534,7 @@ const PipelineSteps = ({
                     emptyModeFilterMode: runMode === 'empty_only' ? (emptyFilterMode || 'include') : 'include',
                     includeChangesInEmptyMode: runMode === 'empty_only' ? (typeof includeChangesInEmptyMode === 'boolean' ? includeChangesInEmptyMode : true) : undefined,
                 };
-                
+
                 console.log('🤖 AI Transformer runOptions:', { runMode, filterConditions, filterMode, emptyEnableFilter, emptyFilterConditions, emptyFilterMode, includeChangesInEmptyMode, finalConfig });
             }
 
@@ -1609,13 +1610,13 @@ const PipelineSteps = ({
                 }
             }
             console.log('step', step);
-            
+
             // Xóa _runOptions sau khi xử lý xong để tránh ảnh hưởng đến lần chạy tiếp theo
             if (step._runOptions) {
                 delete step._runOptions;
                 console.log('🧹 Đã xóa _runOptions sau khi xử lý xong');
             }
-            
+
             // Lưu và thông báo chỉ khi là fileNote hiện tại
             if (isSameFileNote && typeof updatedFinalSteps !== 'undefined' && updatedFinalSteps) {
                 try {
@@ -1691,11 +1692,6 @@ const PipelineSteps = ({
 
         // Load _runOptions từ step nếu có
         const savedRunOptions = step._runOptions || {};
-        
-        // Debug log
-        console.log('🔍 [DEBUG] openAiTransformerRunModal - step:', step);
-        console.log('🔍 [DEBUG] openAiTransformerRunModal - step._runOptions:', step._runOptions);
-        console.log('🔍 [DEBUG] openAiTransformerRunModal - savedRunOptions:', savedRunOptions);
 
         setAiTransformerRunModal({
             visible: true,
@@ -1711,7 +1707,7 @@ const PipelineSteps = ({
     const runAiTransformerWithFilter = async (runOptions) => {
         const { stepIndex, runMode, filterConditions, filterMode, emptyEnableFilter, emptyFilterConditions, emptyFilterMode, includeChangesInEmptyMode } = runOptions;
         const step = normalizedSteps[stepIndex];
-        
+
         if (!step || !templateData) {
             message.error('Không thể chạy step này');
             return;
@@ -1746,11 +1742,7 @@ const PipelineSteps = ({
             emptyFilterMode,
             includeChangesInEmptyMode,
         };
-        
-        // Debug log
-        console.log('🔍 [DEBUG] runAiTransformerWithFilter - Saving _runOptions:', step._runOptions);
-        console.log('🔍 [DEBUG] runAiTransformerWithFilter - step after saving:', step);
-        
+
         // Lưu _runOptions vào database để persist sau F5
         try {
             const updatedSteps = [...normalizedSteps];
@@ -1758,10 +1750,9 @@ const PipelineSteps = ({
             if (stepIndex !== -1) {
                 updatedSteps[stepIndex] = { ...updatedSteps[stepIndex], _runOptions: step._runOptions };
                 await updateTemplateTable({ ...templateData, steps: updatedSteps });
-                console.log('🔍 [DEBUG] runAiTransformerWithFilter - _runOptions saved to database');
             }
         } catch (error) {
-            console.error('🔍 [DEBUG] runAiTransformerWithFilter - Error saving _runOptions to database:', error);
+            console.error('Error saving _runOptions to database:', error);
         }
 
         // Đăng ký executeStep function cho queue service
@@ -1901,17 +1892,17 @@ const PipelineSteps = ({
                             }
                         });
                     } else if (tempConfig.uploadType === 'googleSheets' && tempConfig.googleSheetsData && tempConfig.googleSheetsData.length > 0) {
-						// Từ dữ liệu Google Sheets đã upload - GIỮ THỨ TỰ CỘT THEO googleSheetsColumns nếu có
-						const headersOrdered = Array.isArray(tempConfig.googleSheetsColumns) && tempConfig.googleSheetsColumns.length > 0
-							? tempConfig.googleSheetsColumns
-							: Object.keys(tempConfig.googleSheetsData[0] || {});
-						headersOrdered.forEach(columnName => {
-							if (columnName !== 'key') {
-                            outputColumns.push({
-                                name: columnName,
-                                type: 'text',
-                            });
-							}
+                        // Từ dữ liệu Google Sheets đã upload - GIỮ THỨ TỰ CỘT THEO googleSheetsColumns nếu có
+                        const headersOrdered = Array.isArray(tempConfig.googleSheetsColumns) && tempConfig.googleSheetsColumns.length > 0
+                            ? tempConfig.googleSheetsColumns
+                            : Object.keys(tempConfig.googleSheetsData[0] || {});
+                        headersOrdered.forEach(columnName => {
+                            if (columnName !== 'key') {
+                                outputColumns.push({
+                                    name: columnName,
+                                    type: 'text',
+                                });
+                            }
                         });
                     } else if (tempConfig.uploadType === 'googleDrive' && tempConfig.googleDriveData && tempConfig.googleDriveData.length > 0) {
                         // Từ dữ liệu Google Drive đã upload
@@ -2868,104 +2859,104 @@ const PipelineSteps = ({
 
     // Hàm lưu dữ liệu vào database
     // Hàm lưu dữ liệu vào database
-const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns = null, originalColumns = null) => {
-    if (!data || data.length === 0) {
-        message.warning('Không có dữ liệu để lưu');
-        return false;
-    }
-
-    try {
-        console.log('data', data);
-        // Làm sạch meta từ multi-file trước khi lưu và chuẩn hoá mảng
-        const cleanData = (Array.isArray(data) ? data : [data]).map((row) => {
-            const { __fileId, __fileOrder, ...rest } = row || {};
-            return rest;
-        });
-
-        // Chuẩn bị dữ liệu để lưu
-        let dataToSave = {
-            tableId: templateId,
-            data: cleanData, // Truyền trực tiếp mảng dữ liệu đã làm sạch
-        };
-
-        // Nếu là step từ bước 2 trở đi, thêm version để tạo dữ liệu mới
-        if (currentStepId && currentStepId > 1) {
-            dataToSave.version = currentStepId;
+    const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns = null, originalColumns = null) => {
+        if (!data || data.length === 0) {
+            message.warning('Không có dữ liệu để lưu');
+            return false;
         }
 
-        // Đảm bảo cột tồn tại trước khi lưu (đặc biệt với step 1)
-        if (!currentStepId || currentStepId === 1) {
-            const columns = await createColumnsFromData(cleanData, templateId, outputColumns, originalColumns);
-            if (!columns || columns.length === 0) {
-                message.error('Không thể tạo cột');
-                return false;
-            }
-        }
+        try {
+            console.log('data', data);
+            // Làm sạch meta từ multi-file trước khi lưu và chuẩn hoá mảng
+            const cleanData = (Array.isArray(data) ? data : [data]).map((row) => {
+                const { __fileId, __fileOrder, ...rest } = row || {};
+                return rest;
+            });
 
-        // Lưu dữ liệu theo batch tuần tự để đảm bảo thứ tự dữ liệu
-        const batchSize = 1000; // Tăng batch size để tối ưu hóa hiệu suất xử lý
-        const totalBatches = Math.ceil(cleanData.length / batchSize);
-
-        // Hiển thị progress cho user nếu có nhiều batch
-        // if (totalBatches > 1) {
-        //  message.loading(`Đang lưu ${data.length} dòng dữ liệu... (0/${totalBatches} batches)`, 0);
-        // }
-
-        // Xử lý batch tuần tự để đảm bảo thứ tự dữ liệu được giữ nguyên
-        for (let i = 0; i < cleanData.length; i += batchSize) {
-            const batch = cleanData.slice(i, i + batchSize);
-            if (batch.length === 0) break;
-
-            // Kiểm tra xem có phải batch cuối cùng không
-            const isLastBatch = (i + batchSize) >= cleanData.length;
-            const shouldClearCache = isLastBatch;
-
-            const batchData = {
+            // Chuẩn bị dữ liệu để lưu
+            let dataToSave = {
                 tableId: templateId,
-                data: batch, // Truyền trực tiếp mảng batch
-                id_DataOriginal: null,
-                version: currentStepId && currentStepId > 1 ? currentStepId : null,
-                skipCacheClear: !shouldClearCache, // Skip cache clear cho tất cả batch trừ batch cuối
+                data: cleanData, // Truyền trực tiếp mảng dữ liệu đã làm sạch
             };
 
-            try {
-                await createBathTemplateRow(batchData);
-
-                // Cập nhật progress
-                const completedBatches = Math.floor((i + batchSize) / batchSize);
-
-                // if (totalBatches > 1) {
-                //  message.loading(`Đang lưu ${data.length} dòng dữ liệu... (${completedBatches}/${totalBatches} batches)`, 0);
-                // }
-
-                // Delay nhỏ giữa các batch để tránh overload server
-                if (!isLastBatch) {
-                    await new Promise(resolve => setTimeout(resolve, 10));
-                }
-            } catch (batchError) {
-                if (totalBatches > 1) {
-                    message.destroy();
-                }
-                throw new Error(`Lỗi khi lưu dữ liệu: ${batchError.message}`);
+            // Nếu là step từ bước 2 trở đi, thêm version để tạo dữ liệu mới
+            if (currentStepId && currentStepId > 1) {
+                dataToSave.version = currentStepId;
             }
+
+            // Đảm bảo cột tồn tại trước khi lưu (đặc biệt với step 1)
+            if (!currentStepId || currentStepId === 1) {
+                const columns = await createColumnsFromData(cleanData, templateId, outputColumns, originalColumns);
+                if (!columns || columns.length === 0) {
+                    message.error('Không thể tạo cột');
+                    return false;
+                }
+            }
+
+            // Lưu dữ liệu theo batch tuần tự để đảm bảo thứ tự dữ liệu
+            const batchSize = 1000; // Tăng batch size để tối ưu hóa hiệu suất xử lý
+            const totalBatches = Math.ceil(cleanData.length / batchSize);
+
+            // Hiển thị progress cho user nếu có nhiều batch
+            // if (totalBatches > 1) {
+            //  message.loading(`Đang lưu ${data.length} dòng dữ liệu... (0/${totalBatches} batches)`, 0);
+            // }
+
+            // Xử lý batch tuần tự để đảm bảo thứ tự dữ liệu được giữ nguyên
+            for (let i = 0; i < cleanData.length; i += batchSize) {
+                const batch = cleanData.slice(i, i + batchSize);
+                if (batch.length === 0) break;
+
+                // Kiểm tra xem có phải batch cuối cùng không
+                const isLastBatch = (i + batchSize) >= cleanData.length;
+                const shouldClearCache = isLastBatch;
+
+                const batchData = {
+                    tableId: templateId,
+                    data: batch, // Truyền trực tiếp mảng batch
+                    id_DataOriginal: null,
+                    version: currentStepId && currentStepId > 1 ? currentStepId : null,
+                    skipCacheClear: !shouldClearCache, // Skip cache clear cho tất cả batch trừ batch cuối
+                };
+
+                try {
+                    await createBathTemplateRow(batchData);
+
+                    // Cập nhật progress
+                    const completedBatches = Math.floor((i + batchSize) / batchSize);
+
+                    // if (totalBatches > 1) {
+                    //  message.loading(`Đang lưu ${data.length} dòng dữ liệu... (${completedBatches}/${totalBatches} batches)`, 0);
+                    // }
+
+                    // Delay nhỏ giữa các batch để tránh overload server
+                    if (!isLastBatch) {
+                        await new Promise(resolve => setTimeout(resolve, 10));
+                    }
+                } catch (batchError) {
+                    if (totalBatches > 1) {
+                        message.destroy();
+                    }
+                    throw new Error(`Lỗi khi lưu dữ liệu: ${batchError.message}`);
+                }
+            }
+
+            // Xóa loading message khi hoàn thành
+            // if (totalBatches > 1) {
+            //  message.destroy();
+            // }
+
+            // Cột đã được đảm bảo trước khi lưu ở trên
+
+            const actionText = currentStepId && currentStepId > 1 ? 'thêm' : 'lưu';
+            message.success(`Đã ${actionText} ${data.length} dòng dữ liệu thành công`);
+            return true;
+        } catch (error) {
+            console.error('Lỗi khi lưu dữ liệu:', error);
+            message.error('Có lỗi khi lưu dữ liệu');
+            return false;
         }
-
-        // Xóa loading message khi hoàn thành
-        // if (totalBatches > 1) {
-        //  message.destroy();
-        // }
-
-        // Cột đã được đảm bảo trước khi lưu ở trên
-
-        const actionText = currentStepId && currentStepId > 1 ? 'thêm' : 'lưu';
-        message.success(`Đã ${actionText} ${data.length} dòng dữ liệu thành công`);
-        return true;
-    } catch (error) {
-        console.error('Lỗi khi lưu dữ liệu:', error);
-        message.error('Có lỗi khi lưu dữ liệu');
-        return false;
-    }
-};
+    };
     // Hàm xử lý save cho từng loại upload
     const handleSaveUploadData = async (uploadConfig, currentStepId) => {
         if (!templateData?.id) {
@@ -3011,6 +3002,63 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
             console.log('HTQC Pipeline Debug - uploadConfig.htqcData:', uploadConfig.htqcData);
             uploadConfig.excelData = uploadConfig.htqcData;
             uploadConfig.excelColumns = uploadConfig.htqcColumns || Object.keys(uploadConfig.htqcData[0] || {});
+        }
+
+        // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng trước khi xử lý
+        try {
+            const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+            const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+            const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+            
+            // Lấy tổng số dòng hiện tại có version null
+            const totalRowsResponse = await getTotalRows(null);
+            const currentTotalRows = totalRowsResponse?.count || 0;
+            
+            // Tính số dòng sẽ upload
+            let dataLength = 0;
+            switch (uploadType) {
+                case 'htqc':
+                case 'excel':
+                    dataLength = uploadConfig.excelData?.length || 0;
+                    break;
+                case 'googleSheets':
+                    dataLength = uploadConfig.googleSheetsData?.length || 0;
+                    break;
+                case 'googleDrive':
+                    dataLength = uploadConfig.googleDriveData?.length || 0;
+                    break;
+                case 'googleDriveFolder':
+                    dataLength = uploadConfig.googleDriveFolderData?.length || 0;
+                    break;
+                case 'postgresql':
+                    dataLength = uploadConfig.postgresData?.length || 0;
+                    break;
+                case 'api':
+                    dataLength = uploadConfig.apiData?.length || 0;
+                    break;
+                case 'system':
+                    dataLength = uploadConfig.systemData?.length || 0;
+                    break;
+            }
+            
+            // Kiểm tra giới hạn số dòng cho 1 file
+            if (dataLength > maxRecordPerFile) {
+                message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể upload tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                return false;
+            }
+            
+            // Kiểm tra nếu vượt quá giới hạn tổng số dòng hệ thống
+            if (currentTotalRows + dataLength > maxTotalRecord) {
+                const availableSpace = maxTotalRecord - currentTotalRows;
+                message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                return false;
+            }
+            
+            console.log(`✅ Kiểm tra giới hạn: File ${dataLength.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+        } catch (error) {
+            console.error('Lỗi khi kiểm tra giới hạn:', error);
+            message.error('Không thể kiểm tra giới hạn');
+            return false;
         }
 
         switch (uploadType) {
@@ -3161,10 +3209,10 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                             return false;
                         }
                     }
-               
+
                     success = await saveDataToDatabase(dataToSave, templateData.id, currentStepId, outputColumns, resBody.columns);
-         
-                  
+
+
                     if (success) {
                         // Cập nhật outputColumns vào step hiện tại (nếu đã có step upload) và persist vào template_table
                         const baseSteps = Array.isArray(steps) ? steps : [];
@@ -3270,7 +3318,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                     return false;
                 }
                 break;
-            
+
             default:
                 message.error('Loại upload không hợp lệ');
                 return false;
@@ -3285,7 +3333,11 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
             message.error('Không tìm thấy step để xuất bản');
             return;
         }
-
+        const availableApps = await getSettingByType('DASHBOARD_SETTING');
+        let availableAppsIds = [];
+        if (availableApps && availableApps.setting) {
+            availableAppsIds = availableApps.setting.map(app => app.id);
+        }
         let payload;
 
         // Nếu là step "Import từ hệ thống", xuất bản dữ liệu từ nguồn
@@ -3301,6 +3353,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
 
                     payload = {
                         id_version: sourceStepId,
+                        apps: availableAppsIds.filter(app => app === 'fdr' || app === 'analysis-review'),
                         id_template: sourceTableId,
                         id_fileNote: sourceTemplate.fileNote_id,
                         created_at: new Date().toISOString(),
@@ -3321,6 +3374,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
             payload = {
                 id_version: stepId,
                 id_template: templateData.id,
+                apps: availableAppsIds.filter(app => app === 'fdr' || app === 'analysis-review'),
                 id_fileNote: idFileNote,
                 created_at: new Date().toISOString(),
                 user_create: currentUser.email,
@@ -3529,7 +3583,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                     templateId: templateData?.id,
                     timestamp: new Date().toISOString(),
                     columnOrder: columnOrderObject, // Gửi thứ tự cột dạng object {1: "tên cột", 2: "tên cột", ...}
-                   
+
                 },
                 currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com'
             );
@@ -3642,7 +3696,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                 lastUpdate: firstStep.config.lastUpdate || null,
             }));
         } else if (isGoogleDriveSource) {
-            if(firstStep.config.googleDriveMultiFiles){
+            if (firstStep.config.googleDriveMultiFiles) {
                 setImportMoreDataConfig(prev => ({
                     ...prev,
                     isGoogleSheetSource: false,
@@ -3656,26 +3710,26 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                     intervalUpdate: firstStep.config.intervalUpdate || 0,
                     lastUpdate: firstStep.config.lastUpdate || null,
                     googleDriveFolderUrl: firstStep.config.googleDriveFolderUrl || '',
-                    
+
                 }));
-            }else{  
-            setImportMoreDataConfig(prev => ({
-                ...prev,
-                isGoogleSheetSource: false,
-                isGoogleDriveSource: true,
-                isPostgresSource: false,
-                isApiSource: false,
-                isSystemSource: false,
-                googleDriveUrl: firstStep.config.googleDriveUrl || '',
-                googleDriveFileId: firstStep.config.googleDriveFileId || '',
-                googleDriveSheet: firstStep.config.googleDriveSheet || '',
-                googleDriveHeaderRow: firstStep.config.googleDriveHeaderRow || 0,
-                googleDriveSelectedFileName: firstStep.config.googleDriveSelectedFileName || '',
-                outputColumns: firstStep.config.outputColumns || [],
-                intervalUpdate: firstStep.config.intervalUpdate || 0,
-                lastUpdate: firstStep.config.lastUpdate || null,
-                googleDriveFolderUrl: firstStep.config.googleDriveFolderUrl || '',
-            }));
+            } else {
+                setImportMoreDataConfig(prev => ({
+                    ...prev,
+                    isGoogleSheetSource: false,
+                    isGoogleDriveSource: true,
+                    isPostgresSource: false,
+                    isApiSource: false,
+                    isSystemSource: false,
+                    googleDriveUrl: firstStep.config.googleDriveUrl || '',
+                    googleDriveFileId: firstStep.config.googleDriveFileId || '',
+                    googleDriveSheet: firstStep.config.googleDriveSheet || '',
+                    googleDriveHeaderRow: firstStep.config.googleDriveHeaderRow || 0,
+                    googleDriveSelectedFileName: firstStep.config.googleDriveSelectedFileName || '',
+                    outputColumns: firstStep.config.outputColumns || [],
+                    intervalUpdate: firstStep.config.intervalUpdate || 0,
+                    lastUpdate: firstStep.config.lastUpdate || null,
+                    googleDriveFolderUrl: firstStep.config.googleDriveFolderUrl || '',
+                }));
             }
         } else if (isGoogleDriveFolderSource) {
             setImportMoreDataConfig(prev => ({
@@ -3773,7 +3827,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                     const dataModified = [];
                     const options = [];
                     jsonData.filter(row => Array.isArray(row) && row.length > 0).forEach((row, index) => {
-                        
+
                         let hasData = false;
                         let previewText = '';
                         if (row && row.some(cell => cell !== null && cell !== undefined && cell !== '')) {
@@ -4069,7 +4123,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                             await createFrequencyConfig({
                                 tableId: templateData.id,
                                 schema: currentSchemaPathRecord?.path,
-                                config: {...configData}
+                                config: { ...configData }
                             });
                             console.log('Created frequency config for Google Drive Folder table:', templateData.id);
                         }
@@ -4078,7 +4132,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                         if (existingConfig?.data?.data) {
                             console.log('existingConfig', existingConfig);
                             console.log('currentSchemaPathRecord?.path', currentSchemaPathRecord?.path);
-                            await deleteFrequencyConfig( existingConfig.data.data.id);
+                            await deleteFrequencyConfig(existingConfig.data.data.id);
                             console.log('Deleted frequency config for Google Drive Folder table:', templateData.id);
                         }
                     }
@@ -4104,44 +4158,68 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
         setImportMoreLoading(true);
         try {
             console.log('Gửi tới N8N:', firstStep.config.googleSheetUrl);
-            const res = await n8nWebhook({ urlSheet: firstStep.config.googleSheetUrl , email_import: currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com' });
-            console.log('Response từ N8N:', res);
+            const res = await n8nWebhook({ urlSheet: firstStep.config.googleSheetUrl, email_import: currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com' });
+
             if (Array.isArray(res) && res.length > 0) {
                 const firstResp = res[0];
 
                 // Ưu tiên cấu trúc mới: { rows: [...], headers: [...], detectedHeaderRow }
                 let headerRow = Array.isArray(firstResp.headers) ? firstResp.headers : [];
+                console.log('headerRow ban đầu:', headerRow);
+                console.log('firstResp.rows:', firstResp.rows);
+                console.log('firstResp.headers:', firstResp.headers);
+                console.log('firstResp.detectedHeaderRow:', firstResp.detectedHeaderRow);
                 let dataRows = [];
 
                 if (Array.isArray(firstResp.rows) && firstResp.rows.length > 0) {
-                    // Ưu tiên cấu hình người dùng: nếu có cấu hình, luôn dùng hàng đó làm header
-                    const detectedHeaderRow = typeof firstResp.detectedHeaderRow === 'number' ? firstResp.detectedHeaderRow : 1; // 1-based
-                    const cfgIndexRaw = Number.parseInt(firstStep?.config?.googleSheetsHeaderRow, 10);
-                    const hasCfgIndex = Number.isFinite(cfgIndexRaw);
-                    if (hasCfgIndex) {
-                        const headerIndexFromConfig = cfgIndexRaw - 1; // convert 1-based -> 0-based
-                        const safeIndex = Math.max(0, Math.min(firstResp.rows.length - 1, headerIndexFromConfig));
-                        headerRow = firstResp.rows[safeIndex]?.data || [];
-                        // Dữ liệu lấy sau dòng header đã chọn, bỏ trống
+                    // Ưu tiên sử dụng headers từ N8N nếu có và hợp lệ
+                    if (Array.isArray(firstResp.headers) && firstResp.headers.length > 0 && !firstResp.headers.every(h => !h || h.trim() === '')) {
+                        console.log('Sử dụng headers từ N8N:', firstResp.headers);
+                        headerRow = firstResp.headers;
+                        // Lấy tất cả dữ liệu không phải header
                         dataRows = firstResp.rows
-                            .slice(safeIndex + 1)
-                            .filter(r => !r.isEmpty && Array.isArray(r.data))
+                            .filter(r => !r.isEmpty && !r.isDetectedHeader && Array.isArray(r.data))
                             .map(r => r.data);
+                        console.log('dataRows từ N8N headers:', dataRows.length);
                     } else {
-                        // Không có cấu hình: fallback theo metadata/detected
-                        if (headerRow.length === 0) {
-                            const fallbackIndex = detectedHeaderRow - 1;
-                            const safeIndex = Math.max(0, Math.min(firstResp.rows.length - 1, fallbackIndex));
+                        // Fallback: sử dụng cấu hình người dùng hoặc detected header
+                        const detectedHeaderRow = typeof firstResp.detectedHeaderRow === 'number' ? firstResp.detectedHeaderRow : 1; // 1-based
+                        const cfgIndexRaw = Number.parseInt(firstStep?.config?.googleSheetsHeaderRow, 10);
+                        const hasCfgIndex = Number.isFinite(cfgIndexRaw);
+                        console.log('hasCfgIndex:', hasCfgIndex, 'cfgIndexRaw:', cfgIndexRaw);
+                        
+                        if (hasCfgIndex) {
+                            const headerIndexFromConfig = cfgIndexRaw - 1; // convert 1-based -> 0-based
+                            const safeIndex = Math.max(0, Math.min(firstResp.rows.length - 1, headerIndexFromConfig));
+                            console.log('headerIndexFromConfig:', headerIndexFromConfig, 'safeIndex:', safeIndex);
                             headerRow = firstResp.rows[safeIndex]?.data || [];
+                            console.log('headerRow từ config:', headerRow);
+                            // Dữ liệu lấy sau dòng header đã chọn, bỏ trống
                             dataRows = firstResp.rows
                                 .slice(safeIndex + 1)
                                 .filter(r => !r.isEmpty && Array.isArray(r.data))
                                 .map(r => r.data);
+                            console.log('dataRows từ config:', dataRows.length);
                         } else {
-                            // Đã có headers từ metadata: dùng như cũ, lấy các hàng dữ liệu (bỏ header detected/trống)
-                            dataRows = firstResp.rows
-                                .filter(r => !r.isEmpty && !r.isDetectedHeader && Array.isArray(r.data))
-                                .map(r => r.data);
+                            // Không có cấu hình: fallback theo metadata/detected
+                            console.log('headerRow.length === 0:', headerRow.length === 0);
+                            if (headerRow.length === 0) {
+                                const fallbackIndex = detectedHeaderRow - 1;
+                                const safeIndex = Math.max(0, Math.min(firstResp.rows.length - 1, fallbackIndex));
+                                console.log('fallbackIndex:', fallbackIndex, 'safeIndex:', safeIndex);
+                                headerRow = firstResp.rows[safeIndex]?.data || [];
+                                console.log('headerRow từ fallback:', headerRow);
+                                dataRows = firstResp.rows
+                                    .slice(safeIndex + 1)
+                                    .filter(r => !r.isEmpty && Array.isArray(r.data))
+                                    .map(r => r.data);
+                                console.log('dataRows từ fallback:', dataRows.length);
+                            } else {
+                                // Đã có headers từ metadata: dùng như cũ, lấy các hàng dữ liệu (bỏ header detected/trống)
+                                dataRows = firstResp.rows
+                                    .filter(r => !r.isEmpty && !r.isDetectedHeader && Array.isArray(r.data))
+                                    .map(r => r.data);
+                            }
                         }
                     }
                 } else if (Array.isArray(firstResp.data)) {
@@ -4166,7 +4244,21 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                     });
                     return newRow;
                 });
-
+                
+                // Kiểm tra headerRow sau khi xử lý
+                console.log('headerRow sau khi xử lý:', headerRow);
+                console.log('dataRows length:', dataRows.length);
+                console.log('data length:', data.length);
+                
+                
+                // Kiểm tra headerRow trước khi tạo outputColumns
+                if (!headerRow || headerRow.length === 0 || headerRow.every(h => !h || h.trim() === '')) {
+                    message.error('Không thể xác định được header của dữ liệu. Vui lòng kiểm tra lại cấu hình Google Sheet.');
+                    setImportMoreLoading(false);
+                    setShowImportMoreDataModal(false);
+                    return;
+                }
+                
                 // Tạo outputColumns mới dựa trên header row hiện tại
                 const newOutputColumns = headerRow.map(header => ({
                     name: header,
@@ -4174,9 +4266,44 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                 }));
 
                 // Kiểm tra giới hạn upload
-                const limitCheck = await checkUploadLimits(headerRow, data);
-                if (!limitCheck.isValid) {
-                    message.error(limitCheck.message);
+                // const limitCheck = await checkUploadLimits(headerRow, data);
+                // if (!limitCheck.isValid) {
+                //     message.error(limitCheck.message);
+                //     setImportMoreLoading(false);
+                //     setShowImportMoreDataModal(false);
+                //     return;
+                // }
+
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (data.length > maxRecordPerFile) {
+                        message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + data.length > maxTotalRecord) {
+                        const availableSpace = maxTotalRecord - currentTotalRows;
+                        message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${data.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    message.error('Không thể kiểm tra giới hạn');
                     setImportMoreLoading(false);
                     setShowImportMoreDataModal(false);
                     return;
@@ -4270,9 +4397,44 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
             if (Array.isArray(res) && res.length > 0) {
                 // Kiểm tra giới hạn upload
                 const allColumns = Object.keys(res[0]);
-                const limitCheck = await checkUploadLimits(allColumns, res);
-                if (!limitCheck.isValid) {
-                    message.error(limitCheck.message);
+                // const limitCheck = await checkUploadLimits(allColumns, res);
+                // if (!limitCheck.isValid) {
+                //     message.error(limitCheck.message);
+                //     setImportMoreLoading(false);
+                //     setShowImportMoreDataModal(false);
+                //     return;
+                // }
+
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (res.length > maxRecordPerFile) {
+                        message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + res.length > maxTotalRecord) {
+                        const availableSpace = maxTotalRecord - currentTotalRows;
+                        message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${res.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    message.error('Không thể kiểm tra giới hạn');
                     setImportMoreLoading(false);
                     setShowImportMoreDataModal(false);
                     return;
@@ -4362,9 +4524,44 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
             if (processedData.length > 0) {
                 // Kiểm tra giới hạn upload
                 const allColumns = Object.keys(processedData[0]);
-                const limitCheck = await checkUploadLimits(allColumns, processedData);
-                if (!limitCheck.isValid) {
-                    message.error(limitCheck.message);
+                // const limitCheck = await checkUploadLimits(allColumns, processedData);
+                // if (!limitCheck.isValid) {
+                //     message.error(limitCheck.message);
+                //     setImportMoreLoading(false);
+                //     setShowImportMoreDataModal(false);
+                //     return;
+                // }
+
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (processedData.length > maxRecordPerFile) {
+                        message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + processedData.length > maxTotalRecord) {
+                        const availableSpace = maxTotalRecord - currentTotalRows;
+                        message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${processedData.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    message.error('Không thể kiểm tra giới hạn');
                     setImportMoreLoading(false);
                     setShowImportMoreDataModal(false);
                     return;
@@ -4411,14 +4608,14 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
     // Hàm lấy dữ liệu từ Google Drive ngay lập tức
     const handleFetchGoogleDriveDataNow = async () => {
         // Trường hợp import gộp nhiều file từ Drive
-        
+
         const firstStep = normalizedSteps.find(step => step.type === 12);
-     
+
         if (importMoreDataConfig?.googleDriveMultiFiles && Array.isArray(importMoreDataConfig.googleDriveFilesInfo) && importMoreDataConfig.googleDriveFilesInfo.length > 0) {
             setImportMoreLoading(true);
             let multiFileSuccess = false;
             try {
-                const filesInfo = [...importMoreDataConfig.googleDriveFilesInfo].sort((a,b)=>Number(a.order||0)-Number(b.order||0));
+                const filesInfo = [...importMoreDataConfig.googleDriveFilesInfo].sort((a, b) => Number(a.order || 0) - Number(b.order || 0));
                 const mergedRows = [];
                 const allHeadersSet = new Set();
                 for (const file of filesInfo) {
@@ -4427,7 +4624,7 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                     const selectedSheet = file.selectedSheet;
                     const headerRowNumber = Number(file.headerRow) || 1; // 1-based from UI
                     const headerRowIndex = Math.max(0, headerRowNumber - 1);
-                    const res = await n8nWebhookGoogleDrive({ 
+                    const res = await n8nWebhookGoogleDrive({
                         googleDriveUrl: fileId,
                         email_import: currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com'
                     });
@@ -4465,14 +4662,46 @@ const saveDataToDatabase = async (data, templateId, currentStepId, outputColumns
                     return;
                 }
                 // Kiểm tra giới hạn upload theo header hợp nhất
-                const limitCheck = await checkUploadLimits(allHeaders, mergedRows);
-                if (!limitCheck.isValid) {
-                    message.error(limitCheck.message);
+                // const limitCheck = await checkUploadLimits(allHeaders, mergedRows);
+                // if (!limitCheck.isValid) {
+                //     message.error(limitCheck.message);
+                //     setImportMoreLoading(false);
+                //     return;
+                // }
+
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (mergedRows.length > maxRecordPerFile) {
+                        message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        setImportMoreLoading(false);
+                        return;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + mergedRows.length > maxTotalRecord) {
+                        const availableSpace = maxTotalRecord - currentTotalRows;
+                        message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                        setImportMoreLoading(false);
+                        return;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${mergedRows.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    message.error('Không thể kiểm tra giới hạn');
                     setImportMoreLoading(false);
                     return;
                 }
-console.log('mergedRows', mergedRows);
-console.log('allHeaders', allHeaders);
+                console.log('mergedRows', mergedRows);
+                console.log('allHeaders', allHeaders);
                 // Thay thế toàn bộ dữ liệu bằng dữ liệu gộp
                 await performGoogleDriveReplace(mergedRows, allHeaders);
 
@@ -4490,7 +4719,7 @@ console.log('allHeaders', allHeaders);
                                     outputColumnsTimestamp: new Date().toISOString(),
                                     googleDriveMultiFiles: true,
                                     googleDriveFilesInfo: filesInfo,
-                                    googleDriveOrder: filesInfo.map(f => ({ id: f.id, order: Number(f.order||0) })),
+                                    googleDriveOrder: filesInfo.map(f => ({ id: f.id, order: Number(f.order || 0) })),
                                 },
                                 needUpdate: false,
                             }
@@ -4508,14 +4737,14 @@ console.log('allHeaders', allHeaders);
                 setImportMoreDataConfig(prev => ({
                     ...prev,
                     googleDriveColumns: allHeaders,
-                    googleDriveOrder: filesInfo.map(f => ({ id: f.id, order: Number(f.order||0) })),
+                    googleDriveOrder: filesInfo.map(f => ({ id: f.id, order: Number(f.order || 0) })),
                 }));
 
                 message.success(`Đã lấy ${mergedRows.length} dòng từ ${filesInfo.length} file Google Drive.`);
                 multiFileSuccess = true;
                 setShowImportMoreDataModal(false);
-              if (onDataUpdate) { await onDataUpdate(); }
-              if (onStepRunComplete) { await onStepRunComplete(firstStep.id); } 
+                if (onDataUpdate) { await onDataUpdate(); }
+                if (onStepRunComplete) { await onStepRunComplete(firstStep.id); }
             } catch (e) {
                 console.error(e);
                 if (!multiFileSuccess) {
@@ -4523,7 +4752,7 @@ console.log('allHeaders', allHeaders);
                 }
             } finally {
                 setImportMoreLoading(false);
-   
+
             }
             return;
         }
@@ -4534,17 +4763,17 @@ console.log('allHeaders', allHeaders);
         setImportMoreLoading(true);
         try {
             console.log('Gửi tới N8N Google Drive:', firstStep.config.googleDriveFileId);
-            const res = await n8nWebhookGoogleDrive({ 
+            const res = await n8nWebhookGoogleDrive({
                 googleDriveUrl: firstStep.config.googleDriveFileId,
                 email_import: currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com'
             });
             console.log('Response từ N8N Google Drive:', res);
-            
+
             if (res && res.success && res.sheets && Array.isArray(res.sheetNames)) {
                 // New backend response: { success, sheets: { name: { data: matrix } }, sheetNames }
                 const selectedSheet = firstStep.config?.googleDriveSheet || res.sheetNames[0];
                 const sheetData = res.sheets[selectedSheet];
-                
+
                 if (!sheetData || !Array.isArray(sheetData.data)) {
                     message.error('Không có dữ liệu trong sheet được chọn');
                     setImportMoreLoading(false);
@@ -4553,7 +4782,7 @@ console.log('allHeaders', allHeaders);
 
                 const matrix = sheetData.data;
                 const headerRowIndex = typeof firstStep.config?.googleDriveHeaderRow === 'number' ? firstStep.config.googleDriveHeaderRow : 0;
-                
+
                 if (headerRowIndex >= matrix.length) {
                     message.error('Hàng tiêu đề không hợp lệ');
                     setImportMoreLoading(false);
@@ -4585,9 +4814,44 @@ console.log('allHeaders', allHeaders);
                 }));
 
                 // Kiểm tra giới hạn upload
-                const limitCheck = await checkUploadLimits(headerRow, data);
-                if (!limitCheck.isValid) {
-                    message.error(limitCheck.message);
+                // const limitCheck = await checkUploadLimits(headerRow, data);
+                // if (!limitCheck.isValid) {
+                //     message.error(limitCheck.message);
+                //     setImportMoreLoading(false);
+                //     setShowImportMoreDataModal(false);
+                //     return;
+                // }
+
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (data.length > maxRecordPerFile) {
+                        message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + data.length > maxTotalRecord) {
+                        const availableSpace = maxTotalRecord - currentTotalRows;
+                        message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${data.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    message.error('Không thể kiểm tra giới hạn');
                     setImportMoreLoading(false);
                     setShowImportMoreDataModal(false);
                     return;
@@ -4639,7 +4903,7 @@ console.log('allHeaders', allHeaders);
                 const jsonData = res.rawData;
                 const sheetNames = res.sheetNames;
                 const selectedSheet = firstStep.config?.googleDriveSheet || sheetNames[0];
-                
+
                 if (jsonData.length > 0) {
                     const headerRowIndex = typeof firstStep.config?.googleDriveHeaderRow === 'number' ? firstStep.config.googleDriveHeaderRow : 0;
                     const headerRow = jsonData[headerRowIndex] || [];
@@ -4660,9 +4924,44 @@ console.log('allHeaders', allHeaders);
                     }));
 
                     // Kiểm tra giới hạn upload
-                    const limitCheck = await checkUploadLimits(headerRow, data);
-                    if (!limitCheck.isValid) {
-                        message.error(limitCheck.message);
+                    // const limitCheck = await checkUploadLimits(headerRow, data);
+                    // if (!limitCheck.isValid) {
+                    //     message.error(limitCheck.message);
+                    //     setImportMoreLoading(false);
+                    //     setShowImportMoreDataModal(false);
+                    //     return;
+                    // }
+
+                    // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                    try {
+                        const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                        const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                        const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                        
+                        // Kiểm tra giới hạn số dòng cho 1 file
+                        if (data.length > maxRecordPerFile) {
+                            message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                            setImportMoreLoading(false);
+                            setShowImportMoreDataModal(false);
+                            return;
+                        }
+                        
+                        // Kiểm tra giới hạn tổng số dòng hệ thống
+                        const totalRowsResponse = await getTotalRows(null);
+                        const currentTotalRows = totalRowsResponse?.count || 0;
+                        
+                        if (currentTotalRows + data.length > maxTotalRecord) {
+                            const availableSpace = maxTotalRecord - currentTotalRows;
+                            message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                            setImportMoreLoading(false);
+                            setShowImportMoreDataModal(false);
+                            return;
+                        }
+                        
+                        console.log(`✅ Kiểm tra giới hạn: File ${data.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                    } catch (error) {
+                        console.error('Lỗi khi kiểm tra giới hạn:', error);
+                        message.error('Không thể kiểm tra giới hạn');
                         setImportMoreLoading(false);
                         setShowImportMoreDataModal(false);
                         return;
@@ -4695,16 +4994,16 @@ console.log('allHeaders', allHeaders);
                     await updateTemplateTable(updatedTemplateData);
 
                     message.success(`Đã cập nhật ${data.length} dòng dữ liệu từ Google Drive (Fallback mode, Sheet: ${selectedSheet}, Header Row: ${headerRowIndex + 1})`);
-                setShowImportMoreDataModal(false);
+                    setShowImportMoreDataModal(false);
 
-                // Cập nhật dữ liệu
-                if (onDataUpdate) {
-                    await onDataUpdate();
-                }
+                    // Cập nhật dữ liệu
+                    if (onDataUpdate) {
+                        await onDataUpdate();
+                    }
 
-                // Gọi callback để cập nhật selectedStepId
-                if (onStepRunComplete) {
-                    await onStepRunComplete(firstStep.id);
+                    // Gọi callback để cập nhật selectedStepId
+                    if (onStepRunComplete) {
+                        await onStepRunComplete(firstStep.id);
                     }
                 } else {
                     message.error('Không có dữ liệu trong sheet được chọn');
@@ -4760,9 +5059,9 @@ console.log('allHeaders', allHeaders);
         try {
             console.log('Bắt đầu lấy dữ liệu từ Google Drive Folder:', firstStep.config.googleDriveFolderUrl);
             console.log('ImportMoreDataConfig:', importMoreDataConfig);
-            
+
             // Bước 1: Lấy danh sách file từ folder sử dụng n8nWebhookGoogleDrive
-            const folderResponse = await n8nWebhookGetFileFromGoogleDrive({ 
+            const folderResponse = await n8nWebhookGetFileFromGoogleDrive({
                 googleDriveUrl: firstStep.config.googleDriveFolderUrl,
                 email_import: currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com'
             });
@@ -4803,7 +5102,7 @@ console.log('allHeaders', allHeaders);
             console.log(`Tổng số file trước khi lọc: ${files.length}`);
             console.log(`Điều kiện tên file: "${importMoreDataConfig.fileNameCondition}"`);
             console.log(`Điều kiện thời gian: "${importMoreDataConfig.lastUpdateCondition}"`);
-            
+
             if (importMoreDataConfig.fileNameCondition) {
                 const pattern = importMoreDataConfig.fileNameCondition.replace(/\*/g, '.*');
                 const regex = new RegExp(pattern, 'i');
@@ -4849,9 +5148,9 @@ console.log('allHeaders', allHeaders);
             for (const file of filteredFiles) {
                 try {
                     console.log(`Đang xử lý file: ${file.name}`);
-                    
+
                     // Lấy dữ liệu từ file riêng lẻ
-                    const fileResponse = await n8nWebhookGoogleDrive({ 
+                    const fileResponse = await n8nWebhookGoogleDrive({
                         googleDriveUrl: file.id,
                         email_import: currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com'
                     });
@@ -4885,7 +5184,7 @@ console.log('allHeaders', allHeaders);
                     const dataRows = matrix.slice(headerRowIndex + 1);
 
                     // Thêm headers vào set tổng hợp
-                    fileHeaderRow.forEach(h => { 
+                    fileHeaderRow.forEach(h => {
                         if (h !== undefined && h !== null && String(h).trim() !== '') {
                             allHeadersSet.add(String(h));
                         }
@@ -4933,9 +5232,44 @@ console.log('allHeaders', allHeaders);
             console.log(`Tổng hợp: ${mergedRows.length} dòng từ ${filteredFiles.length} file, ${allHeaders.length} cột`);
 
             // Bước 5: Kiểm tra giới hạn upload
-            const limitCheck = await checkUploadLimits(allHeaders, mergedRows);
-            if (!limitCheck.isValid) {
-                message.error(limitCheck.message);
+            // const limitCheck = await checkUploadLimits(allHeaders, mergedRows);
+            // if (!limitCheck.isValid) {
+            //     message.error(limitCheck.message);
+            //     setImportMoreLoading(false);
+            //     setShowImportMoreDataModal(false);
+            //     return;
+            // }
+
+            // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+            try {
+                const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                
+                // Kiểm tra giới hạn số dòng cho 1 file
+                if (mergedRows.length > maxRecordPerFile) {
+                    message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                    setImportMoreLoading(false);
+                    setShowImportMoreDataModal(false);
+                    return;
+                }
+                
+                // Kiểm tra giới hạn tổng số dòng hệ thống
+                const totalRowsResponse = await getTotalRows(null);
+                const currentTotalRows = totalRowsResponse?.count || 0;
+                
+                if (currentTotalRows + mergedRows.length > maxTotalRecord) {
+                    const availableSpace = maxTotalRecord - currentTotalRows;
+                    message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                    setImportMoreLoading(false);
+                    setShowImportMoreDataModal(false);
+                    return;
+                }
+                
+                console.log(`✅ Kiểm tra giới hạn: File ${mergedRows.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+            } catch (error) {
+                console.error('Lỗi khi kiểm tra giới hạn:', error);
+                message.error('Không thể kiểm tra giới hạn');
                 setImportMoreLoading(false);
                 setShowImportMoreDataModal(false);
                 return;
@@ -4964,13 +5298,13 @@ console.log('allHeaders', allHeaders);
             );
 
             onChange(updatedSteps);
-            
+
             // Bước 8: Lưu steps đã cập nhật để đảm bảo outputColumns được persisted
             try {
-               
-                    delete updatedSteps[0].config.googleDriveFolderData;
-                    delete updatedSteps[0].config.googleDriveFolderColumns;
-              
+
+                delete updatedSteps[0].config.googleDriveFolderData;
+                delete updatedSteps[0].config.googleDriveFolderColumns;
+
                 const updatedTemplateData = { ...templateData, steps: updatedSteps };
 
                 await updateTemplateTable(updatedTemplateData);
@@ -4983,7 +5317,7 @@ console.log('allHeaders', allHeaders);
                 if (templateData?.id) {
                     // Kiểm tra xem đã có frequency config chưa
                     const existingConfig = await getFrequencyConfigByTableId(templateData.id);
-                    
+
                     if (importMoreDataConfig.isFrequencyActive) {
                         // Tạo hoặc cập nhật frequency config
                         const frequency_hours = Number(importMoreDataConfig.frequencyHours || 3);
@@ -5019,7 +5353,7 @@ console.log('allHeaders', allHeaders);
                     } else {
                         // Xóa frequency config nếu có
                         if (existingConfig?.data?.data) {
-                            await deleteFrequencyConfig(existingConfig.data.data.id);   
+                            await deleteFrequencyConfig(existingConfig.data.data.id);
                             console.log('Deleted frequency config for Google Drive Folder table:', templateData.id);
                         }
                     }
@@ -5140,6 +5474,41 @@ console.log('allHeaders', allHeaders);
             }
 
             if (data && Array.isArray(data) && data.length > 0) {
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (data.length > maxRecordPerFile) {
+                        message.error(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + data.length > maxTotalRecord) {
+                        const availableSpace = maxTotalRecord - currentTotalRows;
+                        message.error(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${availableSpace.toLocaleString()} dòng.`);
+                        setImportMoreLoading(false);
+                        setShowImportMoreDataModal(false);
+                        return;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${data.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    message.error('Không thể kiểm tra giới hạn');
+                    setImportMoreLoading(false);
+                    setShowImportMoreDataModal(false);
+                    return;
+                }
+
                 // Thực hiện thay thế toàn bộ dữ liệu
                 await performSystemReplace(data);
 
@@ -5263,20 +5632,20 @@ console.log('allHeaders', allHeaders);
             } else {
                 // Thêm mới dữ liệu
                 if (importMoreDataConfig.duplicateCheck && importMoreDataConfig.duplicateKeys.length > 0) {
-					// Xử lý trùng lặp (bỏ qua cột key) với chuẩn hóa giá trị để so khớp ổn định
-					const normalizeValue = (v) => {
-						if (v === null || v === undefined) return '';
-						// Chuẩn hóa: chuyển sang string, bỏ dấu ' đầu và trim khoảng trắng
-						return String(v).replace(/^'/, '').trim();
-					};
-					const createKey = (row) => importMoreDataConfig.duplicateKeys
-						.filter(col => col !== 'key')
-						.map(col => normalizeValue(row[col]))
-						.join('|');
+                    // Xử lý trùng lặp (bỏ qua cột key) với chuẩn hóa giá trị để so khớp ổn định
+                    const normalizeValue = (v) => {
+                        if (v === null || v === undefined) return '';
+                        // Chuẩn hóa: chuyển sang string, bỏ dấu ' đầu và trim khoảng trắng
+                        return String(v).replace(/^'/, '').trim();
+                    };
+                    const createKey = (row) => importMoreDataConfig.duplicateKeys
+                        .filter(col => col !== 'key')
+                        .map(col => normalizeValue(row[col]))
+                        .join('|');
 
                     const existingKeys = new Set();
                     baseData.forEach(row => {
-						const key = createKey(row);
+                        const key = createKey(row);
                         existingKeys.add(key);
                     });
 
@@ -5284,7 +5653,7 @@ console.log('allHeaders', allHeaders);
                     const duplicateData = [];
 
                     importedMoreData.forEach(row => {
-						const key = createKey(row);
+                        const key = createKey(row);
                         if (existingKeys.has(key)) {
                             duplicateData.push(row);
                         } else {
@@ -5303,8 +5672,8 @@ console.log('allHeaders', allHeaders);
                             // Xác định các dòng cần xóa từ database
                             const rowsToDelete = [];
                             baseData.forEach(row => {
-								const key = createKey(row);
-								const isDuplicate = duplicateData.some(dupRow => createKey(dupRow) === key);
+                                const key = createKey(row);
+                                const isDuplicate = duplicateData.some(dupRow => createKey(dupRow) === key);
                                 if (isDuplicate && row.rowId) { // Sử dụng rowId thay vì id
                                     rowsToDelete.push(row.rowId);
                                 }
@@ -5327,8 +5696,8 @@ console.log('allHeaders', allHeaders);
 
                             // Lọc dữ liệu cũ để không hiển thị trùng lặp
                             const filteredOriginal = baseData.filter(row => {
-								const key = createKey(row);
-								return !duplicateData.some(dupRow => createKey(dupRow) === key);
+                                const key = createKey(row);
+                                return !duplicateData.some(dupRow => createKey(dupRow) === key);
                             });
 
                             console.log('Dữ liệu gốc sau khi lọc:', filteredOriginal.length, 'dòng');
@@ -5652,38 +6021,65 @@ console.log('allHeaders', allHeaders);
                                         </Button>
                                     </Tooltip>
                                 ) : (
-                                <Tooltip title={
-                                    autorun ? 'Không thể chạy step khi Autorun đang bật' :
-                                        (isTestMode && step.id > 1) ? 'Chạy thử step với 1000 dòng dữ liệu' :
-                                            'Run Step'
-                                }>
-                                    {(isTestMode && step.id > 1) ? (
-                                        <Dropdown
-                                            menu={{
-                                                items: [
-                                                    {
-                                                        key: 'normal',
-                                                        label: 'Run',
-                                                        tooltip: 'Chạy với đầy đủ dữ liệu',
-                                                        icon: <PlayCircleOutlined />,
-                                                        onClick: (e) => {
-                                                            e.domEvent.stopPropagation();
-                                                            if (!autorun && !(isRunningForThisFile && isBatchRunning)) {
-                                                                if (setRunningFileNotes && templateData?.fileNote_id) {
-                                                                    setRunningFileNotes(prev => new Set([...prev, String(templateData.fileNote_id)]));
+                                    <Tooltip title={
+                                        autorun ? 'Không thể chạy step khi Autorun đang bật' :
+                                            (isTestMode && step.id > 1) ? 'Chạy thử step với 1000 dòng dữ liệu' :
+                                                'Run Step'
+                                    }>
+                                        {(isTestMode && step.id > 1) ? (
+                                            <Dropdown
+                                                menu={{
+                                                    items: [
+                                                        {
+                                                            key: 'normal',
+                                                            label: 'Run',
+                                                            tooltip: 'Chạy với đầy đủ dữ liệu',
+                                                            icon: <PlayCircleOutlined />,
+                                                            onClick: (e) => {
+                                                                e.domEvent.stopPropagation();
+                                                                if (!autorun && !(isRunningForThisFile && isBatchRunning)) {
+                                                                    if (setRunningFileNotes && templateData?.fileNote_id) {
+                                                                        setRunningFileNotes(prev => new Set([...prev, String(templateData.fileNote_id)]));
+                                                                    }
+                                                                    // Chạy với đầy đủ dữ liệu (forceNormalMode = true)
+                                                                    handleRunStep(idx, true);
+                                                                    checkRunningStep(step.id);
                                                                 }
-                                                                // Chạy với đầy đủ dữ liệu (forceNormalMode = true)
-                                                                handleRunStep(idx, true);
-                                                                checkRunningStep(step.id);
                                                             }
                                                         }
-                                                    }
-                                                ]
-                                            }}
-                                            trigger={['contextMenu']}
-                                            placement="bottom"
-                                            disabled={autorun || (isRunningForThisFile && (runningStep !== null || isBatchRunning))}
-                                        >
+                                                    ]
+                                                }}
+                                                trigger={['contextMenu']}
+                                                placement="bottom"
+                                                disabled={autorun || (isRunningForThisFile && (runningStep !== null || isBatchRunning))}
+                                            >
+                                                <Button
+                                                    icon={<PlayCircleOutlined />}
+                                                    size="small"
+                                                    type="primary"
+                                                    loading={isRunningForThisFile && runningStep === step.id}
+                                                    disabled={autorun || (isRunningForThisFile && (runningStep !== null || isBatchRunning))}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(); // Ngăn event bubble lên card
+                                                        // Cho phép chạy nếu không autorun và KHÔNG chạy batch cho chính filenote này
+                                                        if (!autorun && !(isRunningForThisFile && isBatchRunning)) {
+                                                            if (setRunningFileNotes && templateData?.fileNote_id) {
+                                                                setRunningFileNotes(prev => new Set([...prev, String(templateData.fileNote_id)]));
+                                                            }
+                                                            handleRunStep(idx);
+                                                            checkRunningStep(step.id);
+                                                        }
+                                                    }}
+                                                    style={{
+                                                        marginRight: 8,
+                                                        backgroundColor: '#1890ff',
+                                                        borderColor: '#1890ff'
+                                                    }}
+                                                >
+                                                    Test
+                                                </Button>
+                                            </Dropdown>
+                                        ) : (
                                             <Button
                                                 icon={<PlayCircleOutlined />}
                                                 size="small"
@@ -5702,39 +6098,12 @@ console.log('allHeaders', allHeaders);
                                                     }
                                                 }}
                                                 style={{
-                                                    marginRight: 8,
-                                                    backgroundColor: '#1890ff',
-                                                    borderColor: '#1890ff'
+                                                    marginRight: 8
                                                 }}
                                             >
-                                                Test
                                             </Button>
-                                        </Dropdown>
-                                    ) : (
-                                        <Button
-                                            icon={<PlayCircleOutlined />}
-                                            size="small"
-                                            type="primary"
-                                            loading={isRunningForThisFile && runningStep === step.id}
-                                            disabled={autorun || (isRunningForThisFile && (runningStep !== null || isBatchRunning))}
-                                            onClick={(e) => {
-                                                e.stopPropagation(); // Ngăn event bubble lên card
-                                                // Cho phép chạy nếu không autorun và KHÔNG chạy batch cho chính filenote này
-                                                if (!autorun && !(isRunningForThisFile && isBatchRunning)) {
-                                                    if (setRunningFileNotes && templateData?.fileNote_id) {
-                                                        setRunningFileNotes(prev => new Set([...prev, String(templateData.fileNote_id)]));
-                                                    }
-                                                    handleRunStep(idx);
-                                                    checkRunningStep(step.id);
-                                                }
-                                            }}
-                                            style={{
-                                                marginRight: 8
-                                            }}
-                                        >
-                                        </Button>
-                                    )}
-                                </Tooltip>
+                                        )}
+                                    </Tooltip>
                                 )}
                                 <Tooltip title={autorun ? 'Không thể chỉnh sửa step khi Autorun đang bật' : 'Edit'}>
                                     <Button
@@ -6479,7 +6848,7 @@ console.log('allHeaders', allHeaders);
                 open={isResetExcelModalVisible}
                 width={980}
                 centered
-                destroyOnClose
+                destroyOnHidden
                 zIndex={1000}
                 title="Reset dữ liệu nguồn"
                 onCancel={() => {
@@ -6556,7 +6925,7 @@ console.log('allHeaders', allHeaders);
                         try {
                             const existingConfig = await getFrequencyConfigByTableId(templateData.id);
                             if (existingConfig?.data?.data) {
-                                await deleteFrequencyConfig(existingConfig.data.data.id);   
+                                await deleteFrequencyConfig(existingConfig.data.data.id);
                                 console.log('Deleted old frequency config before reset:', templateData.id);
                             }
                         } catch (error) {
@@ -6613,7 +6982,7 @@ console.log('allHeaders', allHeaders);
                                     return String(col);
                                 }
                             });
-                            
+
                             // Debug log để kiểm tra googleDriveFileId
                             console.log('Google Drive prepared config:', {
                                 googleDriveFileId: prepared.googleDriveFileId,
@@ -6648,7 +7017,7 @@ console.log('allHeaders', allHeaders);
                                 });
 
                                 // Bước 1: Lấy danh sách file từ folder sử dụng n8nWebhookGoogleDrive
-                                const folderResponse = await n8nWebhookGetFileFromGoogleDrive({ 
+                                const folderResponse = await n8nWebhookGetFileFromGoogleDrive({
                                     googleDriveUrl: prepared.googleDriveFolderUrl,
                                     email_import: currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com'
                                 });
@@ -6688,7 +7057,7 @@ console.log('allHeaders', allHeaders);
                                 console.log(`Tổng số file trước khi lọc: ${files.length}`);
                                 console.log(`Điều kiện tên file: "${prepared.fileNameCondition}"`);
                                 console.log(`Điều kiện thời gian: "${prepared.lastUpdateCondition}"`);
-                                
+
                                 if (prepared.fileNameCondition) {
                                     const pattern = prepared.fileNameCondition.replace(/\*/g, '.*');
                                     const regex = new RegExp(pattern, 'i');
@@ -6732,9 +7101,9 @@ console.log('allHeaders', allHeaders);
                                 for (const file of filteredFiles) {
                                     try {
                                         console.log(`Đang xử lý file: ${file.name}`);
-                                        
+
                                         // Lấy dữ liệu từ file riêng lẻ
-                                        const fileResponse = await n8nWebhookGoogleDrive({ 
+                                        const fileResponse = await n8nWebhookGoogleDrive({
                                             googleDriveUrl: file.id,
                                             email_import: currentSchemaPathRecord?.email_import || 'gateway@xichtho-vn.com'
                                         });
@@ -6768,7 +7137,7 @@ console.log('allHeaders', allHeaders);
                                         const dataRows = matrix.slice(headerRowIndex + 1);
 
                                         // Thêm headers vào set tổng hợp
-                                        fileHeaderRow.forEach(h => { 
+                                        fileHeaderRow.forEach(h => {
                                             if (h !== undefined && h !== null && String(h).trim() !== '') {
                                                 allHeadersSet.add(String(h));
                                             }
@@ -6861,10 +7230,10 @@ console.log('allHeaders', allHeaders);
                             let updatedSteps = [...normalizedSteps];
                             if (resetTargetStepIndex !== null && updatedSteps[resetTargetStepIndex]) {
                                 const uploadStep = updatedSteps[resetTargetStepIndex];
-                                
+
                                 // Tạo config mới dựa trên loại upload
                                 let extraConfig = {};
-                                
+
                                 switch (prepared.uploadType) {
                                     case 'excel':
                                         extraConfig = {
@@ -6900,12 +7269,12 @@ console.log('allHeaders', allHeaders);
                                         };
                                         break;
                                     case 'googleDriveFolder':
-                                       
+
                                         extraConfig = {
                                             uploadType: 'googleDriveFolder',
-                                                googleDriveFolderUrl: prepared.googleDriveFolderUrl || uploadStep.config?.googleDriveFolderUrl || '',
-                                                
-                                                lastUpdate: new Date().toISOString(),
+                                            googleDriveFolderUrl: prepared.googleDriveFolderUrl || uploadStep.config?.googleDriveFolderUrl || '',
+
+                                            lastUpdate: new Date().toISOString(),
                                         };
                                         break;
                                     case 'postgresql':
@@ -6949,10 +7318,10 @@ console.log('allHeaders', allHeaders);
                                             lastUpdate: new Date().toISOString(),
                                         };
                                 }
-                                
+
                                 // Xóa các config cũ không còn liên quan
                                 const cleanConfig = { ...uploadStep.config };
-                                
+
                                 // Xóa tất cả config của các loại upload khác
                                 const allUploadTypes = ['excel', 'googleSheets', 'googleDrive', 'postgresql', 'api', 'system', 'htqc'];
                                 allUploadTypes.forEach(type => {
@@ -6960,7 +7329,7 @@ console.log('allHeaders', allHeaders);
                                         // Xóa data và columns của các loại khác
                                         delete cleanConfig[`${type}Data`];
                                         delete cleanConfig[`${type}Columns`];
-                                        
+
                                         // Xóa các config đặc biệt
                                         if (type === 'googleSheets') {
                                             delete cleanConfig.googleSheetUrl;
@@ -6975,7 +7344,7 @@ console.log('allHeaders', allHeaders);
                                             delete cleanConfig.googleDriveSheet;
                                             delete cleanConfig.googleDriveHeaderRow;
                                         }
-                                        
+
                                         else if (type === 'googleDriveFolder') {
                                             delete cleanConfig.googleDriveFolderData;
                                             delete cleanConfig.googleDriveFolderColumns;
@@ -6989,20 +7358,20 @@ console.log('allHeaders', allHeaders);
                                         }
                                     }
                                 });
-                                
+
                                 const newConfig = {
                                     ...cleanConfig,
                                     ...extraConfig,
                                     outputColumns: newOutputColumns,
                                     outputColumnsTimestamp: new Date().toISOString(),
                                 };
-                                
+
                                 updatedSteps[resetTargetStepIndex] = { ...uploadStep, config: newConfig, needUpdate: false };
-                                
+
                                 // 5) Đánh dấu needUpdate cho các step phía sau
                                 updatedSteps = updatedSteps.map((s, idx) => idx > resetTargetStepIndex ? { ...s, needUpdate: true } : s);
                                 onChange(updatedSteps);
-                                
+
                                 if (templateData && templateData.id) {
                                     try {
                                         await updateTemplateTable({ ...templateData, steps: updatedSteps });
@@ -7017,11 +7386,11 @@ console.log('allHeaders', allHeaders);
                                         // Kiểm tra xem có cấu hình frequency không
                                         const isFrequencyActive = prepared.isFrequencyActive || false;
                                         const frequencyHours = Number(prepared.frequencyHours || 3);
-                                        
+
                                         if (isFrequencyActive && frequencyHours > 0) {
                                             // Kiểm tra xem đã có frequency config chưa
                                             const existingConfig = await getFrequencyConfigByTableId(templateData.id);
-                                            
+
                                             const configData = {
                                                 frequency_hours: frequencyHours,
                                                 is_active: true,
@@ -7051,7 +7420,7 @@ console.log('allHeaders', allHeaders);
                                                 });
                                                 console.log('Created frequency config for Google Drive Folder table:', templateData.id);
                                             }
-                                        } 
+                                        }
                                     }
                                 } catch (error) {
                                     console.error('Error handling frequency config for Google Drive Folder:', error);
@@ -7292,7 +7661,7 @@ console.log('allHeaders', allHeaders);
                                 </Space>
                             </Card>
 
-                          
+
 
                             <Card title="Cấu hình tự động cập nhật" size="small">
                                 <Space direction="vertical" style={{ width: '100%' }}>
@@ -7344,7 +7713,7 @@ console.log('allHeaders', allHeaders);
                                             {importMoreDataConfig.googleDriveFolderUrl || 'Chưa có'}
                                         </div>
                                     </div>
-                                    
+
                                     <div>
                                         <strong>Điều kiện tên file:</strong>
                                         <Input
@@ -7357,7 +7726,7 @@ console.log('allHeaders', allHeaders);
                                             style={{ marginTop: 4 }}
                                         />
                                     </div>
-                                    
+
                                     <div>
                                         <strong>Điều kiện thời gian cập nhật:</strong>
                                         <Select
@@ -7376,7 +7745,7 @@ console.log('allHeaders', allHeaders);
                                             <Option value="30d">Trong 30 ngày</Option>
                                         </Select>
                                     </div>
-                                    
+
                                     <div>
                                         <strong>Hàng làm header:</strong>
                                         <InputNumber
@@ -7390,7 +7759,7 @@ console.log('allHeaders', allHeaders);
                                             placeholder="Số thứ tự hàng (bắt đầu từ 1)"
                                         />
                                     </div>
-                                    
+
                                     <div>
                                         <strong>Tự động cập nhật:</strong>
                                         <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 4 }}>
@@ -7425,7 +7794,7 @@ console.log('allHeaders', allHeaders);
                                             </Select>
                                         )}
                                     </div>
-                                    
+
                                     <div>
                                         <strong>Lần cập nhật cuối:</strong>
                                         <div style={{ marginTop: 4, padding: 8, backgroundColor: '#f5f5f5', borderRadius: 4 }}>
@@ -7619,7 +7988,7 @@ console.log('allHeaders', allHeaders);
                                             ))}
                                         </div>
                                     </div>
-                                    
+
                                     <Alert
                                         message="Thông tin"
                                         description="Hệ thống sẽ tự động lấy dữ liệu từ Google Drive Folder theo cấu hình đã thiết lập và tổng hợp dữ liệu từ nhiều file."
@@ -7632,104 +8001,104 @@ console.log('allHeaders', allHeaders);
                     ) : importMoreDataConfig.isGoogleDriveSource ? (
                         <>
                             {/* UI cho Google Drive */}
-                   
+
                             <Card title="" size="small">
                                 <Space direction="vertical" style={{ width: '100%' }}>
                                     {importMoreDataConfig?.googleDriveMultiFiles ? <div>
                                         <div>
-                                        <strong>Folder URL:</strong>
-                                        <div style={{
-                                            marginTop: 4,
-                                            padding: 8,
-                                            backgroundColor: '#f5f5f5',
-                                            borderRadius: 4,
-                                            fontSize: '12px',
-                                        }}>
-                                            {importMoreDataConfig?.googleDriveFolderUrl}
+                                            <strong>Folder URL:</strong>
+                                            <div style={{
+                                                marginTop: 4,
+                                                padding: 8,
+                                                backgroundColor: '#f5f5f5',
+                                                borderRadius: 4,
+                                                fontSize: '12px',
+                                            }}>
+                                                {importMoreDataConfig?.googleDriveFolderUrl}
+                                            </div>
                                         </div>
-                                    </div>
-                                        </div> : (
-                                    <div>
-                                        <strong>Tên file:</strong>
-                                        <div style={{
-                                            marginTop: 4,
-                                            padding: 8,
-                                            backgroundColor: '#f5f5f5',
-                                            borderRadius: 4,
-                                            fontSize: '12px',
-                                        }}>
-                                            {importMoreDataConfig?.googleDriveSelectedFileName}
+                                    </div> : (
+                                        <div>
+                                            <strong>Tên file:</strong>
+                                            <div style={{
+                                                marginTop: 4,
+                                                padding: 8,
+                                                backgroundColor: '#f5f5f5',
+                                                borderRadius: 4,
+                                                fontSize: '12px',
+                                            }}>
+                                                {importMoreDataConfig?.googleDriveSelectedFileName}
+                                            </div>
                                         </div>
-                                    </div>
-                                    ) }
-                                      {!importMoreDataConfig?.googleDriveMultiFiles ? (
-                                    <div>
-                                        <strong>Folder URL:</strong>
-                                        <div style={{
-                                            marginTop: 4,
-                                            padding: 8,
-                                            backgroundColor: '#f5f5f5',
-                                            borderRadius: 4,
-                                            fontSize: '12px',
-                                        }}>
-                                            {importMoreDataConfig.googleDriveFolderUrl ? <a href={`${importMoreDataConfig?.googleDriveFolderUrl}`} 
-                                                                target="_blank" rel="noopener noreferrer"
-                                                                style={{display: 'flex', alignItems: 'center', gap: 4}}
-                                                                >
-                                                                <LinkOutlined />
-                                                                {importMoreDataConfig?.googleDriveFolderUrl}
-                                                                </a> : 'Folder URL'}
+                                    )}
+                                    {!importMoreDataConfig?.googleDriveMultiFiles ? (
+                                        <div>
+                                            <strong>Folder URL:</strong>
+                                            <div style={{
+                                                marginTop: 4,
+                                                padding: 8,
+                                                backgroundColor: '#f5f5f5',
+                                                borderRadius: 4,
+                                                fontSize: '12px',
+                                            }}>
+                                                {importMoreDataConfig.googleDriveFolderUrl ? <a href={`${importMoreDataConfig?.googleDriveFolderUrl}`}
+                                                    target="_blank" rel="noopener noreferrer"
+                                                    style={{ display: 'flex', alignItems: 'center', gap: 4 }}
+                                                >
+                                                    <LinkOutlined />
+                                                    {importMoreDataConfig?.googleDriveFolderUrl}
+                                                </a> : 'Folder URL'}
+                                            </div>
                                         </div>
-                                    </div>
-                                    ) : null}
-                                         {!importMoreDataConfig?.googleDriveMultiFiles ? (
-                                    <div>
-                                        <strong>File URL:</strong>
-                                        <div style={{
-                                            marginTop: 4,
-                                            padding: 8,
-                                            backgroundColor: '#f5f5f5',
-                                            borderRadius: 4,
-                                            fontSize: '12px',
-                                        }}>
-                                            {importMoreDataConfig.googleDriveFileId ? <a href={`https://docs.google.com/spreadsheets/d/${importMoreDataConfig.googleDriveFileId}`} 
-                                                                target="_blank" rel="noopener noreferrer"
-                                                                style={{display: 'flex', alignItems: 'center', gap: 4}}
-                                                                >
-                                                                <LinkOutlined />
-                                                                https://docs.google.com/spreadsheets/d/${importMoreDataConfig.googleDriveFileId}
-                                                                </a> : 'File URL'}
-                                        </div>
-                                    </div>
                                     ) : null}
                                     {!importMoreDataConfig?.googleDriveMultiFiles ? (
-                                    <div>
-                                        <strong>Sheet:</strong>
-                                        <div style={{
-                                            marginTop: 4,
-                                            padding: 8,
-                                            backgroundColor: '#f5f5f5',
-                                            borderRadius: 4,
-                                            fontSize: '12px',
-                                        }}>
-                                            {importMoreDataConfig.googleDriveSheet || 'Sheet mặc định'}
+                                        <div>
+                                            <strong>File URL:</strong>
+                                            <div style={{
+                                                marginTop: 4,
+                                                padding: 8,
+                                                backgroundColor: '#f5f5f5',
+                                                borderRadius: 4,
+                                                fontSize: '12px',
+                                            }}>
+                                                {importMoreDataConfig.googleDriveFileId ? <a href={`https://docs.google.com/spreadsheets/d/${importMoreDataConfig.googleDriveFileId}`}
+                                                    target="_blank" rel="noopener noreferrer"
+                                                    style={{ display: 'flex', alignItems: 'center', gap: 4 }}
+                                                >
+                                                    <LinkOutlined />
+                                                    https://docs.google.com/spreadsheets/d/${importMoreDataConfig.googleDriveFileId}
+                                                </a> : 'File URL'}
+                                            </div>
                                         </div>
-                                    </div>
+                                    ) : null}
+                                    {!importMoreDataConfig?.googleDriveMultiFiles ? (
+                                        <div>
+                                            <strong>Sheet:</strong>
+                                            <div style={{
+                                                marginTop: 4,
+                                                padding: 8,
+                                                backgroundColor: '#f5f5f5',
+                                                borderRadius: 4,
+                                                fontSize: '12px',
+                                            }}>
+                                                {importMoreDataConfig.googleDriveSheet || 'Sheet mặc định'}
+                                            </div>
+                                        </div>
                                     ) : null}
 
                                     {!importMoreDataConfig.googleDriveMultiFiles ? (
-                                    <div>
-                                        <strong>Hàng làm header:</strong>
-                                        <div style={{
-                                            marginTop: 4,
-                                            padding: 8,
-                                            backgroundColor: '#f5f5f5',
-                                            borderRadius: 4,
-                                            fontSize: '12px',
-                                        }}>
-                                            Hàng {typeof importMoreDataConfig.googleDriveHeaderRow === 'number' ? importMoreDataConfig.googleDriveHeaderRow + 1 : 1}
+                                        <div>
+                                            <strong>Hàng làm header:</strong>
+                                            <div style={{
+                                                marginTop: 4,
+                                                padding: 8,
+                                                backgroundColor: '#f5f5f5',
+                                                borderRadius: 4,
+                                                fontSize: '12px',
+                                            }}>
+                                                Hàng {typeof importMoreDataConfig.googleDriveHeaderRow === 'number' ? importMoreDataConfig.googleDriveHeaderRow + 1 : 1}
+                                            </div>
                                         </div>
-                                    </div>
                                     ) : null}
 
                                     {importMoreDataConfig.googleDriveMultiFiles && Array.isArray(importMoreDataConfig.googleDriveFilesInfo) && importMoreDataConfig.googleDriveFilesInfo.length > 0 && (
@@ -7744,11 +8113,13 @@ console.log('allHeaders', allHeaders);
                                                         { title: 'Tên file', dataIndex: 'name', key: 'name' },
                                                         { title: 'Sheet', dataIndex: 'selectedSheet', key: 'selectedSheet' },
                                                         { title: 'Header row', dataIndex: 'headerRow', key: 'headerRow', render: r => (typeof r === 'number' ? r : '') },
-                                                        { title: 'Liên kết', dataIndex: 'id', key: 'id', 
-                                                            render: r => (<a href={`https://docs.google.com/spreadsheets/d/${r}`} 
+                                                        {
+                                                            title: 'Liên kết', dataIndex: 'id', key: 'id',
+                                                            render: r => (<a href={`https://docs.google.com/spreadsheets/d/${r}`}
                                                                 target="_blank" rel="noopener noreferrer">
                                                                 <LinkOutlined />
-                                                                </a>) },
+                                                            </a>)
+                                                        },
                                                     ]}
                                                     pagination={false}
                                                 />
@@ -7833,8 +8204,8 @@ console.log('allHeaders', allHeaders);
                                 </Space>
                             </Card>
 
-                              {/* Modal chọn nhiều file (giống UploadConfig) */}
-                              <Modal
+                            {/* Modal chọn nhiều file (giống UploadConfig) */}
+                            <Modal
                                 title="Chọn file từ Google Drive"
                                 open={isDriveFileModalVisible}
                                 onCancel={() => setIsDriveFileModalVisible(false)}
@@ -7857,7 +8228,7 @@ console.log('allHeaders', allHeaders);
                                                     selectedSheet: driveFileMeta[fid]?.selectedSheet || null,
                                                     headerRow: driveFileMeta[fid]?.headerRow || null,
                                                     order: Number((driveOrderMap || {})[fid] ?? 0)
-                                                })).sort((a,b)=>a.order-b.order);
+                                                })).sort((a, b) => a.order - b.order);
 
                                                 // Cập nhật state tạm cho UI
                                                 setImportMoreDataConfig(prev => ({
@@ -7879,7 +8250,7 @@ console.log('allHeaders', allHeaders);
                                                                     googleDriveFilesInfo: filesInfo,
                                                                     googleDriveFolderUrl: importMoreDataConfig?.googleDriveFolderUrl || step.config?.googleDriveFolderUrl || '',
                                                                     // googleDriveFilesMeta: driveFileMeta,
-                                                
+
                                                                 },
                                                                 needUpdate: true,
                                                             }
@@ -8345,25 +8716,25 @@ console.log('allHeaders', allHeaders);
                                                         <strong>Chọn cột làm key để kiểm tra trùng lặp:</strong>
 
                                                         {importedMoreColumns && importedMoreColumns.filter(col => col.title !== 'key').length > 0 && (
-                                                        <div style={{ marginBottom: 8 }}>
-                                                            <Button
-                                                                size="small"
-                                                                onClick={() => {
-                                                                    const allKeys = importedMoreColumns
-                                                                        .filter(col => col.title !== 'key')
-                                                                        .map(col => col.title);
-                                                                    setImportMoreDataConfig(prev => ({
-                                                                        ...prev,
-                                                                        duplicateKeys: allKeys,
-                                                                    }));
-                                                                }}
-                                                            >
-                                                                Chọn tất cả
-                                                            </Button>
+                                                            <div style={{ marginBottom: 8 }}>
+                                                                <Button
+                                                                    size="small"
+                                                                    onClick={() => {
+                                                                        const allKeys = importedMoreColumns
+                                                                            .filter(col => col.title !== 'key')
+                                                                            .map(col => col.title);
+                                                                        setImportMoreDataConfig(prev => ({
+                                                                            ...prev,
+                                                                            duplicateKeys: allKeys,
+                                                                        }));
+                                                                    }}
+                                                                >
+                                                                    Chọn tất cả
+                                                                </Button>
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                    )}
-                                                    </div>
-                                                   
+
                                                     <Select
                                                         mode="multiple"
                                                         placeholder="Chọn các cột"
@@ -8482,7 +8853,7 @@ console.log('allHeaders', allHeaders);
 const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
     // Load từ _runOptions của step nếu có
     const savedRunOptions = modal.step?._runOptions || {};
-    
+
     const [runMode, setRunMode] = useState(savedRunOptions.runMode || 'full');
     const [filterConditions, setFilterConditions] = useState(savedRunOptions.filterConditions || []);
     const [filterMode, setFilterMode] = useState(savedRunOptions.filterMode || 'include');
@@ -8496,8 +8867,7 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
     useEffect(() => {
         if (modal.visible && modal.step?._runOptions) {
             const options = modal.step._runOptions;
-            console.log('🔍 [DEBUG] AiTransformerRunModal - Force updating state with:', options);
-            
+
             setRunMode(options.runMode || 'full');
             setFilterConditions(options.filterConditions || []);
             setFilterMode(options.filterMode || 'include');
@@ -8606,13 +8976,13 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                                 </div>
                             </Radio>
                             <Radio value="empty_only">
-                                        <div>
-                                            <strong>Chạy nốt dòng còn trống</strong>
-                                            <div style={{ fontSize: '12px', color: '#666' }}>
-                                                Chỉ xử lý các dòng mà cột kết quả còn trống + tự động phát hiện dữ liệu mới/thay đổi
-                                            </div>
-                                        </div>
-                                    </Radio>
+                                <div>
+                                    <strong>Chạy nốt dòng còn trống</strong>
+                                    <div style={{ fontSize: '12px', color: '#666' }}>
+                                        Chỉ xử lý các dòng mà cột kết quả còn trống + tự động phát hiện dữ liệu mới/thay đổi
+                                    </div>
+                                </div>
+                            </Radio>
                         </Space>
                     </Radio.Group>
                 </div>
@@ -8626,7 +8996,7 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                         <div style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
                             <InfoCircleOutlined /> Chỉ dữ liệu thỏa mãn điều kiện sẽ được gửi cho AI xử lý
                         </div>
-                        
+
                         {/* Chế độ lọc */}
                         <div style={{ marginBottom: '12px' }}>
                             <label style={{ display: 'block', marginBottom: '4px', fontWeight: 'bold' }}>
@@ -8645,10 +9015,10 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                         {/* Danh sách điều kiện lọc */}
                         <div style={{ marginBottom: '8px' }}>
                             {filterConditions.map((condition, index) => (
-                                <div key={index} style={{ 
-                                    display: 'flex', 
-                                    alignItems: 'center', 
-                                    gap: '8px', 
+                                <div key={index} style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
                                     marginBottom: '8px',
                                     padding: '8px',
                                     border: '1px solid #d9d9d9',
@@ -8666,7 +9036,7 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                                             <Option value="OR">OR</Option>
                                         </Select>
                                     )}
-                                    
+
                                     {/* Chọn cột */}
                                     <Select
                                         placeholder="Chọn cột"
@@ -8675,7 +9045,7 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                                         style={{ width: '150px' }}
                                         options={columnOptions}
                                     />
-                                    
+
                                     {/* Chọn toán tử */}
                                     <Select
                                         placeholder="Toán tử"
@@ -8694,7 +9064,7 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                                         <Option value="is_empty">Trống</Option>
                                         <Option value="is_not_empty">Không trống</Option>
                                     </Select>
-                                    
+
                                     {/* Nhập giá trị - ẩn nếu là is_empty hoặc is_not_empty */}
                                     {!['is_empty', 'is_not_empty'].includes(condition.operator) && (
                                         <Input
@@ -8704,7 +9074,7 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                                             style={{ width: '120px' }}
                                         />
                                     )}
-                                    
+
                                     {/* Nút xóa điều kiện */}
                                     <Button
                                         type="text"
@@ -8717,7 +9087,7 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                                 </div>
                             ))}
                         </div>
-                        
+
                         {/* Nút thêm điều kiện */}
                         <Button
                             type="dashed"
@@ -8760,10 +9130,10 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                                 {/* Danh sách điều kiện lọc */}
                                 <div style={{ marginBottom: '8px' }}>
                                     {emptyFilterConditions.map((condition, index) => (
-                                        <div key={index} style={{ 
-                                            display: 'flex', 
-                                            alignItems: 'center', 
-                                            gap: '8px', 
+                                        <div key={index} style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
                                             marginBottom: '8px',
                                             padding: '8px',
                                             border: '1px solid #d9d9d9',
@@ -8834,9 +9204,9 @@ const AiTransformerRunModal = ({ modal, onClose, onRun, availableColumns }) => {
                 )}
 
                 {/* Thông tin về step */}
-                <div style={{ 
-                    padding: '12px', 
-                    backgroundColor: '#f0f0f0', 
+                <div style={{
+                    padding: '12px',
+                    backgroundColor: '#f0f0f0',
                     borderRadius: '4px',
                     fontSize: '12px'
                 }}>

@@ -1,9 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, message, Select } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { createDemoSchemaPublicController } from '../../apis/public/publicService.jsx';
-import { getSettingByType } from '../../apis/settingService';
 import styles from './WorkspaceRegistration.module.css';
+
+// Hardcoded versions configurations
+const HARDCODED_VERSIONS = [
+    {
+        id: 'express',
+        name: 'Express',
+        rubikDataRowsLimit: 50000, // 50K dòng/1 file
+        rubikDataColumnsLimit: 20,
+        rubikDataTotalRowsLimit: 250000, // 250K dòng total
+        contextInstruction: 'Express package with basic features'
+    },
+    {
+        id: 'one',
+        name: 'One',
+        rubikDataRowsLimit: 150000, // 150K dòng/1 file
+        rubikDataColumnsLimit: 25,
+        rubikDataTotalRowsLimit: 1000000, // 1M dòng total
+        contextInstruction: 'One package with enhanced features'
+    },
+    {
+        id: 'pro',
+        name: 'Pro',
+        rubikDataRowsLimit: 250000, // 250K dòng/1 file
+        rubikDataColumnsLimit: 30,
+        rubikDataTotalRowsLimit: 3000000, // 3M dòng total
+        contextInstruction: 'Pro package with professional features'
+    },
+    {
+        id: 'premium',
+        name: 'Premium',
+        rubikDataRowsLimit: 450000, // 450K dòng/1 file
+        rubikDataColumnsLimit: 40,
+        rubikDataTotalRowsLimit: 5000000, // 5M dòng total
+        contextInstruction: 'Premium package with enterprise features'
+    }
+];
 
 const WorkspaceRegistration = () => {
     const navigate = useNavigate();
@@ -11,26 +46,9 @@ const WorkspaceRegistration = () => {
     const [loading, setLoading] = useState(false);
 
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
-    const [versions, setVersions] = useState([]);
-    const [selectedVersion, setSelectedVersion] = useState(null);
+    const [versions] = useState(HARDCODED_VERSIONS);
+    const [selectedVersion, setSelectedVersion] = useState(HARDCODED_VERSIONS[0]);
     const [formValues, setFormValues] = useState({});
-
-    // Load versions khi component mount
-    useEffect(() => {
-        const loadVersions = async () => {
-            try {
-                const response = await getSettingByType('GLOBAL_SCHEMA_VERSIONS');
-                const versionsList = response?.setting || [];
-                setVersions(versionsList);
-                if (versionsList.length > 0) {
-                    setSelectedVersion(versionsList[0]); // Chọn version đầu tiên làm default
-                }
-            } catch (error) {
-                console.error('Lỗi khi lấy danh sách versions:', error);
-            }
-        };
-        loadVersions();
-    }, []);
 
     // Function to check if form is valid
     const isFormValid = () => {
@@ -71,6 +89,7 @@ const WorkspaceRegistration = () => {
                             tokenSize: chosenVersion.tokenSize,
                             rubikDataRowsLimit: chosenVersion.rubikDataRowsLimit,
                             rubikDataColumnsLimit: chosenVersion.rubikDataColumnsLimit,
+                            rubikDataTotalRowsLimit: chosenVersion.rubikDataTotalRowsLimit,
                             userNumberLimit: chosenVersion.userNumberLimit,
                         }
                     })
@@ -191,16 +210,12 @@ const WorkspaceRegistration = () => {
                                             
                                             <div className={styles.versionDetails}>
                                                 <div className={styles.versionFeature}>
-                                                    <span className={styles.featureIcon}>👥</span>
-                                                    <span>{version.userNumberLimit} người dùng</span>
-                                                </div>
-                                                <div className={styles.versionFeature}>
-                                                    <span className={styles.featureIcon}>🧠</span>
-                                                    <span>{version.tokenSize} tokens</span>
-                                                </div>
-                                                <div className={styles.versionFeature}>
                                                     <span className={styles.featureIcon}>📊</span>
-                                                    <span>{version.rubikDataRowsLimit} dòng dữ liệu</span>
+                                                    <span>{version.rubikDataRowsLimit.toLocaleString()} dòng/1 file</span>
+                                                </div>
+                                                <div className={styles.versionFeature}>
+                                                    <span className={styles.featureIcon}>🗂️</span>
+                                                    <span>Tổng {version.rubikDataTotalRowsLimit.toLocaleString()} dòng rubik</span>
                                                 </div>
                                                 <div className={styles.versionFeature}>
                                                     <span className={styles.featureIcon}>📋</span>

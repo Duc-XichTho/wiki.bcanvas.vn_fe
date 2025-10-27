@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MyContext } from '../../../../MyContext.jsx';
 import { AgGridReact } from 'ag-grid-react';
 import AG_GRID_LOCALE_VN from '../../../Home/AgridTable/locale';
-import { getTemplateByFileNoteId, getTemplateColumn, getTemplateRow, updateTemplateColumnWidth, updateColumnIndexes, updateTemplateTable, getTemplateInfoByTableId, batchRunAllSteps, clearTestData, resetTemplateFlow, deleteTemplateRowByTableId, createBathTemplateRow } from '../../../../apis/templateSettingService.jsx';
+import { getTemplateByFileNoteId, getTemplateColumn, getTemplateRow, updateTemplateColumnWidth, updateColumnIndexes, updateTemplateTable, getTemplateInfoByTableId, batchRunAllSteps, clearTestData, resetTemplateFlow, deleteTemplateRowByTableId, createBathTemplateRow, getTotalRows } from '../../../../apis/templateSettingService.jsx';
 import { getFileNotePadByIdController, getAllFileNotePad } from '../../../../apis/fileNotePadService.jsx';
 import { getAllApprovedVersion } from '../../../../apis/approvedVersionTemp.jsx';
 import { getAllTemplateSheetTable } from '../../../../apis/templateSettingService.jsx';
@@ -19,6 +19,7 @@ import { postgresService } from '../../../../apis/postgresService.jsx';
 import { n8nWebhook, n8nWebhookGoogleDrive } from '../../../../apis/n8nWebhook.jsx';
 import { getFrequencyConfigByTableId, deleteFrequencyConfig } from '../../../../apis/frequencyConfigService.jsx';
 import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa"
+import { getSettingByType } from '../../../../apis/settingService.jsx';
 // Import AG Grid styles
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
@@ -1967,32 +1968,43 @@ const ShowData = ({ idFileNote, stepId }) => {
                 let dataRows = [];
 
                 if (Array.isArray(firstResp.rows) && firstResp.rows.length > 0) {
-                    // Ưu tiên cấu hình người dùng nếu có (1-based)
-                    const cfgIndexRaw = Number.parseInt(firstStep?.config?.googleSheetsHeaderRow, 10);
-                    const hasCfgIndex = Number.isFinite(cfgIndexRaw);
-                    if (hasCfgIndex) {
-                        const headerIndexFromConfig = cfgIndexRaw - 1; // 1-based -> 0-based
-                        const safeIndex = Math.max(0, Math.min(firstResp.rows.length - 1, headerIndexFromConfig));
-                        headerRow = firstResp.rows[safeIndex]?.data || [];
+                    // Ưu tiên sử dụng headers từ N8N nếu có và hợp lệ
+                    if (Array.isArray(firstResp.headers) && firstResp.headers.length > 0 && !firstResp.headers.every(h => !h || h.trim() === '')) {
+                        console.log('Sử dụng headers từ N8N:', firstResp.headers);
+                        headerRow = firstResp.headers;
+                        // Lấy tất cả dữ liệu không phải header
                         dataRows = firstResp.rows
-                            .slice(safeIndex + 1)
-                            .filter(r => !r.isEmpty && Array.isArray(r.data))
+                            .filter(r => !r.isEmpty && !r.isDetectedHeader && Array.isArray(r.data))
                             .map(r => r.data);
+                        console.log('dataRows từ N8N headers:', dataRows.length);
                     } else {
-                        // Fallback: dùng detectedHeaderRow nếu không có cấu hình
-                        if (headerRow.length === 0) {
-                            const detectedHeaderRow = typeof firstResp.detectedHeaderRow === 'number' ? firstResp.detectedHeaderRow : 1; // 1-based
-                            const fallbackIndex = detectedHeaderRow - 1;
-                            const safeIndex = Math.max(0, Math.min(firstResp.rows.length - 1, fallbackIndex));
+                        // Fallback: sử dụng cấu hình người dùng hoặc detected header
+                        const cfgIndexRaw = Number.parseInt(firstStep?.config?.googleSheetsHeaderRow, 10);
+                        const hasCfgIndex = Number.isFinite(cfgIndexRaw);
+                        if (hasCfgIndex) {
+                            const headerIndexFromConfig = cfgIndexRaw - 1; // 1-based -> 0-based
+                            const safeIndex = Math.max(0, Math.min(firstResp.rows.length - 1, headerIndexFromConfig));
                             headerRow = firstResp.rows[safeIndex]?.data || [];
                             dataRows = firstResp.rows
                                 .slice(safeIndex + 1)
                                 .filter(r => !r.isEmpty && Array.isArray(r.data))
                                 .map(r => r.data);
                         } else {
-                            dataRows = firstResp.rows
-                                .filter(r => !r.isEmpty && !r.isDetectedHeader && Array.isArray(r.data))
-                                .map(r => r.data);
+                            // Fallback: dùng detectedHeaderRow nếu không có cấu hình
+                            if (headerRow.length === 0) {
+                                const detectedHeaderRow = typeof firstResp.detectedHeaderRow === 'number' ? firstResp.detectedHeaderRow : 1; // 1-based
+                                const fallbackIndex = detectedHeaderRow - 1;
+                                const safeIndex = Math.max(0, Math.min(firstResp.rows.length - 1, fallbackIndex));
+                                headerRow = firstResp.rows[safeIndex]?.data || [];
+                                dataRows = firstResp.rows
+                                    .slice(safeIndex + 1)
+                                    .filter(r => !r.isEmpty && Array.isArray(r.data))
+                                    .map(r => r.data);
+                            } else {
+                                dataRows = firstResp.rows
+                                    .filter(r => !r.isEmpty && !r.isDetectedHeader && Array.isArray(r.data))
+                                    .map(r => r.data);
+                            }
                         }
                     }
                 } else if (Array.isArray(firstResp.data)) {
@@ -2003,7 +2015,13 @@ const ShowData = ({ idFileNote, stepId }) => {
                     dataRows = firstResp.data.slice(safeIndex + 1);
                 }
 
-                if (!Array.isArray(headerRow) || headerRow.length === 0 || !Array.isArray(dataRows)) {
+                // Kiểm tra headerRow trước khi xử lý
+                if (!Array.isArray(headerRow) || headerRow.length === 0 || headerRow.every(h => !h || h.trim() === '')) {
+                    console.warn('Không thể xác định được header của dữ liệu từ Google Sheet');
+                    return false;
+                }
+                
+                if (!Array.isArray(dataRows)) {
                     console.warn('Không lấy được dữ liệu từ Google Sheet');
                     return false;
                 }
@@ -2015,6 +2033,34 @@ const ShowData = ({ idFileNote, stepId }) => {
                     });
                     return newRow;
                 });
+
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (data.length > maxRecordPerFile) {
+                        console.warn(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        return false;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + data.length > maxTotalRecord) {
+                        console.warn(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${maxTotalRecord - currentTotalRows} dòng.`);
+                        return false;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${data.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    return false;
+                }
 
                 // Thay thế dữ liệu trong database
                 await deleteTemplateRowByTableId(template.id);
@@ -2110,6 +2156,34 @@ const ShowData = ({ idFileNote, stepId }) => {
                     return false;
                 }
 
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (mergedRows.length > maxRecordPerFile) {
+                        console.warn(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        return false;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + mergedRows.length > maxTotalRecord) {
+                        console.warn(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${maxTotalRecord - currentTotalRows} dòng.`);
+                        return false;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${mergedRows.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    return false;
+                }
+
                 // Replace data in database
                 await deleteTemplateRowByTableId(template.id);
                 const success = await saveDataToDatabase(mergedRows, template.id, 1);
@@ -2186,6 +2260,34 @@ const ShowData = ({ idFileNote, stepId }) => {
                     return newRow;
                 });
 
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (data.length > maxRecordPerFile) {
+                        console.warn(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        return false;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + data.length > maxTotalRecord) {
+                        console.warn(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${maxTotalRecord - currentTotalRows} dòng.`);
+                        return false;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${data.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    return false;
+                }
+
                 // Thay thế dữ liệu trong database
                 await deleteTemplateRowByTableId(template.id);
                 const success = await saveDataToDatabase(data, template.id, 1);
@@ -2241,6 +2343,34 @@ const ShowData = ({ idFileNote, stepId }) => {
                         return newRow;
                     });
 
+                    // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                    try {
+                        
+                        const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                        const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                        const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                        
+                        // Kiểm tra giới hạn số dòng cho 1 file
+                        if (data.length > maxRecordPerFile) {
+                            console.warn(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                            return false;
+                        }
+                        
+                        // Kiểm tra giới hạn tổng số dòng hệ thống
+                        const totalRowsResponse = await getTotalRows(null);
+                        const currentTotalRows = totalRowsResponse?.count || 0;
+                        
+                        if (currentTotalRows + data.length > maxTotalRecord) {
+                            console.warn(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${maxTotalRecord - currentTotalRows} dòng.`);
+                            return false;
+                        }
+                        
+                        console.log(`✅ Kiểm tra giới hạn: File ${data.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                    } catch (error) {
+                        console.error('Lỗi khi kiểm tra giới hạn:', error);
+                        return false;
+                    }
+
                     // Thay thế dữ liệu trong database
                     await deleteTemplateRowByTableId(template.id);
                     const success = await saveDataToDatabase(data, template.id, 1);
@@ -2291,6 +2421,34 @@ const ShowData = ({ idFileNote, stepId }) => {
 
             const res = await postgresService.getTableData(firstStep.config.postgresConfig);
             if (Array.isArray(res) && res.length > 0) {
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (res.length > maxRecordPerFile) {
+                        console.warn(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        return false;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + res.length > maxTotalRecord) {
+                        console.warn(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${maxTotalRecord - currentTotalRows} dòng.`);
+                        return false;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${res.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    return false;
+                }
+
                 // Thay thế dữ liệu trong database
                 await deleteTemplateRowByTableId(template.id);
                 const success = await saveDataToDatabase(res, template.id, 1);
@@ -2363,6 +2521,34 @@ const ShowData = ({ idFileNote, stepId }) => {
             }
 
             if (processedData.length > 0) {
+                // Kiểm tra giới hạn số dòng cho 1 file và tổng số dòng
+                try {
+                    
+                    const limitConfig = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+                    const maxRecordPerFile = limitConfig?.setting?.max_record_per_file || 100000;
+                    const maxTotalRecord = limitConfig?.setting?.max_total_record || 1500000;
+                    
+                    // Kiểm tra giới hạn số dòng cho 1 file
+                    if (processedData.length > maxRecordPerFile) {
+                        console.warn(`Vượt quá giới hạn số dòng cho 1 file. Chỉ có thể import tối đa ${maxRecordPerFile.toLocaleString()} dòng mỗi lần.`);
+                        return false;
+                    }
+                    
+                    // Kiểm tra giới hạn tổng số dòng hệ thống
+                    const totalRowsResponse = await getTotalRows(null);
+                    const currentTotalRows = totalRowsResponse?.count || 0;
+                    
+                    if (currentTotalRows + processedData.length > maxTotalRecord) {
+                        console.warn(`Vượt quá giới hạn tổng số dòng hệ thống. Hiện tại: ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}. Chỉ có thể upload tối đa ${maxTotalRecord - currentTotalRows} dòng.`);
+                        return false;
+                    }
+                    
+                    console.log(`✅ Kiểm tra giới hạn: File ${processedData.length.toLocaleString()}/${maxRecordPerFile.toLocaleString()}, Tổng ${currentTotalRows.toLocaleString()}/${maxTotalRecord.toLocaleString()}`);
+                } catch (error) {
+                    console.error('Lỗi khi kiểm tra giới hạn:', error);
+                    return false;
+                }
+
                 // Thay thế dữ liệu trong database
                 await deleteTemplateRowByTableId(template.id);
                 const success = await saveDataToDatabase(processedData, template.id, 1);

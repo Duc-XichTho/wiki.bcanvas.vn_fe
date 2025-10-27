@@ -29,6 +29,7 @@
     "@mui/icons-material": "6.1.9",
     "@mui/material": "6.1.9",
     "@mui/system": "6.2.0",
+    "@payos/node": "^2.0.3",
     "@shopify/web-worker": "^6.4.0",
     "@syncfusion/ej2-base": "27.2.5",
     "@syncfusion/ej2-react-pdfviewer": "27.2.5",

@@ -127,6 +127,19 @@ export const getSchemaBackground = async (schema) => {
     }
 };
 
+export const getUniversalBackground = async (schema) => {
+    try {
+        const data = await instance.post(`${URL}/schema-tools`, { 
+            schema: schema, 
+            type: 'UNIVERSAL_BACKGROUND' 
+        });
+        return data.data;
+    } catch (error) {
+        console.error('Lỗi khi lấy tools của schema:', error);
+        throw error;
+    }
+};
+
 // API cập nhật tools cho từng schema
 // export const updateSchemaBackground = async (schema, backgroundImageUrl, settingId = null) => {
 //     try {
