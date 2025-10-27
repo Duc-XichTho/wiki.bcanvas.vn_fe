@@ -3954,7 +3954,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                               {/* Available apps (not in trial) */}
                               {(  () => {
                                 const availableApps = getAvailableApps();
-                                console.log('availableApps', availableApps);
                                 return availableApps.map((app) => {
                                 // Tìm thông tin từ master schema để hiển thị đúng icon và nội dung
                                 const masterApp = masterAppsList.find(tool => tool.id === app.id);

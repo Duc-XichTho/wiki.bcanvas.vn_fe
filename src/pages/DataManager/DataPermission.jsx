@@ -214,58 +214,63 @@ const DataPermission = ({ isOpen, onClose }) => {
     }
   };
 
-  // Fetch apps based on current schema - use master schema's DASHBOARD_SETTING for icons
-  const fetchAppsForSchema = async () => {
+  // Get visible tools/apps similar to WikiCanvas logic
+  const getVisibleTools = async () => {
     try {
       // First, get the master schema's DASHBOARD_SETTING to get the complete app list with icons
       const masterResponse = await getSchemaTools('master');
       const masterAppsList = masterResponse?.setting || [];
       console.log('Master apps loaded for DataPermission:', masterAppsList.length, 'apps');
       
-      if (currentUser?.isSuperAdmin && selectedSchema && selectedSchema !== 'default') {
-        // Lấy tools thực tế được cấu hình cho schema này
-        const schemaToolsResponse = await getSchemaTools(selectedSchema.path);
-        console.log('Schema tools response for DataPermission:', schemaToolsResponse);
+      let visibleTools = masterAppsList.filter(tool => {
+        // Check if tool is enabled (default to true if not set)
+        if (tool.enabled === false) return false;
 
-        if (schemaToolsResponse && schemaToolsResponse.setting && schemaToolsResponse.setting.length > 0) {
-          // Combine: use master app info (name, icon, description) with current schema's enabled apps
-          const enabledAppIds = schemaToolsResponse.setting.map(app => app.id);
-          const combinedApps = masterAppsList
-            .filter(app => enabledAppIds.includes(app.id) && app.id !== 'data-manager' && app.id !== 'adminApp')
-            .map(masterApp => {
-              // Find the current schema's app to get schema-specific properties
-              const currentApp = schemaToolsResponse.setting.find(app => app.id === masterApp.id);
-              return {
-                ...masterApp, // Use master app's name, icon, description, content1
-                ...currentApp, // Override with current schema's tag, enterUrl, content2, showSupport, showInfo
-              };
-            });
-          
-          setApps(combinedApps);
-          console.log(`DataPermission: Using combined master + schema tools for ${selectedSchema.path}: ${combinedApps.length} apps`);
-        } else {
-          // Fallback: use master apps with default filtering
-          const filteredApps = masterAppsList.filter(app => 
-            app.id !== 'data-manager' && app.id !== 'adminApp' &&
-            (app.tag === 'Working' || app.tag === 'On-demand')
-          );
-          setApps(filteredApps);
-          console.log(`DataPermission: Using master apps with default filtering for ${selectedSchema.path}: ${filteredApps.length} apps`);
+        // Check visibility based on user authentication (default to 'public' if not set)
+        const visibility = tool.visibility || 'public';
+        switch (visibility) {
+          case 'public':
+            return true; // Always visible
+          case 'login-required':
+            return currentUser && currentUser.email; // Only visible if logged in
+          case 'trial':
+            // For trial tools, check if user is logged in AND has permission
+            if (!currentUser || !currentUser.email) return false;
+            if (!currentUser?.isSuperAdmin && !currentUser?.isAdmin) return false;
+            return true; // For now, allow trial tools for admin/superAdmin
+          default:
+            return true;
         }
-      } else {
-        // Use master apps or fallback to default
-        if (masterAppsList && masterAppsList.length > 0) {
-          const filteredApps = masterAppsList.filter(app => app.id !== 'data-manager' && app.id !== 'adminApp');
-          setApps(filteredApps);
-          console.log('DataPermission: Using master apps (no schema or not superAdmin):', filteredApps.length);
-        } else {
-          const filteredApps = defaultApps.filter(app => app.id !== 'data-manager' && app.id !== 'adminApp');
-          setApps(filteredApps);
-          console.log('DataPermission: Using default apps (no master apps available):', filteredApps.length);
+      });
+      
+      // Apply permission logic after tool settings
+      visibleTools = visibleTools.filter(tool => {
+        // Super admin can see all tools (except data-manager, adminApp, data-factory and process-guide)
+        if (currentUser?.isSuperAdmin) {
+          return tool.id !== 'data-manager' && tool.id !== 'adminApp' && 
+                 tool.id !== 'data-factory' && tool.id !== 'process-guide';
         }
-      }
+
+        // Admin can see all tools (except data-manager, adminApp, data-factory and process-guide)
+        if (currentUser?.isAdmin) {
+          return tool.id !== 'data-manager' && tool.id !== 'adminApp' && 
+                 tool.id !== 'data-factory' && tool.id !== 'process-guide';
+        }
+
+        // For regular users, check allowedAppIds (if available)
+        // For now, show all tools except restricted ones
+        return tool.id !== 'data-manager' && tool.id !== 'adminApp' && 
+               tool.id !== 'data-factory' && tool.id !== 'process-guide';
+      });
+
+      // Sort by order field
+      visibleTools = visibleTools.sort((a, b) => (a.order || 0) - (b.order || 0));
+      
+      console.log('Visible tools for DataPermission:', visibleTools.length, 'tools');
+      setApps(visibleTools);
+      
     } catch (error) {
-      console.error('Lỗi khi lấy apps cho schema:', error);
+      console.error('Lỗi khi lấy visible tools:', error);
       // Fallback: sử dụng danh sách app mặc định
       const filteredApps = defaultApps.filter(app => app.id !== 'data-manager' && app.id !== 'adminApp');
       setApps(filteredApps);
@@ -360,12 +365,12 @@ const DataPermission = ({ isOpen, onClose }) => {
     }
   }, [isOpen, currentUser?.isSuperAdmin]);
 
-  // Fetch apps when schema changes
+  // Fetch visible tools when modal opens
   useEffect(() => {
     if (isOpen) {
-      fetchAppsForSchema();
+      getVisibleTools();
     }
-  }, [isOpen, selectedSchema, currentUser?.isSuperAdmin]);
+  }, [isOpen, currentUser]);
 
   // Fetch main data when modal opens
   useEffect(() => {

@@ -723,20 +723,20 @@ Chỉ trả về nội dung theo đúng định dạng trên, không thêm phầ
 			title: 'Định giá',
 			dataIndex: 'Giá mục tiêu (đồng)',
 			key: 'giaMucTieu',
-			width: 140,
+			width: 200,
 			render: (value) => value ? value.toLocaleString('vi-VN') + ' VNĐ' : 'N/A',
 		},
 		{
 			title: 'Ngày',
 			dataIndex: 'Ngày công bố',
 			key: 'ngayCongBo',
-			width: 120,
+			width: 200,
 			render: (value, record) => value || record['Ngày khuyến nghị'] || 'N/A',
 		},
 		{
 			title: 'Báo cáo chi tiết',
 			key: 'baoCaoChiTiet',
-			width: 150,
+			width: 200,
 			render: (_, record) => {
 				const url = record['URLReport'] || record['URL'] || record['Link'] || '';
 
@@ -1571,7 +1571,7 @@ Chỉ trả về nội dung theo đúng định dạng trên, không thêm phầ
 			...labels.map(q => ({
 				field: q,
 				headerName: q,
-				width: 140,
+				width: 200,
 				valueFormatter: params => formatNumber(params.value),
 			})),
 		];
@@ -1674,7 +1674,7 @@ Chỉ trả về nội dung theo đúng định dạng trên, không thêm phầ
 			...peerLabels.map(maCK => ({
 				field: maCK,
 				headerName: maCK,
-				width: 140,
+				width: 200,
 				valueFormatter: params => formatNumber(params.value),
 			})),
 		];
@@ -1904,7 +1904,7 @@ Chỉ trả về nội dung theo đúng định dạng trên, không thêm phầ
 															autoGroupColumnDef={{
 																headerName: 'Nhóm/Chỉ số',
 																cellRendererParams: { suppressCount: true },
-																minWidth: 220,
+																minWidth: 400,
 															}}
 															defaultColDef={{
 																resizable: true,
@@ -1996,7 +1996,7 @@ Chỉ trả về nội dung theo đúng định dạng trên, không thêm phầ
 															autoGroupColumnDef={{
 																headerName: 'Nhóm/Chỉ số',
 																cellRendererParams: { suppressCount: true },
-																minWidth: 220,
+																minWidth: 400,
 															}}
 															defaultColDef={{
 																resizable: true,
