@@ -1182,7 +1182,10 @@ export const FULL_DASHBOARD_APPS = [
         "content1": "",
         "shortcut": "SHIFT 1",
         "description": "Tích hợp,làm sạch, chuẩn hóa dữ liệu ứng dụng AI và 25+ tác vụ  chuyên dụng cho đặc thù dữ liệu với ngôn ngữ Việt Nam",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "forecast",
@@ -1191,7 +1194,10 @@ export const FULL_DASHBOARD_APPS = [
         "name": "Mô hình dự báo kinh doanh",
         "content1": "",
         "description": "Dự báo số liệu kinh doanh 7-15 ngày tới. Giải pháp này đang trong quá trình xây dựng\n",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "ai-academic-assistant",
@@ -1200,7 +1206,10 @@ export const FULL_DASHBOARD_APPS = [
         "name": "Trợ lý học thuật (AI Academic Assistant)",
         "content1": "",
         "description": "Trợ lý học thuật (AI Academic Assistant) giúp bạn học tập, tìm kiếm thông tin,...",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "analysis-review",
@@ -1215,7 +1224,10 @@ export const FULL_DASHBOARD_APPS = [
         "content2": "",
         "shortcut": "SHIFT 2",
         "description": "Đo chỉ số - phân tích kinh doanh thông minh, nắm vững thực trạng số liệu, ứng dụng AI chuyên biệt hóa",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "fdr",
@@ -1228,7 +1240,10 @@ export const FULL_DASHBOARD_APPS = [
         "content1": "",
         "shortcut": "Shift 3",
         "description": "Module chuyên dụng xử lý phân bổ, tính toán lãi lỗ theo các chiều nhìn khác nhau (Lãi lỗ đơn vị, sản phẩm, dự án...)\t",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "data-factory",
@@ -1236,7 +1251,10 @@ export const FULL_DASHBOARD_APPS = [
         "icon": "folder-network_9672259",
         "name": "SDS - Thám báo Social Network",
         "description": "Tổng hợp dữ liệu từ các FBGroup/Page thường xuyên",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "business-wikibook",
@@ -1249,7 +1267,10 @@ export const FULL_DASHBOARD_APPS = [
         "content1": "",
         "enterUrl": "",
         "description": "Học tập kỹ năng , phản ứng tình huống thực chiến với 1000+ case study và 15 chuyên đề chuyên môn kinh doanh",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "k9",
@@ -1263,7 +1284,10 @@ export const FULL_DASHBOARD_APPS = [
         "title": "",
         "content1": "",
         "description": "Dữ liệu tài chính, chỉ số kinh doanh, báo cáo phân tích toàn diện của các doanh nghiệp niêm yết Việt Nam",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "x-app",
@@ -1272,7 +1296,10 @@ export const FULL_DASHBOARD_APPS = [
         "name": "Trợ lý sự kiện (F&B)",
         "content1": "",
         "description": "Cập nhập các sự kiện về thời tiết, sự kiện kinh tế chính trị sắp diễn ra nhằm có sự chuẩn bị cho chuỗi cung ứng, bán hàn",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "scrape",
@@ -1281,7 +1308,10 @@ export const FULL_DASHBOARD_APPS = [
         "name": "B-Crawler",
         "content1": "",
         "description": "Sử dụng để kéo dữ liệu từ các trang Facebook về nhằm phân tích, nắm bắt tình hình thị trường, khách hàng, đối thủ",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "metric-map",
@@ -1295,7 +1325,10 @@ export const FULL_DASHBOARD_APPS = [
         "content1": "",
         "shortcut": "Shift 4",
         "description": "Tổng quan hóa bức tranh liên kết giữa năng lực cạnh tranh và các chỉ số đo lường, tùy biến theo từng ngành/ mô hình kinh",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "proposal-maker",
@@ -1303,7 +1336,10 @@ export const FULL_DASHBOARD_APPS = [
         "icon": "business-report_9461193",
         "name": "Proposal Maker",
         "description": "Hệ thống chỉ số theo mô hình kinh doanh",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "adminApp",
@@ -1316,7 +1352,10 @@ export const FULL_DASHBOARD_APPS = [
         "title": "",
         "content1": "",
         "description": "Sử dụng để cài đặt thêm mới/ sửa xóa quyền hạn của User và setup công ty cho công cụ HQTC",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "survey-app",
@@ -1324,7 +1363,10 @@ export const FULL_DASHBOARD_APPS = [
         "icon": "icon_44",
         "name": "Khảo sát & Thông tin bán hàng",
         "description": "Tạo và quản lý khảo sát khách hàng với template tùy chỉnh",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "crm",
@@ -1332,7 +1374,10 @@ export const FULL_DASHBOARD_APPS = [
         "icon": "icon_52",
         "name": "Mini CRM",
         "description": "Phần mềm/ứng dụng để quản lý khách hàng, lưu trữ thông tin liên hệ, lịch sử mua hàng, chăm sóc khách hàng.",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "storage-tool",
@@ -1340,7 +1385,10 @@ export const FULL_DASHBOARD_APPS = [
         "icon": "folder-setting_15554314",
         "name": "Storage",
         "description": "Kho dữ liệu đơn giản, sử dụng để tải lên file nhằm lưu trữ chung hoặc lấy link file/ ảnh (URL online)",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "ai-work-automation",
@@ -1352,14 +1400,20 @@ export const FULL_DASHBOARD_APPS = [
         ],
         "content1": "",
         "description": "Công cụ AI Agent Chat hub và quản lý chung các luồng tự động hóa (Robotic Process) thiết lập với Make/n8n",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     {
         "id": "khkd",
         "tag": "Working",
         "icon": "icon_43",
         "name": "KHKD",
-        "viewCount": 120
+        "viewCount": 120,
+        "featured": false,
+        "directDownload": false,
+        "downloadUrl": ""
     },
     // {
     //   "id": "process-guide",

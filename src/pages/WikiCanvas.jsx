@@ -88,6 +88,10 @@ const WikiCanvas = () => {
   // Tool Settings states
   const [showToolSettingsModal, setShowToolSettingsModal] = useState(false);
   const [tempToolSettings, setTempToolSettings] = useState({});
+  
+  // Direct Download Modal states
+  const [showDirectDownloadModal, setShowDirectDownloadModal] = useState(false);
+  const [selectedDownloadTool, setSelectedDownloadTool] = useState(null);
 
   // Available apps that are not yet added - based on dashboardApps but only specific ones
   const availableApps = useMemo(() => {
@@ -1386,6 +1390,14 @@ const [masterAppsList, setMasterAppsList] = useState([]);
 
   const handleToolNavigation = (toolId) => {
     const tool = tools.find(app => app.id === toolId);
+    
+    // Check if this is a Direct Download tool
+    if (tool && tool.directDownload) {
+      setSelectedDownloadTool(tool);
+      setShowDirectDownloadModal(true);
+      return;
+    }
+    
     if (tool && tool.tag === 'under-development') {
       setShowUnderDevelopmentModal(true);
     } else {
@@ -2795,7 +2807,10 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       tools.forEach(tool => {
         tempSettings[tool.id] = {
           visibility: tool.visibility || 'public',
-          enabled: tool.enabled !== false
+          enabled: tool.enabled !== false,
+          featured: tool.featured || false,
+          directDownload: tool.directDownload || false,
+          downloadUrl: tool.downloadUrl || ""
         };
       });
       setTempToolSettings(tempSettings);
@@ -2824,7 +2839,10 @@ const [masterAppsList, setMasterAppsList] = useState([]);
           return {
             ...tool,
             visibility: toolSetting.visibility,
-            enabled: toolSetting.enabled
+            enabled: toolSetting.enabled,
+            featured: toolSetting.featured,
+            directDownload: toolSetting.directDownload,
+            downloadUrl: toolSetting.downloadUrl
           };
         }
         return tool;
@@ -3576,8 +3594,25 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                               fontSize: '11px',
                               color: '#666',
                               fontWeight: 600,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px'
                             }}>
                               {tool.viewCount || 0} views
+                              {tool.featured && (
+                                <div style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  marginLeft: '8px'
+                                }}>
+                                  <svg width="22" height="19" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.7235 16.2406C12.6998 16.3919 12.7612 16.4816 12.8689 16.4816C12.9084 16.4816 12.954 16.4696 13.0038 16.4443L15.5301 15.1639C15.6233 15.1167 15.7463 15.093 15.8691 15.093C15.992 15.093 16.1149 15.1167 16.2081 15.1639L18.7344 16.4443C18.7843 16.4696 18.8298 16.4816 18.8692 16.4816C18.977 16.4816 19.0384 16.3919 19.0148 16.2406L18.5778 13.4424C18.5455 13.2358 18.6398 12.9456 18.7872 12.7975L20.7855 10.7905C20.933 10.6425 20.8849 10.4942 20.6785 10.461L17.8821 10.0119C17.6758 9.97883 17.4289 9.79942 17.3336 9.61335L16.0424 7.09268C15.9947 6.99964 15.932 6.95312 15.8692 6.95312C15.8064 6.95312 15.7436 6.99964 15.6959 7.09268L14.4047 9.61335C14.3094 9.79942 14.0626 9.97883 13.8562 10.0119L11.0598 10.461C10.8534 10.4942 10.8052 10.6425 10.9527 10.7905L12.951 12.7975C13.0985 12.9456 13.1929 13.2358 13.1606 13.4424L12.7235 16.2406Z" fill="#F8BB4A"/>
+                                    <path d="M21.1513 9.49222C21.7143 8.28504 22 7.07548 22 5.88007C22 2.63778 19.3622 0 16.1199 0C13.927 0 12.0107 1.20637 11 2.99052C9.98911 1.20637 8.07289 0 5.88 0C2.63778 0 0 2.63778 0 5.88007C0 7.58993 0.581259 9.32882 1.72763 11.0483C2.61756 12.3832 3.85089 13.7118 5.39341 14.9972C7.99126 17.1621 10.5523 18.4525 10.6601 18.5064C10.767 18.56 10.8836 18.5867 11 18.5867C11.1164 18.5867 11.2329 18.56 11.3399 18.5064C11.3942 18.4793 12.0719 18.1378 13.063 17.5287C12.9987 17.5386 12.934 17.5441 12.869 17.5441C12.5135 17.5441 12.1788 17.3913 11.9509 17.125C11.7093 16.8428 11.6104 16.4696 11.6721 16.0747L12.0844 13.4339L10.1987 11.5399C9.842 11.1817 9.71578 10.7004 9.86133 10.2523C10.0068 9.80422 10.3917 9.48874 10.891 9.40844L13.5301 8.98467L14.7487 6.6057C14.9792 6.15585 15.3981 5.88719 15.8691 5.88719C16.3402 5.88719 16.7591 6.15585 16.9896 6.60578L18.2081 8.98474L21.1513 9.49222Z" fill="#F8BB4A"/>
+                                  </svg>
+                                  <span style={{ color: '#F8BB4A', fontWeight: 600 }}>Featured</span>
+                                </div>
+                              )}
                             </div>
                             {/* Shortcut display */}
                             {tool.shortcut && (
@@ -4264,7 +4299,9 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                   >
                     {icon.icon ? (
                       <img src={icon.icon} alt="icon" width={32} height={32} />
-                    ) : icon.icon}
+                    ) : (
+                      <span>{icon.id}</span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -4366,6 +4403,63 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                 Hiện nút Thông tin
               </Checkbox>
             </div>
+            <div className={styles.formCheckRow}>
+              <Checkbox
+                checked={!!editingTool.featured}
+                onChange={(e) => setEditingTool({ ...editingTool, featured: e.target.checked })}
+              >
+                Featured
+              </Checkbox>
+              <Checkbox
+                checked={!!editingTool.directDownload}
+                onChange={(e) => setEditingTool({ ...editingTool, directDownload: e.target.checked })}
+              >
+                Direct Download
+              </Checkbox>
+            </div>
+            {/* Show download URL input when Direct Download is checked */}
+            {editingTool.directDownload && (
+              <div className={styles.formGridOne}>
+                <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+                  Download URL or Upload File:
+                </label>
+                <Input
+                  value={editingTool.downloadUrl || ''}
+                  onChange={(e) => setEditingTool({ ...editingTool, downloadUrl: e.target.value })}
+                  placeholder="Enter download URL"
+                  className={styles.dashboardInput}
+                />
+                <Upload
+                  beforeUpload={(file) => {
+                    const uploadFile = async () => {
+                      try {
+                        const { uploadFileService } = await import('../apis/uploadFileService.jsx');
+                        const response = await uploadFileService([file]);
+                        if (response && response.files && response.files.length > 0) {
+                          setEditingTool({ ...editingTool, downloadUrl: response.files[0].fileUrl });
+                          message.success('File uploaded successfully!');
+                        }
+                      } catch (error) {
+                        console.error('Upload error:', error);
+                        message.error('Failed to upload file');
+                      }
+                    };
+                    uploadFile();
+                    return false; // Prevent auto upload
+                  }}
+                  showUploadList={false}
+                >
+                  <Button type="default" icon={<UploadOutlined />} style={{ marginTop: '8px', width: '100%' }}>
+                    Upload File
+                  </Button>
+                </Upload>
+                {editingTool.downloadUrl && (
+                  <div style={{ marginTop: '8px', fontSize: '12px', color: '#666' }}>
+                    Current: {editingTool.downloadUrl}
+                  </div>
+                )}
+              </div>
+            )}
             {/* Action Buttons */}
             <div className={styles.toolActionRow}>
               <button
@@ -7167,7 +7261,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                 </div>
               </div>
 
-              <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
                 <div style={{ flex: 1 }}>
                   <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
                     Trạng thái hiển thị:
@@ -7196,9 +7290,121 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                   </Checkbox>
                 </div>
               </div>
+
+              <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                <Checkbox
+                  checked={tempToolSettings[tool.id]?.featured || false}
+                  onChange={(e) => handleToolSettingChange(tool.id, 'featured', e.target.checked)}
+                >
+                  Featured
+                </Checkbox>
+                <Checkbox
+                  checked={tempToolSettings[tool.id]?.directDownload || false}
+                  onChange={(e) => handleToolSettingChange(tool.id, 'directDownload', e.target.checked)}
+                >
+                  Direct Download
+                </Checkbox>
+              </div>
+
+              {/* Show download URL input when Direct Download is checked */}
+              {tempToolSettings[tool.id]?.directDownload && (
+                <div>
+                  <label style={{ display: 'block', marginBottom: '4px', fontWeight: '500' }}>
+                    Download URL or Upload File:
+                  </label>
+                  <Input
+                    value={tempToolSettings[tool.id]?.downloadUrl || ""}
+                    onChange={(e) => handleToolSettingChange(tool.id, 'downloadUrl', e.target.value)}
+                    placeholder="Enter download URL"
+                  />
+                  <Upload
+                    beforeUpload={(file) => {
+                      const uploadFile = async () => {
+                        try {
+                          const { uploadFileService } = await import('../apis/uploadFileService.jsx');
+                          const response = await uploadFileService([file]);
+                          if (response && response.files && response.files.length > 0) {
+                            handleToolSettingChange(tool.id, 'downloadUrl', response.files[0].fileUrl);
+                            message.success('File uploaded successfully!');
+                          }
+                        } catch (error) {
+                          console.error('Upload error:', error);
+                          message.error('Failed to upload file');
+                        }
+                      };
+                      uploadFile();
+                      return false; // Prevent auto upload
+                    }}
+                    showUploadList={false}
+                  >
+                    <Button type="default" icon={<UploadOutlined />} style={{ marginTop: '8px', width: '100%' }}>
+                      Upload File
+                    </Button>
+                  </Upload>
+                  {tempToolSettings[tool.id]?.downloadUrl && (
+                    <div style={{ marginTop: '8px', fontSize: '12px', color: '#666', wordBreak: 'break-all' }}>
+                      Current: {tempToolSettings[tool.id]?.downloadUrl}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>
+      </Modal>
+
+      {/* Direct Download Modal */}
+      <Modal
+        title="Tài liệu Download"
+        open={showDirectDownloadModal}
+        onCancel={() => setShowDirectDownloadModal(false)}
+        width={500}
+        footer={[
+          <Button key="cancel" onClick={() => setShowDirectDownloadModal(false)}>
+            Hủy
+          </Button>,
+          <Button 
+            key="confirm" 
+            type="primary" 
+            onClick={() => {
+              if (selectedDownloadTool?.downloadUrl) {
+                window.open(selectedDownloadTool.downloadUrl, '_blank');
+              }
+              setShowDirectDownloadModal(false);
+            }}
+          >
+            Xác nhận tải về
+          </Button>
+        ]}
+      >
+        {selectedDownloadTool && (
+          <div>
+            <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '600' }}>
+              Tài liệu: {selectedDownloadTool.name}
+            </h3>
+            {selectedDownloadTool.description && (
+              <p style={{ marginBottom: '16px', color: '#666', lineHeight: '1.6' }}>
+                {selectedDownloadTool.description}
+              </p>
+            )}
+            {selectedDownloadTool.downloadUrl && (
+              <div style={{ 
+                padding: '12px', 
+                background: '#f5f5f5', 
+                borderRadius: '4px',
+                marginTop: '16px'
+              }}>
+                <strong>Download URL:</strong>
+                <div style={{ 
+                  marginTop: '4px',
+                  wordBreak: 'break-all'
+                }}>
+                  {selectedDownloadTool.downloadUrl}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </Modal>
 
     </div>
