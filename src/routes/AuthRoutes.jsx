@@ -24,7 +24,6 @@ import DataRubikProcessGuide from '../pages/DataRubikProcessGuide/DataRubikProce
 import DiagramFactoryDetail from '../pages/DiagramFactory/DiagramFactoryDetail.jsx';
 import DiagramFactoryLayout from '../pages/DiagramFactory/DiagramFactoryLayout.jsx';
 import DiagramFactoryList from '../pages/DiagramFactory/DiagramFactoryList.jsx';
-import ExcelData from '../pages/ExcelData.jsx';
 import ForecastingApp from '../pages/ForecastingApp/ForecastingApp.jsx';
 import Homepage from '../pages/Homepage/Homepage.jsx';
 import K9Service from '../pages/K9/K9Service.jsx';
@@ -299,7 +298,6 @@ export const AuthRoutes = ({ listCompany, isMobile }) => (
 		<Route path={'/audio-merge'} element={<Suspense fallback={fallback}><AudioMerge /></Suspense>} />
 		<Route path={'/scrape'} element={<Suspense fallback={fallback}><SocialDataScraperApp /></Suspense>} />
 		{/*<Route path={'/apify'} element={<Suspense fallback={fallback}><Apify /></Suspense>} />*/}
-		<Route path={'/excelData'} element={<ExcelData />} />
 		<Route path='/survey-app' element={<CustomerSurveyApp />} />
 		<Route path='/survey-app/:surveyId' element={<CustomerSurveyApp />} />
 		<Route path='/process-guide' element={<DataRubikProcessGuide />} />
