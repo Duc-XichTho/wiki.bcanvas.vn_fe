@@ -1333,13 +1333,16 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         trialEndDate: trial.endDate
       }));
     // Add process-guide tool
-    newVisibleTools = [...newVisibleTools, ...newTrialTools, {
+    newVisibleTools = [...newVisibleTools, ...newTrialTools, 
+      {
       id: "process-guide",
       tag: "Working",
       icon: "case-file_10256079",
       name: "TLSD BCanvas",
+      viewCount: 120,
       description: "Hướng dẫn quy trình và các tài liệu sử dụng platform BCanvas",
-    }];
+    }
+  ];
 
     // Filter by selected tags if any
     if (selectedTagFilters.length > 0) {
@@ -3564,6 +3567,17 @@ const [masterAppsList, setMasterAppsList] = useState([]);
 
 
 
+                            </div>
+                            {/* View Count Badge */}
+                            <div style={{
+                              position: 'absolute',
+                              bottom: '8px',
+                              left: '27px',
+                              fontSize: '11px',
+                              color: '#666',
+                              fontWeight: 600,
+                            }}>
+                              {tool.viewCount || 0} views
                             </div>
                             {/* Shortcut display */}
                             {tool.shortcut && (
