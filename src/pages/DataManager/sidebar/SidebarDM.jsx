@@ -21,6 +21,7 @@ import { getAllChartTemplate } from '../../../apis/chartTemplateService.jsx';
 import KPI from '../../Canvas/DuLieu/CanvasDuLieuTongHop/KPI.jsx';
 import CreateDataFullType from '../../Canvas/DuLieu/CreateData/CreateDataFullType.jsx';
 import { createSetting, getSettingByType, updateSetting } from '../../../apis/settingService.jsx';
+import { getTotalRows } from '../../../apis/templateSettingService.jsx';
 import { getAllApprovedVersion, deleteApprovedVersion } from '../../../apis/approvedVersionTemp.jsx';
 import { Link as LucideLink } from 'lucide-react';
 import { getAllUserClass, getUserClassByEmail } from '../../../apis/userClassService.jsx';
@@ -84,10 +85,13 @@ export default function SidebarDM() {
 	const [isUploadLimitModalVisible, setIsUploadLimitModalVisible] = useState(false);
 	const [uploadLimitConfig, setUploadLimitConfig] = useState({
 		max_record: 50000,
-		max_column: 25
+		max_column: 25,
+		max_total_record: 1500000,
+		max_record_per_file: 100000
 	});
 	const [uploadLimitLoading, setUploadLimitLoading] = useState(false);
 	const [existingUploadLimitSetting, setExistingUploadLimitSetting] = useState(null);
+	const [currentTotalRows, setCurrentTotalRows] = useState(null);
 	const [selectedUserClassFile, setSelectedUserClassFile] = useState(null);
 	const [selectedUserClasses, setSelectedUserClasses] = useState(new Set());
 	const [allUserClasses, setAllUserClasses] = useState([]);
@@ -218,7 +222,9 @@ const fetchUploadLimitConfig = async () => {
 					...data,
 					setting: {
 						max_record: 50000,
-						max_column: 25
+						max_column: 25,
+						max_total_record: 1500000,
+						max_record_per_file: 100000
 					}
 				});
 			}
@@ -972,13 +978,19 @@ const fetchUploadLimitConfig = async () => {
 	const handleOpenUploadLimitModal = async () => {
 		try {
 			setUploadLimitLoading(true);
-			const existingSetting = await getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG');
+			const [existingSetting, totalRows] = await Promise.all([
+				getSettingByType('LIMIT_UPLOAD_SIZE_CONFIG'),
+				getTotalRows(null)
+			]);
+			
 			if (existingSetting && existingSetting.setting) {
 				setUploadLimitConfig(existingSetting.setting);
 				setExistingUploadLimitSetting(existingSetting);
 			} else {
 				setExistingUploadLimitSetting(null);
 			}
+			
+			setCurrentTotalRows(totalRows.count || 0);
 			setIsUploadLimitModalVisible(true);
 		} catch (error) {
 			console.error('Error loading upload limit config:', error);
@@ -1028,7 +1040,9 @@ const fetchUploadLimitConfig = async () => {
 		setIsUploadLimitModalVisible(false);
 		setUploadLimitConfig({
 			max_record: 50000,
-			max_column: 25
+			max_column: 25,
+			max_total_record: 1500000,
+			max_record_per_file: 100000
 		});
 		setExistingUploadLimitSetting(null);
 	};
@@ -1885,7 +1899,9 @@ const fetchUploadLimitConfig = async () => {
 					open={isModalKpiVisible}
 					onCancel={() => setIsModalKpiVisible(false)}
 					footer={null}
-					bodyStyle={{ padding: '16px', maxHeight: '80vh', overflowY: 'auto' }}
+					styles={{
+						body: { padding: '16px', maxHeight: '80vh', overflowY: 'auto' }
+					}}
 					style={{ width: 'auto', maxWidth: '90%' }}
 				>
 					<div style={{ display: 'flex', gap: '16px' }}>
@@ -2156,7 +2172,7 @@ const fetchUploadLimitConfig = async () => {
 
 			{/* Upload Limit Configuration Modal */}
 			<Modal
-				title="Cấu hình giới hạn upload"
+				title="Cấu hình giới hạn dữ liệu"
 				open={isUploadLimitModalVisible}
 				onOk={handleSaveUploadLimitConfig}
 				onCancel={handleCancelUploadLimitModal}
@@ -2166,39 +2182,120 @@ const fetchUploadLimitConfig = async () => {
 				width={500}
 			>
 				<div style={{ padding: '16px 0' }}>
-					<div style={{ marginBottom: '16px' }}>
-						<label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
-							Số dòng tối đa (max_record):
-						</label>
-						<Input
-							type="number"
-							value={uploadLimitConfig.max_record}
-							onChange={(e) => handleUploadLimitConfigChange('max_record', parseInt(e.target.value) || 0)}
-							placeholder="Nhập số dòng tối đa"
-							min={1}
-							style={{ width: '100%' }}
-						/>
-						<div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
-							Giới hạn số dòng dữ liệu có thể upload (mặc định: 50,000)
+					{/* Cấu hình giới hạn upload */}
+					<div style={{
+						border: '1px solid #d9d9d9',
+						borderRadius: '6px',
+						padding: '16px',
+						marginBottom: '20px',
+						backgroundColor: '#fafafa'
+					}}>
+						<div style={{
+							fontSize: '14px',
+							fontWeight: '600',
+							color: '#262626',
+							marginBottom: '16px',
+							borderBottom: '1px solid #e8e8e8',
+							paddingBottom: '8px'
+						}}>
+							Cấu hình giới hạn upload
+						</div>
+						
+						<div style={{ marginBottom: '16px' }}>
+							<label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+								Số dòng tối đa (max_record):
+							</label>
+							<Input
+								type="number"
+								value={uploadLimitConfig.max_record}
+								onChange={(e) => handleUploadLimitConfigChange('max_record', parseInt(e.target.value) || 0)}
+								placeholder="Nhập số dòng tối đa"
+								min={1}
+								style={{ width: '100%' }}
+							/>
+							<div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+								Giới hạn số dòng dữ liệu có thể upload (mặc định: 50,000)
+							</div>
+						</div>
+
+						<div style={{ marginBottom: '0' }}>
+							<label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+								Số cột tối đa (max_column):
+							</label>
+							<Input
+								type="number"
+								value={uploadLimitConfig.max_column}
+								onChange={(e) => handleUploadLimitConfigChange('max_column', parseInt(e.target.value) || 0)}
+								placeholder="Nhập số cột tối đa"
+								min={1}
+								style={{ width: '100%' }}
+							/>
+							<div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+								Giới hạn số cột dữ liệu có thể upload (mặc định: 25)
+							</div>
 						</div>
 					</div>
 
-					<div style={{ marginBottom: '16px' }}>
-						<label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
-							Số cột tối đa (max_column):
-						</label>
-						<Input
-							type="number"
-							value={uploadLimitConfig.max_column}
-							onChange={(e) => handleUploadLimitConfigChange('max_column', parseInt(e.target.value) || 0)}
-							placeholder="Nhập số cột tối đa"
-							min={1}
-							style={{ width: '100%' }}
-						/>
-						<div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
-							Giới hạn số cột dữ liệu có thể upload (mặc định: 25)
+					{/* Cấu hình giới hạn hệ thống */}
+					<div style={{
+						border: '1px solid #d9d9d9',
+						borderRadius: '6px',
+						padding: '16px',
+						marginBottom: '20px',
+						backgroundColor: '#fafafa'
+					}}>
+						<div style={{
+							fontSize: '14px',
+							fontWeight: '600',
+							color: '#262626',
+							marginBottom: '16px',
+							borderBottom: '1px solid #e8e8e8',
+							paddingBottom: '8px'
+						}}>
+							Cấu hình giới hạn hệ thống
+						</div>
+						
+						<div style={{ marginBottom: '16px' }}>
+							<label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+								Số dòng tối đa cho 1 file :
+							</label>
+							<Input
+								type="number"
+								value={uploadLimitConfig.max_record_per_file}
+								onChange={(e) => handleUploadLimitConfigChange('max_record_per_file', parseInt(e.target.value) || 0)}
+								placeholder="Nhập số dòng tối đa cho 1 file"
+								min={1}
+								style={{ width: '100%' }}
+							/>
+							<div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+								Giới hạn số dòng cho mỗi lần fetch/import dữ liệu thêm vào file (mặc định: 100,000)
+							</div>
+						</div>
+
+						<div style={{ marginBottom: '0' }}>
+							<label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+								Tổng số dòng tối đa (Total limit):
+							</label>
+							<Input
+								type="number"
+								value={uploadLimitConfig.max_total_record}
+								onChange={(e) => handleUploadLimitConfigChange('max_total_record', parseInt(e.target.value) || 0)}
+								placeholder="Nhập tổng số dòng tối đa"
+								min={1}
+								style={{ width: '100%' }}
+							/>
+							<div style={{ fontSize: '12px', color: '#666', marginTop: '4px' }}>
+								Giới hạn tổng số dòng đã được tải lên. Áp dụng cho toàn hệ thống (Data rubik)
+							</div>
+							{currentTotalRows !== null && (
+								<div style={{ fontSize: '12px', color: '#1890ff', marginTop: '8px', fontWeight: '500' }}>
+									Tổng số bản ghi hiện tại: {currentTotalRows.toLocaleString()} / {uploadLimitConfig.max_total_record.toLocaleString()}
+								</div>
+							)}
 						</div>
 					</div>
+
+					
 
 					<div style={{
 						padding: '12px',
