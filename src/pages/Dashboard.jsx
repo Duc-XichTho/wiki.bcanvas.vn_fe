@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo, useCallback } from 'react';
-import { RotateCcw, Plus, Edit2, X, Check, MoreHorizontal, Palette, HelpCircle, Phone, ChevronDown, ChevronUp, Trash2, MessageSquare, HelpCircle as QuestionMark, ArrowUpDown } from 'lucide-react';
+import { RotateCcw, Plus, Edit2, X, Check, MoreHorizontal, Palette, HelpCircle, Phone, ChevronDown, ChevronUp, Trash2, MessageSquare, HelpCircle as QuestionMark, ArrowUpDown, Search } from 'lucide-react';
 import styles from './Dashboard.module.css';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AI_Meter, ICON_CROSSROAD_LIST } from '../icon/svg/IconSvg.jsx';
@@ -1171,6 +1171,16 @@ const Dashboard = () => {
   // filter by selected tags if any
   if (selectedTagFilters.length > 0) {
     visibleTools = visibleTools.filter(t => Array.isArray(t.tags) && t.tags.some(tag => selectedTagFilters.includes(tag)));
+  }
+
+  // Filter by search term if any
+  if (tagSearch && tagSearch.trim() !== '') {
+    visibleTools = visibleTools.filter(t => {
+      const name = (t.name || '').toLowerCase();
+      const description = (t.description || '').toLowerCase();
+      const searchTerm = tagSearch.toLowerCase();
+      return name.includes(searchTerm) || description.includes(searchTerm);
+    });
   }
 
   const handleToolNavigation = (toolId) => {
@@ -3119,7 +3129,45 @@ const Dashboard = () => {
                     );
                   })()}
                 </div>
-                <div className={styles.tabStatusRight} style={{ fontWeight: 600, minWidth: '20%', maxWidth: '20%', textAlign: 'right', color: statusBarTheme.textColor }}>{formatVietnameseDateTime(currentTime)}</div>
+                <div className={styles.tabStatusRight} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, minWidth: '20%', maxWidth: '20%', color: statusBarTheme.textColor }}>
+                  <div style={{ 
+                    position: 'relative', 
+                    flex: 1, 
+                    minWidth: '150px',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}>
+                    <div style={{
+                      position: 'relative',
+                      width: '100%'
+                    }}>
+                      <Search 
+                        size={18} 
+                        style={{ 
+                          position: 'absolute', 
+                          left: '10px', 
+                          top: '50%', 
+                          transform: 'translateY(-50%)',
+                          color: '#66666C',
+                          zIndex: 1
+                        }} 
+                      />
+                      <Input
+                        placeholder="Tìm kiếm"
+                        value={tagSearch}
+                        onChange={(e) => setTagSearch(e.target.value)}
+                        style={{
+                          paddingLeft: '40px',
+                          borderRadius: '20px',
+                          border: 'none',
+                          background: '#F5F5F5',
+                          height: '36px'
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <span style={{ fontWeight: 600 }}>{formatVietnameseDateTime(currentTime)}</span>
+                </div>
               </div>
             </div>
           )}

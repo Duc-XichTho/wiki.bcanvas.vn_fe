@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo, useCallback } from 'react';
-import { RotateCcw, Plus, Edit2, X, Check, MoreHorizontal, Palette, HelpCircle, Phone, ChevronDown, ChevronUp, Trash2, MessageSquare, HelpCircle as QuestionMark, ArrowUpDown } from 'lucide-react';
+import { RotateCcw, Plus, Edit2, X, Check, MoreHorizontal, Palette, HelpCircle, Phone, ChevronDown, ChevronUp, Trash2, MessageSquare, HelpCircle as QuestionMark, ArrowUpDown, Search } from 'lucide-react';
 import styles from './Dashboard.module.css';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AI_Meter, ICON_CROSSROAD_LIST } from '../icon/svg/IconSvg.jsx';
@@ -1277,7 +1277,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       return true;
     });
     // Create blocked tools list for visual feedback
-    const newBlockedTools = tools.filter(tool => {
+    let newBlockedTools = tools.filter(tool => {
       // Check if tool is disabled
       if (tool.enabled === false) return false; // Don't show disabled tools in blocked list
 
@@ -1346,6 +1346,31 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       newVisibleTools = newVisibleTools.filter(t => Array.isArray(t.tags) && t.tags.some(tag => selectedTagFilters.includes(tag)));
     }
 
+    // Filter by search term if any
+    if (tagSearch && tagSearch.trim() !== '') {
+      newVisibleTools = newVisibleTools.filter(t => {
+        const name = (t.name || '').toLowerCase();
+        const description = (t.description || '').toLowerCase();
+        const searchTerm = tagSearch.toLowerCase();
+        return name.includes(searchTerm) || description.includes(searchTerm);
+      });
+
+      // Also filter blocked tools and trial tools
+      newBlockedTools = newBlockedTools.filter(t => {
+        const name = (t.name || '').toLowerCase();
+        const description = (t.description || '').toLowerCase();
+        const searchTerm = tagSearch.toLowerCase();
+        return name.includes(searchTerm) || description.includes(searchTerm);
+      });
+
+      newTrialTools = newTrialTools.filter(t => {
+        const name = (t.name || '').toLowerCase();
+        const description = (t.description || '').toLowerCase();
+        const searchTerm = tagSearch.toLowerCase();
+        return name.includes(searchTerm) || description.includes(searchTerm);
+      });
+    }
+
     // Sort visibleTools by order field
     newVisibleTools = newVisibleTools.sort((a, b) => (a.order || 0) - (b.order || 0));
 
@@ -1354,7 +1379,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     setVisibleTools(newVisibleTools);
     setBlockedTools(newBlockedTools);
     setTrialTools(newTrialTools);
-  }, [tools, currentUser, allowedAppIds, selectedTagFilters, selectedSchema]);
+  }, [tools, currentUser, allowedAppIds, selectedTagFilters, selectedSchema, tagSearch]);
 
   const handleToolNavigation = (toolId) => {
     const tool = tools.find(app => app.id === toolId);
@@ -3319,7 +3344,45 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                     );
                   })()}
                 </div>
-                <div className={styles.tabStatusRight} style={{ fontWeight: 600, minWidth: '20%', maxWidth: '20%', textAlign: 'right', color: statusBarTheme.textColor }}>{formatVietnameseDateTime(currentTime)}</div>
+                <div className={styles.tabStatusRight} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, minWidth: '20%', maxWidth: '20%', color: statusBarTheme.textColor }}>
+                  <div style={{ 
+                    position: 'relative', 
+                    flex: 1, 
+                    minWidth: '150px',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}>
+                    <div style={{
+                      position: 'relative',
+                      width: '100%'
+                    }}>
+                      <Search 
+                        size={18} 
+                        style={{ 
+                          position: 'absolute', 
+                          left: '10px', 
+                          top: '50%', 
+                          transform: 'translateY(-50%)',
+                          color: '#66666C',
+                          zIndex: 1
+                        }} 
+                      />
+                      <Input
+                        placeholder="Tìm kiếm"
+                        value={tagSearch}
+                        onChange={(e) => setTagSearch(e.target.value)}
+                        style={{
+                          paddingLeft: '40px',
+                          borderRadius: '20px',
+                          border: 'none',
+                          background: '#F5F5F5',
+                          height: '36px'
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <span style={{ fontWeight: 600 }}>{formatVietnameseDateTime(currentTime)}</span>
+                </div>
               </div>
             </div>
           )}
