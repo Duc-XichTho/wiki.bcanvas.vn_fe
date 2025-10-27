@@ -459,3 +459,14 @@ export const resetTemplateFlow = async (templateId) => {
     throw error;
   }
 }
+
+// API để lấy tổng số dòng có version null (data rubik)
+export const getTotalRows = async (version) => {
+  try {
+    const { data } = await instance.get(URL + `/total-rows/${version}`);
+    return data;
+  } catch (error) {
+    console.error("Error getting total rows with version null: ", error);
+    throw error;
+  }
+}
