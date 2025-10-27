@@ -3124,7 +3124,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
 
                     </span>
                   </Tooltip> */}
-                  {(currentUser?.isAdmin || currentUser?.isSuperAdmin) &&
+                  {( currentUser?.isSuperAdmin) &&
                     <Dropdown
                       menu={{ items: settingsMenuItems }}
                       trigger={['click']}

@@ -82,15 +82,13 @@ const WorkspaceRegistration = () => {
                     expired_at: expiredDate.toISOString(),
                     // Auto apply chosen version nếu có
                     ...(chosenVersion && {
-                        limit_user: chosenVersion.userNumberLimit,
                         version_id: chosenVersion.id,
                         version_data: {
                             contextInstruction: chosenVersion.contextInstruction,
-                            tokenSize: chosenVersion.tokenSize,
                             rubikDataRowsLimit: chosenVersion.rubikDataRowsLimit,
                             rubikDataColumnsLimit: chosenVersion.rubikDataColumnsLimit,
                             rubikDataTotalRowsLimit: chosenVersion.rubikDataTotalRowsLimit,
-                            userNumberLimit: chosenVersion.userNumberLimit,
+                            rubikDataRowsPerFile: chosenVersion.rubikDataRowsLimit, // Số dòng tối đa cho 1 file
                         }
                     })
                 }
