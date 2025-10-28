@@ -299,7 +299,15 @@ export const AuthRoutes = ({ listCompany, isMobile }) => (
 		<Route path={'/audio-merge'} element={<Suspense fallback={fallback}><AudioMerge /></Suspense>} />
 		<Route path={'/scrape'} element={<Suspense fallback={fallback}><SocialDataScraperApp /></Suspense>} />
 		<Route path={ROUTES.UNIVERSAL_APP} element={<Suspense fallback={fallback}><UniversalApp /></Suspense>} />
+		<Route path={'/universal-app-2'} element={<Suspense fallback={fallback}><UniversalApp /></Suspense>} />
+		<Route path={'/universal-app-3'} element={<Suspense fallback={fallback}><UniversalApp /></Suspense>} />
+		<Route path={'/universal-app-4'} element={<Suspense fallback={fallback}><UniversalApp /></Suspense>} />
+		<Route path={'/universal-app-5'} element={<Suspense fallback={fallback}><UniversalApp /></Suspense>} />
 		<Route path='/universal-app/:tabId/:processItemId?/:headingId?' element={<UniversalApp />} />
+		<Route path='/universal-app-2/:tabId/:processItemId?/:headingId?' element={<UniversalApp />} />
+		<Route path='/universal-app-3/:tabId/:processItemId?/:headingId?' element={<UniversalApp />} />
+		<Route path='/universal-app-4/:tabId/:processItemId?/:headingId?' element={<UniversalApp />} />
+		<Route path='/universal-app-5/:tabId/:processItemId?/:headingId?' element={<UniversalApp />} />
 		{/*<Route path={'/apify'} element={<Suspense fallback={fallback}><Apify /></Suspense>} />*/}
 		<Route path='/survey-app' element={<CustomerSurveyApp />} />
 		<Route path='/survey-app/:surveyId' element={<CustomerSurveyApp />} />

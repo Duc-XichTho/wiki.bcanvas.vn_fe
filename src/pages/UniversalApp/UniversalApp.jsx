@@ -22,7 +22,7 @@ import {
   getDeletedProcessItems,
   restoreProcessItem
 } from '../../apis/processItemService';
-import { getSchemaTools, getUniversalBackground, updateSetting } from '../../apis/settingService';
+import { getSchemaTools, getSettingByType, createSetting, updateSetting } from '../../apis/settingService';
 import { uploadFileService } from '../../apis/uploadFileService';
 import { getCurrentUserLogin, updateUser } from '../../apis/userService';
 import { getAllUserClass } from '../../apis/userClassService';
@@ -37,6 +37,7 @@ import SearchModal from './SearchModal';
 import TabBar from './components/TabBar';
 import UserProcessGuide from './components/UserProcessGuide';
 import { MyContext } from '../../MyContext.jsx';
+import { useUniversalConfig } from './useUniversalConfig';
 
 const { TabPane } = Tabs;
 
@@ -115,6 +116,12 @@ const DataRubikProcessGuide = () => {
   const [isViewAsUser, setIsViewAsUser] = useState(false);
   const contentRef = useRef(null);
   console.log('tool', tool);
+  const { descriptionTag, backgroundSettingType, basePath } = useUniversalConfig();
+
+  // Debug: log nameTable whenever it changes
+  useEffect(() => {
+    console.log('nameTable', nameTable);
+  }, [nameTable]);
   // New state variables for deleted items modal
   const [isDeletedItemsModalVisible, setIsDeletedItemsModalVisible] = useState(false);
   const [deletedProcesses, setDeletedProcesses] = useState([]);
@@ -343,14 +350,14 @@ const DataRubikProcessGuide = () => {
       
       // Navigate to the process item with heading if available
       if (closestHeading && selectedResult.type === 'content') {
-        navigate(`/universal-app/${activeTabId}/${processItem.id}/${closestHeading.id}`);
+        navigate(`${basePath}/${activeTabId}/${processItem.id}/${closestHeading.id}`);
           
           // After navigation, highlight the search term in the content
           setTimeout(() => {
             highlightSearchTerm(selectedResult.originalParagraph || '');
           }, 1000); // Wait for navigation to complete
       } else {
-        navigate(`/universal-app/${activeTabId}/${processItem.id}`);
+        navigate(`${basePath}/${activeTabId}/${processItem.id}`);
       }
       
       // Clear search
@@ -729,7 +736,7 @@ const DataRubikProcessGuide = () => {
       for (const process of processList) {
         const items = await getProcessItemsByProcessId(process.id);
         const visibleItems = items.filter(item => 
-          item.show !== false && item.description === 'UNIVERSAL_APP'
+          item.show !== false && item.description === descriptionTag
         );
         itemsData[process.id] = visibleItems.map(item => {
           // Determine privacy type based on users column only
@@ -789,13 +796,13 @@ const DataRubikProcessGuide = () => {
             // If tab not found, redirect to first available tab
             if (tabsData.length > 0) {
               const firstTab = tabsData.sort((a, b) => a.id - b.id)[0];
-              navigate(`/universal-app/${firstTab.id}${processItemId ? `/${processItemId}` : ''}${headingId ? `/${headingId}` : ''}`);
+              navigate(`${basePath}/${firstTab.id}${processItemId ? `/${processItemId}` : ''}${headingId ? `/${headingId}` : ''}`);
             }
           }
         } else if (!tabId && tabsData.length > 0) {
           // If no tabId in URL, redirect to first available tab
           const firstTab = tabsData.sort((a, b) => a.id - b.id)[0];
-          navigate(`/universal-app/${firstTab.id}${processItemId ? `/${processItemId}` : ''}${headingId ? `/${headingId}` : ''}`);
+          navigate(`${basePath}/${firstTab.id}${processItemId ? `/${processItemId}` : ''}${headingId ? `/${headingId}` : ''}`);
         }
       } catch (error) {
         console.error('❌ Error fetching tabs for URL tabId:', error);
@@ -892,12 +899,12 @@ const DataRubikProcessGuide = () => {
     // Update URL if it's a processItem
     if (processItemId) {
       if (headingId) {
-        navigate(`/universal-app/${activeTabId}/${processItemId}/${headingId}`);
+        navigate(`${basePath}/${activeTabId}/${processItemId}/${headingId}`);
       } else {
-        navigate(`/universal-app/${activeTabId}/${processItemId}`);
+        navigate(`${basePath}/${activeTabId}/${processItemId}`);
       }
     } else {
-      navigate(`/universal-app/${activeTabId}`);
+      navigate(`${basePath}/${activeTabId}`);
     }
   };
 
@@ -1796,7 +1803,7 @@ const DataRubikProcessGuide = () => {
       const processItemData = {
         id: editingProcessItem.id,
         title: editingProcessItem.text,
-        description: 'UNIVERSAL_APP', // Preserve UNIVERSAL_APP description
+        description: descriptionTag, // tag per variant
         content: currentContent,
         processId: editingProcessItem.processId,
         order: editingProcessItem.order,
@@ -1877,7 +1884,7 @@ const DataRubikProcessGuide = () => {
       
       const processItemData = {
         title: values.title,
-        description: 'UNIVERSAL_APP', // Mark as Universal App processItem
+        description: descriptionTag, // Mark per variant
         content: tiptapContent || '',
         processId: selectedProcessId,
         order: nextOrder, // Set order to max + 1 (bottom of the list)
@@ -1913,7 +1920,7 @@ const DataRubikProcessGuide = () => {
       const deletedProcess = processes.find(p => p.id === processId);
       if (deletedProcess && activeHeading === deletedProcess.text) {
         setActiveHeading('');
-        navigate(`/universal-app/${activeTabId}`);
+        navigate(`${basePath}/${activeTabId}`);
       }
       
       fetchProcesses(activeProcessTab?.id); // Refresh the list
@@ -1934,7 +1941,7 @@ const DataRubikProcessGuide = () => {
       // Clear active heading if it was the deleted process item
       if (activeHeading === processItemTitle) {
         setActiveHeading('');
-        navigate(`/universal-app/${activeTabId}`);
+        navigate(`${basePath}/${activeTabId}`);
       }
       
       fetchProcesses(activeProcessTab?.id); // Refresh the list
@@ -1961,7 +1968,7 @@ const DataRubikProcessGuide = () => {
       const processItemData = {
         id: item.id,
         title: item.text,
-        description: item.description || 'UNIVERSAL_APP',
+        description: item.description || descriptionTag,
         content: item.content || '',
         processId: item.processId,
         order: item.order || 0,
@@ -1999,11 +2006,11 @@ const DataRubikProcessGuide = () => {
       setLoading(true);
       
       // First, get the existing background setting to get the ID
-      const existingSetting = await getUniversalBackground();
+      const existingSetting = await getSettingByType(backgroundSettingType);
       
       // Prepare the settings data with ID if it exists
       const settingsData = {
-        type: 'UNIVERSAL_BACKGROUND',
+        type: backgroundSettingType,
         setting: backgroundImageUrl
       };
       
@@ -2036,7 +2043,7 @@ const DataRubikProcessGuide = () => {
       const processItemData = {
         id: selectedProcessItem.id,
         title: selectedProcessItem.text,
-        description: selectedProcessItem.description || 'UNIVERSAL_APP',
+        description: selectedProcessItem.description || descriptionTag,
         content: selectedProcessItem.content || '',
         processId: selectedProcessItem.processId,
         order: selectedProcessItem.order || 0,
@@ -2076,7 +2083,7 @@ const DataRubikProcessGuide = () => {
   useEffect(() => {
     const loadBackgroundImage = async () => {
       try {
-        const backgroundData = await getUniversalBackground();
+      const backgroundData = await getSettingByType(backgroundSettingType);
         
         if (backgroundData && backgroundData.setting) {
           setBackgroundImageUrl(backgroundData.setting);
@@ -2405,7 +2412,7 @@ const DataRubikProcessGuide = () => {
                           
                           // Navigate to the closest heading
                           if (closestHeading) {
-                            navigate(`/universal-app/${activeTabId}/${selectedProcessItem.id}/${closestHeading.id}`);
+                            navigate(`${basePath}/${activeTabId}/${selectedProcessItem.id}/${closestHeading.id}`);
                             
                             // After navigation, highlight the search term in the content
                             setTimeout(() => {
@@ -2413,7 +2420,7 @@ const DataRubikProcessGuide = () => {
                             }, 1000); // Wait for navigation to complete
                           } else {
                             // Fallback: navigate to the process item without heading
-                            navigate(`/universal-app/${activeTabId}/${selectedProcessItem.id}`);
+                            navigate(`${basePath}/${activeTabId}/${selectedProcessItem.id}`);
                             
                             // After navigation, highlight the search term in the content
                             setTimeout(() => {
@@ -3423,7 +3430,7 @@ const DataRubikProcessGuide = () => {
                           const processItemData = {
                             id: currentProcessItem.id,
                             title: currentProcessItem.text,
-                            description: currentProcessItem.description || 'UNIVERSAL_APP',
+                            description: currentProcessItem.description || descriptionTag,
                             processId: currentProcessItem.processId,
                             order: currentProcessItem.order ?? 0,
                             show: currentProcessItem.show ?? true,
@@ -3755,7 +3762,7 @@ const DataRubikProcessGuide = () => {
                           const processItemData = {
                             id: currentProcessItem.id,
                             title: currentProcessItem.text,
-                            description: currentProcessItem.description || 'UNIVERSAL_APP',
+                            description: currentProcessItem.description || descriptionTag,
                             content: currentProcessItem.content || '',
                             processId: currentProcessItem.processId,
                             order: currentProcessItem.order || 0,
@@ -3859,7 +3866,7 @@ const DataRubikProcessGuide = () => {
                         scrollToContentHeading(heading.text);
                         // Update URL with heading ID
                         if (processItemId) {
-                                navigate(`/universal-app/${activeTabId}/${processItemId}/${heading.id}`);
+                                navigate(`${basePath}/${activeTabId}/${processItemId}/${heading.id}`);
                         }
                       }}
                     >
