@@ -3503,20 +3503,23 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                               </>
 
                             )}
-                            <div className={styles.toolCardItem}>
-                              <div className={styles.toolIcon}>
+                            <div className={styles.toolCardItem} style={{ alignItems: 'flex-start', textAlign: 'left', width: '100%' }}>
+                              <div className={styles.toolIcon} style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', marginLeft: '15px', justifyContent: 'flex-start' }}>
                                 {tool.icon ? (
                                   (() => {
                                     const iconSrc = getIconSrcById(tool);
                                     return iconSrc ? (
-                                      <img src={iconSrc} alt={tool.name} height={55} width={'auto'} />
+                                      <img src={iconSrc} alt={tool.name} height={40} width={'auto'} />
                                     ) : (
-                                      <span style={{ fontSize: '40px' }}>{tool.icon}</span>
+                                      <span style={{ fontSize: '30px' }}>{tool.icon}</span>
                                     );
                                   })()
                                 ) : (
-                                  <span style={{ fontSize: '40px' }}>🛠️</span>
+                                  <span style={{ fontSize: '30px' }}>🛠️</span>
                                 )}
+                                <div className={styles.box} style={{ margin: 0 }}>
+                                  <h3 className={styles.toolTitleItem} style={{ margin: 0, textAlign: 'left' }}>{tool.name}</h3>
+                                </div>
                               </div>
 
                               {/* Trial Tag and Expiry Date */}
@@ -3551,9 +3554,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                                   </span>
                                 </div>
                               )}
-                              <div className={styles.box}>
-                                <h3 className={styles.toolTitleItem}>{tool.name}</h3>
-                              </div>
+                              
                               <div className={styles.toolCardDesc}>
                                 <p className={styles.toolDescItem}>{tool.description}</p>
                               </div>
@@ -3590,13 +3591,14 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                             <div style={{
                               position: 'absolute',
                               bottom: '8px',
-                              left: '27px',
+                              right: '12px',
                               fontSize: '11px',
                               color: '#666',
                               fontWeight: 600,
                               display: 'flex',
                               alignItems: 'center',
-                              gap: '8px'
+                              gap: '8px',
+                              justifyContent: 'flex-end'
                             }}>
                               {tool.viewCount || 0} views
                               {tool.featured && (
