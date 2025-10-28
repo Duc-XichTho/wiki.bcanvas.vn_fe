@@ -253,6 +253,7 @@ const AiFile = lazy(() => import('../pages/AIFileTool/AIFile.jsx'));
 const StorageTool = lazy(() => import('../pages/StorageTool/StorageTool.jsx'));
 const AIWorkAutomation = lazy(() => import('../pages/AIWorkAutomation/AIWorkAutomation.jsx'));
 const WikiCanvas = lazy(() => import('../pages/WikiCanvas.jsx'));
+const UniversalApp = lazy(() => import('../pages/UniversalApp/UniversalApp.jsx'));
 const fallback = (
 	<div
 		style={{
@@ -297,6 +298,8 @@ export const AuthRoutes = ({ listCompany, isMobile }) => (
 		<Route path={'/geo'} element={<Suspense fallback={fallback}><Geo /></Suspense>} />
 		<Route path={'/audio-merge'} element={<Suspense fallback={fallback}><AudioMerge /></Suspense>} />
 		<Route path={'/scrape'} element={<Suspense fallback={fallback}><SocialDataScraperApp /></Suspense>} />
+		<Route path={ROUTES.UNIVERSAL_APP} element={<Suspense fallback={fallback}><UniversalApp /></Suspense>} />
+		<Route path='/universal-app/:tabId/:processItemId?/:headingId?' element={<UniversalApp />} />
 		{/*<Route path={'/apify'} element={<Suspense fallback={fallback}><Apify /></Suspense>} />*/}
 		<Route path='/survey-app' element={<CustomerSurveyApp />} />
 		<Route path='/survey-app/:surveyId' element={<CustomerSurveyApp />} />

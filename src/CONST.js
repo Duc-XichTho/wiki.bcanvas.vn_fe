@@ -19,6 +19,7 @@ export const ROUTES = {
     WIKI_FILE_DETAIL: '/wiki/file/:id',
 
     SURVEY_APP: '/survey-app',
+    UNIVERSAL_APP: '/universal-app',
 
     AI: '/canvas/:companySelect/:buSelect/ai',
     AI_CENTER: '/canvas/:companySelect/:buSelect/ai-center',
