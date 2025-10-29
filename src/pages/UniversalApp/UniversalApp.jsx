@@ -2234,7 +2234,7 @@ const DataRubikProcessGuide = () => {
                 </div>
               ) : (
                 <div>
-                 <div className={styles.processItemActionsContainer} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px', gap: '8px', alignItems: 'center', position: 'sticky', top: '0px', zIndex: 1000, background: '#FDFDFD' }}>
+                 <div className={styles.processItemActionsContainer} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px', gap: '8px', alignItems: 'center', position: 'sticky', top: '-14px', zIndex: 1000, background: '#FDFDFD', height: '44px' }}>
                     {/* Content Search Bar */}
                     <AutoComplete
                       value={contentSearchValue}
