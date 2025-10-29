@@ -3969,12 +3969,12 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                           <div
                             key={tool.id}
                             className={styles.toolCard}
-                            style={{
-                              opacity: 0.5,
-                              filter: 'grayscale(100%)',
-                              cursor: 'not-allowed',
-                              position: 'relative'
-                            }}
+                            // style={{
+                            //   opacity: 0.5,
+                            //   filter: 'grayscale(100%)',
+                            //   cursor: 'not-allowed',
+                            //   position: 'relative'
+                            // }}
                             onClick={(e) => {
                               e.preventDefault();
                               if (tool.visibility === 'trial') {
@@ -4022,15 +4022,44 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                                 gap: '4px'
                               }}>
                                 {tool.visibility === 'trial' ? 
-                                  (!currentUser || !currentUser.email ? '🔒 Yêu cầu đăng nhập' : 
+                                  (!currentUser || !currentUser.email ? '🔒 Cần đăng nhập' : 
                                    (!currentUser?.isSuperAdmin && !currentUser?.isAdmin && allowedAppIds.length === 0 ? '🚫 Không có quyền' : '🧪 Cần kích hoạt trial')) : 
-                                  '🔒 Yêu cầu đăng nhập'}
+                                  '🔒 Cần đăng nhập'}
                               </div>
 
                               {/* <div className={styles.box}> */}
                               <h3 className={styles.toolTitleItem} style={{ marginBottom: '15px' }}>{tool.name}</h3>
                               <p className={styles.toolDescriptionItem}>{tool.description}</p>
                               {/* </div> */}
+                            {/* View Count and Featured (bottom right) */}
+                            <div style={{
+                              position: 'absolute',
+                              bottom: '8px',
+                              right: '12px',
+                              fontSize: '11px',
+                              color: '#666',
+                              fontWeight: 600,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                              justifyContent: 'flex-end'
+                            }}>
+                              {tool.viewCount || 0} views
+                              {tool.featured && (
+                                <div style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  marginLeft: '8px'
+                                }}>
+                                  <svg width="22" height="19" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.7235 16.2406C12.6998 16.3919 12.7612 16.4816 12.8689 16.4816C12.9084 16.4816 12.954 16.4696 13.0038 16.4443L15.5301 15.1639C15.6233 15.1167 15.7463 15.093 15.8691 15.093C15.992 15.093 16.1149 15.1167 16.2081 15.1639L18.7344 16.4443C18.7843 16.4696 18.8298 16.4816 18.8692 16.4816C18.977 16.4816 19.0384 16.3919 19.0148 16.2406L18.5778 13.4424C18.5455 13.2358 18.6398 12.9456 18.7872 12.7975L20.7855 10.7905C20.933 10.6425 20.8849 10.4942 20.6785 10.461L17.8821 10.0119C17.6758 9.97883 17.4289 9.79942 17.3336 9.61335L16.0424 7.09268C15.9947 6.99964 15.932 6.95312 15.8692 6.95312C15.8064 6.95312 15.7436 6.99964 15.6959 7.09268L14.4047 9.61335C14.3094 9.79942 14.0626 9.97883 13.8562 10.0119L11.0598 10.461C10.8534 10.4942 10.8052 10.6425 10.9527 10.7905L12.951 12.7975C13.0985 12.9456 13.1929 13.2358 13.1606 13.4424L12.7235 16.2406Z" fill="#F8BB4A"/>
+                                    <path d="M21.1513 9.49222C21.7143 8.28504 22 7.07548 22 5.88007C22 2.63778 19.3622 0 16.1199 0C13.927 0 12.0107 1.20637 11 2.99052C9.98911 1.20637 8.07289 0 5.88 0C2.63778 0 0 2.63778 0 5.88007C0 7.58993 0.581259 9.32882 1.72763 11.0483C2.61756 12.3832 3.85089 13.7118 5.39341 14.9972C7.99126 17.1621 10.5523 18.4525 10.6601 18.5064C10.767 18.56 10.8836 18.5867 11 18.5867C11.1164 18.5867 11.2329 18.56 11.3399 18.5064C11.3942 18.4793 12.0719 18.1378 13.063 17.5287C12.9987 17.5386 12.934 17.5441 12.869 17.5441C12.5135 17.5441 12.1788 17.3913 11.9509 17.125C11.7093 16.8428 11.6104 16.4696 11.6721 16.0747L12.0844 13.4339L10.1987 11.5399C9.842 11.1817 9.71578 10.7004 9.86133 10.2523C10.0068 9.80422 10.3917 9.48874 10.891 9.40844L13.5301 8.98467L14.7487 6.6057C14.9792 6.15585 15.3981 5.88719 15.8691 5.88719C16.3402 5.88719 16.7591 6.15585 16.9896 6.60578L18.2081 8.98474L21.1513 9.49222Z" fill="#F8BB4A"/>
+                                  </svg>
+                                  <span style={{ color: '#F8BB4A', fontWeight: 600 }}>Featured</span>
+                                </div>
+                              )}
+                            </div>
                             </div>
                           </div>
                         ))}
