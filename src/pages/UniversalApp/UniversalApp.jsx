@@ -2234,7 +2234,7 @@ const DataRubikProcessGuide = () => {
                 </div>
               ) : (
                 <div>
-                  <div className={styles.processItemActionsContainer} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px', gap: '8px', alignItems: 'center' }}>
+                  <div className={styles.processItemActionsContainer} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px', gap: '8px', alignItems: 'center', position: 'sticky', top: '0px', zIndex: 10, background: '#FDFDFD' }}>
                     {/* Content Search Bar */}
                     <AutoComplete
                       value={contentSearchValue}
@@ -2515,7 +2515,7 @@ const DataRubikProcessGuide = () => {
                   {/* ProcessItem Title and Metadata */}
                   <div style={{ 
                     marginBottom: '20px', 
-                    padding: '6px 16px 16px 0px', 
+                    padding: '36px 16px 16px 0px', 
                     background: '#FDFDFD  ', 
                     borderRadius: '8px',
                     // borderBottom: '1px solid #e9ecef'
@@ -3722,6 +3722,26 @@ const DataRubikProcessGuide = () => {
               const isNotSuperAdminOrViewAsUser = !currentUser?.isSuperAdmin || isViewAsUser;
               
               return !showMainSidebar && isNotSuperAdminOrViewAsUser ? '200px' : '0px';
+            })(),
+            borderTopLeftRadius: (() => {
+              // Determine whether main sidebar (file list) is shown
+              const isSuperAdminEffective = currentUser?.isSuperAdmin && !isViewAsUser;
+              let showMainSidebar = true;
+              if (!isSuperAdminEffective) {
+                if (activeHeading) {
+                  let currentProcessItem = null;
+                  for (const processId in processItems) {
+                    const itemList = processItems[processId];
+                    currentProcessItem = itemList.find(item => item.text === activeHeading);
+                    if (currentProcessItem) break;
+                  }
+                  if (currentProcessItem) {
+                    const metaVisible = currentProcessItem?.metadata?.isSidebarVisible;
+                    showMainSidebar = metaVisible !== undefined ? !!metaVisible : true;
+                  }
+                }
+              }
+              return !showMainSidebar ? '8px' : '0px';
             })()
           }}
         >

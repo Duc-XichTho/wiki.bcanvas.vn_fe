@@ -71,6 +71,7 @@
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     overflow-y: auto;
+    border-top-left-radius: 8px;
 }
 
 .container {
@@ -118,7 +119,7 @@
 
 .content {
     width: 95%;
-    margin-top: 33px;
+    margin-top: 3px;
     height: calc(100vh - 103px); /* Subtract topBar height (16px padding * 2 + content height) */
     display: flex;
     gap: 2px;
@@ -129,7 +130,7 @@
     margin-top: 83px;
     height: calc(100vh - 153px); /* Subtract topBar height (16px padding * 2 + content height) */
     display: flex;
-    gap: 2px;
+    /* gap: 2px; */
 }
 .quillMain {
     flex: 1;
@@ -138,6 +139,8 @@
     background-color: #FDFDFD;
     display: flex;
     gap: 20px;
+    /* border-top-left-radius: 8px; */
+    border-top-right-radius: 8px;
 }
 
 .mainContent {
@@ -614,7 +617,7 @@
 .contentHeadingsSidebar {
     width: 450px;
     background-color: #FDFDFD;
-    /* border: 1px solid #e9ecef; */
+    border-right: 1px dashed #ddd;
     border-radius: 8px;
     padding: 0px 16px 16px 16px;
     overflow-y: auto;
@@ -1191,3 +1194,10 @@
     background-color: #f5f5f5;
 }
   
+/* Sticky actions container for process items */
+.processItemActionsContainer {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #FDFDFD;
+}
