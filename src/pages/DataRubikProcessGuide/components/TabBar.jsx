@@ -28,7 +28,6 @@ import {
 import styles from './TabBar.module.css';
 
 const TabBar = ({ onTabChange, activeTabId, shouldAutoSelect = true, currentUser }) => {
-  console.log('🏗️ TabBar component props:', { onTabChange: !!onTabChange, activeTabId });
   
   const [tabs, setTabs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -44,12 +43,9 @@ const TabBar = ({ onTabChange, activeTabId, shouldAutoSelect = true, currentUser
   }, []);
 
   const fetchTabs = async () => {
-    console.log('📋 TabBar fetchTabs called');
     try {
       setLoading(true);
-      const tabsData = await getAllProcessTabs();
-      console.log('📋 Fetched tabs data:', tabsData);
-      console.log('📋 Tabs with show property:', tabsData.map(tab => ({ id: tab.id, title: tab.title, show: tab.show })));
+      const tabsData = (await getAllProcessTabs()).filter(tab => tab.title !== "UNIVERSAL_APP");
       
       // Determine order using description as numeric position; assign incremental if missing
       let maxOrder = 0;

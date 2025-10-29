@@ -727,8 +727,10 @@ const DataRubikProcessGuide = () => {
   useEffect(() => {
     const handleTabSelection = async () => {
       try {
-        const tabsData = await getAllProcessTabs();
-        
+        const tabsData = (await getAllProcessTabs()).filter(tab => tab.title !== "UNIVERSAL_APP");
+        console.log(tabsData);
+
+
         if (tabId && !activeTabId) {
           // Find the tab by ID and select it
           const targetTab = tabsData.find(tab => tab.id.toString() === tabId);
