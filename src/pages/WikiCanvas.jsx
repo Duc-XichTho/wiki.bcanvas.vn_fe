@@ -3503,7 +3503,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                               </>
 
                             )}
-                            <div className={styles.toolCardItem} style={{ alignItems: 'flex-start', textAlign: 'left', width: '100%' }}>
+                           <div className={styles.toolCardItem} style={{ alignItems: 'flex-start', textAlign: 'left', width: '100%' }}>
                               <div className={styles.toolIcon} style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', marginLeft: '15px', justifyContent: 'flex-start' }}>
                                 {tool.icon ? (
                                   (() => {
@@ -3521,6 +3521,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                                   <h3 className={styles.toolTitleItem} style={{ margin: 0, textAlign: 'left' }}>{tool.name}</h3>
                                 </div>
                               </div>
+
 
                               {/* Trial Tag and Expiry Date */}
                               {tool.isTrial && (
