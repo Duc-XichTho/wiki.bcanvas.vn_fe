@@ -183,7 +183,7 @@
 }
 
 .toolCard {
-  /* height: 200px; */
+  min-height: 160px;
   background: white;
   border: 1px solid white;
   border-radius: 8px;
@@ -954,7 +954,7 @@
 
 
 .toolTitleItem {
-  font-size: 21px;
+  font-size: 19px;
   font-weight: 500;
   color: var(--text-primary);
   text-align: center;

@@ -3991,27 +3991,63 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                               }
                             }}
                           >
-                            <div className={styles.toolCardItem}>
-                              <div className={styles.toolIcon}>
+                            <div className={styles.toolCardItem} style={{ alignItems: 'flex-start', textAlign: 'left', width: '100%' }}>
+                              <div className={styles.toolIcon} style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', marginLeft: '15px', justifyContent: 'flex-start' }}>
                                 {tool.icon ? (
                                   (() => {
                                     const iconSrc = getIconSrcById(tool);
                                     return iconSrc ? (
-                                      <img src={iconSrc} alt={tool.name} height={55} width={'auto'} />
+                                      <img src={iconSrc} alt={tool.name} height={40} width={'auto'} />
                                     ) : (
-                                      <span style={{ fontSize: '40px' }}>{tool.icon}</span>
+                                      <span style={{ fontSize: '30px' }}>{tool.icon}</span>
                                     );
                                   })()
                                 ) : (
-                                  <span style={{ fontSize: '40px' }}>🛠️</span>
+                                  <span style={{ fontSize: '30px' }}>🛠️</span>
                                 )}
+                                <div className={styles.box} style={{ margin: 0 }}>
+                                  <h3 className={styles.toolTitleItem} style={{ margin: 0, textAlign: 'left' }}>{tool.name}</h3>
+                                </div>
                               </div>
+
+                              {/* Trial Tag and Expiry Date */}
+                              {tool.isTrial && (
+                                <div style={{
+                                  position: 'absolute',
+                                  top: '8px',
+                                  left: '8px',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '4px'
+                                }}>
+                                  <span style={{
+                                    background: '#3b82f6',
+                                    color: 'white',
+                                    padding: '2px 6px',
+                                    borderRadius: '4px',
+                                    fontSize: '10px',
+                                    fontWeight: 'bold'
+                                  }}>
+                                    TRIAL
+                                  </span>
+                                  <span style={{
+                                    background: 'rgba(0,0,0,0.7)',
+                                    color: 'white',
+                                    padding: '2px 4px',
+                                    borderRadius: '3px',
+                                    fontSize: '9px',
+                                    textAlign: 'center'
+                                  }}>
+                                    {new Date(tool.trialEndDate).toLocaleDateString('vi-VN')}
+                                  </span>
+                                </div>
+                              )}
 
                               {/* Lock Badge */}
                               <div style={{
                                 position: 'absolute',
-                                top: '8px',
-                                right: '8px',
+                                bottom: '8px',
+                                left: '24px',
                                 background: 'rgba(0,0,0,0.7)',
                                 color: 'white',
                                 padding: '4px 8px',
@@ -4020,7 +4056,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                                 fontWeight: 'bold',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '4px'
+                                gap: '4px',
+                                opacity: 0.5
                               }}>
                                 {tool.visibility === 'trial' ? 
                                   (!currentUser || !currentUser.email ? '🔒 Cần đăng nhập' : 
@@ -4028,10 +4065,32 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                                   '🔒 Cần đăng nhập'}
                               </div>
 
-                              {/* <div className={styles.box}> */}
-                              <h3 className={styles.toolTitleItem} style={{ marginBottom: '15px' }}>{tool.name}</h3>
-                              <p className={styles.toolDescriptionItem}>{tool.description}</p>
-                              {/* </div> */}
+                              <div className={styles.toolCardDesc}>
+                                <p className={styles.toolDescItem}>{tool.description}</p>
+                              </div>
+
+                              {/* Info content on card when available */}
+                              {tool.content1 && (
+                                <div className={styles.toolInfoSection}>
+                                  <div
+                                    className={styles.toolInfoContent}
+                                    dangerouslySetInnerHTML={{
+                                      __html: marked(tool.content1)
+                                    }}
+                                  />
+                                </div>
+                              )}
+
+                              {tool.content2 && (
+                                <div className={styles.toolSupportSection}>
+                                  <div
+                                    className={styles.toolSupportContent}
+                                    dangerouslySetInnerHTML={{
+                                      __html: marked(tool.content2)
+                                    }}
+                                  />
+                                </div>
+                              )}
                             {/* View Count and Featured (bottom right) */}
                             <div style={{
                               position: 'absolute',
@@ -4045,6 +4104,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                               gap: '8px',
                               justifyContent: 'flex-end'
                             }}>
+                              
                               {tool.viewCount || 0} views
                               {tool.featured && (
                                 <div style={{
