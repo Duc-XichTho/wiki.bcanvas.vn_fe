@@ -2253,9 +2253,10 @@ const DataRubikProcessGuide = () => {
                    color: 'var(--text-color)',
                    position: 'fixed',
                    top: '130px',
+                    width: '1000px',
                   right: (() => {
                     // Apply offsets only when user is NOT superadmin and in view-as-user mode
-                    const shouldApplyOffset = (!currentUser?.isSuperAdmin && isViewAsUser);
+                    const shouldApplyOffset = (!currentUser?.isSuperAdmin || isViewAsUser);
 
                     // Base position
                     let rightPx = 280;
