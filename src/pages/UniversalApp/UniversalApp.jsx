@@ -2040,11 +2040,11 @@ const DataRubikProcessGuide = () => {
         [field]: value
       };
       
+      // Only send fields that need updating to avoid accidental overwrites
       const processItemData = {
         id: selectedProcessItem.id,
         title: selectedProcessItem.text,
         description: selectedProcessItem.description || descriptionTag,
-        content: selectedProcessItem.content || '',
         processId: selectedProcessItem.processId,
         order: selectedProcessItem.order || 0,
         show: selectedProcessItem.show !== false,
