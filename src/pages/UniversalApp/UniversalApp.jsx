@@ -2253,13 +2253,44 @@ const DataRubikProcessGuide = () => {
                    color: 'var(--text-color)',
                    position: 'fixed',
                    top: '130px',
-                    width: '1000px',
+                  //  minWidth: '450px',
+                   width: (() => {
+                    // Apply offsets only when user is NOT superadmin and in view-as-user mode
+                    const shouldApplyOffset = (!currentUser?.isSuperAdmin || isViewAsUser);
+
+                    // Base position
+                    let rightPx = 35;
+                    if (!shouldApplyOffset) {
+                      return `${rightPx}%`;
+                    }
+
+                    // Determine sidebar states from metadata
+                    let shouldShowMainSidebar = true;
+                    let currentProcessItem = null;
+                    if (activeHeading) {
+                      for (const processId in processItems) {
+                        const itemList = processItems[processId];
+                        currentProcessItem = itemList.find(item => item.text === activeHeading);
+                        if (currentProcessItem) break;
+                      }
+                    }
+                    if (currentProcessItem) {
+                      const metaVisible = currentProcessItem?.metadata?.isSidebarVisible;
+                      shouldShowMainSidebar = metaVisible !== undefined ? !!metaVisible : true;
+                    }
+                    const isHidingSidebar = currentProcessItem?.metadata?.isHidingHeadingsSidebar || false;
+
+                    // Adjust right offset based on sidebars
+                    if (!shouldShowMainSidebar) rightPx += 8;
+                    if (isHidingSidebar) rightPx += 14;
+                    return `${rightPx}%`;
+                  })(),
                   right: (() => {
                     // Apply offsets only when user is NOT superadmin and in view-as-user mode
                     const shouldApplyOffset = (!currentUser?.isSuperAdmin || isViewAsUser);
 
                     // Base position
-                    let rightPx = 280;
+                    let rightPx = 260;
                     if (!shouldApplyOffset) {
                       return `${rightPx}px`;
                     }
@@ -2281,8 +2312,8 @@ const DataRubikProcessGuide = () => {
                     const isHidingSidebar = currentProcessItem?.metadata?.isHidingHeadingsSidebar || false;
 
                     // Adjust right offset based on sidebars
-                    if (!shouldShowMainSidebar) rightPx += 240;
-                    if (isHidingSidebar) rightPx += 240;
+                    if (!shouldShowMainSidebar) rightPx += 120;
+                    if (isHidingSidebar) rightPx += 120;
                     return `${rightPx}px`;
                   })(),
                    zIndex: 1000,
