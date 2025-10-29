@@ -179,7 +179,6 @@
   gap: 1.5rem;
   justify-content: left;
   margin-left: 5rem;
-
 }
 
 .toolCard {
@@ -628,6 +627,7 @@
 
   .toolsList {
     gap: 1rem;
+    margin-left: 0;
   }
 
   .toolCard,
@@ -954,7 +954,7 @@
 
 
 .toolTitleItem {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--text-primary);
   text-align: center;

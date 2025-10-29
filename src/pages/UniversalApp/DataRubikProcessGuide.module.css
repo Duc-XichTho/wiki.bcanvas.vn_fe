@@ -127,8 +127,8 @@
 
 .contentContainer {
     width: 95%;
-    margin-top: 83px;
-    height: calc(100vh - 153px); /* Subtract topBar height (16px padding * 2 + content height) */
+    margin-top: 55px;
+    height: calc(100vh - 125px); /* Subtract topBar height (16px padding * 2 + content height) */
     display: flex;
     /* gap: 2px; */
 }
