@@ -3380,7 +3380,7 @@ const DataRubikProcessGuide = () => {
               }
               const isHidingSidebar = currentProcessItem?.metadata?.isHidingHeadingsSidebar || false;
               const shouldHideSidebar = isHidingSidebar && !isSuperAdminEffective;
-              return shouldHideSidebar ? '200px' : '0px';
+              return shouldHideSidebar ? '200px' : '100px';
             })()
           }}
         >
@@ -3718,7 +3718,10 @@ const DataRubikProcessGuide = () => {
                 isHidingHeadings = hiding && !isSuperAdminEffective;
               }
 
-              return !showMainSidebar && isHidingHeadings ? '450px' : '0px';
+              // Check if user is not superadmin or superadmin is in view as user mode
+              const isNotSuperAdminOrViewAsUser = !currentUser?.isSuperAdmin || isViewAsUser;
+              
+              return !showMainSidebar && isNotSuperAdminOrViewAsUser ? '200px' : '0px';
             })()
           }}
         >
