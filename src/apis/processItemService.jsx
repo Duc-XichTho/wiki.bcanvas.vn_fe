@@ -64,19 +64,17 @@ export const getProcessItemsByProcessId = async (processId) => {
 // Update a process item
 export const updateProcessItem = async (processItemData) => {
     try {
-        // Add default values for the actual table structure
-        const dataToSend = {
-            id: processItemData.id,
-            title: processItemData.title,
-            description: processItemData.description,
-            content: processItemData.content || '',
-            processId: processItemData.processId,
-            order: processItemData.order || 0,
-            show: processItemData.show !== undefined ? processItemData.show : true,
-            privacyType: processItemData.privacyType || 'public',
-            users: processItemData.users || [],
-            metadata: processItemData.metadata || {}
-        };
+        // Build partial update payload: only include fields explicitly provided
+        const dataToSend = { id: processItemData.id };
+        if ('title' in processItemData) dataToSend.title = processItemData.title;
+        if ('description' in processItemData) dataToSend.description = processItemData.description;
+        if ('content' in processItemData) dataToSend.content = processItemData.content; // do not default to ''
+        if ('processId' in processItemData) dataToSend.processId = processItemData.processId;
+        if ('order' in processItemData) dataToSend.order = processItemData.order;
+        if ('show' in processItemData) dataToSend.show = processItemData.show;
+        if ('privacyType' in processItemData) dataToSend.privacyType = processItemData.privacyType;
+        if ('users' in processItemData) dataToSend.users = processItemData.users;
+        if ('metadata' in processItemData) dataToSend.metadata = processItemData.metadata;
         
         const { data } = await instance.put(URL, dataToSend);
         return data;

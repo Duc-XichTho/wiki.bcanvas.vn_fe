@@ -812,24 +812,31 @@ const DataRubikProcessGuide = () => {
     handleTabSelection();
   }, [tabId, activeTabId, processItemId, headingId, navigate]);
 
-  // Fetch dashboard setting for nameTable
+  // Fetch dashboard setting for nameTable (match tool by basePath id)
   useEffect(() => {
-    getSchemaTools().then(schemaTools => {
-      const dashboardSetting = schemaTools.find(setting => setting.type === 'DASHBOARD_SETTING');
-      if (dashboardSetting && dashboardSetting.setting && dashboardSetting.setting.length > 0) {
-        // Look for universal-app specifically
-        let universalAppSetting = dashboardSetting.setting.find(item => item.id === 'universal-app');
-        console.log('dashboardSetting', universalAppSetting);
-        if (universalAppSetting) {
-          setNameTable(universalAppSetting.name);
-          setTool(universalAppSetting);
+    (async () => {
+      try {
+        const response = await getSchemaTools('master');
+        // Determine tool id from current route basePath, e.g. '/universal-app-2' -> 'universal-app-2'
+        const toolIdFromPath = (basePath || '').replace(/^\//, '') || 'universal-app';
+        const settingsArray = Array.isArray(response?.setting) ? response.setting : [];
+        console.log('[UniversalApp] basePath:', basePath, 'toolIdFromPath:', toolIdFromPath);
+        console.log('[UniversalApp] DASHBOARD_SETTING length:', settingsArray.length);
+        const matchedSetting = settingsArray.find(item => item.id === toolIdFromPath)
+          || settingsArray.find(item => item.id === 'universal-app');
+        console.log('[UniversalApp] matchedSetting:', matchedSetting);
+        if (matchedSetting) {
+          setNameTable(matchedSetting.name);
+          setTool(matchedSetting);
         } else {
-          // Fallback for Process Guide page
           setNameTable('Universal App');
         }
+      } catch (e) {
+        console.error('Failed to load schema tools for UniversalApp title:', e);
+        setNameTable('Universal App');
       }
-    });
-  }, []);
+    })();
+  }, [basePath]);
 
   // Handle URL parameter for direct processItem access
   useEffect(() => {
@@ -2234,7 +2241,59 @@ const DataRubikProcessGuide = () => {
                 </div>
               ) : (
                 <div>
-                 <div className={styles.processItemActionsContainer} style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px', gap: '8px', alignItems: 'center', position: 'sticky', top: '-14px', zIndex: 1000, background: '#FDFDFD', height: '44px' }}>
+                 <div
+                 className={styles.processItemActionsContainer}
+                 style={{
+                   margin: 0,
+                   border: 'none',
+                   outline: 'none',
+                   boxSizing: 'border-box',
+                   fontSize: '16.5px',
+                   fontFamily: 'var(--font-family)',
+                   color: 'var(--text-color)',
+                   position: 'fixed',
+                   top: '130px',
+                  right: (() => {
+                    // Apply offsets only when user is NOT superadmin and in view-as-user mode
+                    const shouldApplyOffset = (!currentUser?.isSuperAdmin && isViewAsUser);
+
+                    // Base position
+                    let rightPx = 280;
+                    if (!shouldApplyOffset) {
+                      return `${rightPx}px`;
+                    }
+
+                    // Determine sidebar states from metadata
+                    let shouldShowMainSidebar = true;
+                    let currentProcessItem = null;
+                    if (activeHeading) {
+                      for (const processId in processItems) {
+                        const itemList = processItems[processId];
+                        currentProcessItem = itemList.find(item => item.text === activeHeading);
+                        if (currentProcessItem) break;
+                      }
+                    }
+                    if (currentProcessItem) {
+                      const metaVisible = currentProcessItem?.metadata?.isSidebarVisible;
+                      shouldShowMainSidebar = metaVisible !== undefined ? !!metaVisible : true;
+                    }
+                    const isHidingSidebar = currentProcessItem?.metadata?.isHidingHeadingsSidebar || false;
+
+                    // Adjust right offset based on sidebars
+                    if (!shouldShowMainSidebar) rightPx += 240;
+                    if (isHidingSidebar) rightPx += 240;
+                    return `${rightPx}px`;
+                  })(),
+                   zIndex: 1000,
+                   backgroundColor: '#FDFDFD',
+                   padding: '8px 16px',
+                   display: 'flex',
+                   justifyContent: 'flex-end',
+                   marginBottom: '8px',
+                   gap: '8px',
+                   alignItems: 'center'
+                 }}
+               >
                     {/* Content Search Bar */}
                     <AutoComplete
                       value={contentSearchValue}
@@ -3786,7 +3845,6 @@ const DataRubikProcessGuide = () => {
                             id: currentProcessItem.id,
                             title: currentProcessItem.text,
                             description: currentProcessItem.description || descriptionTag,
-                            content: currentProcessItem.content || '',
                             processId: currentProcessItem.processId,
                             order: currentProcessItem.order || 0,
                             show: currentProcessItem.show !== false,
