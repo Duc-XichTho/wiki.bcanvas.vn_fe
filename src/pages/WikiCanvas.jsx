@@ -1338,14 +1338,14 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       }));
     // Add process-guide tool
     newVisibleTools = [...newVisibleTools, ...newTrialTools, 
-      {
-      id: "process-guide",
-      tag: "Working",
-      icon: "case-file_10256079",
-      name: "TLSD BCanvas",
-      viewCount: 120,
-      description: "Hướng dẫn quy trình và các tài liệu sử dụng platform BCanvas",
-    }
+    //   {
+    //   id: "process-guide",
+    //   tag: "Working",
+    //   icon: "case-file_10256079",
+    //   name: "TLSD BCanvas",
+    //   viewCount: 120,
+    //   description: "Hướng dẫn quy trình và các tài liệu sử dụng platform BCanvas",
+    // }
   ];
 
     // Filter by selected tags if any
