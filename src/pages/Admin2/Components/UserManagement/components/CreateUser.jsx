@@ -77,8 +77,8 @@ const CreateUser = ({ open, onCancel, onFinish, loading, currentUser, availableP
           </Form.Item>
         )}
 
-        {/* Chỉ hiển thị khi currentUser là Super Admin */}
-        {/* {currentUser?.isSuperAdmin && (
+        {/* Chỉ hiển thị khi currentUser là Super Admin */} 
+        {currentUser?.isSuperAdmin && (
           <>
             <Form.Item label="Schema" name="schema">
               <Select
@@ -101,7 +101,7 @@ const CreateUser = ({ open, onCancel, onFinish, loading, currentUser, availableP
               <Checkbox>Cấp quyền Super Admin</Checkbox>
             </Form.Item>
           </>
-        )} */}
+        )}
       </Form>
     </Modal>
   );

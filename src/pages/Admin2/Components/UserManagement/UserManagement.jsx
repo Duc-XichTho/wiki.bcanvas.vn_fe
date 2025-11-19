@@ -445,7 +445,7 @@ const UserManagement = () => {
         isEditor: values.isEditor || false,
         isAdmin: values.isAdmin || false,
         isSuperAdmin: values.isSuperAdmin || false,
-        schema: values.schema || null,
+        schema: values.schema || 'xichtho',
         info: {
           position: selectedPosition
             ? {

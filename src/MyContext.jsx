@@ -257,10 +257,19 @@ const MyProvider = ({ children }) => {
 
     const fetchCurrentUser = async () => {
         const user = await getCurrentUserLogin();
+        console.log('=== MyContext: fetchCurrentUser ===');
+        console.log('Full response:', user);
+        console.log('User data:', user?.data);
+        console.log('User email:', user?.data?.email);
+        console.log('Is Admin:', user?.data?.isAdmin);
+        console.log('Is Super Admin:', user?.data?.isSuperAdmin);
+        console.log('Is Editor:', user?.data?.isEditor);
+        console.log('Schema:', user?.data?.schema);
         if (user && Object.keys(user?.data || {}).length > 0) {
             setIsLoggedIn(true);
         }
         setCurrentUser(user.data);
+        console.log('Current user state set to:', user.data);
         return user;
     };
 

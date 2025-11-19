@@ -2,6 +2,7 @@ import "./LoginSuccess.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { getSchemaBackground } from "../../apis/settingService.jsx";
+import { getCurrentUserLogin } from "../../apis/userService.jsx";
 
 export default function LoginSuccess() {
   const navigate = useNavigate();
@@ -27,6 +28,25 @@ export default function LoginSuccess() {
   }, []);
 
   useEffect(() => {
+    // Fetch and log user after login
+    const fetchUserAfterLogin = async () => {
+      try {
+        const userResponse = await getCurrentUserLogin();
+        console.log('=== LoginSuccess: User after login ===');
+        console.log('Full response:', userResponse);
+        console.log('User data:', userResponse?.data);
+        console.log('User email:', userResponse?.data?.email);
+        console.log('Is Admin:', userResponse?.data?.isAdmin);
+        console.log('Is Super Admin:', userResponse?.data?.isSuperAdmin);
+        console.log('Is Editor:', userResponse?.data?.isEditor);
+        console.log('Schema:', userResponse?.data?.schema);
+      } catch (error) {
+        console.error('Error fetching user after login:', error);
+      }
+    };
+
+    fetchUserAfterLogin();
+
     const isMobile = /Mobi|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
 
     const timer = setTimeout(() => {

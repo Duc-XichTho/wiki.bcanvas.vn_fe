@@ -546,6 +546,17 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   const { theme, changeTheme } = useTheme();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
+  // Log currentUser state changes for debugging
+  useEffect(() => {
+    console.log('=== WikiCanvas: currentUser state ===');
+    console.log('Current user:', currentUser);
+    console.log('Is Admin:', currentUser?.isAdmin);
+    console.log('Is Super Admin:', currentUser?.isSuperAdmin);
+    console.log('Is Editor:', currentUser?.isEditor);
+    console.log('Schema:', currentUser?.schema);
+    console.log('Will show login button?', !currentUser);
+  }, [currentUser]);
+
   useEffect(() => {
     if (isMobile) {
       setSelectedTagFilters([]);
@@ -557,6 +568,71 @@ const [masterAppsList, setMasterAppsList] = useState([]);
 
   // Danh sách mặc định khi chưa có setting - sử dụng useMemo để tránh tạo mới mỗi lần render
 
+
+  // Helper function để đảm bảo universal-app-1 và universal-app-2 luôn có trong tools
+  const ensureUniversalApps = useCallback((apps) => {
+    // Tính toán order phù hợp (lấy max order + 1 hoặc dùng length nếu không có order)
+    const maxOrder = apps.length > 0 
+      ? Math.max(...apps.map(app => app.order ?? 0), apps.length - 1)
+      : -1;
+    const nextOrder = maxOrder + 1;
+
+    const universalApp1 = {
+      id: 'universal-app',
+      name: 'Universal App',
+      description: 'Universal App - Công cụ đa năng',
+      icon: 'icon_66',
+      tag: 'Working',
+      enterUrl: '/universal-app',
+      content1: '',
+      shortcut: '',
+      tags: [],
+      order: nextOrder,
+      visibility: true,
+      enabled: true,
+      viewCount: 0,
+      featured: false,
+      directDownload: false,
+      downloadUrl: ''
+    };
+
+    const universalApp2 = {
+      id: 'universal-app-2',
+      name: 'Universal App 2',
+      description: 'Universal App 2 - Công cụ đa năng',
+      icon: 'icon_66',
+      tag: 'Working',
+      enterUrl: '/universal-app-2',
+      content1: '',
+      shortcut: '',
+      tags: [],
+      order: nextOrder + 1,
+      visibility: true,
+      enabled: true,
+      viewCount: 0,
+      featured: false,
+      directDownload: false,
+      downloadUrl: ''
+    };
+
+    // Kiểm tra xem đã có universal-app-1 và universal-app-2 chưa
+    const hasUniversalApp1 = apps.some(app => app.id === 'universal-app');
+    const hasUniversalApp2 = apps.some(app => app.id === 'universal-app-2');
+
+    let result = [...apps];
+
+    // Thêm universal-app-1 nếu chưa có
+    if (!hasUniversalApp1) {
+      result.push(universalApp1);
+    }
+
+    // Thêm universal-app-2 nếu chưa có
+    if (!hasUniversalApp2) {
+      result.push(universalApp2);
+    }
+
+    return result;
+  }, []);
 
   // Helper function để lọc apps theo schema
   const filterAppsBySchema = useCallback((apps, schema) => {
@@ -663,7 +739,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
 
         const combinedTools = await combineAppsWithMasterInfo(toolsToProcess);
         console.log('combinedTools', combinedTools);
-        setTools(combinedTools);
+        const appsWithUniversal = ensureUniversalApps(combinedTools);
+        setTools(appsWithUniversal);
       } else {
         console.log('Creating new dashboard setting');
         // Tạo array format với order field
@@ -681,11 +758,13 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         
  
         const combinedTools = await combineAppsWithMasterInfo(toolsWithOrder);
-        setTools(combinedTools);
+        const appsWithUniversal = ensureUniversalApps(combinedTools);
+        setTools(appsWithUniversal);
       }
     } catch (error) {
       console.error('Lỗi khi lấy/tạo data', error);
-      setTools(dashboardApps);
+      const appsWithUniversal = ensureUniversalApps(dashboardApps);
+      setTools(appsWithUniversal);
     } finally {
       setIsLoadingTools(false);
     }
@@ -734,8 +813,9 @@ const [masterAppsList, setMasterAppsList] = useState([]);
           if (schemaToolsResponse && schemaToolsResponse.setting && schemaToolsResponse.setting.length > 0) {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
-            setTools(combinedApps);
-            console.log(`Initialized with configured tools for schema ${selectedSchema.path}: ${combinedApps.length} apps`);
+            const appsWithUniversal = ensureUniversalApps(combinedApps);
+            setTools(appsWithUniversal);
+            console.log(`Initialized with configured tools for schema ${selectedSchema.path}: ${appsWithUniversal.length} apps`);
           } else {
             // Fallback: sử dụng logic lọc cũ nếu chưa có cấu hình
             let schemaSpecificApps;
@@ -756,8 +836,9 @@ const [masterAppsList, setMasterAppsList] = useState([]);
             }
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
-            setTools(combinedApps);
-            console.log(`Initialized with fallback filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
+            const appsWithUniversal = ensureUniversalApps(combinedApps);
+            setTools(appsWithUniversal);
+            console.log(`Initialized with fallback filtered tools for schema ${selectedSchema.path}, showing ${appsWithUniversal.length} apps`);
           }
         } catch (error) {
           console.error('Lỗi khi khởi tạo tools cho schema:', error);
@@ -780,8 +861,9 @@ const [masterAppsList, setMasterAppsList] = useState([]);
           }
           // Kết hợp với thông tin từ schema master
           const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
-          setTools(combinedApps);
-          console.log(`Error fallback initialization: using filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
+          const appsWithUniversal = ensureUniversalApps(combinedApps);
+          setTools(appsWithUniversal);
+          console.log(`Error fallback initialization: using filtered tools for schema ${selectedSchema.path}, showing ${appsWithUniversal.length} apps`);
         } finally {
           setIsSwitchingSchema(false);
         }
@@ -1413,7 +1495,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       tool.id === editingTool.id ? { ...editingTool, tag: editingTool.tag ?? null } : tool
     );
     console.log('Saving tools:', updatedTools);
-    setTools(updatedTools);
+    const appsWithUniversal = ensureUniversalApps(updatedTools);
+    setTools(appsWithUniversal);
     setEditingTool(null);
 
     // Tách trial data ra khỏi tools data
@@ -1480,7 +1563,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   };
 
   const handleSaveToolReorder = async (reorderedTools) => {
-    setTools(reorderedTools);
+    const appsWithUniversal = ensureUniversalApps(reorderedTools);
+    setTools(appsWithUniversal);
 
     // Tách trial data ra khỏi tools data
     const toolsWithoutTrialData = reorderedTools.map(tool => {
@@ -1531,7 +1615,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     // Xóa tool khỏi danh sách
     const updatedTools = tools.filter(t => t.id !== tool.id);
     console.log('Deleting tool:', tool.name, 'Remaining tools:', updatedTools.length);
-    setTools(updatedTools);
+    const appsWithUniversal = ensureUniversalApps(updatedTools);
+    setTools(appsWithUniversal);
 
     // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
     try {
@@ -1561,7 +1646,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     } catch (error) {
       console.error('Lỗi khi xóa tool:', error);
       // Rollback nếu có lỗi
-      setTools(tools);
+      const appsWithUniversal = ensureUniversalApps(tools);
+      setTools(appsWithUniversal);
     }
   };
 
@@ -1678,7 +1764,9 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         id: `tool-${Date.now()}`,
         tags: newTool.tags || [],
       };
-      setTools([...tools, tool]);
+      const updatedTools = [...tools, tool];
+      const appsWithUniversal = ensureUniversalApps(updatedTools);
+      setTools(appsWithUniversal);
       setNewTool({ title: '', description: '', icon: '🛠️', tags: [] });
       setShowAddForm(false);
     }
@@ -2312,7 +2400,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
           if (schemaToolsResponse && schemaToolsResponse.setting && schemaToolsResponse.setting.length > 0) {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
-            setTools(combinedApps);
+            const appsWithUniversal = ensureUniversalApps(combinedApps);
+            setTools(appsWithUniversal);
           } else {
             // Fallback: sử dụng logic lọc cũ
             let schemaSpecificApps;
@@ -2333,7 +2422,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
             }
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
-            setTools(combinedApps);
+            const appsWithUniversal = ensureUniversalApps(combinedApps);
+            setTools(appsWithUniversal);
           }
         }
       } catch (error) {
@@ -2357,7 +2447,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         }
         // Kết hợp với thông tin từ schema master
         const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
-        setTools(combinedApps);
+        const appsWithUniversal = ensureUniversalApps(combinedApps);
+        setTools(appsWithUniversal);
       } finally {
         setIsSwitchingSchema(false);
       }
@@ -2443,7 +2534,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         tags: newToolResearchBpo.tags || [],
       };
       const updatedTools = [...tools, tool];
-      setTools(updatedTools);
+      const appsWithUniversal = ensureUniversalApps(updatedTools);
+      setTools(appsWithUniversal);
       setNewToolResearchBpo({ name: '', description: '', icon: '🛠️', tags: [], enterUrl: '', content1: '', content2: '', showSupport: false, showInfo: false });
       setShowAddFormResearchBpo(false);
 
@@ -2482,7 +2574,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         tags: newToolTrainingProductivity.tags || [],
       };
       const updatedTools = [...tools, tool];
-      setTools(updatedTools);
+      const appsWithUniversal = ensureUniversalApps(updatedTools);
+      setTools(appsWithUniversal);
       setNewToolTrainingProductivity({ name: '', description: '', icon: '🛠️', tags: [], enterUrl: '', content1: '', content2: '', showSupport: false, showInfo: false });
       setShowAddFormTrainingProductivity(false);
 
@@ -2866,7 +2959,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       }
 
       // Update local tools state
-      setTools(updatedTools);
+      const appsWithUniversal = ensureUniversalApps(updatedTools);
+      setTools(appsWithUniversal);
       setShowToolSettingsModal(false);
       message.success('Cài đặt tool đã được lưu thành công!');
     } catch (error) {
@@ -3207,7 +3301,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
               {/* <ProfileSelect color={topbarTheme.textColor} /> */}
 
               {
-                (currentUser?.isAdmin || currentUser?.isSuperAdmin) ? (
+                currentUser ? (
                   <>
                     <div>
                       {/* <Button type="text" style={{ color: topbarTheme.textColor }}>
@@ -3226,9 +3320,9 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                         const currentPath = '/login-success';
                         window.open(`${import.meta.env.VITE_API_URL}/login?redirect=${encodeURIComponent(currentPath)}`, '_self');
                       }}>Đăng nhập </Button>
-                      <Button type="text" style={{ color: topbarTextColor || topbarTheme.textColor }} onClick={() => {
-                        navigate('/workspace-registration');
-                      }}>Đăng ký Power User </Button>
+                      {/*<Button type="text" style={{ color: topbarTextColor || topbarTheme.textColor }} onClick={() => {*/}
+                      {/*  navigate('/workspace-registration');*/}
+                      {/*}}>Đăng ký Power User </Button>*/}
                     </div>
                   </>
                 )
@@ -3365,7 +3459,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                     );
                   })()}
                 </div>
-                <div className={styles.tabStatusRight} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, minWidth: '25%', maxWidth: '25%', color: statusBarTheme.textColor }}>
+                <div className={styles.tabStatusRight} style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 600, minWidth: '25%', maxWidth: '30%', color: statusBarTheme.textColor }}>
                   <div style={{ 
                     position: 'relative', 
                     flex: 1, 
@@ -3735,13 +3829,13 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                                 Thông tin
                               </button>
                               }
-                              {tool.enterUrl && (
+                              {/* {tool.enterUrl && (
                                 <a href={tool.enterUrl} target="_blank" rel="noopener noreferrer">
                                   <button className={`${styles.toolActionButton} ${styles.enterApp}`}>
                                     To App
                                   </button>
                                 </a>
-                              )}
+                              )} */}
                             </div>
                           </div>
                         );
