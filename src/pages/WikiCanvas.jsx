@@ -546,16 +546,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   const { theme, changeTheme } = useTheme();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  // Log currentUser state changes for debugging
-  useEffect(() => {
-    console.log('=== WikiCanvas: currentUser state ===');
-    console.log('Current user:', currentUser);
-    console.log('Is Admin:', currentUser?.isAdmin);
-    console.log('Is Super Admin:', currentUser?.isSuperAdmin);
-    console.log('Is Editor:', currentUser?.isEditor);
-    console.log('Schema:', currentUser?.schema);
-    console.log('Will show login button?', !currentUser);
-  }, [currentUser]);
 
   useEffect(() => {
     if (isMobile) {
@@ -654,7 +644,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       }
 
       if (existing.setting) {
-        console.log('Setting tools from existing setting:', existing.setting);
 
         // Luôn sử dụng array format, thêm order field nếu chưa có
         let toolsToProcess = Array.isArray(existing.setting) ? existing.setting : Object.values(existing.setting).filter(tool => tool && tool.id);
@@ -672,10 +661,8 @@ const [masterAppsList, setMasterAppsList] = useState([]);
        
 
         const combinedTools = await combineAppsWithMasterInfo(toolsToProcess);
-        console.log('combinedTools', combinedTools);
         setTools(combinedTools);
       } else {
-        console.log('Creating new dashboard setting');
         // Tạo array format với order field
         const toolsWithOrder = dashboardApps.map((tool, index) => ({
           ...tool,
@@ -685,8 +672,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         await updateSetting({
           ...existing,
           setting: toolsWithOrder
-        }).then(res => {
-          console.log('Updated:', res);
         });
         
  
@@ -702,13 +687,32 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   };
   useEffect(() => {
     if (activeTab) {
-      // Load dashboard setting cho user thường hoặc super admin với tab khác 'app'
-      // Super admin với tab 'app' sẽ được xử lý bởi useEffect khác dựa trên selectedSchema
-      if (!currentUser?.isSuperAdmin || activeTab !== 'app') {
+      // For normal users with assigned schema, load schema-specific tools
+      if (!currentUser?.isSuperAdmin && selectedSchema && typeof selectedSchema === 'object' && selectedSchema !== 'master' && activeTab === 'app') {
+        const loadUserSchemaTools = async () => {
+          try {
+            const schemaToolsResponse = await getSchemaTools(selectedSchema.path);
+            if (schemaToolsResponse && schemaToolsResponse.setting && schemaToolsResponse.setting.length > 0) {
+              const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
+              setTools(combinedApps);
+            } else {
+              // Fallback to master dashboard setting if schema has no tools
+              fetchDashboardSetting();
+            }
+          } catch (error) {
+            console.error('Error loading user schema tools:', error);
+            // Fallback to master dashboard setting on error
+            fetchDashboardSetting();
+          }
+        };
+        loadUserSchemaTools();
+      } else if (!currentUser?.isSuperAdmin || activeTab !== 'app') {
+        // Load dashboard setting cho user thường hoặc super admin với tab khác 'app'
+        // Super admin với tab 'app' sẽ được xử lý bởi useEffect khác dựa trên selectedSchema
         fetchDashboardSetting();
       }
     }
-  }, [activeTab, currentUser]); // Chỉ chạy khi activeTab hoặc user thay đổi
+  }, [activeTab, currentUser, selectedSchema]); // Chỉ chạy khi activeTab, user hoặc selectedSchema thay đổi
 
   useEffect(() => {
     loadTagOptions();
@@ -727,25 +731,21 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         setResourcesSettingId(resourcesData.id);
       }
     } catch (error) {
-      console.log('Error loading master schema resources:', error);
     }
   };
   // Khởi tạo tools theo schema hiện tại khi component mount
   useEffect(() => {
     if (currentUser?.isSuperAdmin && selectedSchema && selectedSchema !== 'master' && activeTab === 'app') {
-      console.log('Initializing tools for schema:', selectedSchema.path);
       // Lấy tools thực tế được cấu hình cho schema này
       const initializeToolsForSchema = async () => {
         setIsSwitchingSchema(true);
         try {
           const schemaToolsResponse = await getSchemaTools(selectedSchema.path);
-          console.log('Initial schema tools response:', schemaToolsResponse);
 
           if (schemaToolsResponse && schemaToolsResponse.setting && schemaToolsResponse.setting.length > 0) {
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaToolsResponse.setting);
             setTools(combinedApps);
-            console.log(`Initialized with configured tools for schema ${selectedSchema.path}: ${combinedApps.length} apps`);
           } else {
             // Fallback: sử dụng logic lọc cũ nếu chưa có cấu hình
             let schemaSpecificApps;
@@ -767,7 +767,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
             // Kết hợp với thông tin từ schema master
             const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
             setTools(combinedApps);
-            console.log(`Initialized with fallback filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
           }
         } catch (error) {
           console.error('Lỗi khi khởi tạo tools cho schema:', error);
@@ -791,7 +790,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
           // Kết hợp với thông tin từ schema master
           const combinedApps = await combineAppsWithMasterInfo(schemaSpecificApps);
           setTools(combinedApps);
-          console.log(`Error fallback initialization: using filtered tools for schema ${selectedSchema.path}, showing ${combinedApps.length} apps`);
         } finally {
           setIsSwitchingSchema(false);
         }
@@ -811,13 +809,13 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     try {
       // Load tools từ setting của schema master
       await fetchDashboardSetting();
-      console.log('Loaded master schema tools from settings');
     } catch (error) {
       console.error('Error loading master schema tools:', error);
     } finally {
       setIsSwitchingSchema(false);
     }
   };
+
   // Xử lý khi selectedSchema là 'master' - load từ setting và kết hợp với master info
   useEffect(() => {
     if (currentUser?.isSuperAdmin && selectedSchema === 'master' && activeTab === 'app') {
@@ -896,18 +894,12 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     const loadDashboardColorSettings = async () => {
       try {
         const existing = await getSettingByType('DASHBOARD_COLORS');
-        console.log('Loading dashboard colors:', existing);
 
         if (existing && existing.setting && typeof existing.setting === 'object') {
           const { background } = existing.setting;
           if (background && background.gradient && background.gridColor !== undefined && background.gridOpacity !== undefined) {
-            console.log('Setting dashboard colors:', existing.setting);
             setDashboardColors({ background });
-          } else {
-            console.log('Invalid dashboard colors structure, using defaults');
           }
-        } else {
-          console.log('No existing dashboard colors found, using defaults');
         }
       } catch (error) {
         console.error('Error loading initial dashboard color settings:', error);
@@ -941,7 +933,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     const loadTopbarTheme = async () => {
       try {
         const existing = await getSettingByType('TOPBAR_THEME');
-        console.log('Loading topbar theme:', existing);
 
         if (existing && existing.setting) {
           setTopbarTheme(existing.setting);
@@ -954,7 +945,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     const loadStatusBarTheme = async () => {
       try {
         const existing = await getSettingByType('STATUS_BAR_THEME');
-        console.log('Loading status bar theme:', existing);
 
         if (existing && existing.setting) {
           setStatusBarTheme(existing.setting);
@@ -1041,7 +1031,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
           setSchemaError(null);
           const data = await getAllPath();
           const schemas = data?.data || [];
-          console.log('Schemas:', schemas);
           if (schemas && Array.isArray(schemas)) {
             // Lọc chỉ những schema có status = "true" và show = true
             const activeSchemas = schemas.filter(schema =>
@@ -1112,23 +1101,52 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     };
   }, [currentUser?.isSuperAdmin, currentUser?.schema, selectedSchema]);
 
-  // Clear schema state when user is not super admin
+  // Load user's assigned schema for normal users (non-superAdmin)
   useEffect(() => {
-    if (!currentUser?.isSuperAdmin) {
-      setAvailableSchemas([]);
-      setSelectedSchema(null);
-      // Clear schema header
-      updateSchemaHeader(null);
-      // Clear localStorage
-      localStorage.removeItem('selectedSchemaId');
-    }
-  }, [currentUser?.isSuperAdmin]);
+    const loadUserSchema = async () => {
+      if (!currentUser?.isSuperAdmin && currentUser?.schema) {
+        try {
+          // Fetch all schemas to find the user's assigned schema
+          const data = await getAllPath();
+          const schemas = data?.data || [];
+          
+          if (schemas && Array.isArray(schemas)) {
+            // Find the schema that matches the user's assigned schema
+            // currentUser.schema could be: schema name, path, or id
+            const userSchema = schemas.find(s => 
+              s.name === currentUser.schema || 
+              s.path === currentUser.schema || 
+              s.id.toString() === currentUser.schema.toString()
+            );
+            
+            if (userSchema) {
+              setSelectedSchema(userSchema);
+              // Update axios header with schema id
+              updateSchemaHeader(userSchema.id.toString());
+            } else {
+              setSelectedSchema('master');
+              updateSchemaHeader(null);
+            }
+          }
+        } catch (error) {
+          console.error('Error loading user schema:', error);
+          setSelectedSchema('master');
+          updateSchemaHeader(null);
+        }
+      } else if (!currentUser?.isSuperAdmin && !currentUser?.schema) {
+        // User has no schema assigned, use master
+        setSelectedSchema('master');
+        updateSchemaHeader(null);
+      }
+    };
+    
+    loadUserSchema();
+  }, [currentUser?.isSuperAdmin, currentUser?.schema]);
 
   // Check if this is the first time visiting dashboard
   useEffect(() => {
     if (settingsLoaded) {
       const hasVisitedDashboard = localStorage.getItem('firstTimeDashboardPopup');
-      console.log("hasVisitedDashboard", hasVisitedDashboard);
       if (!hasVisitedDashboard) {
         setShowFirstTimePopup(true);
       }
@@ -1275,7 +1293,11 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       }
 
       // Admin can see all tools (except data-factory and process-guide)
+      // But adminApp requires isRealAdmin as well
       if (currentUser?.isAdmin) {
+        if (tool.id === 'adminApp') {
+          return currentUser?.isRealAdmin === true;
+        }
         return tool.id !== 'data-factory' && tool.id !== 'process-guide';
       }
 
@@ -1283,13 +1305,16 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       if (allowedAppIds.length > 0) {
         return allowedAppIds.includes(tool.id) &&
           tool.id !== 'data-factory' &&
-          tool.id !== 'process-guide';
+          tool.id !== 'process-guide' &&
+          tool.id !== 'adminApp';
       }
 
       // If no allowedAppIds and user is not logged in, only show public tools
       // (this case is handled by the visibility logic above)
-      return true;
+      // But always exclude adminApp for non-admin users
+      return tool.id !== 'adminApp';
     });
+    
     // Create blocked tools list for visual feedback
     let newBlockedTools = tools.filter(tool => {
       // Check if tool is disabled
@@ -1392,7 +1417,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     newVisibleTools = newVisibleTools.sort((a, b) => (a.order || 0) - (b.order || 0));
 
     // Update states
-    console.log('newVisibleTools', newVisibleTools);
     setVisibleTools(newVisibleTools);
     setBlockedTools(newBlockedTools);
     setTrialTools(newTrialTools);
@@ -1422,7 +1446,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     const updatedTools = tools.map(tool =>
       tool.id === editingTool.id ? { ...editingTool, tag: editingTool.tag ?? null } : tool
     );
-    console.log('Saving tools:', updatedTools);
     setTools(updatedTools);
     setEditingTool(null);
 
@@ -1435,11 +1458,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
     // Lưu tools data (không có trial data) lên backend
     try {
       const existing = await getTypeSchema('master', 'DASHBOARD_SETTING');
-      console.log('existing', existing);
-      console.log('updatedTools without trial data', toolsWithoutTrialData);
-      const response = await updateSchemaTools('master', toolsWithoutTrialData, existing.id);
-      console.log('response', response);
-      console.log(`Đã lưu tools vào schema: master`);
+      await updateSchemaTools('master', toolsWithoutTrialData, existing.id);
     } catch (error) {
       console.error('Lỗi khi cập nhật setting:', error);
     }
@@ -1480,12 +1499,10 @@ const [masterAppsList, setMasterAppsList] = useState([]);
           await createSetting(updatedTrialSettings);
         }
         
-        console.log(`Đã lưu trial data vào DASHBOARD_TRIAL_APPS cho schema: ${selectedSchema}`, trialData);
       } catch (error) {
         console.error('Lỗi khi cập nhật trial data:', error);
       }
     } else {
-      console.log('Master schema - không lưu trial data');
     }
   };
 
@@ -1509,7 +1526,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       if (selectedSchema && selectedSchema !== 'master') {
         // Sử dụng updateSchemaTools cho schema cụ thể
         await updateSchemaTools(selectedSchema, toolsWithOrder);
-        console.log(`Đã lưu thứ tự tools vào schema: ${selectedSchema}`);
       } else {
         // Sử dụng updateSetting cho master schema
         let existing;
@@ -1530,7 +1546,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         };
 
         await updateSetting(updatedSetting);
-        console.log('Đã lưu thứ tự tools vào master schema');
       }
     } catch (error) {
       console.error('Lỗi khi cập nhật thứ tự tools:', error);
@@ -1540,7 +1555,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   const handleDeleteTool = async (tool) => {
     // Xóa tool khỏi danh sách
     const updatedTools = tools.filter(t => t.id !== tool.id);
-    console.log('Deleting tool:', tool.name, 'Remaining tools:', updatedTools.length);
     setTools(updatedTools);
 
     // Lưu lên backend - sử dụng schema-specific API nếu không phải master schema
@@ -1548,7 +1562,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
       if (selectedSchema && selectedSchema !== 'master') {
         // Sử dụng updateSchemaTools cho schema cụ thể
         await updateSchemaTools(selectedSchema, updatedTools);
-        console.log(`Đã xóa tool khỏi schema: ${selectedSchema}`);
       } else {
         // Sử dụng updateSetting cho master schema
         let existing;
@@ -1566,7 +1579,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
           ...existing,
           setting: updatedTools
         });
-        console.log('Tool deleted successfully from master schema');
       }
     } catch (error) {
       console.error('Lỗi khi xóa tool:', error);
@@ -1702,7 +1714,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
 
   // Handle tag selection for multiple tags
   const handleTagToggle = (tagValue, isEditing = false) => {
-    console.log('handleTagToggle called with:', tagValue, isEditing);
     if (isEditing) {
       setEditingTool(prev => {
         const currentTags = prev.tags || [];
@@ -1739,7 +1750,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   const loadTrialApps = async () => {
     try {
       const response = await getSettingByType('DASHBOARD_TRIAL_APPS');
-      console.log('response', response);
       if (response?.setting && response.setting.length > 0) {
         setTrialApps(response.setting);
       } else {
@@ -2012,8 +2022,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   const handleOpenColorModal = async () => {
     try {
       const existing = await getSettingByType('SettingColor');
-      console.log('Fetched color setting:', existing);
-
       if (existing && existing.setting && Array.isArray(existing.setting)) {
         // Validate that each item has id and color properties
         const isValidColorArray = existing.setting.every(item =>
@@ -2024,12 +2032,7 @@ const [masterAppsList, setMasterAppsList] = useState([]);
 
         if (isValidColorArray) {
           setSelectedColors(existing.setting);
-          console.log('Setting colors:', existing.setting);
-        } else {
-          console.log('Invalid color array structure, using defaults');
         }
-      } else {
-        console.log('No existing color setting found or invalid format');
       }
     } catch (error) {
       console.error('Lỗi khi lấy cài đặt màu:', error);
@@ -2040,17 +2043,13 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   // Hàm xử lý lưu màu
   const handleSaveColors = async () => {
     try {
-      console.log('Saving colors:', selectedColors);
       const existing = await getSettingByType('SettingColor');
-      console.log('Existing setting:', existing);
 
       if (existing && existing.id) {
         const updatedSetting = { ...existing, setting: selectedColors };
-        console.log('Updating setting:', updatedSetting);
         await updateSetting(updatedSetting);
       } else {
         const newSetting = { type: 'SettingColor', setting: selectedColors };
-        console.log('Creating new setting:', newSetting);
         await createSetting(newSetting);
       }
       setShowColorModal(false);
@@ -2063,18 +2062,12 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   const handleOpenBackgroundModal = async () => {
     try {
       const existing = await getSettingByType('DASHBOARD_COLORS');
-      console.log('Fetched dashboard color setting:', existing);
 
       if (existing && existing.setting && typeof existing.setting === 'object') {
         const { background } = existing.setting;
         if (background && background.gradient && background.gridColor !== undefined && background.gridOpacity !== undefined) {
           setDashboardColors({ background });
-          console.log('Setting dashboard colors:', existing.setting);
-        } else {
-          console.log('Invalid dashboard colors structure, using current state');
         }
-      } else {
-        console.log('No existing dashboard color setting found, using current state');
       }
     } catch (error) {
       console.error('Lỗi khi lấy cài đặt màu dashboard:', error);
@@ -2085,17 +2078,13 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   // Hàm xử lý lưu dashboard colors
   const handleSaveBackgroundColors = async () => {
     try {
-      console.log('Saving dashboard colors:', dashboardColors);
       const existing = await getSettingByType('DASHBOARD_COLORS');
-      console.log('Existing dashboard setting:', existing);
 
       if (existing && existing.id) {
         const updatedSetting = { ...existing, setting: dashboardColors };
-        console.log('Updating dashboard setting:', updatedSetting);
         await updateSetting(updatedSetting);
       } else {
         const newSetting = { type: 'DASHBOARD_COLORS', setting: dashboardColors };
-        console.log('Creating new dashboard setting:', newSetting);
         await createSetting(newSetting);
       }
       setShowBackgroundModal(false);
@@ -2117,17 +2106,13 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   // Hàm xử lý mở modal guideline settings
   const handleOpenGuidelineModal = async () => {
     try {
-      console.log('Opening guideline modal...');
       const existing = await getSettingByType('GUIDELINE_SETTING');
-      console.log('Existing guideline setting:', existing);
 
       if (existing && existing.setting) {
         const { imageUrl, markdownText } = existing.setting;
-        console.log('Loading existing guideline data:', { imageUrl, markdownText });
         setGuidelineImageUrl(imageUrl || '');
         setGuidelineMarkdown(markdownText || '');
       } else {
-        console.log('No existing guideline setting found, using defaults');
         setGuidelineImageUrl('');
         setGuidelineMarkdown('');
       }
@@ -2141,20 +2126,16 @@ const [masterAppsList, setMasterAppsList] = useState([]);
 
   // Hàm xử lý upload image
   const handleImageUpload = (file) => {
-    console.log('Image upload triggered:', file);
     if (file && file.type.startsWith('image/')) {
-      console.log('Valid image file detected:', file.name, file.type, file.size);
       setGuidelineImage(file);
 
       // Create a preview URL
       const reader = new FileReader();
       reader.onload = (e) => {
-        console.log('Image preview URL created');
         setGuidelineImageUrl(e.target.result);
       };
       reader.readAsDataURL(file);
     } else {
-      console.log('Invalid file type:', file?.type);
       Modal.error({ title: 'Lỗi', content: 'Vui lòng chọn file hình ảnh!' });
     }
     return false; // Prevent default upload behavior
@@ -2177,13 +2158,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   // Hàm xử lý lưu guideline settings
   const handleSaveGuideline = async () => {
     try {
-      console.log('Saving guideline settings...');
-      console.log('Current state:', {
-        guidelineImage,
-        guidelineMarkdown,
-        guidelineImageUrl
-      });
-
       // For now, we'll use the preview URL as the image URL
       // In a real implementation, you'd upload the file to a server
       const imageUrl = guidelineImageUrl;
@@ -2193,21 +2167,14 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         markdownText: guidelineMarkdown
       };
 
-      console.log('Guideline data to save:', guidelineData);
-
       const existing = await getSettingByType('GUIDELINE_SETTING');
-      console.log('Existing setting for update:', existing);
 
       if (existing && existing.id) {
         const updatedSetting = { ...existing, setting: guidelineData };
-        console.log('Updating existing setting:', updatedSetting);
         await updateSetting(updatedSetting);
-        console.log('Guideline setting updated successfully');
       } else {
         const newSetting = { type: 'GUIDELINE_SETTING', setting: guidelineData };
-        console.log('Creating new setting:', newSetting);
         await createSetting(newSetting);
-        console.log('Guideline setting created successfully');
       }
 
       setShowGuidelineModal(false);
@@ -2222,14 +2189,11 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   const handleOpenBackgroundSettingsModal = async () => {
     try {
       const existing = await getSchemaBackground('master');
-      console.log('Fetched dashboard background setting from master schema:', existing);
 
       if (existing && existing.setting && typeof existing.setting === 'string') {
         setBackgroundImageUrl(existing.setting);
-        console.log('Setting background URL:', existing.setting);
       } else {
         setBackgroundImageUrl('/simple_background.png');
-        console.log('No existing background found, using default');
       }
     } catch (error) {
       console.error('Lỗi khi lấy cài đặt background dashboard:', error);
@@ -2241,20 +2205,16 @@ const [masterAppsList, setMasterAppsList] = useState([]);
   // Hàm xử lý lưu background settings
   const handleSaveBackgroundSettings = async () => {
     try {
-      console.log('Saving dashboard background:', backgroundImageUrl);
-
       // Check if setting already exists using regular getSettingByType
       const existing = await getSettingByType('DASHBOARD_BACKGROUND');
 
       if (existing && existing.id) {
-        console.log('Updating existing background setting...');
         await updateSetting({
           id: existing.id,
           type: 'DASHBOARD_BACKGROUND',
           setting: backgroundImageUrl
         });
       } else {
-        console.log('Creating new background setting...');
         await createSetting({
           type: 'DASHBOARD_BACKGROUND',
           setting: backgroundImageUrl
@@ -2463,7 +2423,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         if (selectedSchema && selectedSchema !== 'master') {
           // Sử dụng updateSchemaTools cho schema cụ thể
           await updateSchemaTools(selectedSchema, updatedTools);
-          console.log(`Đã thêm tool vào schema: ${selectedSchema}`);
         } else {
           // Sử dụng updateSetting cho master schema
           const existing = await getSettingByType('RESEARCH_BPO_SETTING');
@@ -2471,7 +2430,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
             ...existing,
             setting: updatedTools
           });
-          console.log('Đã thêm tool vào master schema');
         }
       } catch (error) {
         console.error('Lỗi khi lưu RESEARCH_BPO_SETTING:', error);
@@ -2502,7 +2460,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
         if (selectedSchema && selectedSchema !== 'master') {
           // Sử dụng updateSchemaTools cho schema cụ thể
           await updateSchemaTools(selectedSchema, updatedTools);
-          console.log(`Đã thêm tool vào schema: ${selectedSchema}`);
         } else {
           // Sử dụng updateSetting cho master schema
           const existing = await getSettingByType('TRAINING_PRODUCTIVITY_SETTING');
@@ -2510,7 +2467,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
             ...existing,
             setting: updatedTools
           });
-          console.log('Đã thêm tool vào master schema');
         }
       } catch (error) {
         console.error('Lỗi khi lưu TRAINING_PRODUCTIVITY_SETTING:', error);
@@ -4285,7 +4241,6 @@ const [masterAppsList, setMasterAppsList] = useState([]);
                                 // Tìm thông tin từ master schema để hiển thị đúng icon và nội dung
                       
                                 const masterApp = masterAppsList.find(tool => tool.id === app.id);
-                                console.log('masterApp', masterApp);
                                 const displayApp = masterApp ? {
                                   ...app,
                                   name: masterApp.name,
